@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2013-02-03 11:36+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-07-26 16:31+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:07+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-27 06:22+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: marketing_campaign_crm_demo
 #: model:ir.actions.report.xml,name:marketing_campaign_crm_demo.mc_crm_lead_demo_report
 msgid "Marketing campaign demo report"
-msgstr "Marketing campaign demo report"
+msgstr "Demo poročilo o marketinški kampanji"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_1
@@ -28,16 +28,18 @@ msgid ""
 "Hello,Thanks for generous interest you have shown in the "
 "openERP.Regards,OpenERP Team,"
 msgstr ""
+"Pozdravljeni, hvala za velikodušno zanimanje, ki ste ga pokazali za OpenERP. "
+"Pozdrav, Ekipa OpenERP"
 
 #. module: marketing_campaign_crm_demo
 #: report:crm.lead.demo:0
 msgid "Company :"
-msgstr "Company :"
+msgstr "Podjetje"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_4
 msgid "Thanks for buying the OpenERP book"
-msgstr "Thanks for buying the OpenERP book"
+msgstr "Hvala za nakup OpenERP knjige"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_6
@@ -49,21 +51,27 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Zdravo, imamo dobro ponudbo, ki bi vam lahko ustrezala.\n"
+"            Za naše srebrne partnerje nudimo plačljivo tehnično "
+"usposabljanje v juniju 2010.\n"
+"            Za vsakršna morebitna dodatna vprašanja se obrnite na nas.\n"
+"            Za sodelovanje se vam lepo zahvaljujemo.\n"
+"            Pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_5
 msgid "Propose a free technical training to Gold partners"
-msgstr "Propose a free technical training to Gold partners"
+msgstr "Predlog brezplačnega tehničnega usposabljanja Zlatim partnerjem"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_3
 msgid "Thanks for subscribing to the OpenERP Discovery Day"
-msgstr "Thanks for subscribing to the OpenERP Discovery Day"
+msgstr "Hvala za prijavo na OpenERP raziskovanli dan"
 
 #. module: marketing_campaign_crm_demo
 #: model:ir.actions.server,name:marketing_campaign_crm_demo.action_dummy
 msgid "Dummy Action"
-msgstr "Dummy Action"
+msgstr "Navidezna aktivnost"
 
 #. module: marketing_campaign_crm_demo
 #: report:crm.lead.demo:0
@@ -73,12 +81,12 @@ msgstr "Partner :"
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_1
 msgid "Thanks for showing interest in OpenERP"
-msgstr "Thanks for showing interest in OpenERP"
+msgstr "Hvala za izkazan interes za OpenERP"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_2
 msgid "Propose to subscribe to the OpenERP Discovery Day on May 2010"
-msgstr "Propose to subscribe to the OpenERP Discovery Day on May 2010"
+msgstr "Predlog za prijavo na OpenERP raziskovalni dan maja 2010"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_7
@@ -89,11 +97,16 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Zdravo, imamo dobro ponudbo, ki bi vam lahko ustrezala.\n"
+"            Za naše srebrne partnerje nudimo Zlato partnerstvo.\n"
+"            Za vsakršna morebitna dodatna vprašanja se obrnite na nas.\n"
+"            Za sodelovanje se vam lepo zahvaljujemo.\n"
+"            Pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_7
 msgid "Propose gold partnership to silver partners"
-msgstr "Propose gold partnership to silver partners"
+msgstr "Predlagaj Zlato partnerstvo vsem Srebrnim partnerjem"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_4
@@ -103,6 +116,10 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Pozdravljeni, Hvala za izkazano zanimanje in nakup OpenERP knjige.\n"
+"            Za vsakršno morebitno dodatno vprašanje smo vam na voljo.\n"
+"            Najlepša hvala za sodelovanje.\n"
+"            Lep pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_5
@@ -114,6 +131,12 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Zdravo, imamo dobro ponudbo, ki bi vam lahko ustrezala.\n"
+"            Za naše zlate partnerje nudimo brezplačno tehnično usposabljanje "
+"v juniju 2010.\n"
+"            Za vsakršna morebitna dodatna vprašanja se obrnite na nas.\n"
+"            Za sodelovanje se vam lepo zahvaljujemo.\n"
+"            Pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_3
@@ -124,11 +147,15 @@ msgid ""
 "             I really appreciate your co-operation on this.\n"
 "             Regards,OpenERP Team,"
 msgstr ""
+"Pozdravljeni, Hvala za zanimanje in vpis na OpenERP Discovery Day.\n"
+"             Za morebitna dodatna vprašanja smo vam vedno na voljo.\n"
+"             Hvala za sodelovanje.\n"
+"             Lep pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_8
 msgid "Thanks for subscribing to technical training"
-msgstr "Thanks for subscribing to technical training"
+msgstr "Hvala za prijavo na tehnično usposabljanje"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_2
@@ -140,6 +167,11 @@ msgid ""
 "            We really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Zdravo, imamo dobro ponudbo, ki bi vam lahko ustrezala.\n"
+"            Predlagamo vam vpis na OpenERP Discovery Day v maju 2010.\n"
+"            Za vsakršna morebitna dodatna vprašanja se obrnite na nas.\n"
+"            Za sodelovanje se vam lepo zahvaljujemo.\n"
+"            Pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_8
@@ -149,8 +181,12 @@ msgid ""
 "appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
+"Pozdravljeni, Hvala za izkazano zanimanje in vpis na tehnično usposabljanje. "
+"Za morebitna dodatna vprašanja smo vam vedno na voljo. Hvala za "
+"sodelovanje.\n"
+"             Lep pozdrav, Ekipa OpenERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_6
 msgid "Propose paid training to Silver partners"
-msgstr "Propose paid training to Silver partners"
+msgstr "Predlagaj plačljivo usposabljanje Srebrnim partnerjem"

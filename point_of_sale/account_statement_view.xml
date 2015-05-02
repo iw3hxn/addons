@@ -130,23 +130,27 @@
         </record>
 
         <menuitem name="Cash Register Management" parent="point_of_sale.menu_point_root"
-            id="menu_point_open_config" sequence="10"/>
+            id="menu_point_open_config" sequence="10"
+            groups="group_pos_manager"/>
         <menuitem
             name="Open Cash Registers" parent="menu_point_open_config"
             string="Open Cash Registers"
             action="action_pos_open_statement"
-            id="menu_open_statement" sequence="1" />
+            id="menu_open_statement" sequence="1" 
+            groups="group_pos_manager_configuration" />
 
         <menuitem
             name="Close Cash Registers" parent="menu_point_open_config"
             string="Close Cash Registers"
             action="action_pos_close_statement"
-            id="menu_close_statement" sequence="2" />
+            id="menu_close_statement" sequence="2"
+            groups="group_pos_manager_configuration" />
 
         <menuitem
             parent="menu_point_open_config"
             action="action_pos_confirm"
-            id="menu_wizard_pos_confirm" sequence="8" />
+            id="menu_wizard_pos_confirm" sequence="8" 
+            groups="group_pos_manager_configuration" />
 
 
         <menuitem

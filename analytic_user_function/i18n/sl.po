@@ -7,29 +7,30 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2014-07-30 11:23+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-31 06:56+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: analytic_user_function
 #: field:analytic.user.funct.grid,product_id:0
 msgid "Product"
-msgstr "Izdelek"
+msgstr "Proizvod"
 
 #. module: analytic_user_function
 #: model:ir.model,name:analytic_user_function.model_analytic_user_funct_grid
 msgid "Relation table between users and products on a analytic account"
-msgstr "Tabela odnosov med uporabniki in produkti na analitičnem kontu"
+msgstr "Tabela odnosov med uporabniki in proizvodi na analitičnem kontu"
 
 #. module: analytic_user_function
 #: constraint:hr.analytic.timesheet:0
 msgid "You cannot modify an entry in a Confirmed/Done timesheet !."
 msgstr ""
+"Vnosa v časovnico, ki je v stanju Potrjeno/Opravljeno, ni možno spreminjati!"
 
 #. module: analytic_user_function
 #: field:analytic.user.funct.grid,account_id:0
@@ -38,6 +39,7 @@ msgid "Analytic Account"
 msgstr "Analitični konto"
 
 #. module: analytic_user_function
+#: view:account.analytic.account:0
 #: field:account.analytic.account,user_product_ids:0
 msgid "Users/Products Rel."
 msgstr "Odnos Uporabniki/Produkti"
@@ -48,11 +50,11 @@ msgid "User"
 msgstr "Uporabnik"
 
 #. module: analytic_user_function
-#: code:addons/analytic_user_function/analytic_user_function.py:107
-#: code:addons/analytic_user_function/analytic_user_function.py:136
+#: code:addons/analytic_user_function/analytic_user_function.py:96
+#: code:addons/analytic_user_function/analytic_user_function.py:131
 #, python-format
 msgid "There is no expense account define for this product: \"%s\" (id:%d)"
-msgstr "Ni definiranega konta stroškov za ta izdelek: \"%s\" (id:%d)"
+msgstr "Ni definiranega konta stroškov za ta proizvod: \"%s\" (id:%d)"
 
 #. module: analytic_user_function
 #: code:addons/analytic_user_function/analytic_user_function.py:95
@@ -64,7 +66,7 @@ msgstr "Napaka!"
 #. module: analytic_user_function
 #: constraint:account.analytic.account:0
 msgid "Error! You can not create recursive analytic accounts."
-msgstr "Napaka! Ne morete kreirati rekurzivnih analitičnih kontov."
+msgstr "Napaka! Ne morete ustvariti rekurzivnih analitičnih kontov."
 
 #. module: analytic_user_function
 #: model:ir.model,name:analytic_user_function.model_hr_analytic_timesheet
@@ -74,4 +76,4 @@ msgstr "Postavka časovnice"
 #. module: analytic_user_function
 #: view:analytic.user.funct.grid:0
 msgid "User's Product for this Analytic Account"
-msgstr "Uporabniški proizvodi za ta analitični konto"
+msgstr "Uporabnikov proizvod za ta analitični konto"

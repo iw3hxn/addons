@@ -39,6 +39,7 @@ class sale_shop(osv.osv):
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist'),
         'project_id': fields.many2one('account.analytic.account', 'Analytic Account', domain=[('parent_id', '!=', False)]),
         'company_id': fields.many2one('res.company', 'Company', required=False),
+        'member_ids':fields.many2many('res.users', 'user_sale_shop_rel', 'shop_id', 'member_id', 'Team Members'),
     }
     _defaults = {
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'sale.shop', context=c),
@@ -727,6 +728,9 @@ class sale_order(osv.osv):
     def _prepare_order_line_move(self, cr, uid, order, line, picking_id, date_planned, context=None):
         location_id = order.shop_id.warehouse_id.lot_stock_id.id
         output_id = order.shop_id.warehouse_id.lot_output_id.id
+        price_unit = 0.0
+        if line.product_uom_qty != 0.0:
+            price_unit = line.price_subtotal / line.product_uom_qty
         return {
             'name': line.name[:250],
             'picking_id': picking_id,
@@ -748,8 +752,10 @@ class sale_order(osv.osv):
             #'state': 'waiting',
             'note': line.notes,
             'company_id': order.company_id.id,
-            'price_unit': line.product_id.standard_price or 0.0
+            'price_unit': price_unit
         }
+
+
 
     def _prepare_order_picking(self, cr, uid, order, context=None):
         pick_name = self.pool.get('ir.sequence').get(cr, uid, 'stock.picking.out')

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <openerp>
-    <data noupdate="1">
+    <data>
         <!--
 	Resource: product.uom.categ
 	-->
@@ -20,7 +20,9 @@
         <record id="uom_categ_length" model="product.uom.categ">
             <field name="name">Length / Distance</field>
         </record>
-
+        <record id="product_uom_categ_vol" model="product.uom.categ">
+            <field name="name">Volume</field>
+        </record>
 
         <!--
             Resource: product.uom
@@ -30,6 +32,12 @@
             <field name="name">PCE</field>
             <field name="factor" eval="1.0"/>
             <field name="rounding" eval="1.0"/>
+        </record>
+       <record id="product_uom_dozen" model="product.uom">
+            <field name="category_id" ref="product.product_uom_categ_unit"/>
+            <field name="name">Dozen(s)</field>
+            <field name="factor_inv" eval="12"/>
+            <field name="uom_type">bigger</field>
         </record>
         <record id="product_uom_kgm" model="product.uom">
             <field name="category_id" ref="product_uom_categ_kgm"/>
@@ -77,6 +85,11 @@
             <field name="name">cm</field>
             <field name="factor" eval="100"/>
             <field name="uom_type">smaller</field>
+        </record>
+        <record id="product_uom_litre" model="product.uom">
+            <field name="name">Litre</field>
+            <field name="category_id" ref="product_uom_categ_vol"/>
+            <field name="factor">1.0</field>
         </record>
 
 

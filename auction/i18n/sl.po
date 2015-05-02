@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Fabien (Open ERP) <fp@tinyerp.com>\n"
+"PO-Revision-Date: 2014-08-11 08:49+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:49+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-12 06:17+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.auction_report_menu
@@ -24,12 +24,12 @@ msgstr "Poročanje"
 #. module: auction
 #: model:ir.model,name:auction.model_auction_taken
 msgid "Auction taken"
-msgstr ""
+msgstr "Dražba oddano"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Set to draft"
-msgstr "V osnutek"
+msgstr "Nastavi v osnutek"
 
 #. module: auction
 #: view:auction.deposit:0
@@ -43,7 +43,7 @@ msgstr "Prodajalec"
 #. module: auction
 #: field:auction.lots,name:0
 msgid "Title"
-msgstr ""
+msgstr "Naziv"
 
 #. module: auction
 #: field:auction.lots.sms.send,text:0
@@ -55,17 +55,17 @@ msgstr "SMS sporočilo"
 #: view:auction.lots.auction.move:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid " "
-msgstr ""
+msgstr " "
 
 #. module: auction
 #: view:auction.lots.auction.move:0
 msgid "Warning, Erase The Object Adjudication Price and Its Buyer!"
-msgstr ""
+msgstr "Pozor, izbrišite zmagovito ceno in kupca predmeta!"
 
 #. module: auction
 #: help:auction.pay.buy,statement_id1:0
 msgid "First Bank Statement For Buyer"
-msgstr ""
+msgstr "Prvi bančni izpisek za kupca"
 
 #. module: auction
 #: field:auction.bid_line,lot_id:0
@@ -76,12 +76,12 @@ msgstr "Predmet"
 #. module: auction
 #: field:report.auction.object.date,obj_num:0
 msgid "# of Objects"
-msgstr ""
+msgstr "# predmetov"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Authors"
-msgstr ""
+msgstr "Avtorji"
 
 #. module: auction
 #: view:auction.bid:0
@@ -101,23 +101,25 @@ msgstr "Kupec"
 #. module: auction
 #: field:report.auction,object:0
 msgid "No of objects"
-msgstr ""
+msgstr "Št. predmetov"
 
 #. module: auction
 #: help:auction.lots,paid_vnd:0
 msgid ""
 "When state of Seller Invoice is 'Paid', this field is selected as True."
 msgstr ""
+"Ko je stanje prodajalčevega računa v 'Plačano', je to polje izbrano kot "
+"'Pravilno'"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of paid items (based on invoices):"
-msgstr ""
+msgstr "# plačanih kosov (glede na račune):"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Deposit Border"
-msgstr ""
+msgstr "Meja depozita"
 
 #. module: auction
 #: field:auction.lots.make.invoice,amount:0
@@ -128,12 +130,12 @@ msgstr "Zaračunani znesek"
 #. module: auction
 #: help:auction.lots,name:0
 msgid "Auction object name"
-msgstr ""
+msgstr "Dražbeni naziv predmeta"
 
 #. module: auction
 #: model:ir.model,name:auction.model_aie_category
 msgid "aie.category"
-msgstr ""
+msgstr "aie.category"
 
 #. module: auction
 #: field:auction.deposit.cost,amount:0
@@ -147,12 +149,12 @@ msgstr "Znesek"
 #: model:ir.actions.act_window,name:auction.action_deposit_border
 #: model:ir.ui.menu,name:auction.menu_auction_deposit_border
 msgid "Deposit border"
-msgstr ""
+msgstr "Meja depozita"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Reference"
-msgstr ""
+msgstr "Sklic"
 
 #. module: auction
 #: help:auction.dates,state:0
@@ -160,6 +162,8 @@ msgid ""
 "When auction starts the state is 'Draft'.\n"
 " At the end of auction, the state becomes 'Closed'."
 msgstr ""
+"Ob začetku dražbe je stanje 'Osnutek'.\n"
+" Na kancu dražbe stanje preide v 'Zaključeno'."
 
 #. module: auction
 #: field:auction.dates,account_analytic_id:0
@@ -169,27 +173,27 @@ msgstr "Analitični konto"
 #. module: auction
 #: help:auction.pay.buy,amount3:0
 msgid "Amount For Third Bank Statement"
-msgstr ""
+msgstr "Znesek za tretji bančni izpisek"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Buy object"
-msgstr ""
+msgstr "Kupi predmet"
 
 #. module: auction
 #: field:auction.lots,lot_num:0
 msgid "List Number"
-msgstr ""
+msgstr "Številka seznama"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Date:"
-msgstr ""
+msgstr "Datum:"
 
 #. module: auction
 #: field:auction.deposit.cost,name:0
 msgid "Cost Name"
-msgstr ""
+msgstr "Naziv stroška"
 
 #. module: auction
 #: view:auction.dates:0
@@ -204,12 +208,12 @@ msgstr "Stanje"
 #. module: auction
 #: view:auction.dates:0
 msgid "First Auction Date"
-msgstr ""
+msgstr "Datum prve dražbe"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "January"
-msgstr ""
+msgstr "Januar"
 
 #. module: auction
 #: help:auction.lot.category,active:0
@@ -217,6 +221,8 @@ msgid ""
 "If the active field is set to False, it will allow you to hide the auction "
 "lot category without removing it."
 msgstr ""
+"Če je aktivno polje nastavljeno na 'Narobe', se kategorija dražbenega lota "
+"lahko skrije, ne da bi jo brisali."
 
 #. module: auction
 #: view:auction.lots:0
@@ -226,22 +232,22 @@ msgstr "Sklic"
 #. module: auction
 #: field:report.auction,total_price:0
 msgid "Total Price"
-msgstr ""
+msgstr "Skupaj cena"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Total Adj."
-msgstr ""
+msgstr "Skupaj dobljeno"
 
 #. module: auction
 #: view:auction.lots.sms.send:0
 msgid "SMS - Gateway: clickatell','Bulk SMS send"
-msgstr ""
+msgstr "SMS prehod: clickatell','gmotno pošiljanje SMS"
 
 #. module: auction
 #: help:auction.lots,costs:0
 msgid "Deposit cost"
-msgstr ""
+msgstr "Strošek depozita"
 
 #. module: auction
 #: selection:auction.lots,state:0
@@ -253,12 +259,12 @@ msgstr "Neprodano"
 #. module: auction
 #: view:auction.deposit:0
 msgid "Search Auction deposit"
-msgstr ""
+msgstr "Iskanje po dražbenih depozitih"
 
 #. module: auction
 #: help:auction.lots,lot_num:0
 msgid "List number in depositer inventory"
-msgstr ""
+msgstr "Številka v seznamu depozitarjev"
 
 #. module: auction
 #: report:auction.total.rml:0
@@ -269,7 +275,7 @@ msgstr "Predmeti"
 #: model:account.tax,name:auction.auction_tax5
 #: field:auction.dates,seller_costs:0
 msgid "Seller Costs"
-msgstr ""
+msgstr "Prodajalčevi stroški"
 
 #. module: auction
 #: view:auction.bid:0
@@ -279,84 +285,84 @@ msgstr ""
 #: model:ir.actions.report.xml,name:auction.bid_auction
 #: model:ir.ui.menu,name:auction.menu_action_bid_open
 msgid "Bids"
-msgstr ""
+msgstr "Ponudbe"
 
 #. module: auction
 #: field:report.auction,gross_revenue:0
 msgid "Gross Revenue"
-msgstr ""
+msgstr "Bruto prihodki"
 
 #. module: auction
 #: view:auction.lots.buyer_map:0
 msgid "Buyer Map"
-msgstr ""
+msgstr "Načrt kupcev"
 
 #. module: auction
 #: field:report.object.encoded,obj_ret:0
 msgid "# obj ret"
-msgstr ""
+msgstr "# pridržanih predmetov"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_bid
 msgid "Bid Auctions"
-msgstr ""
+msgstr "Dražbene ponudbe"
 
 #. module: auction
 #: help:auction.lots,image:0
 msgid "Object Image"
-msgstr ""
+msgstr "Slika predmeta"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_buyer_map.py:70
 #, python-format
 msgid "No buyer is set for this lot."
-msgstr ""
+msgstr "Za ta lot ni nastavljenega kupca."
 
 #. module: auction
 #: code:addons/auction/auction.py:578
 #, python-format
 msgid "The Buyer \"%s\" has no Invoice Address."
-msgstr ""
+msgstr "Kupec \"%s\" nima naslova za račun."
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_object_categories
 msgid "Auction object Categories"
-msgstr ""
+msgstr "Kategorije dražbenih predmetov"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_deposit_cost
 msgid "Auction Deposit Cost"
-msgstr ""
+msgstr "Strošek dražbenega depozita"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Deposit Border Form"
-msgstr ""
+msgstr "Obrazec meje depozita"
 
 #. module: auction
 #: help:auction.lots,statement_id:0
 msgid "Bank statement line for given buyer"
-msgstr ""
+msgstr "Postavka bančnega izpiska za danega kupca"
 
 #. module: auction
 #: field:auction.lot.category,aie_categ:0
 msgid "Category"
-msgstr ""
+msgstr "Kategorija"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_view_auction_buyer_map
 msgid "Map buyer username to Partners"
-msgstr ""
+msgstr "Načrt uporabniških imen kupcev po partnerjih"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Search Auction Lots"
-msgstr ""
+msgstr "Iskanje dražbenih lotov"
 
 #. module: auction
 #: field:report.auction,net_revenue:0
 msgid "Net Revenue"
-msgstr ""
+msgstr "Neto prihodki"
 
 #. module: auction
 #: field:report.auction.adjudication,state:0
@@ -372,7 +378,7 @@ msgstr "Pošlji SMS"
 #. module: auction
 #: selection:report.auction,month:0
 msgid "August"
-msgstr ""
+msgstr "Avgust"
 
 #. module: auction
 #: view:auction.lots:0
@@ -385,74 +391,74 @@ msgstr "Prodano"
 #. module: auction
 #: selection:report.auction,month:0
 msgid "June"
-msgstr ""
+msgstr "Junij"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_catalog_flagey_report.py:63
 #, python-format
 msgid "No Lots belong to this Auction Date"
-msgstr ""
+msgstr "Temu datumu dražbe ne ustreza noben lot."
 
 #. module: auction
 #: view:auction.lots:0
 msgid "New Object"
-msgstr ""
+msgstr "Nov predmet"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "October"
-msgstr ""
+msgstr "Oktober"
 
 #. module: auction
 #: field:auction.bid_line,name:0
 msgid "Bid date"
-msgstr ""
+msgstr "Datum ponudbe"
 
 #. module: auction
 #: field:auction.dates,acc_expense:0
 msgid "Expense Account"
-msgstr "Konto stroškov"
+msgstr "Konto izdatkov"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.menu_wizard_emporte
 msgid "Deliveries Management"
-msgstr ""
+msgstr "Upravljanje dostave"
 
 #. module: auction
 #: field:auction.lots,obj_desc:0
 msgid "Object Description"
-msgstr ""
+msgstr "Opis predmeta"
 
 #. module: auction
 #: field:auction.lots,artist2_id:0
 msgid "Artist/Author2"
-msgstr ""
+msgstr "Umetnik/avtor2"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Line1"
-msgstr ""
+msgstr "Vrsta1"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_make_invoice_buyer
 msgid "Make Invoice for Buyer"
-msgstr ""
+msgstr "Izdaj račun kupcu"
 
 #. module: auction
 #: field:auction.lots,gross_revenue:0
 #: field:report.object.encoded,gross_revenue:0
 msgid "Gross revenue"
-msgstr ""
+msgstr "Bruto prihodki"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_pay_buy
 msgid "Pay objects of the buyer"
-msgstr ""
+msgstr "Plačaj predmete kupca"
 
 #. module: auction
 #: help:auction.dates,auction2:0
 msgid "End date of auction"
-msgstr ""
+msgstr "Končni datum dražbe"
 
 #. module: auction
 #: view:auction.lots.sms.send:0
@@ -462,64 +468,64 @@ msgstr "Pošlji SMS"
 #. module: auction
 #: field:auction.lots,name2:0
 msgid "Short Description (2)"
-msgstr ""
+msgstr "Kratek opis (2)"
 
 #. module: auction
 #: report:auction.total.rml:0
 #: model:ir.ui.menu,name:auction.auction_buyers_menu
 msgid "Buyers"
-msgstr ""
+msgstr "Kupci"
 
 #. module: auction
 #: view:auction.lots:0
 #: view:report.auction:0
 msgid "Object Category"
-msgstr ""
+msgstr "Kategorija predmeta"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id4
 msgid "VAT 12%"
-msgstr ""
+msgstr "DDV"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Buyer Invoices"
-msgstr ""
+msgstr "Računi kupcev"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.res_w_buyer
 msgid "Results with buyer"
-msgstr ""
+msgstr "Izkupiček s kupcem"
 
 #. module: auction
 #: field:auction.bid_line,price:0
 msgid "Maximum Price"
-msgstr ""
+msgstr "Maksimalna cena"
 
 #. module: auction
 #: help:auction.dates,auction1:0
 msgid "Start date of auction"
-msgstr ""
+msgstr "Začetni datum dražbe"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_auction_move
 msgid "Auction Move"
-msgstr ""
+msgstr "Dražbeni premik"
 
 #. module: auction
 #: help:auction.dates,buyer_costs:0
 msgid "Account tax for buyer"
-msgstr ""
+msgstr "Konto davkov za kupca"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Next Auction"
-msgstr ""
+msgstr "Naslednja dražba"
 
 #. module: auction
 #: view:auction.taken:0
 msgid "Select lots which are Sold"
-msgstr ""
+msgstr "Izbira prodanih lotov"
 
 #. module: auction
 #: field:auction.lots,statement_id:0
@@ -531,144 +537,144 @@ msgstr "Plačilo"
 #: code:addons/auction/auction.py:686
 #, python-format
 msgid "The object \"%s\" has no buyer assigned."
-msgstr ""
+msgstr "Predmet \"%s\" nima dodeljenega kupca."
 
 #. module: auction
 #: selection:auction.deposit,method:0
 msgid "Keep until sold"
-msgstr ""
+msgstr "Hrani do prodaje"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Last Auction Date"
-msgstr ""
+msgstr "Zadnji datum dražbe"
 
 #. module: auction
 #: field:report.object.encoded,obj_num:0
 msgid "# of Encoded obj."
-msgstr ""
+msgstr "# knjiženih predmetov"
 
 #. module: auction
 #: field:auction.lots,paid_vnd:0
 msgid "Seller Paid"
-msgstr ""
+msgstr "Kupec plačal"
 
 #. module: auction
 #: view:board.board:0
 #: view:report.object.encoded:0
 msgid "Objects statistics"
-msgstr ""
+msgstr "Statistika predmeta"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of sellers:"
-msgstr ""
+msgstr "# kupcev:"
 
 #. module: auction
 #: field:report.auction,date:0
 #: field:report.object.encoded,date:0
 msgid "Create Date"
-msgstr ""
+msgstr "Datum nastanka"
 
 #. module: auction
 #: view:auction.dates:0
 #: selection:report.object.encoded,state:0
 msgid "Invoiced"
-msgstr ""
+msgstr "Zaračunano"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of items taken away:"
-msgstr ""
+msgstr "# oddanih predmetov:"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_auction
 #: view:report.auction:0
 msgid "Auction's Summary"
-msgstr ""
+msgstr "Povzetek dražbe"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "%)"
-msgstr ""
+msgstr "%)"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Buyer Information"
-msgstr ""
+msgstr "Podatki o kupcu"
 
 #. module: auction
 #: help:auction.lots,gross_revenue:0
 msgid "Buyer Price - Seller Price"
-msgstr ""
+msgstr "Kupčeva cena - prodajalčeva cena"
 
 #. module: auction
 #: field:auction.lots.make.invoice,objects:0
 #: field:auction.lots.make.invoice.buyer,objects:0
 msgid "# of objects"
-msgstr ""
+msgstr "# predmetov"
 
 #. module: auction
 #: field:auction.lots,lot_est2:0
 msgid "Maximum Estimation"
-msgstr ""
+msgstr "Maksimalna ocena"
 
 #. module: auction
 #: field:auction.lots,buyer_price:0
 msgid "Buyer price"
-msgstr ""
+msgstr "Kupčeva cena"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Bids Details"
-msgstr ""
+msgstr "Podrobnosti o ponudbah"
 
 #. module: auction
 #: field:auction.lots,is_ok:0
 msgid "Buyer's payment"
-msgstr ""
+msgstr "Kupčevo plačilo"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "End of auction"
-msgstr ""
+msgstr "Zaključek dražbe"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_catalog_flagey_wizard
 #: model:ir.model,name:auction.model_auction_catalog_flagey
 msgid "Auction Catalog Flagey"
-msgstr ""
+msgstr "Dražbeni katalog"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "March"
-msgstr ""
+msgstr "Marec"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax4
 msgid "Seller Costs1"
-msgstr ""
+msgstr "Prodajalčevi stroški1"
 
 #. module: auction
 #: field:auction.deposit,create_uid:0
 #: field:auction.lots,create_uid:0
 msgid "Created by"
-msgstr ""
+msgstr "Ustvaril"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of buyers:"
-msgstr ""
+msgstr "# kupcev:"
 
 #. module: auction
 #: field:auction.lots,costs:0
 msgid "Indirect costs"
-msgstr ""
+msgstr "Posredni stroški"
 
 #. module: auction
 #: help:auction.dates,seller_costs:0
 msgid "Account tax for seller"
-msgstr ""
+msgstr "Konto davkov prodajalca"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_invoice.py:67
@@ -676,12 +682,12 @@ msgstr ""
 #: code:addons/auction/wizard/auction_lots_numerotate.py:129
 #, python-format
 msgid "UserError"
-msgstr ""
+msgstr "UporabniškaNapaka"
 
 #. module: auction
 #: field:auction.dates,journal_seller_id:0
 msgid "Seller Journal"
-msgstr ""
+msgstr "Dnevnik prodajalca"
 
 #. module: auction
 #: view:auction.dates:0
@@ -693,38 +699,38 @@ msgstr ""
 #: selection:report.auction.adjudication,state:0
 #: selection:report.object.encoded,state:0
 msgid "Draft"
-msgstr ""
+msgstr "Osnutek"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Invoiced Auction"
-msgstr ""
+msgstr "Obračunana dražba"
 
 #. module: auction
 #: view:auction.catalog.flagey:0
 msgid "Print"
-msgstr ""
+msgstr "Natisni"
 
 #. module: auction
 #: view:auction.lots:0
 #: view:report.auction:0
 msgid "Type"
-msgstr ""
+msgstr "Tip"
 
 #. module: auction
 #: help:aie.category,child_ids:0
 msgid "children aie category"
-msgstr ""
+msgstr "podrejene kategorije"
 
 #. module: auction
 #: help:auction.lots,ach_emp:0
 msgid "When state is Taken Away, this field is marked as True"
-msgstr ""
+msgstr "Ko je stanje 'Oddano' je to polje označeno kot 'Pravilno'."
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_taken
 msgid "Gestion emporte"
-msgstr ""
+msgstr "Upravljanje dobitkov"
 
 #. module: auction
 #: view:auction.bid:0
@@ -737,186 +743,186 @@ msgstr ""
 #: model:ir.ui.menu,name:auction.auction_menu_root
 #: view:report.auction:0
 msgid "Auction"
-msgstr ""
+msgstr "Dražba"
 
 #. module: auction
 #: view:auction.lot.category:0
 #: model:ir.ui.menu,name:auction.menu_auction_object_cat
 msgid "Object Categories"
-msgstr ""
+msgstr "Kategorije predmetov"
 
 #. module: auction
 #: field:auction.lots.sms.send,app_id:0
 msgid "API ID"
-msgstr ""
+msgstr "ID API"
 
 #. module: auction
 #: field:auction.bid,name:0
 #: field:auction.bid_line,bid_id:0
 msgid "Bid ID"
-msgstr ""
+msgstr "ID ponudbe"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Min Estimate:"
-msgstr ""
+msgstr "Minimalna ocena"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "September"
-msgstr ""
+msgstr "September"
 
 #. module: auction
 #: field:report.auction,net_margin:0
 msgid "Net Margin"
-msgstr ""
+msgstr "Neto marža"
 
 #. module: auction
 #: field:auction.lots,vnd_lim_net:0
 msgid "Net limit ?"
-msgstr ""
+msgstr "Neto limit?"
 
 #. module: auction
 #: field:aie.category,child_ids:0
 msgid "unknown"
-msgstr ""
+msgstr "neznano"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of commissions:"
-msgstr ""
+msgstr "# provizij:"
 
 #. module: auction
 #: field:auction.bid_line,auction:0
 #: field:auction.dates,name:0
 msgid "Auction Name"
-msgstr ""
+msgstr "Naziv dražbe"
 
 #. module: auction
 #: model:account.tax,name:auction.tax_seller
 msgid "Seller Costs (12%)"
-msgstr ""
+msgstr "Stroški prodajalca (DDV)"
 
 #. module: auction
 #: field:aie.category,parent_id:0
 msgid "Parent aie Category"
-msgstr ""
+msgstr "Nadrejena kategorija"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction Summary"
-msgstr ""
+msgstr "Povzetek dražbe"
 
 #. module: auction
 #: view:auction.lots.make.invoice:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid "(Keep empty for automatic number)"
-msgstr ""
+msgstr "(Pustite prazno za samodejno številčenje)"
 
 #. module: auction
 #: code:addons/auction/auction.py:578
 #, python-format
 msgid "No Invoice Address"
-msgstr ""
+msgstr "Ni naslova za račun"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.v_huissier
 msgid "Bailiffs Listing"
-msgstr ""
+msgstr "Seznam izvršiteljev"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_numerotate.py:103
 #: code:addons/auction/wizard/auction_lots_numerotate.py:129
 #, python-format
 msgid "This record does not exist !"
-msgstr ""
+msgstr "Ta zapis ne obstaja!"
 
 #. module: auction
 #: field:auction.pay.buy,total:0
 msgid "Total Amount"
-msgstr ""
+msgstr "Skupni znesek"
 
 #. module: auction
 #: help:auction.pay.buy,amount:0
 msgid "Amount For First Bank Statement"
-msgstr ""
+msgstr "Znesek za prvi bančni izpisek"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_auction_object_date
 #: view:report.auction.object.date:0
 msgid "Objects per day"
-msgstr ""
+msgstr "Predmetov po dnevih"
 
 #. module: auction
 #: help:auction.lots,author_right:0
 msgid "Account tax for author commission"
-msgstr ""
+msgstr "Konto davka na avtorsko provizijo"
 
 #. module: auction
 #: model:product.template,name:auction.monproduit_product_template
 msgid "Oeuvres a 21%"
-msgstr ""
+msgstr "Dela po 21%"
 
 #. module: auction
 #: field:report.object.encoded,adj:0
 msgid "Adj."
-msgstr ""
+msgstr "Dob."
 
 #. module: auction
 #: field:auction.lot.history,name:0
 #: field:report.auction.adjudication,date:0
 msgid "Date"
-msgstr ""
+msgstr "Datum"
 
 #. module: auction
 #: field:auction.lots,obj_ret:0
 msgid "Price retired"
-msgstr ""
+msgstr "Cene umaknjenih"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Extra Costs"
-msgstr ""
+msgstr "Dodatni stroški"
 
 #. module: auction
 #: view:auction.lots.buyer_map:0
 msgid "Map "
-msgstr ""
+msgstr "Načrt "
 
 #. module: auction
 #: field:auction.lots,paid_ach:0
 msgid "Buyer Invoice Reconciled"
-msgstr ""
+msgstr "Račun kupca usklajen"
 
 #. module: auction
 #: field:auction.deposit,date_dep:0
 msgid "Deposit date"
-msgstr ""
+msgstr "Datum depozita"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.id_deposit
 msgid "Deposits"
-msgstr ""
+msgstr "Depoziti"
 
 #. module: auction
 #: field:auction.deposit,specific_cost_ids:0
 msgid "Specific Costs"
-msgstr ""
+msgstr "Specifični stroški"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "To pay ("
-msgstr ""
+msgstr "Za plačilo ("
 
 #. module: auction
 #: model:account.tax,name:auction.tax_buyer
 msgid "Buyer Costs (20%)"
-msgstr ""
+msgstr "Stroški kupca (DDV)"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.menu_board_auction
 msgid "Dashboard"
-msgstr ""
+msgstr "Nadzorna plošča"
 
 #. module: auction
 #: view:auction.dates:0
@@ -924,159 +930,161 @@ msgstr ""
 #: model:ir.ui.menu,name:auction.auction_date_menu
 #: model:ir.ui.menu,name:auction.menu_auction_dates_next1
 msgid "Auctions"
-msgstr ""
+msgstr "Dražbe"
 
 #. module: auction
 #: view:board.board:0
 msgid "Total Adjudications"
-msgstr ""
+msgstr "Skupaj dobitkov"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_make_invoice
 msgid "Make invoice"
-msgstr ""
+msgstr "Izdaj račun"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "November"
-msgstr ""
+msgstr "November"
 
 #. module: auction
 #: view:auction.dates:0
 #: view:auction.lots:0
 msgid "History"
-msgstr ""
+msgstr "Zgodovina"
 
 #. module: auction
 #: field:aie.category,code:0
 msgid "Code"
-msgstr ""
+msgstr "Koda"
 
 #. module: auction
 #: report:auction.code_bar_lot:0
 msgid "Nr."
-msgstr ""
+msgstr "Št."
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.v_report_barcode_lot
 msgid "Barcode batch"
-msgstr ""
+msgstr "Črtna koda lota"
 
 #. module: auction
 #: report:report.auction.buyer.result:0
 msgid "Num"
-msgstr ""
+msgstr "Št."
 
 #. module: auction
 #: view:auction.catalog.flagey:0
 #: view:auction.taken:0
 msgid "Cancel"
-msgstr ""
+msgstr "Preklic"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Buyer's Payment History"
-msgstr ""
+msgstr "Zgodovina plačil kupca"
 
 #. module: auction
 #: view:auction.artists:0
 #: field:auction.artists,biography:0
 msgid "Biography"
-msgstr ""
+msgstr "Biografija"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Inventory"
-msgstr ""
+msgstr "Inventar"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Pay"
-msgstr ""
+msgstr "Plačaj"
 
 #. module: auction
 #: view:auction.lots.make.invoice:0
 msgid "Create Invoices For Seller"
-msgstr ""
+msgstr "Izdaj račune za prodajalca"
 
 #. module: auction
 #: field:report.object.encoded,obj_margin:0
 msgid "Net margin"
-msgstr ""
+msgstr "Neto marža"
 
 #. module: auction
 #: help:auction.lots,lot_local:0
 msgid "Auction Location"
-msgstr ""
+msgstr "Lokacija dražbe"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Analytic"
-msgstr ""
+msgstr "Analitika"
 
 #. module: auction
 #: help:auction.lots,paid_ach:0
 msgid ""
 "When state of Buyer Invoice is 'Paid', this field is selected as True."
 msgstr ""
+"Ko je stanje kupčevega računa v 'Plačano', je to polje izbrano kot "
+"'Pravilno'."
 
 #. module: auction
 #: report:bids.lots:0
 #: report:bids.phones.details:0
 msgid "Cat.N"
-msgstr ""
+msgstr "Kataloška št."
 
 #. module: auction
 #: selection:auction.deposit,method:0
 msgid "Decrease limit of 10%"
-msgstr ""
+msgstr "Znižaj limit za 10%"
 
 #. module: auction
 #: field:auction.dates,adj_total:0
 #: field:report.auction.adjudication,adj_total:0
 msgid "Total Adjudication"
-msgstr ""
+msgstr "Skupaj dobljeno"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_lots_make_invoice_buyer
 msgid "Invoice Buyer objects"
-msgstr ""
+msgstr "Obračun kupčevih predmetov"
 
 #. module: auction
 #: view:report.auction:0
 msgid "My Auction"
-msgstr ""
+msgstr "Moja dražba"
 
 #. module: auction
 #: help:auction.lots,gross_margin:0
 msgid "(Gross Revenue*100.0)/ Object Price"
-msgstr ""
+msgstr "(Bruto prihodki*100.0)/ Cena predmeta"
 
 #. module: auction
 #: field:auction.bid,contact_tel:0
 msgid "Contact Number"
-msgstr ""
+msgstr "Kontaktna številka"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Price"
-msgstr ""
+msgstr "Cena"
 
 #. module: auction
 #: report:bids.phones.details:0
 msgid "-"
-msgstr ""
+msgstr "-"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Photos"
-msgstr ""
+msgstr "Fotografije"
 
 #. module: auction
 #: field:auction.lots.make.invoice,number:0
 #: field:auction.lots.make.invoice.buyer,number:0
 msgid "Invoice Number"
-msgstr ""
+msgstr "Številka računa"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_buyer_map.py:87
@@ -1087,87 +1095,87 @@ msgstr ""
 #: code:addons/auction/wizard/auction_lots_numerotate.py:173
 #, python-format
 msgid "Active IDs not Found"
-msgstr ""
+msgstr "Aktivni ID ni najden"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_aie_send.py:166
 #: code:addons/auction/wizard/auction_aie_send_result.py:117
 #, python-format
 msgid "Connection to WWW.Auction-in-Europe.com failed !"
-msgstr ""
+msgstr "Povezava na www.auction-in-europe.com je spodletela!"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_open_bid
 #: model:ir.actions.act_window,name:auction.action_bid_open
 msgid "Open Bids"
-msgstr ""
+msgstr "Odprte ponudbe"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.open_board_auction
 msgid "Auction board"
-msgstr ""
+msgstr "Nadzorna plošča dražb"
 
 #. module: auction
 #: field:aie.category,name:0
 #: view:auction.artists:0
 #: report:bids.lots:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: auction
 #: field:auction.deposit,name:0
 #: view:auction.lots:0
 #: field:auction.lots,bord_vnd_id:0
 msgid "Depositer Inventory"
-msgstr ""
+msgstr "Seznam depozitarjev"
 
 #. module: auction
 #: code:addons/auction/auction.py:692
 #, python-format
 msgid "The Buyer has no Invoice Address."
-msgstr ""
+msgstr "Kupec nima naslova za račun."
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction_adjudication_tree
 msgid "Auction Adjudication Report"
-msgstr ""
+msgstr "Poročilo o dobitkih na dražbi"
 
 #. module: auction
 #: field:auction.lots.sms.send,user:0
 msgid "Login"
-msgstr ""
+msgstr "Prijava"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_auction_adjudication
 msgid "report_auction_adjudication"
-msgstr ""
+msgstr "report_auction_adjudication"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.seller_lots_3
 msgid "Seller Form"
-msgstr ""
+msgstr "Obrazec prodajalca"
 
 #. module: auction
 #: field:auction.lots,lot_type:0
 #: field:report.auction,lot_type:0
 msgid "Object category"
-msgstr ""
+msgstr "Kategorija predmeta"
 
 #. module: auction
 #: view:auction.taken:0
 msgid "Mark Lots"
-msgstr ""
+msgstr "Označi lote"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots
 msgid "Auction Object"
-msgstr ""
+msgstr "Dražbeni predmet"
 
 #. module: auction
 #: field:auction.lots,obj_num:0
 #: field:auction.lots.enable,confirm_en:0
 msgid "Catalog Number"
-msgstr ""
+msgstr "Kataloška številka"
 
 #. module: auction
 #: view:auction.dates:0
@@ -1177,17 +1185,17 @@ msgstr "Računovodstvo"
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.bid_phone
 msgid "Bids phones"
-msgstr ""
+msgstr "Tel. številke ponudnikov"
 
 #. module: auction
 #: field:report.auction,avg_estimation:0
 msgid "Avg estimation"
-msgstr ""
+msgstr "Povprečna ocena"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Debit:"
-msgstr ""
+msgstr "Dolg:"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_aie_send.py:166
@@ -1196,12 +1204,12 @@ msgstr ""
 #: code:addons/auction/wizard/auction_lots_numerotate.py:145
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #. module: auction
 #: field:auction.lots,author_right:0
 msgid "Author rights"
-msgstr ""
+msgstr "Avtorske pravice"
 
 #. module: auction
 #: view:auction.bid:0
@@ -1210,17 +1218,17 @@ msgstr ""
 #: view:auction.lots:0
 #: view:report.auction:0
 msgid "Group By..."
-msgstr ""
+msgstr "Združi po..."
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction during last month."
-msgstr ""
+msgstr "Dražbe v prejšnjem mesecu"
 
 #. module: auction
 #: help:auction.dates,journal_id:0
 msgid "Account journal for buyer"
-msgstr ""
+msgstr "Kontni dnevnik za kupca"
 
 #. module: auction
 #: field:auction.bid,bid_lines:0
@@ -1233,338 +1241,338 @@ msgstr "Ponudba"
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total net rev."
-msgstr ""
+msgstr "Skupaj neto prihodkov"
 
 #. module: auction
 #: view:auction.lots.buyer_map:0
 msgid "Update"
-msgstr ""
+msgstr "Posodobi"
 
 #. module: auction
 #: report:auction.total.rml:0
 #: model:ir.ui.menu,name:auction.auction_seller_menu
 msgid "Sellers"
-msgstr ""
+msgstr "Prodajalci"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Draft Auction"
-msgstr ""
+msgstr "Osnutek dražbe"
 
 #. module: auction
 #: help:auction.lots,lot_est2:0
 msgid "Maximum Estimate Price"
-msgstr ""
+msgstr "Najvišja ocenjena cena"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Notes"
-msgstr ""
+msgstr "Opombe"
 
 #. module: auction
 #: view:auction.lots.auction.move:0
 msgid "Move to Auction date"
-msgstr ""
+msgstr "Premakni na datum dražbe"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of unsold items:"
-msgstr ""
+msgstr "# neprodanih predmetov:"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Create Invoices"
-msgstr ""
+msgstr "Ustvari račune"
 
 #. module: auction
 #: field:auction.bid,auction_id:0
 #: view:auction.dates:0
 #: field:auction.lots.auction.move,auction_id:0
 msgid "Auction Date"
-msgstr ""
+msgstr "Datum dražbe"
 
 #. module: auction
 #: report:auction.code_bar_lot:0
 msgid ", ID"
-msgstr ""
+msgstr ", ID"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Adj.("
-msgstr ""
+msgstr "Dob.("
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.lot_list_inv
 msgid "Lots List - Landscape"
-msgstr ""
+msgstr "Seznam lotov - položno"
 
 #. module: auction
 #: view:auction.artists:0
 msgid "Author/Artist"
-msgstr ""
+msgstr "Avtor/umetnik"
 
 #. module: auction
 #: field:auction.lots,ach_login:0
 #: field:auction.lots.buyer_map,ach_login:0
 msgid "Buyer Username"
-msgstr ""
+msgstr "Uporabniško ime kupca"
 
 #. module: auction
 #: field:auction.lot.category,priority:0
 msgid "Priority"
-msgstr ""
+msgstr "Prioriteta"
 
 #. module: auction
 #: view:board.board:0
 #: model:ir.actions.act_window,name:auction.action_report_latest_objects_tree
 msgid "Latest objects"
-msgstr ""
+msgstr "Zadnji predmeti"
 
 #. module: auction
 #: field:auction.lots,lot_local:0
 msgid "Location"
-msgstr ""
+msgstr "Lokacija"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Month -1"
-msgstr ""
+msgstr "Mesec -1"
 
 #. module: auction
 #: help:auction.lots,is_ok:0
 msgid "When buyer pay for bank statement', this field is marked"
-msgstr ""
+msgstr "Ko kupec vplača za bančni izpisek', je to polje označeno"
 
 #. module: auction
 #: field:auction.lots,ach_emp:0
 msgid "Taken Away"
-msgstr ""
+msgstr "Oddano"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total gross rev."
-msgstr ""
+msgstr "Skupaj bruto prihodki"
 
 #. module: auction
 #: help:auction.lots,lot_est1:0
 msgid "Minimum Estimate Price"
-msgstr ""
+msgstr "Minimalna ocenjena cena"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Deposit Date"
-msgstr ""
+msgstr "Datum depozita"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_numerotate.py:145
 #, python-format
 msgid "This lot does not exist !"
-msgstr ""
+msgstr "Ta lot ne obstaja!"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "July"
-msgstr ""
+msgstr "Julij"
 
 #. module: auction
 #: field:auction.bid_line,call:0
 msgid "To be Called"
-msgstr ""
+msgstr "Potrebno poklicati"
 
 #. module: auction
 #: view:auction.lots:0
 #: model:ir.actions.act_window,name:auction.action_report_auction_lots_estimation_adj_category_tree
 msgid "Min est/Adj/Max est"
-msgstr ""
+msgstr "Min. ocena/Doblj/Max. ocena"
 
 #. module: auction
 #: field:auction.lots,lot_est1:0
 msgid "Minimum Estimation"
-msgstr ""
+msgstr "Minimalna ocena"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_sms_send
 msgid "Sms send "
-msgstr ""
+msgstr "Pošlji SMS "
 
 #. module: auction
 #: view:auction.lots.auction.move:0
 #: model:ir.actions.act_window,name:auction.action_auction_lots_auction_move
 msgid "Change Auction Date"
-msgstr ""
+msgstr "Spremeni datum dražbe"
 
 #. module: auction
 #: field:auction.artists,birth_death_dates:0
 msgid "Lifespan"
-msgstr ""
+msgstr "Življenska doba"
 
 #. module: auction
 #: view:auction.deposit:0
 #: field:auction.deposit,method:0
 msgid "Withdrawned method"
-msgstr ""
+msgstr "Metoda umaknjenih"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Buyer Commissions"
-msgstr ""
+msgstr "Provizije kupca"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction
 #: model:ir.ui.menu,name:auction.menu_report_auction
 msgid "Auction Analysis"
-msgstr ""
+msgstr "Analiza dražbe"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_pay_buy.py:80
 #, python-format
 msgid "Payment aborted !"
-msgstr ""
+msgstr "Plačilo prekinjeno!"
 
 #. module: auction
 #: field:auction.lot.history,price:0
 msgid "Withdrawn price"
-msgstr ""
+msgstr "Cena umaknjenih"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Beginning of the auction"
-msgstr ""
+msgstr "Začetek dražbe"
 
 #. module: auction
 #: help:auction.pay.buy,statement_id3:0
 msgid "Third Bank Statement For Buyer"
-msgstr ""
+msgstr "Tretji bančni izpisek za kupca"
 
 #. module: auction
 #: view:report.auction:0
 #: field:report.auction,month:0
 #: field:report.auction.object.date,month:0
 msgid "Month"
-msgstr ""
+msgstr "Mesec"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Max Estimate:"
-msgstr ""
+msgstr "Maksimalna ocena"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Statistical"
-msgstr ""
+msgstr "Statistično"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_deposit
 msgid "Auction Deposit Border"
-msgstr ""
+msgstr "Meja dražbenega depozita"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_object_encoded_tree
 msgid "Object statistics"
-msgstr ""
+msgstr "Statistika predmeta"
 
 #. module: auction
 #: help:auction.lots,net_margin:0
 msgid "(Net Revenue * 100)/ Object Price"
-msgstr ""
+msgstr "(Neto prihodki * 100)/ Cena predmeta"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lot_history
 msgid "Lot History"
-msgstr ""
+msgstr "Zgodovina lota"
 
 #. module: auction
 #: view:auction.lots.make.invoice:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid "Create invoices"
-msgstr ""
+msgstr "Izstavi račune"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id5
 msgid "VAT 5%"
-msgstr ""
+msgstr "DDV 5%"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_buyer_map
 msgid "Map Buyer"
-msgstr ""
+msgstr "Načrt kupcev"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Lot"
-msgstr ""
+msgstr "Lot"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction_object_date_tree
 msgid "Auction Object Date"
-msgstr ""
+msgstr "Datum dražbe predmeta"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_artists
 msgid "auction.artists"
-msgstr ""
+msgstr "auction.artists"
 
 #. module: auction
 #: field:report.auction,avg_price:0
 msgid "Avg Price."
-msgstr ""
+msgstr "Povp. cena."
 
 #. module: auction
 #: help:auction.pay.buy,statement_id2:0
 msgid "Second Bank Statement For Buyer"
-msgstr ""
+msgstr "Drugi bančni izpisek za kupca"
 
 #. module: auction
 #: field:auction.dates,journal_id:0
 msgid "Buyer Journal"
-msgstr ""
+msgstr "Dnevnik kupca"
 
 #. module: auction
 #: selection:auction.lots,state:0
 #: selection:report.object.encoded,state:0
 msgid "Paid"
-msgstr ""
+msgstr "Plačano"
 
 #. module: auction
 #: report:bids.lots:0
 #: report:bids.phones.details:0
 msgid "Phone"
-msgstr ""
+msgstr "Telefon"
 
 #. module: auction
 #: field:auction.lot.category,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktivno"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Exposition Dates"
-msgstr ""
+msgstr "Datum razstave"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax1
 msgid "TVA"
-msgstr ""
+msgstr "DDV"
 
 #. module: auction
 #: field:auction.lots,important:0
 msgid "To be Emphatized"
-msgstr ""
+msgstr "Za poudariti"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Total:"
-msgstr ""
+msgstr "Skupaj:"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax2
 msgid "TVA1"
-msgstr ""
+msgstr "DDV1"
 
 #. module: auction
 #: view:report.auction.object.date:0
 msgid "Objects per Day"
-msgstr ""
+msgstr "Predmetov na dan"
 
 #. module: auction
 #: field:auction.dates,seller_invoice_history:0
@@ -1576,29 +1584,29 @@ msgstr "Račun prodajalca"
 #. module: auction
 #: view:board.board:0
 msgid "Objects by day"
-msgstr ""
+msgstr "Predmetov po dnevih"
 
 #. module: auction
 #: help:auction.dates,expo2:0
 msgid "Last exposition date for auction"
-msgstr ""
+msgstr "Datum zadnje razstave pred dražbo"
 
 #. module: auction
 #: code:addons/auction/auction.py:571
 #: code:addons/auction/auction.py:686
 #, python-format
 msgid "Missed buyer !"
-msgstr ""
+msgstr "Izgubljeni kupec !"
 
 #. module: auction
 #: report:auction.code_bar_lot:0
 msgid "Flagey"
-msgstr ""
+msgstr "Flagey"
 
 #. module: auction
 #: view:board.board:0
 msgid "Auction manager "
-msgstr "Vodaj dražbe "
+msgstr "Upravitelj dražbe "
 
 #. module: auction
 #: code:addons/auction/wizard/auction_lots_invoice.py:67
@@ -1607,76 +1615,78 @@ msgid ""
 "Two different buyers for the same invoice !\n"
 "Please correct this problem before invoicing"
 msgstr ""
+"Dva različna kupca za isti račun!\n"
+"Odpravite težavo pred obračunom"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Invoice"
-msgstr ""
+msgstr "Račun"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Commissions"
-msgstr "Provizija"
+msgstr "Provizije"
 
 #. module: auction
 #: field:auction.lots,vnd_lim:0
 msgid "Seller limit"
-msgstr ""
+msgstr "Limit prodajalca"
 
 #. module: auction
 #: field:auction.deposit,transfer:0
 msgid "Transfer"
-msgstr ""
+msgstr "Transfer"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Line3"
-msgstr ""
+msgstr "Vrsta3"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Line2"
-msgstr ""
+msgstr "Vrsta2"
 
 #. module: auction
 #: help:auction.lots,obj_ret:0
 msgid "Object Ret"
-msgstr ""
+msgstr "Objekt obdržan"
 
 #. module: auction
 #: view:report.auction.adjudication:0
 msgid "Total adjudication"
-msgstr ""
+msgstr "Skupaj dobitek"
 
 #. module: auction
 #: selection:auction.deposit,method:0
 msgid "Contact the Seller"
-msgstr ""
+msgstr "Kontaktiraj prodajalca"
 
 #. module: auction
 #: field:auction.taken,lot_ids:0
 msgid "Lots Emportes"
-msgstr ""
+msgstr "Loti dobitkov"
 
 #. module: auction
 #: field:auction.lots,net_margin:0
 msgid "Net Margin (%)"
-msgstr ""
+msgstr "Neto marža (%)"
 
 #. module: auction
 #: field:auction.lots,product_id:0
 msgid "Product"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: auction
 #: report:buyer.list:0
 msgid ")"
-msgstr ""
+msgstr ")"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Seller Information"
-msgstr ""
+msgstr "Podatki o prodajalcu"
 
 #. module: auction
 #: view:auction.deposit:0
@@ -1690,153 +1700,153 @@ msgstr "Predmeti"
 #. module: auction
 #: view:auction.dates:0
 msgid "Seller Invoices"
-msgstr ""
+msgstr "Računi prodajalca"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Paid:"
-msgstr ""
+msgstr "Plačano:"
 
 #. module: auction
 #: field:auction.deposit,total_neg:0
 msgid "Allow Negative Amount"
-msgstr ""
+msgstr "Dovoli negativni znesek"
 
 #. module: auction
 #: help:auction.pay.buy,amount2:0
 msgid "Amount For Second Bank Statement"
-msgstr ""
+msgstr "Znesek za drugi bančni izpisek"
 
 #. module: auction
 #: field:auction.lot.history,auction_id:0
 #: field:report.auction,auction:0
 #: field:report.auction.adjudication,name:0
 msgid "Auction date"
-msgstr ""
+msgstr "Datum dražbe"
 
 #. module: auction
 #: view:auction.lots.sms.send:0
 msgid "SMS Text"
-msgstr ""
+msgstr "SMS besedilo"
 
 #. module: auction
 #: field:auction.dates,auction1:0
 msgid "First Auction Day"
-msgstr ""
+msgstr "Prvi dan dražbe"
 
 #. module: auction
 #: view:auction.lots.make.invoice.buyer:0
 msgid "Create Invoices For Buyer"
-msgstr ""
+msgstr "Izdaj račune za kupca"
 
 #. module: auction
 #: model:res.groups,name:auction.group_auction_manager
 msgid "Manager"
-msgstr ""
+msgstr "Upravitelj"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Names"
-msgstr ""
+msgstr "Nazivi"
 
 #. module: auction
 #: view:auction.artists:0
 #: model:ir.ui.menu,name:auction.menu_auction_artist
 msgid "Artists"
-msgstr ""
+msgstr "Umetniki"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Pay Objects"
-msgstr ""
+msgstr "Plačilo predmetov"
 
 #. module: auction
 #: help:auction.dates,expo1:0
 msgid "Beginning exposition date for auction"
-msgstr ""
+msgstr "Začetek razstave za dražbo"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_line_open
 msgid "Open lots"
-msgstr ""
+msgstr "Odpri lote"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.act_auction_lot_open_deposit
 msgid "Deposit slip"
-msgstr ""
+msgstr "Potrdilo o depozitu"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_enable
 msgid "Lots Enable"
-msgstr ""
+msgstr "Omogoči lote"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Lots"
-msgstr ""
+msgstr "Loti"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_artist
 msgid "Auction Artists"
-msgstr ""
+msgstr "Umetniki dražbe"
 
 #. module: auction
 #: field:auction.lots,seller_price:0
 msgid "Seller price"
-msgstr ""
+msgstr "Prodajalčeva cena"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax20
 msgid "Frais de vente0"
-msgstr ""
+msgstr "Prodajni stroški0"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.buy_id_list
 msgid "Buyer List"
-msgstr ""
+msgstr "Seznam kupcev"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "Buyer costs("
-msgstr ""
+msgstr "Stroški kupca("
 
 #. module: auction
 #: field:auction.pay.buy,statement_id1:0
 #: field:auction.pay.buy,statement_id2:0
 #: field:auction.pay.buy,statement_id3:0
 msgid "Statement"
-msgstr ""
+msgstr "Izpisek"
 
 #. module: auction
 #: help:auction.lots,seller_price:0
 #: help:auction.lots.make.invoice,amount:0
 msgid "Seller Price"
-msgstr ""
+msgstr "Prodajalčeva cena"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax6
 msgid "Frais de vente"
-msgstr ""
+msgstr "Prodajni stroški"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id1
 msgid "VAT 1%"
-msgstr ""
+msgstr "DDV 1%"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax
 msgid "Droit d'auteur"
-msgstr ""
+msgstr "Avtorske pravice"
 
 #. module: auction
 #: field:auction.dates,expo1:0
 msgid "First Exposition Day"
-msgstr ""
+msgstr "Prvi dan razstave"
 
 #. module: auction
 #: field:report.auction.object.date,name:0
 msgid "Created date"
-msgstr ""
+msgstr "Datum nastanka"
 
 #. module: auction
 #: help:auction.lots,bord_vnd_id:0
@@ -1844,131 +1854,133 @@ msgid ""
 "Provide deposit information: seller, Withdrawned Method, Object, Deposit "
 "Costs"
 msgstr ""
+"Informacije o depozitu: prodajalec, metoda umikanja, predmet, stroški "
+"depozita"
 
 #. module: auction
 #: field:auction.lots,net_revenue:0
 #: field:report.object.encoded,net_revenue:0
 msgid "Net revenue"
-msgstr ""
+msgstr "Neto prihodki"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_catalog_flagey_report.py:63
 #: code:addons/auction/wizard/auction_pay_buy.py:89
 #, python-format
 msgid "Error!"
-msgstr ""
+msgstr "Napaka!"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_latest_doposit_tree
 msgid "Latest Deposits"
-msgstr ""
+msgstr "Zadnji depoziti"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "# of items:"
-msgstr ""
+msgstr "# predmetov:"
 
 #. module: auction
 #: model:account.tax,name:auction.tax_buyer_author
 msgid "Author rights (4%)"
-msgstr ""
+msgstr "Avtorske pravice (4%)"
 
 #. module: auction
 #: field:report.object.encoded,estimation:0
 msgid "Estimation"
-msgstr ""
+msgstr "Ocena"
 
 #. module: auction
 #: view:auction.taken:0
 msgid "OK"
-msgstr ""
+msgstr "V redu"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.buyer_form_id
 msgid "Buyer Form"
-msgstr ""
+msgstr "Obrazec kupca"
 
 #. module: auction
 #: field:auction.bid,partner_id:0
 msgid "Buyer Name"
-msgstr ""
+msgstr "Naziv kupca"
 
 #. module: auction
 #: view:report.auction:0
 #: field:report.auction,day:0
 msgid "Day"
-msgstr ""
+msgstr "Dan"
 
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_auction_lots_make_invoice
 msgid "Invoice Seller objects"
-msgstr ""
+msgstr "Obračunaj prodajalčeve predmete"
 
 #. module: auction
 #: field:auction.lots,gross_margin:0
 msgid "Gross Margin (%)"
-msgstr ""
+msgstr "Bruto marža (%)"
 
 #. module: auction
 #: selection:auction.dates,state:0
 #: selection:report.auction.adjudication,state:0
 msgid "Closed"
-msgstr ""
+msgstr "Zaključeno"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Search Next Auction Dates"
-msgstr ""
+msgstr "Iskanje naslednjih datumov dražbe"
 
 #. module: auction
 #: view:auction.catalog.flagey:0
 msgid "Print Auction Catalog Flagey Report..."
-msgstr ""
+msgstr "Natisni dražbeni katalog"
 
 #. module: auction
 #: field:auction.lots,ach_avance:0
 msgid "Buyer Advance"
-msgstr ""
+msgstr "Kupčevo predplačilo"
 
 #. module: auction
 #: field:auction.lots,obj_comm:0
 msgid "Commission"
-msgstr ""
+msgstr "Provizija"
 
 #. module: auction
 #: view:board.board:0
 msgid "Min/Adj/Max"
-msgstr ""
+msgstr "Min/Dob/Maks"
 
 #. module: auction
 #: view:auction.catalog.flagey:0
 msgid "Catalog Flagey Report"
-msgstr ""
+msgstr "Kataloško poročilo"
 
 #. module: auction
 #: help:auction.lots,obj_price:0
 msgid "Object Price"
-msgstr ""
+msgstr "Cena predmeta"
 
 #. module: auction
 #: view:auction.bid:0
 msgid "Bids Lines"
-msgstr ""
+msgstr "Postavke ponudb"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Catalog"
-msgstr ""
+msgstr "Katalog"
 
 #. module: auction
 #: help:auction.lots,auction_id:0
 msgid "Auction for object"
-msgstr ""
+msgstr "Dražba za predmet"
 
 #. module: auction
 #: field:auction.deposit.cost,account:0
 msgid "Destination Account"
-msgstr ""
+msgstr "Ciljni konto"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.auction_config_menu
@@ -1978,7 +1990,7 @@ msgstr "Konfiguracija"
 #. module: auction
 #: model:ir.actions.act_window,name:auction.action_report_auction_object_date_tree_my
 msgid "My Auction Object Date"
-msgstr ""
+msgstr "Moji datumi dražbenih predmetov"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_pay_buy.py:80
@@ -1986,125 +1998,126 @@ msgstr ""
 msgid ""
 "You should pay all the total: \"%.2f\" are missing to accomplish the payment."
 msgstr ""
+"Plačati bi morali celoten znesek: \"%.2f\" manjka do celotnega plačila."
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_pay_buy
 msgid "Pay buy"
-msgstr ""
+msgstr "Plačilo nakupa"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.auction_outils_menu
 msgid "Tools Bar Codes"
-msgstr ""
+msgstr "Črtne kode orodij"
 
 #. module: auction
 #: field:auction.deposit.cost,deposit_id:0
 msgid "Deposit"
-msgstr ""
+msgstr "Depozit"
 
 #. module: auction
 #: field:auction.dates,expo2:0
 msgid "Last Exposition Day"
-msgstr ""
+msgstr "Zadnji dan razstave"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lots_able
 msgid "Lots able"
-msgstr ""
+msgstr "Omogočeni loti"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id3
 msgid "VAT 10%"
-msgstr ""
+msgstr "DDV 10%"
 
 #. module: auction
 #: field:auction.artists,name:0
 msgid "Artist/Author Name"
-msgstr ""
+msgstr "Umetnik/naziv avtorja"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "December"
-msgstr ""
+msgstr "December"
 
 #. module: auction
 #: view:auction.deposit:0
 #: field:auction.lots,image:0
 msgid "Image"
-msgstr ""
+msgstr "Slika"
 
 #. module: auction
 #: help:auction.lots,buyer_price:0
 #: help:auction.lots.make.invoice.buyer,amount:0
 msgid "Buyer Price"
-msgstr ""
+msgstr "Kupčeva cena"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_lot_category
 msgid "Auction Lots Category"
-msgstr ""
+msgstr "Kategorije dražbenih lotov"
 
 #. module: auction
 #: model:account.tax.code,name:auction.account_tax_code_id2
 msgid "VAT 20%"
-msgstr ""
+msgstr "DDV 20%"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_payer_sel
 msgid "Auction payment for seller"
-msgstr ""
+msgstr "Dražbeno plačilo za prodajalca"
 
 #. module: auction
 #: view:auction.lots:0
 #: selection:auction.lots,state:0
 msgid "Taken away"
-msgstr ""
+msgstr "Oddano"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.seller_form_id
 msgid "Seller List"
-msgstr ""
+msgstr "Seznam prodajalcev"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Total adj."
-msgstr ""
+msgstr "Skupaj doblj."
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Deposit Costs"
-msgstr ""
+msgstr "Stroški depozitov"
 
 #. module: auction
 #: field:auction.lot.category,name:0
 msgid "Category Name"
-msgstr ""
+msgstr "Naziv kategorije"
 
 #. module: auction
 #: report:buyer.list:0
 msgid "........."
-msgstr ""
+msgstr "........."
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction Summary tree view"
-msgstr ""
+msgstr "Povzetek dražbe v obliki seznama"
 
 #. module: auction
 #: report:report.auction.buyer.result:0
 msgid "Adj"
-msgstr ""
+msgstr "Doblj."
 
 #. module: auction
 #: view:auction.dates:0
 #: model:ir.model,name:auction.model_auction_dates
 msgid "Auction Dates"
-msgstr ""
+msgstr "Datumi dražb"
 
 #. module: auction
 #: model:ir.ui.menu,name:auction.menu_board_auction_open
 msgid "Auction DashBoard"
-msgstr ""
+msgstr "Nadzorna plošča dražb"
 
 #. module: auction
 #: view:report.auction:0
@@ -2114,23 +2127,23 @@ msgstr ""
 #: field:report.object.encoded,user_id:0
 #: model:res.groups,name:auction.group_auction_user
 msgid "User"
-msgstr ""
+msgstr "Uporabnik"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Payment Lines"
-msgstr ""
+msgstr "Plačilne postavke"
 
 #. module: auction
 #: code:addons/auction/auction.py:692
 #, python-format
 msgid "Missed Address !"
-msgstr ""
+msgstr "Manjkajoči naslov!"
 
 #. module: auction
 #: help:auction.lots,net_revenue:0
 msgid "Buyer Price - Seller Price - Indirect Cost"
-msgstr ""
+msgstr "Kupčeva cena - Prodajalčeva cena - Posredni stroški"
 
 #. module: auction
 #: help:auction.lots,state:0
@@ -2142,59 +2155,64 @@ msgid ""
 "* The 'Paid' state is used when user pay for the object                 \n"
 "* The 'Sold' state is used when user buy the object."
 msgstr ""
+" * Stanje 'Osnutek' ob vnosu novega predmeta.                 \n"
+"* Stanje 'Neprodano' ko se predmet dlje časa ne proda, lahko se tudi nastavi "
+"v osnutek.                 \n"
+"* Stanje 'Plačano', ko uporabnik plača za predmet                 \n"
+"* Stanje 'Prodano' ko uporabnik predmet kupi."
 
 #. module: auction
 #: field:auction.artists,pseudo:0
 msgid "Pseudo"
-msgstr ""
+msgstr "Psevdo"
 
 #. module: auction
 #: view:auction.lots:0
 msgid "Not sold"
-msgstr ""
+msgstr "Neprodano"
 
 #. module: auction
 #: model:account.tax,name:auction.auction_tax3
 #: field:auction.dates,buyer_costs:0
 msgid "Buyer Costs"
-msgstr ""
+msgstr "Stroški kupca"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Auction Date:"
-msgstr ""
+msgstr "Datum dražbe"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "Objects Description"
-msgstr ""
+msgstr "Opis predmetov"
 
 #. module: auction
 #: field:auction.dates,buyer_invoice_history:0
 #: field:auction.lots,ach_inv_id:0
 #: view:auction.lots.make.invoice.buyer:0
 msgid "Buyer Invoice"
-msgstr ""
+msgstr "Račun kupca"
 
 #. module: auction
 #: report:auction.bids:0
 msgid "Tel"
-msgstr ""
+msgstr "Tel"
 
 #. module: auction
 #: field:auction.lots,artist_id:0
 msgid "Artist/Author"
-msgstr ""
+msgstr "Umetnik/avtor"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.total_result1
 msgid "Auction Totals with lists"
-msgstr ""
+msgstr "Dražbeni skupni zneski s seznami"
 
 #. module: auction
 #: view:auction.deposit:0
 msgid "General Information"
-msgstr ""
+msgstr "Splošni podatki"
 
 #. module: auction
 #: view:auction.lots.auction.move:0
@@ -2204,153 +2222,153 @@ msgstr ""
 #: view:auction.lots.sms.send:0
 #: view:auction.pay.buy:0
 msgid "Close"
-msgstr ""
+msgstr "Zaključi"
 
 #. module: auction
 #: model:ir.model,name:auction.model_report_object_encoded
 msgid "Object encoded"
-msgstr ""
+msgstr "Objekt vknjižen"
 
 #. module: auction
 #: view:auction.bid:0
 msgid "Search Auction Bid"
-msgstr ""
+msgstr "Iskanje po dražbenih ponudbah"
 
 #. module: auction
 #: report:bids.phones.details:0
 msgid "Est"
-msgstr ""
+msgstr "Ocena"
 
 #. module: auction
 #: view:auction.dates:0
 msgid "Seller Commissions"
-msgstr ""
+msgstr "Provizije prodajalcev"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "Object statistic"
-msgstr ""
+msgstr "Statistika predmetov"
 
 #. module: auction
 #: help:auction.dates,journal_seller_id:0
 msgid "Account journal for seller"
-msgstr ""
+msgstr "Kontni dnevnik za prodajalca"
 
 #. module: auction
 #: field:auction.dates,auction2:0
 msgid "Last Auction Day"
-msgstr ""
+msgstr "Zadnji dan dražbe"
 
 #. module: auction
 #: code:addons/auction/wizard/auction_pay_buy.py:89
 #, python-format
 msgid "No auction date for \"%s\": Please set one."
-msgstr ""
+msgstr "Ni datuma dražbe za \"%s\": Nastavite ga."
 
 #. module: auction
 #: view:auction.deposit:0
 #: field:auction.deposit,info:0
 #: report:bids.phones.details:0
 msgid "Description"
-msgstr ""
+msgstr "Opis"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "May"
-msgstr ""
+msgstr "Maj"
 
 #. module: auction
 #: field:auction.lots,obj_price:0
 msgid "Adjudication price"
-msgstr ""
+msgstr "Zmagovita cena"
 
 #. module: auction
 #: field:auction.dates,acc_income:0
 msgid "Income Account"
-msgstr ""
+msgstr "Konto prihodkov"
 
 #. module: auction
 #: field:auction.lots.sms.send,password:0
 msgid "Password"
-msgstr ""
+msgstr "Geslo"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "February"
-msgstr ""
+msgstr "Februar"
 
 #. module: auction
 #: selection:report.auction,month:0
 msgid "April"
-msgstr ""
+msgstr "April"
 
 #. module: auction
 #: view:auction.pay.buy:0
 msgid "Pay objects"
-msgstr ""
+msgstr "Plačilo predmetov"
 
 #. module: auction
 #: view:report.object.encoded:0
 msgid "# objects"
-msgstr ""
+msgstr "# predmetov"
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Adjudication:"
-msgstr ""
+msgstr "Dobljeno:"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.details_bids_phones
 msgid "Bids per lot (phone)"
-msgstr ""
+msgstr "Ponudbe po lotih (telefonske)"
 
 #. module: auction
 #: field:report.auction,buyer_login:0
 msgid "Buyer Login"
-msgstr ""
+msgstr "Prijava kupca"
 
 #. module: auction
 #: field:auction.deposit,tax_id:0
 msgid "Expenses"
-msgstr ""
+msgstr "Izdatki"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction during current month."
-msgstr ""
+msgstr "Dražbe tekočega meseca"
 
 #. module: auction
 #: model:ir.model,name:auction.model_auction_payer
 msgid "Auction payer"
-msgstr ""
+msgstr "Plačnik dražbe"
 
 #. module: auction
 #: view:report.auction:0
 msgid "Auction during current year."
-msgstr ""
+msgstr "Dražbe tekočega leta."
 
 #. module: auction
 #: report:auction.total.rml:0
 msgid "Auction name:"
-msgstr ""
+msgstr "Naziv dražbe"
 
 #. module: auction
 #: view:board.board:0
 msgid "Latest deposits"
-msgstr ""
+msgstr "Zadnji depoziti"
 
 #. module: auction
 #: model:ir.actions.report.xml,name:auction.art2
 msgid "Artists Biography"
-msgstr ""
+msgstr "Biografija umetnika"
 
 #. module: auction
 #: view:report.auction:0
 #: field:report.auction,year:0
 msgid "Year"
-msgstr ""
+msgstr "Leto"
 
 #. module: auction
 #: field:auction.lots,history_ids:0
 msgid "Auction history"
-msgstr ""
+msgstr "Zgodovina dražbe"

@@ -44,9 +44,9 @@ class external_pdf(render):
 class report_stock(report_int):
     def create(self, cr, uid, ids, datas, context={}):
         product_ids = ids
-        if 'location_id' in context:
-            location_id = context['location_id']
-        else:
+
+        location_id = context.get('location_id', False)
+        if not location_id:
             warehouse_id = pooler.get_pool(cr.dbname).get('stock.warehouse').search(cr, uid, [])[0]
             location_id = pooler.get_pool(cr.dbname).get('stock.warehouse').browse(cr, uid, warehouse_id).lot_stock_id.id
 

@@ -7,14 +7,20 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:49+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Davide Corio - agilebg.com <davide.corio@agilebg.com>\n"
+"PO-Revision-Date: 2014-07-23 14:54+0000\n"
+"Last-Translator: Davide Corio - agilebg.com <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:08+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 07:07+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
+
+#. module: mrp
+#: model:ir.module.category,name:base.module_category_manufacturing
+#: model:ir.ui.menu,name:base.menu_mrp_root
+msgid "Manufacturing"
+msgstr "Produzione"
 
 #. module: mrp
 #: view:mrp.routing.workcenter:0
@@ -31,9 +37,9 @@ msgid ""
 "(stock increase) when the order is processed."
 msgstr ""
 "Gli Ordini di Produzione vengono solitamente proposti automaticamente da "
-"OpenERP in base alle distinte base e alle regole di approvvigionamento, ma "
-"possono essere anche creati manualmente.\r\n"
-"OpenERP gestirà il consumo di materie prime e la produzione dei prodotti "
+"SimplERP in base alle distinte base e alle regole di approvvigionamento, ma "
+"possono essere anche creati manualmente."
+"SimplERP gestirà il consumo di materie prime e la produzione dei prodotti "
 "finiti quando gli ordini vengono processati."
 
 #. module: mrp
@@ -57,9 +63,7 @@ msgid "No. Of Cycles"
 msgstr "N. Cicli di Lavoro"
 
 #. module: mrp
-#: field:mrp.production.workcenter.line,cycle:0
 #: field:mrp.routing.workcenter,cycle_nbr:0
-#: field:report.workcenter.load,cycle:0
 msgid "Number of Cycles"
 msgstr "Numero di cicli"
 
@@ -138,6 +142,7 @@ msgstr ""
 #. module: mrp
 #: view:mrp.bom:0
 #: field:mrp.bom,code:0
+#: view:mrp.production:0
 #: field:mrp.production,name:0
 msgid "Reference"
 msgstr "Riferimento"
@@ -207,6 +212,9 @@ msgstr "Unità di Misura"
 
 #. module: mrp
 #: field:change.production.qty,product_qty:0
+#: field:mrp.bom,product_qty:0
+#: field:mrp.production,product_qty:0
+#: field:mrp.production.product.line,product_qty:0
 msgid "Product Qty"
 msgstr "Quantità"
 
@@ -268,7 +276,6 @@ msgid "Capacity Information"
 msgstr "Informazioni Capacità"
 
 #. module: mrp
-#: view:mrp.production:0
 #: field:mrp.production,move_created_ids2:0
 msgid "Produced Products"
 msgstr "Articoli Prodotti"
@@ -279,7 +286,7 @@ msgid "Destination Location"
 msgstr "Ubicazione di Destinazione"
 
 #. module: mrp
-#: view:mrp.config.settings:0
+#: model:ir.ui.menu,name:mrp.menu_mrp_bom
 msgid "Master Data"
 msgstr "Distinte Base"
 
@@ -357,15 +364,14 @@ msgstr "U.M. predefinita"
 
 #. module: mrp
 #: sql_constraint:mrp.production:0
+#: sql_constraint:stock.picking:0
 msgid "Reference must be unique per Company!"
 msgstr "Il riferimento deve essere univoco per ogni Azienda!"
 
 #. module: mrp
 #: code:addons/mrp/report/price.py:139
 #: report:bom.structure:0
-#: view:mrp.bom:0
 #: field:mrp.product_price,number:0
-#: view:mrp.production:0
 #: report:mrp.production.order:0
 #, python-format
 msgid "Quantity"
@@ -408,6 +414,13 @@ msgid ""
 "sales person creates a sales order, he can relate it to several properties "
 "and OpenERP will automatically select the BoM to use according the needs."
 msgstr ""
+"Le proprietà in SimplERP sono utilizzate per selezionare la giusta"
+"lista di materiali di produzione per il prodotto quando avete a"
+"disposizione metodi diversi di costruire lo stesso prodotto. Potete"
+"assegnare diverse proprietà a ciascuna lista dei materiali. Quando un"
+"venditore crea un ordine di vendita, lo può collegare a diverse"
+"proprietà e SimplERP selezionerà automaticamente alla relativa lista"
+"dei materiali a seconda delle necessità."
 
 #. module: mrp
 #: help:mrp.production,picking_id:0
@@ -430,7 +443,7 @@ msgstr "Variazione Settimanale Valore Stock"
 
 #. module: mrp
 #: view:mrp.production:0
-#: field:mrp.production,date_planned:0
+#: field:mrp.production,date_planned_date:0
 #: report:mrp.production.order:0
 msgid "Scheduled Date"
 msgstr "Data prevista"
@@ -438,10 +451,9 @@ msgstr "Data prevista"
 #. module: mrp
 #: view:mrp.bom:0
 msgid "Component Product"
-msgstr ""
+msgstr "Prodotto Assieme"
 
 #. module: mrp
-#: view:mrp.bom:0
 #: report:mrp.production.order:0
 msgid "Bill Of Material"
 msgstr "Distinta Base (BOM)"
@@ -543,7 +555,6 @@ msgid "Error: Invalid ean code"
 msgstr "Errore: codice EAN non valido"
 
 #. module: mrp
-#: view:mrp.production:0
 #: field:mrp.production,move_created_ids:0
 msgid "Products to Produce"
 msgstr "Articoli da Produrre"
@@ -662,7 +673,7 @@ msgid "Work Center Load"
 msgstr "Carico Centro di Lavoro"
 
 #. module: mrp
-#: code:addons/mrp/procurement.py:50
+#: code:addons/mrp/procurement.py:43
 #, python-format
 msgid "No BoM defined for this product !"
 msgstr "Non è stata definita la distinta base per questo prodotto!"
@@ -680,7 +691,6 @@ msgstr "Movimento Magazzino"
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_mrp_planning
-#: view:mrp.config.settings:0
 msgid "Planning"
 msgstr "Pianificazione"
 
@@ -787,8 +797,8 @@ msgstr ""
 "Un fattore di 0.9 indica una perdita del 10% nel processo di produzione."
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:737
-#: code:addons/mrp/mrp.py:765
+#: code:addons/mrp/mrp.py:734
+#: code:addons/mrp/mrp.py:762
 #, python-format
 msgid "Warning!"
 msgstr "Attenzione!"
@@ -852,10 +862,6 @@ msgstr ""
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_mrp_production
-#: view:mrp.config.settings:0
-#: view:mrp.production:0
-#: field:mrp.production.workcenter.line,production_id:0
-#: field:procurement.order,production_id:0
 msgid "Manufacturing Order"
 msgstr "Ordine di Produzione"
 
@@ -892,7 +898,7 @@ msgid "BoM Type"
 msgstr "Tipo di Distinta base"
 
 #. module: mrp
-#: code:addons/mrp/procurement.py:52
+#: code:addons/mrp/procurement.py:45
 #, python-format
 msgid ""
 "Procurement '%s' has an exception: 'No BoM defined for this product !'"
@@ -922,7 +928,7 @@ msgid "Companies"
 msgstr "Aziende"
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:634
+#: code:addons/mrp/mrp.py:627
 #, python-format
 msgid ""
 "You must first cancel related internal picking attached to this "
@@ -980,6 +986,7 @@ msgstr "N. Ore"
 
 #. module: mrp
 #: view:mrp.property:0
+#: view:mrp.property.group:0
 msgid "Property Group"
 msgstr "Gruppo di Proprietà"
 
@@ -1001,9 +1008,9 @@ msgstr "Inattivo"
 
 #. module: mrp
 #: view:change.production.qty:0
-#: view:mrp.config.settings:0
 #: view:mrp.product.produce:0
 #: view:mrp.product_price:0
+#: view:mrp.production:0
 #: view:mrp.workcenter.load:0
 msgid "Cancel"
 msgstr "Annulla"
@@ -1078,7 +1085,6 @@ msgstr "Struttura prodotto"
 #: field:mrp.bom,name:0
 #: report:mrp.production.order:0
 #: field:mrp.production.product.line,name:0
-#: view:mrp.property:0
 #: field:mrp.routing,name:0
 #: field:mrp.routing.workcenter,name:0
 msgid "Name"
@@ -1113,7 +1119,7 @@ msgstr ""
 "in ogni stadio della lavorazione. Vengono usate delle specifiche (distinte "
 "base) per stabilire le richieste di materie prime e le lavorazioni "
 "necessarie per la lavorazione dei prodotti finiti. Quando la distinta base è "
-"stata definita, OpenERP è in grado di definire i cicli di produzione in base "
+"stata definita, SimplERP è in grado di definire i cicli di produzione in base "
 "alle esigenze dell'azienda."
 
 #. module: mrp
@@ -1186,6 +1192,8 @@ msgid "Analytic Journal"
 msgstr "Registro Analitico"
 
 #. module: mrp
+#: model:ir.actions.act_window,name:mrp.mrp_workcenter_action
+#: model:ir.ui.menu,name:mrp.menu_view_resource_search_mrp
 #: field:mrp.routing,workcenter_lines:0
 msgid "Work Centers"
 msgstr "Centri di lavoro"
@@ -1305,7 +1313,6 @@ msgstr "Priorità"
 
 #. module: mrp
 #: model:ir.model,name:mrp.model_stock_picking
-#: field:mrp.production,picking_id:0
 msgid "Picking List"
 msgstr "Picking List"
 
@@ -1350,7 +1357,7 @@ msgstr ""
 #. module: mrp
 #: view:mrp.bom:0
 msgid "Component Name"
-msgstr ""
+msgstr "Nome Assieme"
 
 #. module: mrp
 #: model:process.node,name:mrp.process_node_mts0
@@ -1374,7 +1381,7 @@ msgid ""
 "production steps or define a single multi-level bill of materials."
 msgstr ""
 "Le distinte base consentono di creare e gestire la lista della materia prima "
-"usata per la produzione di un prodotto finito. OpenERP userà queste BoM per "
+"usata per la produzione di un prodotto finito. SimplERP userà queste BoM per "
 "proporre in automatico ordini di produzione in base alle esigenze del "
 "prodotto. E' anche possibile creare BoM per definire specifici step della "
 "produzione o definire singole BoM multi-livello."
@@ -1545,9 +1552,7 @@ msgid "Manufacturing Orders To Start"
 msgstr "Ordini di Produzione da Eseguire"
 
 #. module: mrp
-#: model:ir.actions.act_window,name:mrp.mrp_workcenter_action
 #: model:ir.model,name:mrp.model_mrp_workcenter
-#: model:ir.ui.menu,name:mrp.menu_view_resource_search_mrp
 #: field:mrp.production.workcenter.line,workcenter_id:0
 #: field:mrp.routing.workcenter,workcenter_id:0
 #: view:mrp.workcenter:0
@@ -1711,6 +1716,7 @@ msgstr "Utilizzo Prodotti in Produzione"
 #: model:ir.actions.act_window,name:mrp.mrp_production_action
 #: model:ir.actions.act_window,name:mrp.mrp_production_action_planning
 #: model:ir.ui.menu,name:mrp.menu_mrp_production_action
+#: model:ir.ui.menu,name:mrp.menu_mrp_production_order_action
 #: view:mrp.production:0
 msgid "Manufacturing Orders"
 msgstr "Ordini di produzione"
@@ -1760,7 +1766,7 @@ msgstr ""
 "UoM (Unità di Misura) è l'unità di misura per il controllo dell'inventario"
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:737
+#: code:addons/mrp/mrp.py:734
 #, python-format
 msgid ""
 "You are going to consume total %s quantities of \"%s\".\n"
@@ -1802,6 +1808,7 @@ msgstr "Tempistiche per un ciclo (ore)"
 #. module: mrp
 #: model:ir.actions.report.xml,name:mrp.report_mrp_production_report
 #: field:mrp.production.product.line,production_id:0
+#: field:mrp.production.workcenter.line,production_id:0
 #: model:process.node,name:mrp.process_node_production0
 #: model:process.node,name:mrp.process_node_productionorder0
 msgid "Production Order"
@@ -1857,6 +1864,7 @@ msgstr "Tempi di Produzione"
 
 #. module: mrp
 #: field:mrp.bom,product_uos_qty:0
+#: field:mrp.production.product.line,product_uos_qty:0
 msgid "Product UOS Qty"
 msgstr "Qtà Unità di Vendita"
 
@@ -1959,6 +1967,7 @@ msgstr "Ordinato"
 
 #. module: mrp
 #: model:ir.ui.menu,name:mrp.menu_mrp_configuration
+#: view:res.company:0
 msgid "Configuration"
 msgstr "Configurazione"
 
@@ -1983,9 +1992,7 @@ msgid "Total Qty"
 msgstr "Qtà totale"
 
 #. module: mrp
-#: field:mrp.production.workcenter.line,hour:0
 #: field:mrp.routing.workcenter,hour_nbr:0
-#: field:report.workcenter.load,hour:0
 msgid "Number of Hours"
 msgstr "Numero di ore"
 
@@ -2025,6 +2032,7 @@ msgid "Orange Juice"
 msgstr ""
 
 #. module: mrp
+#: field:mrp.bom.revision,bom_id:0
 #: field:procurement.order,bom_id:0
 msgid "BoM"
 msgstr "Distinta base"
@@ -2059,7 +2067,6 @@ msgstr "Revisioni Distinta Base"
 
 #. module: mrp
 #: field:report.mrp.inout,date:0
-#: view:report.workcenter.load:0
 #: field:report.workcenter.load,name:0
 msgid "Week"
 msgstr "Settimana"
@@ -2123,7 +2130,7 @@ msgid "Litre"
 msgstr ""
 
 #. module: mrp
-#: code:addons/mrp/mrp.py:765
+#: code:addons/mrp/mrp.py:762
 #, python-format
 msgid ""
 "You are going to produce total %s quantities of \"%s\".\n"
@@ -2156,11 +2163,9 @@ msgid "Select Quantity"
 msgstr "Selezionare la quantità"
 
 #. module: mrp
+#: model:ir.actions.act_window,name:mrp.act_product_product_2_mrp_bom
 #: model:ir.actions.act_window,name:mrp.mrp_bom_form_action
-#: model:ir.actions.act_window,name:mrp.product_open_bom
 #: model:ir.ui.menu,name:mrp.menu_mrp_bom_form_action
-#: view:mrp.bom:0
-#: view:product.product:0
 #: field:product.product,bom_ids:0
 msgid "Bill of Materials"
 msgstr "Distinta Base"
@@ -2171,6 +2176,7 @@ msgstr "Distinta Base"
 #: view:mrp.bom:0
 #: field:mrp.bom,property_ids:0
 #: view:mrp.property:0
+#: view:procurement.order:0
 #: field:procurement.order,property_ids:0
 msgid "Properties"
 msgstr "Proprietà"
@@ -2208,7 +2214,6 @@ msgid "You must assign a production lot for this product"
 msgstr "È necessario assegnare un lotto di produzione per questo prodotto"
 
 #. module: mrp
-#: view:mrp.production:0
 #: field:stock.move,production_id:0
 msgid "Production"
 msgstr "Produzione"
@@ -2251,8 +2256,14 @@ msgid "Change Product Qty"
 msgstr "Cambia la quantità del prodotto"
 
 #. module: mrp
+#: view:mrp.bom.revision:0
+#: field:mrp.bom.revision,description:0
+#: view:mrp.property:0
+#: view:mrp.property.group:0
 #: field:mrp.routing,note:0
+#: view:mrp.routing.workcenter:0
 #: field:mrp.routing.workcenter,note:0
+#: view:mrp.workcenter:0
 #: field:mrp.workcenter,note:0
 msgid "Description"
 msgstr "Descrizione"
@@ -2273,10 +2284,7 @@ msgid "The way to procurement depends on the product type."
 msgstr "Il metodo di approvvigionamento dipende dal tipo di prodotto."
 
 #. module: mrp
-#: model:ir.actions.act_window,name:mrp.open_board_manufacturing
-#: model:ir.ui.menu,name:mrp.menu_board_manufacturing
 #: model:ir.ui.menu,name:mrp.menu_mrp_manufacturing
-#: model:ir.ui.menu,name:mrp.next_id_77
 msgid "Manufacturing"
 msgstr "Gestione Produzione"
 
@@ -2325,7 +2333,7 @@ msgid ""
 "project management module of OpenERP."
 msgstr ""
 "Se il servizio utilizza 'Produci' come metodo di approvvigionamento, creerà "
-"un'attività nel modulo di gestione progetti di OpenERP."
+"un'attività nel modulo di gestione progetti di SimplERP."
 
 #. module: mrp
 #: model:process.transition,note:mrp.process_transition_productionprocureproducts0

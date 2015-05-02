@@ -26,6 +26,7 @@ from operator import itemgetter
 
 import netsvc
 import pooler
+import tools
 from osv import fields, osv
 import decimal_precision as dp
 from tools.translate import _
@@ -219,12 +220,15 @@ class account_account(osv.osv):
             context=None, count=False):
         if context is None:
             context = {}
+        split_args = []
         pos = 0
 
         while pos < len(args):
 
             if args[pos][0] == 'code' and args[pos][1] in ('like', 'ilike') and args[pos][2]:
-                args[pos] = ('code', '=like', str(args[pos][2].replace('%', ''))+'%')
+# [FIX] OPW 591897 - ProgrammingError: memory exhausted when printing chart of accounts with large number of accounts (>20000)
+#                args[pos] = ('code', '=like', str(args[pos][2].replace('%', ''))+'%')
+                args[pos] = ('code', '=like', tools.ustr(args[pos][2].replace('%', ''))+'%')
             if args[pos][0] == 'journal_id':
                 if not args[pos][2]:
                     del args[pos]
@@ -237,17 +241,38 @@ class account_account(osv.osv):
                 ids1 = super(account_account, self).search(cr, uid, [('user_type', 'in', ids3)])
                 ids1 += map(lambda x: x.id, jour.account_control_ids)
                 args[pos] = ('id', 'in', ids1)
+#fix
+
+            # needed to ligthen request sent to postgres in chart of accounts : when requesting child ofg
+            # large amount of accounts, the request is too long for being processed by postgres. 
+            # this mainly happens with leafs account
+            if args[pos][0] == 'parent_id' and args[pos][1] == 'child_of' and args[pos][2] and isinstance(args[pos][2], list):
+                split_size = 1000
+                ids = args[pos][2][:]
+                for i in range(len(ids)/split_size+1):
+                    split_args.append(args[:])
+                    split_args[i][pos] = (args[pos][0],args[pos][1],ids[split_size*i:split_size*(i+1)])
+
             pos += 1
 
-        if context and context.has_key('consolidate_children'): #add consolidated children of accounts
+#        if context and context.has_key('consolidate_children'): #add consolidated children of accounts
+        if split_args:
+            results = []
+            for arg in split_args:
+                results.extend(super(account_account, self).search(cr, uid, arg,
+                                                                   offset, limit, order, context=context, count=count))
+            ids = list(results)
+        else:
+
             ids = super(account_account, self).search(cr, uid, args, offset, limit,
                 order, context=context, count=count)
+
+        if context and 'consolidate_children' in context: #add consolidated children of accounts
+            
+
             for consolidate_child in self.browse(cr, uid, context['account_id'], context=context).child_consol_ids:
                 ids.append(consolidate_child.id)
-            return ids
-
-        return super(account_account, self).search(cr, uid, args, offset, limit,
-                order, context=context, count=count)
+        return ids
 
     def _get_children_and_consol(self, cr, uid, ids, context=None):
         #this function search for all the children and all consolidated children (recursively) of the given account ids
@@ -745,6 +770,7 @@ class account_journal(osv.osv):
     _defaults = {
         'user_id': lambda self, cr, uid, context: uid,
         'company_id': lambda self, cr, uid, c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
+        'update_posted': True
     }
     _sql_constraints = [
         ('code_company_uniq', 'unique (code, company_id)', 'The code of the journal must be unique per company !'),
@@ -1035,6 +1061,12 @@ class account_period(osv.osv):
         ids = self.search(cr, uid, [('date_start','>',period.date_start)])
         if len(ids)>=step:
             return ids[step-1]
+        return False
+
+    def previous(self, cr, uid, period, step, context=None):
+        ids = self.search(cr, uid, [('date_start','<',period.date_start)])
+        if len(ids)>=step:
+            return ids[len(ids)-step]
         return False
 
     def find(self, cr, uid, dt=None, context=None):

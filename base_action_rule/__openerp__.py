@@ -21,7 +21,7 @@
 
 {
     'name': 'Automated Action Rules',
-    'version': '1.0',
+    'version': '1.0.1',
     'category': 'Sales Management',
     'description': """
 This module allows to implement action rules for any object.

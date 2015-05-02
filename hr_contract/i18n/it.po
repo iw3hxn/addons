@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 5.0.4\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-03-23 08:28+0000\n"
+"PO-Revision-Date: 2014-07-23 16:29+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:00+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:54+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: hr_contract
 #: field:hr.contract,wage:0
@@ -95,7 +95,6 @@ msgstr "Distanza Casa-Lavoro"
 
 #. module: hr_contract
 #: view:hr.contract:0
-#: view:hr.employee:0
 #: field:hr.employee,contract_ids:0
 #: model:ir.actions.act_window,name:hr_contract.act_hr_employee_2_hr_contract
 #: model:ir.actions.act_window,name:hr_contract.action_hr_contract
@@ -124,6 +123,7 @@ msgid "Job"
 msgstr "Lavoro"
 
 #. module: hr_contract
+#: view:hr.contract:0
 #: field:hr.contract,advantages:0
 msgid "Advantages"
 msgstr "Vantaggi"
@@ -165,7 +165,6 @@ msgid "Basic Salary of the employee"
 msgstr "Salario Base del dipendente"
 
 #. module: hr_contract
-#: view:hr.contract:0
 #: field:hr.contract,name:0
 msgid "Contract Reference"
 msgstr "Riferimento Contratto"
@@ -188,7 +187,6 @@ msgstr "Permesso di Lavoro N."
 
 #. module: hr_contract
 #: view:hr.contract:0
-#: view:hr.employee:0
 #: field:hr.employee,contract_id:0
 #: model:ir.model,name:hr_contract.model_hr_contract
 #: model:ir.ui.menu,name:hr_contract.next_id_56

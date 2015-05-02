@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 08:11+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:25+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 07:34+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: stock_planning
 #: code:addons/stock_planning/wizard/stock_planning_createlines.py:73
@@ -165,6 +165,10 @@ msgid ""
 "are independent of financial periods. If you need periods other than day-, "
 "week- or month-based, you may also add then manually."
 msgstr ""
+"Questa creazione guidata vi aiuta a creare gli Stock Periods. Questi"
+"periodi possono essere indipendenti o finanziari. Se avete la"
+"necessità di inserire altri tipi di periodi che non siano basati su"
+"giorni, settimane o mesi, potete inserirne di nuovi manualmente."
 
 #. module: stock_planning
 #: view:stock.period.createlines:0
@@ -465,6 +469,10 @@ msgid ""
 "account periods. You can use wizard for creating periods and review them "
 "here."
 msgstr ""
+"Gli stock periods sono utilizzati per la pianificazione dello"
+"stoccaggio. Gli stock periods sono indipendenti dai periodi fiscale."
+"Potete utilizzare questa creazione guidata per creare i periodi e"
+"revisionarli."
 
 #. module: stock_planning
 #: view:stock.planning:0
@@ -695,6 +703,10 @@ msgid ""
 "warehouse, so you don't have to create them one by one. The wizard doesn't "
 "duplicate lines if they already exist for this selection."
 msgstr ""
+"Questa creazione guidata aiuta a creare il programma principale degli"
+"approvvigionamenti per un periodo o un magazzino specifici, così da"
+"non doverli creare singolarmente. La creazione guidata non duplica"
+"linee che esistono già per la selezione che viene fatta."
 
 #. module: stock_planning
 #: field:stock.planning,outgoing:0
@@ -786,6 +798,11 @@ msgid ""
 "manual procurement with this forecast when some periods are exceptional for "
 "usual minimum stock rules."
 msgstr ""
+"Le previsioni di vendita sono un indicatore che lo Stock Planner"
+"utilizza per avviare l'approvvigionamento manuale o per completare"
+"l'approvvigionamento automatico. Potete utilizzare"
+"l'approvvigionamento manuale con queste previsioni quando alcuni"
+"periodi sono insoliti per l'utilizzo delle regole di stock minimo."
 
 #. module: stock_planning
 #: model:ir.actions.act_window,help:stock_planning.action_view_stock_planning_form
@@ -801,6 +818,18 @@ msgid ""
 "can trigger the procurement of what is missing to reach your desired "
 "quantities"
 msgstr ""
+"Il programma principale degli approvvigionamenti può essere lo"
+"strumento principale per il rifornimento del magazzino e può essere"
+"complementare al programma automatico (regole di stoccaggio minimo,"
+"etc..). Ciascuna riga del programma degli approvvigionamenti vi"
+"fornisce una visione d'insieme delle quantità in entrata e in uscia di"
+"un certo prodotto per un certo periodo e in un determinato punto di"
+"stoccaggio, basandosi sui livelli di stoccaggio attuali e futuri, così"
+"come le movimentazioni pianificate. I quantitativi previsti possono"
+"essere modificati manualmente e quando compatibili con le quantità di"
+"stoccaggio (simulate), potete avviare il rifornimento di ciò che manca"
+"per raggiungere le quantità desiderate."
+
 
 #. module: stock_planning
 #: code:addons/stock_planning/stock_planning.py:685
@@ -1218,3 +1247,8 @@ msgid ""
 "you only have to fill in the forecast quantities. The wizard doesn't "
 "duplicate the line when another one exist for the same selection."
 msgstr ""
+"Questa creazione guidata aiuta a creare tutte le righe di previsioni"
+"di vendita in una volta sola. Dopo averle create dovete soltanto"
+"completare le previsioni con le quantità. La creazione guidata non"
+"duplica le righe nel caso in cui ne esista un'altra per la stessa"
+"selezione."

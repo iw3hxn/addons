@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-06-13 22:19+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-08-07 12:30+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:59+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-08 06:45+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: google_base_account
 #: field:res.users,gmail_user:0
@@ -25,49 +25,49 @@ msgstr "Uporabniško ime"
 #. module: google_base_account
 #: model:ir.actions.act_window,name:google_base_account.act_google_login_form
 msgid "Google Login"
-msgstr ""
+msgstr "Google prijava"
 
 #. module: google_base_account
 #: code:addons/google_base_account/wizard/google_login.py:29
 #, python-format
 msgid "Google Contacts Import Error!"
-msgstr ""
+msgstr "Napaka pri uvozu google stikov!"
 
 #. module: google_base_account
 #: view:res.users:0
 msgid " Synchronization "
-msgstr ""
+msgstr " Sinhronizacija "
 
 #. module: google_base_account
 #: sql_constraint:res.users:0
 msgid "You can not have two users with the same login !"
-msgstr ""
+msgstr "Ne morete imeti dveh uporabnikov z istim prijavnim imenom!"
 
 #. module: google_base_account
 #: code:addons/google_base_account/wizard/google_login.py:75
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #. module: google_base_account
 #: view:google.login:0
 msgid "Google login"
-msgstr ""
+msgstr "Google prijava"
 
 #. module: google_base_account
 #: model:ir.model,name:google_base_account.model_res_users
 msgid "res.users"
-msgstr ""
+msgstr "res.users"
 
 #. module: google_base_account
 #: field:google.login,password:0
 msgid "Google Password"
-msgstr ""
+msgstr "Google geslo"
 
 #. module: google_base_account
 #: view:google.login:0
 msgid "_Cancel"
-msgstr ""
+msgstr "_Preklic"
 
 #. module: google_base_account
 #: view:res.users:0
@@ -77,7 +77,7 @@ msgstr "Google Račun"
 #. module: google_base_account
 #: field:google.login,user:0
 msgid "Google Username"
-msgstr ""
+msgstr "Google uporabniško ime"
 
 #. module: google_base_account
 #: code:addons/google_base_account/wizard/google_login.py:29
@@ -86,11 +86,13 @@ msgid ""
 "Please install gdata-python-client from http://code.google.com/p/gdata-"
 "python-client/downloads/list"
 msgstr ""
+"Prosimo namestite gdata-python-client iz http://code.google.com/p/gdata-"
+"python-client/downloads/list"
 
 #. module: google_base_account
 #: model:ir.model,name:google_base_account.model_google_login
 msgid "Google Contact"
-msgstr ""
+msgstr "Google stik"
 
 #. module: google_base_account
 #: view:google.login:0
@@ -100,7 +102,7 @@ msgstr "_Prijava"
 #. module: google_base_account
 #: constraint:res.users:0
 msgid "The chosen company is not in the allowed companies for this user"
-msgstr ""
+msgstr "Izbrano podjetje ni med dovoljenimi podjetji za tega uporabnika"
 
 #. module: google_base_account
 #: field:res.users,gmail_password:0
@@ -111,9 +113,9 @@ msgstr "Geslo"
 #: code:addons/google_base_account/wizard/google_login.py:75
 #, python-format
 msgid "Authentication fail check the user and password !"
-msgstr ""
+msgstr "Overovitev uporabniškega imena in gesla neuspešna!"
 
 #. module: google_base_account
 #: view:google.login:0
 msgid "ex: user@gmail.com"
-msgstr ""
+msgstr "npr. uporabnik@gmail.com"

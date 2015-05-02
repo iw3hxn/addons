@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 16:55+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:00+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:53+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: hr
 #: model:process.node,name:hr.process_node_openerpuser0
@@ -22,7 +22,7 @@ msgid "Openerp user"
 msgstr "Utente Openerp"
 
 #. module: hr
-#: field:hr.job,requirements:0
+#: view:hr.job:0 field:hr.job,requirements:0
 msgid "Requirements"
 msgstr "Requisiti"
 
@@ -42,18 +42,14 @@ msgid "SIN No"
 msgstr "Codice Fiscale"
 
 #. module: hr
-#: model:ir.actions.act_window,name:hr.open_board_hr
-#: model:ir.ui.menu,name:hr.menu_hr_dashboard
 #: model:ir.ui.menu,name:hr.menu_hr_main
-#: model:ir.ui.menu,name:hr.menu_hr_reporting
+#: model:ir.ui.menu,name:hr.menu_hr_management
 #: model:ir.ui.menu,name:hr.menu_hr_root
-#: model:ir.ui.menu,name:hr.menu_human_resources_configuration
 msgid "Human Resources"
 msgstr "Risorse Umane"
 
 #. module: hr
-#: view:hr.employee:0
-#: view:hr.job:0
+#: view:hr.employee:0 view:hr.job:0
 msgid "Group By..."
 msgstr "Raggruppato per..."
 
@@ -79,12 +75,8 @@ msgstr ""
 "posizione lavorativa."
 
 #. module: hr
-#: view:hr.department:0
-#: view:hr.employee:0
-#: field:hr.employee,department_id:0
-#: view:hr.job:0
-#: field:hr.job,department_id:0
-#: model:ir.model,name:hr.model_hr_department
+#: view:hr.employee:0 field:hr.employee,department_id:0 view:hr.job:0
+#: field:hr.job,department_id:0 view:res.users:0
 msgid "Department"
 msgstr "Dipartimento"
 
@@ -104,9 +96,7 @@ msgid "In Recruitment"
 msgstr "In assunzione"
 
 #. module: hr
-#: field:hr.department,company_id:0
-#: view:hr.employee:0
-#: view:hr.job:0
+#: field:hr.department,company_id:0 view:hr.employee:0 view:hr.job:0
 #: field:hr.job,company_id:0
 msgid "Company"
 msgstr "Azienda"
@@ -141,7 +131,7 @@ msgid "Parent Department"
 msgstr "Dipartimento Superiore"
 
 #. module: hr
-#: field:hr.employee,notes:0
+#: view:hr.employee:0 field:hr.employee,notes:0
 msgid "Notes"
 msgstr "Note"
 
@@ -181,7 +171,7 @@ msgid ""
 "The Related user field on the Employee form allows to link the OpenERP user "
 "(and her rights) to the employee."
 msgstr ""
-"Il campo dell'utente associato permette di collegare un utente di OpenERP "
+"Il campo dell'utente associato permette di collegare un utente di SimplERP "
 "(ed i suoi diritti) al dipendente."
 
 #. module: hr
@@ -225,7 +215,7 @@ msgid "Child Categories"
 msgstr "Categorie Secondarie"
 
 #. module: hr
-#: field:hr.job,description:0
+#: view:hr.job:0 field:hr.job,description:0
 #: model:ir.model,name:hr.model_hr_job
 msgid "Job Description"
 msgstr "Descrizione lavoro"
@@ -241,8 +231,7 @@ msgid "My Departments Employee"
 msgstr "Dipendente dei miei dipartimenti"
 
 #. module: hr
-#: view:hr.employee:0
-#: model:ir.model,name:hr.model_hr_employee
+#: view:hr.employee:0 model:ir.model,name:hr.model_hr_employee
 #: model:process.node,name:hr.process_node_employee0
 msgid "Employee"
 msgstr "Dipendente"
@@ -268,14 +257,13 @@ msgid "Reporting"
 msgstr "Reportistica"
 
 #. module: hr
-#: view:board.board:0
+#: model:ir.actions.act_window,name:hr.open_board_hr
+#: model:ir.ui.menu,name:hr.menu_hr_dashboard_user
 msgid "Human Resources Dashboard"
 msgstr "Dashboard Risorse Umane"
 
 #. module: hr
-#: view:hr.employee:0
-#: field:hr.employee,job_id:0
-#: view:hr.job:0
+#: view:hr.employee:0 field:hr.employee,job_id:0 view:hr.job:0
 msgid "Job"
 msgstr "Lavoro"
 
@@ -318,6 +306,7 @@ msgstr "Errore! Non è possibile creare Categorie ricorsive"
 #: view:hr.department:0
 #: model:ir.actions.act_window,name:hr.open_module_tree_department
 #: model:ir.ui.menu,name:hr.menu_hr_department_tree
+#: field:res.users,context_department_id:0
 msgid "Departments"
 msgstr "Dipartimenti"
 
@@ -438,8 +427,6 @@ msgstr "Dipartimenti secondari"
 
 #. module: hr
 #: view:hr.employee:0
-#: view:hr.job:0
-#: field:hr.job,state:0
 msgid "Status"
 msgstr "Stato"
 
@@ -543,7 +530,7 @@ msgid "Employee form and structure"
 msgstr "Modulo dipendenti e struttura"
 
 #. module: hr
-#: field:hr.employee,image:0
+#: field:hr.employee,photo:0
 msgid "Photo"
 msgstr "Foto"
 
@@ -598,7 +585,7 @@ msgid "Job Name"
 msgstr "Nome lavoro"
 
 #. module: hr
-#: view:hr.job:0
+#: view:hr.job:0 selection:hr.job,state:0
 msgid "In Position"
 msgstr "Assunzioni effettuate"
 
@@ -629,7 +616,6 @@ msgstr "Risorsa"
 
 #. module: hr
 #: field:hr.department,complete_name:0
-#: field:hr.employee,name_related:0
 #: field:hr.employee.category,complete_name:0
 msgid "Name"
 msgstr "Nome"
@@ -640,13 +626,14 @@ msgid "Gender"
 msgstr "Sesso"
 
 #. module: hr
-#: view:hr.employee:0
-#: field:hr.employee.category,employee_ids:0
+#: view:hr.employee:0 view:hr.employee.category:0
+#: field:hr.employee.category,employee_ids:0 view:hr.job:0
 #: field:hr.job,employee_ids:0
 #: model:ir.actions.act_window,name:hr.hr_employee_normal_action_tree
 #: model:ir.actions.act_window,name:hr.open_view_employee_list
 #: model:ir.actions.act_window,name:hr.open_view_employee_list_my
 #: model:ir.ui.menu,name:hr.menu_open_view_employee_list_my
+#: model:ir.ui.menu,name:hr.menu_view_employee_category_configuration_form
 msgid "Employees"
 msgstr "Dipendenti"
 
@@ -668,7 +655,7 @@ msgstr "Numero posizione previdenziale"
 #. module: hr
 #: model:process.node,note:hr.process_node_openerpuser0
 msgid "Creation of a OpenERP user"
-msgstr "Creazione utente di OpenERP"
+msgstr "Creazione utente di SimplERP"
 
 #. module: hr
 #: field:hr.employee,login:0
@@ -692,8 +679,7 @@ msgid "Other Id"
 msgstr "Altro ID"
 
 #. module: hr
-#: view:hr.employee:0
-#: field:hr.employee,coach_id:0
+#: view:hr.employee:0 field:hr.employee,coach_id:0
 msgid "Coach"
 msgstr "Istruttore"
 
@@ -708,8 +694,7 @@ msgid "My Departments Jobs"
 msgstr ""
 
 #. module: hr
-#: field:hr.department,manager_id:0
-#: view:hr.employee:0
+#: field:hr.department,manager_id:0 view:hr.employee:0
 #: field:hr.employee,parent_id:0
 msgid "Manager"
 msgstr "Responsabile"

@@ -7,31 +7,31 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2014-08-04 09:06+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:50+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-05 06:33+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: audittrail
-#: code:addons/audittrail/audittrail.py:76
+#: code:addons/audittrail/audittrail.py:75
 #, python-format
 msgid "WARNING: audittrail is not part of the pool"
-msgstr ""
+msgstr "OPOZORILO:revizijska sled ni del skupine"
 
 #. module: audittrail
 #: field:audittrail.log.line,log_id:0
 msgid "Log"
-msgstr "Dnevnik"
+msgstr "Zbirnik"
 
 #. module: audittrail
 #: view:audittrail.rule:0
 #: selection:audittrail.rule,state:0
 msgid "Subscribed"
-msgstr "Naročen"
+msgstr "Aboniran"
 
 #. module: audittrail
 #: sql_constraint:audittrail.rule:0
@@ -39,30 +39,31 @@ msgid ""
 "There is already a rule defined on this object\n"
 " You cannot define another: please edit the existing one."
 msgstr ""
+"Za ta objekt je že določeno pravilo\n"
+"Drugega ne morete določiti: prosim, uredite obstoječega."
 
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "Subscribed Rule"
-msgstr ""
+msgstr "Abonentsko pravilo"
 
 #. module: audittrail
-#: view:audittrail.rule:0
 #: model:ir.model,name:audittrail.model_audittrail_rule
 msgid "Audittrail Rule"
-msgstr ""
+msgstr "Pravilo revizijske sledi"
 
 #. module: audittrail
 #: view:audittrail.view.log:0
 #: model:ir.actions.act_window,name:audittrail.action_audittrail_log_tree
-#: model:ir.ui.menu,name:audittrail.menu_audit_logs
+#: model:ir.ui.menu,name:audittrail.menu_action_audittrail_log_tree
 msgid "Audit Logs"
-msgstr "Revidiraj dnevnike"
+msgstr "Revidiraj zbirnike"
 
 #. module: audittrail
 #: view:audittrail.log:0
 #: view:audittrail.rule:0
 msgid "Group By..."
-msgstr "Združi po ..."
+msgstr "Združi po..."
 
 #. module: audittrail
 #: view:audittrail.rule:0
@@ -73,7 +74,7 @@ msgstr "Stanje"
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "_Subscribe"
-msgstr "_Naroči"
+msgstr "_Aboniraj"
 
 #. module: audittrail
 #: view:audittrail.rule:0
@@ -89,7 +90,7 @@ msgstr "Stara vrednost"
 #. module: audittrail
 #: model:ir.actions.act_window,name:audittrail.action_audittrail_view_log
 msgid "View log"
-msgstr "Poglej dnevnik"
+msgstr "Poglej zbirnik"
 
 #. module: audittrail
 #: help:audittrail.rule,log_read:0
@@ -97,11 +98,13 @@ msgid ""
 "Select this if you want to keep track of read/open on any record of the "
 "object of this rule"
 msgstr ""
+"Označite, če želite spremljati branje/odpiranje kateregakoli zapisa objekta "
+"tega pravila"
 
 #. module: audittrail
 #: field:audittrail.log,method:0
 msgid "Method"
-msgstr "Način"
+msgstr "Metoda"
 
 #. module: audittrail
 #: field:audittrail.view.log,from:0
@@ -111,17 +114,17 @@ msgstr "Beleži od"
 #. module: audittrail
 #: field:audittrail.log.line,log:0
 msgid "Log ID"
-msgstr "Oznaka beleženja"
+msgstr "ID zbirnika"
 
 #. module: audittrail
 #: field:audittrail.log,res_id:0
 msgid "Resource Id"
-msgstr "Oznakavira"
+msgstr "ID vira"
 
 #. module: audittrail
 #: help:audittrail.rule,user_id:0
 msgid "if  User is not added then it will applicable for all users"
-msgstr ""
+msgstr "Če uporabnik ni dodan, velja za vse uporabnike"
 
 #. module: audittrail
 #: help:audittrail.rule,log_workflow:0
@@ -129,6 +132,8 @@ msgid ""
 "Select this if you want to keep track of workflow on any record of the "
 "object of this rule"
 msgstr ""
+"Izberite, če želite spremljati delokrog kateregakoli zapisa objekta tega "
+"pravila"
 
 #. module: audittrail
 #: field:audittrail.rule,user_id:0
@@ -138,7 +143,7 @@ msgstr "Uporabniki"
 #. module: audittrail
 #: view:audittrail.log:0
 msgid "Log Lines"
-msgstr "Vrstice beleženja"
+msgstr "Postavke zbirnika"
 
 #. module: audittrail
 #: view:audittrail.log:0
@@ -165,13 +170,13 @@ msgstr "Besedilo nove vrednosti: "
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "Search Audittrail Rule"
-msgstr ""
+msgstr "Iskanje pravila revizijske sledi"
 
 #. module: audittrail
 #: model:ir.actions.act_window,name:audittrail.action_audittrail_rule_tree
 #: model:ir.ui.menu,name:audittrail.menu_action_audittrail_rule_tree
 msgid "Audit Rules"
-msgstr ""
+msgstr "Pravila revizijske sledi"
 
 #. module: audittrail
 #: view:audittrail.log:0
@@ -195,16 +200,18 @@ msgid ""
 "Select this if you want to keep track of modification on any record of the "
 "object of this rule"
 msgstr ""
+"Izberite, če želite slediti spremembam kateregakoli zapisa objekta tega "
+"pravila"
 
 #. module: audittrail
 #: field:audittrail.rule,log_create:0
 msgid "Log Creates"
-msgstr ""
+msgstr "Beleži nastanke"
 
 #. module: audittrail
 #: help:audittrail.rule,object_id:0
 msgid "Select object for which you want to generate log."
-msgstr ""
+msgstr "Izberite objekt za katerega želite izdelati zbirnik"
 
 #. module: audittrail
 #: view:audittrail.log:0
@@ -214,23 +221,23 @@ msgstr "Besedilo stare vrednosti: "
 #. module: audittrail
 #: field:audittrail.rule,log_workflow:0
 msgid "Log Workflow"
-msgstr ""
+msgstr "Beleženje delokroga"
 
 #. module: audittrail
 #: field:audittrail.rule,log_read:0
 msgid "Log Reads"
-msgstr ""
+msgstr "Beleženje branja"
 
 #. module: audittrail
-#: code:addons/audittrail/audittrail.py:77
+#: code:addons/audittrail/audittrail.py:76
 #, python-format
 msgid "Change audittrail depends -- Setting rule as DRAFT"
-msgstr ""
+msgstr "Spremeni revizijsko sled -- Nastavi pravilo kot OSNUTEK"
 
 #. module: audittrail
 #: field:audittrail.log,line_ids:0
 msgid "Log lines"
-msgstr "Vrstice beleženja"
+msgstr "Postavke zbirnika"
 
 #. module: audittrail
 #: field:audittrail.log.line,field_id:0
@@ -240,7 +247,7 @@ msgstr "Polja"
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "AuditTrail Rules"
-msgstr "Pravilo revizijske sledi"
+msgstr "Pravila revizijskih sledi"
 
 #. module: audittrail
 #: help:audittrail.rule,log_unlink:0
@@ -248,6 +255,7 @@ msgid ""
 "Select this if you want to keep track of deletion on any record of the "
 "object of this rule"
 msgstr ""
+"Izberite, če želite slediti brisanju kateregakoli zapisa objekta tega pravila"
 
 #. module: audittrail
 #: view:audittrail.log:0
@@ -258,22 +266,22 @@ msgstr "Uporabnik"
 #. module: audittrail
 #: field:audittrail.rule,action_id:0
 msgid "Action ID"
-msgstr ""
+msgstr "ID dejanja"
 
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "Users (if User is not added then it will applicable for all users)"
-msgstr ""
+msgstr "Uporabnik (če ni dodan, velja za vse uporabnike)"
 
 #. module: audittrail
 #: view:audittrail.rule:0
 msgid "UnSubscribe"
-msgstr "Preklic naročenosti"
+msgstr "Preklic abonmaja"
 
 #. module: audittrail
 #: field:audittrail.rule,log_unlink:0
 msgid "Log Deletes"
-msgstr ""
+msgstr "Beleži brisanja"
 
 #. module: audittrail
 #: field:audittrail.log.line,field_description:0
@@ -283,17 +291,17 @@ msgstr "Opis polja"
 #. module: audittrail
 #: view:audittrail.log:0
 msgid "Search Audittrail Log"
-msgstr ""
+msgstr "Iskanje revizijske sledi"
 
 #. module: audittrail
 #: field:audittrail.rule,log_write:0
 msgid "Log Writes"
-msgstr ""
+msgstr "Beleži zapise"
 
 #. module: audittrail
 #: view:audittrail.view.log:0
 msgid "Open Logs"
-msgstr "Odpri sledi"
+msgstr "Odpri zbirnike"
 
 #. module: audittrail
 #: field:audittrail.log.line,new_value_text:0
@@ -303,7 +311,7 @@ msgstr "Besedilo nove vrednosti"
 #. module: audittrail
 #: field:audittrail.rule,name:0
 msgid "Rule Name"
-msgstr "Ime pravila"
+msgstr "Naziv pravila"
 
 #. module: audittrail
 #: field:audittrail.log.line,new_value:0
@@ -321,16 +329,15 @@ msgid "Draft  Rule"
 msgstr "Osnutek pravila"
 
 #. module: audittrail
-#: view:audittrail.log:0
 #: model:ir.model,name:audittrail.model_audittrail_log
 msgid "Audittrail Log"
-msgstr ""
+msgstr "Revizijska sled"
 
 #. module: audittrail
 #: help:audittrail.rule,log_action:0
 msgid ""
 "Select this if you want to keep track of actions on the object of this rule"
-msgstr ""
+msgstr "Izberite, če želite slediti aktivnostim objekta tega pravila"
 
 #. module: audittrail
 #: view:audittrail.log:0
@@ -345,22 +352,22 @@ msgstr "Besedilo stare vrednosti"
 #. module: audittrail
 #: view:audittrail.view.log:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: audittrail
 #: model:ir.model,name:audittrail.model_audittrail_view_log
 msgid "View Log"
-msgstr ""
+msgstr "Prikaz zbirnika"
 
 #. module: audittrail
 #: model:ir.model,name:audittrail.model_audittrail_log_line
 msgid "Log Line"
-msgstr ""
+msgstr "Postavka zbirnika"
 
 #. module: audittrail
 #: field:audittrail.rule,log_action:0
 msgid "Log Action"
-msgstr ""
+msgstr "Beleži dejanja"
 
 #. module: audittrail
 #: help:audittrail.rule,log_create:0
@@ -368,3 +375,5 @@ msgid ""
 "Select this if you want to keep track of creation on any record of the "
 "object of this rule"
 msgstr ""
+"Izberite, če želite slediti ustvarjanju kateregakoli zapisa objekta tega "
+"pravila"

@@ -8,24 +8,24 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Mantavya Gajjar (Open ERP) <Unknown>\n"
+"PO-Revision-Date: 2014-07-24 10:21+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:22+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 07:28+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: sale_mrp
 #: help:mrp.production,sale_ref:0
 msgid "Indicate the Customer Reference from sales order."
-msgstr "Kupčeva referenca"
+msgstr "Navedite kupčev sklic iz prodajnega naloga"
 
 #. module: sale_mrp
 #: field:mrp.production,sale_ref:0
 msgid "Sales Reference"
-msgstr ""
+msgstr "Sklic prodaje"
 
 #. module: sale_mrp
 #: model:ir.model,name:sale_mrp.model_mrp_production
@@ -35,19 +35,19 @@ msgstr "Proizvodni nalog"
 #. module: sale_mrp
 #: field:mrp.production,sale_name:0
 msgid "Sales Name"
-msgstr ""
+msgstr "Naziv prodaje"
 
 #. module: sale_mrp
 #: sql_constraint:mrp.production:0
 msgid "Reference must be unique per Company!"
-msgstr ""
+msgstr "Sklic mora biti unikaten za vsako podjetje"
 
 #. module: sale_mrp
 #: constraint:mrp.production:0
 msgid "Order quantity cannot be negative or zero!"
-msgstr ""
+msgstr "Naročena količina mora biti večja od 0"
 
 #. module: sale_mrp
 #: help:mrp.production,sale_name:0
 msgid "Indicate the name of sales order."
-msgstr "Prodajni nalog"
+msgstr "Navedite naziv prodajnega naloga"

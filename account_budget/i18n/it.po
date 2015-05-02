@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-10-08 12:28+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 19:00+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:43+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:26+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: account_budget
 #: field:crossovered.budget,creating_user_id:0
@@ -104,6 +104,7 @@ msgid "Percentage"
 msgstr "Percentuale"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:crossovered.budget.report:0
 msgid "to"
 msgstr "a"
@@ -133,18 +134,21 @@ msgid "The Budget '%s' has no accounts!"
 msgstr "Il Budget '%s' non ha un conto!"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "%"
 msgstr "%"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Description"
 msgstr "Descrizione"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Currency"
 msgstr "Valuta"
@@ -179,6 +183,7 @@ msgid "Planned Amount"
 msgstr "Importo previsto"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Perc(%)"
@@ -191,6 +196,7 @@ msgid "Done"
 msgstr "Fatto"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Practical Amt"
@@ -278,6 +284,7 @@ msgstr "Questo wizard è utilizzato per stampare il Budget"
 
 #. module: account_budget
 #: model:ir.actions.act_window,name:account_budget.act_crossovered_budget_view
+#: model:ir.actions.act_window,name:account_budget.action_account_budget_post_tree
 #: model:ir.actions.act_window,name:account_budget.action_account_budget_report
 #: model:ir.actions.report.xml,name:account_budget.report_crossovered_budget
 #: model:ir.ui.menu,name:account_budget.menu_act_crossovered_budget_view
@@ -335,6 +342,7 @@ msgid "Account Budget  crossvered summary report"
 msgstr "Report riepilogativo budgets"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Theoretical Amt"
@@ -364,6 +372,7 @@ msgid "Theoretical Amount"
 msgstr "Importo Teorico"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: field:crossovered.budget.lines,analytic_account_id:0
 #: model:ir.model,name:account_budget.model_account_analytic_account
 msgid "Analytic Account"
@@ -375,6 +384,7 @@ msgid "Budget :"
 msgstr "Budget :"
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Planned Amt"
@@ -405,6 +415,7 @@ msgstr "Linee Budget"
 #: view:account.budget.crossvered.report:0
 #: view:account.budget.crossvered.summary.report:0
 #: view:account.budget.report:0
+#: view:crossovered.budget:0
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -414,6 +425,7 @@ msgid "Error! You can not create recursive analytic accounts."
 msgstr "Errore! Non è possibile creare conti analitici ricorsivi."
 
 #. module: account_budget
+#: report:account.analytic.account.budget:0
 #: report:account.budget:0
 #: report:crossovered.budget.report:0
 msgid "Analysis from"

@@ -21,7 +21,7 @@
 
 {
     'name': 'Opportunity to Quotation',
-    'version': '1.0',
+    'version': '1.0.2',
     'category': 'Hidden',
     'complexity': "easy",
     'description': """

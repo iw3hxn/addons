@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-01-11 11:14+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2014-08-01 06:37+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-02 06:24+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: association
 #: field:profile.association.config.install_modules_wizard,wiki:0
@@ -29,12 +29,12 @@ msgstr "Upravljanje dogodkov"
 #. module: association
 #: field:profile.association.config.install_modules_wizard,project_gtd:0
 msgid "Getting Things Done"
-msgstr "Getting Things Done"
+msgstr "GTD metodologija"
 
 #. module: association
 #: model:ir.module.module,description:association.module_meta_information
 msgid "This module is to create Profile for Associates"
-msgstr ""
+msgstr "Modul za profiliranje združenja"
 
 #. module: association
 #: field:profile.association.config.install_modules_wizard,progress:0
@@ -46,9 +46,7 @@ msgstr "Potek konfiguracije"
 msgid ""
 "Here are specific applications related to the Association Profile you "
 "selected."
-msgstr ""
-"Hier finden Sie die vorzunehmenden Einstellungen für das Profil "
-"Mitgliederverwaltung."
+msgstr "Specifične aplikacije za izbrani profil združenja"
 
 #. module: association
 #: view:profile.association.config.install_modules_wizard:0
@@ -58,7 +56,7 @@ msgstr "naziv"
 #. module: association
 #: help:profile.association.config.install_modules_wizard,event_project:0
 msgid "Helps you to manage and organize your events."
-msgstr ""
+msgstr "Organizacija dogodkov"
 
 #. module: association
 #: field:profile.association.config.install_modules_wizard,config_logo:0
@@ -71,6 +69,8 @@ msgid ""
 "Tracks and manages employee expenses, and can automatically re-invoice "
 "clients if the expenses are project-related."
 msgstr ""
+"Spremljanje in upravljanje stroškov kadrov in samodejni obračun le-teh "
+"kupcem, če gre za projektne stroške."
 
 #. module: association
 #: help:profile.association.config.install_modules_wizard,project_gtd:0
@@ -78,6 +78,8 @@ msgid ""
 "GTD is a methodology to efficiently organise yourself and your tasks. This "
 "module fully integrates GTD principle with OpenERP's project management."
 msgstr ""
+"GTD je metodologija učinkovite organizacije svojih dejavnosti in opravil. Ta "
+"modul integrira GTD principe v modul upravljanja projektov"
 
 #. module: association
 #: view:profile.association.config.install_modules_wizard:0
@@ -87,18 +89,18 @@ msgstr "Upravljanje virov"
 #. module: association
 #: model:ir.module.module,shortdesc:association.module_meta_information
 msgid "Association profile"
-msgstr ""
+msgstr "Profil združenja"
 
 #. module: association
 #: field:profile.association.config.install_modules_wizard,hr_expense:0
 msgid "Expenses Tracking"
-msgstr "Sledenje izdatkov"
+msgstr "Spremljanje izdatkov"
 
 #. module: association
 #: model:ir.actions.act_window,name:association.action_config_install_module
 #: view:profile.association.config.install_modules_wizard:0
 msgid "Association Application Configuration"
-msgstr ""
+msgstr "Nastavitve združenja"
 
 #. module: association
 #: help:profile.association.config.install_modules_wizard,wiki:0
@@ -106,13 +108,15 @@ msgid ""
 "Lets you create wiki pages and page groups in order to keep track of "
 "business knowledge and share it with and  between your employees."
 msgstr ""
+"Omogoča ustvarjanje wiki strani in skupin strani za spremljanje poslovnega "
+"znanja in za souporabo/soudeležbo kadrov."
 
 #. module: association
 #: help:profile.association.config.install_modules_wizard,project:0
 msgid ""
 "Helps you manage your projects and tasks by tracking them, generating "
 "plannings, etc..."
-msgstr ""
+msgstr "Upravljanje projektov in spremljanje opravil, načrtovanja ipd."
 
 #. module: association
 #: model:ir.model,name:association.model_profile_association_config_install_modules_wizard
@@ -133,4 +137,4 @@ msgstr "Upravljanje projektov"
 #. module: association
 #: view:profile.association.config.install_modules_wizard:0
 msgid "Configure"
-msgstr "Nastavitve"
+msgstr "Nastavi"

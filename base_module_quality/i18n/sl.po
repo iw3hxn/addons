@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev_rc3\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Mantavya Gajjar (Open ERP) <Unknown>\n"
+"PO-Revision-Date: 2014-08-06 12:40+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:51+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-07 06:15+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:187
@@ -22,25 +22,25 @@ msgstr ""
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:274
 #, python-format
 msgid "Suggestion"
-msgstr ""
+msgstr "Predlogi"
 
 #. module: base_module_quality
 #: model:ir.actions.act_window,name:base_module_quality.action_view_quality_save_report
 #: view:save.report:0
 msgid "Standard Entries"
-msgstr ""
+msgstr "Standardni vnosi"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/base_module_quality.py:100
 #, python-format
 msgid "Programming Error"
-msgstr ""
+msgstr "Programska napaka"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:31
 #, python-format
 msgid "Method Test"
-msgstr ""
+msgstr "Metoda testiranja"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:34
@@ -49,33 +49,35 @@ msgid ""
 "\n"
 "Test checks for fields, views, security rules, dependancy level\n"
 msgstr ""
+"\n"
+"Testiranje polj, pogledov, varnostnih pravil in stopenj odvisnosti\n"
 
 #. module: base_module_quality
 #: view:save.report:0
 msgid " "
-msgstr ""
+msgstr " "
 
 #. module: base_module_quality
 #: selection:module.quality.detail,state:0
 msgid "Skipped"
-msgstr "Preskočeno"
+msgstr "Izpuščeno"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:46
 #, python-format
 msgid "Module has no objects"
-msgstr ""
+msgstr "Modul nima objektov"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:49
 #, python-format
 msgid "Speed Test"
-msgstr ""
+msgstr "Test hitrosti"
 
 #. module: base_module_quality
 #: model:ir.model,name:base_module_quality.model_quality_check
 msgid "Module Quality Check"
-msgstr ""
+msgstr "Modul preverbe kvalitete"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:82
@@ -88,7 +90,7 @@ msgstr ""
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:143
 #, python-format
 msgid "Object Name"
-msgstr ""
+msgstr "Naziv objekta"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:54
@@ -96,7 +98,7 @@ msgstr ""
 #: code:addons/base_module_quality/method_test/method_test.py:68
 #, python-format
 msgid "Ok"
-msgstr ""
+msgstr "V redu"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:34
@@ -105,18 +107,19 @@ msgid ""
 "This test checks if the module satisfies the current coding standard used by "
 "OpenERP."
 msgstr ""
+"Test preveri, če modul zadošča trenutnim standardom kodiranja v OpenERP."
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/wizard/quality_save_report.py:39
 #, python-format
 msgid "No report to save!"
-msgstr ""
+msgstr "Ni poročila za shranjevanje!"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:177
 #, python-format
 msgid "Result of dependancy in %"
-msgstr ""
+msgstr "Rezultat odvisnosti v %"
 
 #. module: base_module_quality
 #: help:module.quality.detail,state:0
@@ -131,19 +134,19 @@ msgstr ""
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:99
 #, python-format
 msgid "Result (/10)"
-msgstr ""
+msgstr "Rezultat (/10)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:33
 #, python-format
 msgid "Terp Test"
-msgstr ""
+msgstr "Terp Test"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:33
 #, python-format
 msgid "Object Test"
-msgstr ""
+msgstr "Test objekta"
 
 #. module: base_module_quality
 #: view:module.quality.detail:0
@@ -156,48 +159,48 @@ msgstr "Shrani poročilo"
 #: view:quality.check:0
 #, python-format
 msgid "Quality Check"
-msgstr "Kontorla kvalitete"
+msgstr "Preverba kvalitete"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:128
 #, python-format
 msgid "Not Efficient"
-msgstr ""
+msgstr "Neučinkovito"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/wizard/quality_save_report.py:39
 #, python-format
 msgid "Warning"
-msgstr ""
+msgstr "Opozorilo"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:172
 #, python-format
 msgid "Feedback about structure of module"
-msgstr ""
+msgstr "Povratne informacije o strukturi modula"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/unit_test/unit_test.py:35
 #, python-format
 msgid "Unit Test"
-msgstr ""
+msgstr "Test enot"
 
 #. module: base_module_quality
 #: view:quality.check:0
 msgid "Check"
-msgstr ""
+msgstr "Preveri"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:151
 #, python-format
 msgid "Reading Complexity"
-msgstr ""
+msgstr "Kompleksnost branja"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:267
 #, python-format
 msgid "Result of pep8_test in %"
-msgstr ""
+msgstr "Rezultat pep8_test v %"
 
 #. module: base_module_quality
 #: field:module.quality.detail,state:0
@@ -208,7 +211,7 @@ msgstr "Stanje"
 #: code:addons/base_module_quality/unit_test/unit_test.py:50
 #, python-format
 msgid "Module does not have 'unit_test/test.py' file"
-msgstr ""
+msgstr "Modul nima 'unit_test/test.py' datoteke"
 
 #. module: base_module_quality
 #: field:module.quality.detail,ponderation:0
@@ -219,7 +222,7 @@ msgstr "Uteževanje"
 #: code:addons/base_module_quality/object_test/object_test.py:177
 #, python-format
 msgid "Result of Security in %"
-msgstr ""
+msgstr "Rezultat varnosti v %"
 
 #. module: base_module_quality
 #: help:module.quality.detail,ponderation:0
@@ -227,32 +230,32 @@ msgid ""
 "Some tests are more critical than others, so they have a bigger weight in "
 "the computation of final rating"
 msgstr ""
-"Nekateri testi so bolj kritični do drugih in imajo zato večjo težo pri "
+"Nekateri testi so bolj kritični od drugih in imajo zato večjo težo pri "
 "izračunu končne ocene"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:120
 #, python-format
 msgid "No enough data"
-msgstr ""
+msgstr "Ni dovolj podatkov"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:132
 #, python-format
 msgid "Result (/1)"
-msgstr ""
+msgstr "Rezultat (/1)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:151
 #, python-format
 msgid "N (Number of Records)"
-msgstr ""
+msgstr "N (število zapisov)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:133
 #, python-format
 msgid "No data"
-msgstr ""
+msgstr "Ni podatkov"
 
 #. module: base_module_quality
 #: model:ir.model,name:base_module_quality.model_module_quality_detail
@@ -263,7 +266,7 @@ msgstr "module.quality.detail"
 #: code:addons/base_module_quality/speed_test/speed_test.py:127
 #, python-format
 msgid "O(n) or worst"
-msgstr ""
+msgstr "O(n) ali najslabši"
 
 #. module: base_module_quality
 #: field:save.report,module_file:0
@@ -277,24 +280,26 @@ msgid ""
 "This test checks where object has workflow or not on it if there is a state "
 "field and several buttons on it and also checks validity of workflow xml file"
 msgstr ""
+"Test preveri, če objekt vsebuje delokrog ali ne, če obstaja polje za stanje "
+"in več gumbov in pa preveri tudi veljavnost xml datoteke delokroga"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:151
 #, python-format
 msgid "Result in %"
-msgstr ""
+msgstr "Rezultat v %"
 
 #. module: base_module_quality
 #: view:quality.check:0
 msgid "This wizard will check module(s) quality"
-msgstr ""
+msgstr "Čarovnik za preverbo kvalitete modulov"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:58
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:88
 #, python-format
 msgid "No python file found"
-msgstr ""
+msgstr "Ni najdenih python datotek"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:144
@@ -313,7 +318,7 @@ msgstr "Sporočilo"
 #: code:addons/base_module_quality/terp_test/terp_test.py:54
 #, python-format
 msgid "The module does not contain the __openerp__.py file"
-msgstr ""
+msgstr "Modul ne vsebuje  __openerp__.py datoteke"
 
 #. module: base_module_quality
 #: view:module.quality.detail:0
@@ -334,24 +339,27 @@ msgid ""
 "wished.\n"
 "</html>"
 msgstr ""
+"<html>O(1) pomeni, da je število SQL zahtevkov za branje objekta neodvisno "
+"od števila branih objektov. To lastnost si v glavnem lahko le želimo.\n"
+"</html>"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:120
 #, python-format
 msgid "__openerp__.py file"
-msgstr ""
+msgstr "__openerp__.py datoteka"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/unit_test/unit_test.py:70
 #, python-format
 msgid "Status"
-msgstr ""
+msgstr "Status"
 
 #. module: base_module_quality
 #: view:module.quality.check:0
 #: field:module.quality.check,check_detail_ids:0
 msgid "Tests"
-msgstr "Preizkusi"
+msgstr "Testi"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:50
@@ -362,12 +370,16 @@ msgid ""
 "needed in order to run it.\n"
 "\n"
 msgstr ""
+"\n"
+"Test preveri hitrost modula. Upoštevajte, da je potrebnih vsaj 5 demo "
+"podatkov, da se lahko zažene.\n"
+"\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:71
 #, python-format
 msgid "Unable to parse the result. Check the details."
-msgstr ""
+msgstr "Ni bilo mogoče razčleniti rezultata. Preveri podrobnosti."
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:33
@@ -376,37 +388,39 @@ msgid ""
 "\n"
 "This test checks if the module satisfy tiny structure\n"
 msgstr ""
+"\n"
+"Test preveri, če modul ustreza tiny strukturi\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:151
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:136
 #, python-format
 msgid "Module Name"
-msgstr ""
+msgstr "Naziv modula"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/unit_test/unit_test.py:56
 #, python-format
 msgid "Error! Module is not properly loaded/installed"
-msgstr ""
+msgstr "Napaka! Modul ni pravilno naložen/nameščen"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:115
 #, python-format
 msgid "Error in Read method"
-msgstr ""
+msgstr "Napaka v metodi branja"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:138
 #, python-format
 msgid "Score is below than minimal score(%s%%)"
-msgstr ""
+msgstr "Izid je pod minimalnim izidom(%s%%)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:151
 #, python-format
 msgid "N/2"
-msgstr ""
+msgstr "N/2"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:57
@@ -414,30 +428,30 @@ msgstr ""
 #: code:addons/base_module_quality/method_test/method_test.py:71
 #, python-format
 msgid "Exception"
-msgstr ""
+msgstr "Izjema"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/base_module_quality.py:100
 #, python-format
 msgid "Test Is Not Implemented"
-msgstr ""
+msgstr "Test ni opravljen"
 
 #. module: base_module_quality
 #: model:ir.model,name:base_module_quality.model_save_report
 msgid "Save Report of Quality"
-msgstr ""
+msgstr "Shrani poročilo o kvaliteti"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:151
 #, python-format
 msgid "N"
-msgstr ""
+msgstr "N"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:143
 #, python-format
 msgid "Feed back About Workflow of Module"
-msgstr ""
+msgstr "Povrate informacije o delokrogu modula"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:73
@@ -446,6 +460,8 @@ msgid ""
 "Given module has no objects.Speed test can work only when new objects are "
 "created in the module along with demo data"
 msgstr ""
+"Dani modul nima objektov. Test hitrosti deluje le, ko so ustvarjeni novi "
+"objekti v modulu skupaj z vzorčnimi podatki"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:32
@@ -455,18 +471,22 @@ msgid ""
 "of Python. See http://www.logilab.org/project/name/pylint for further info.\n"
 " "
 msgstr ""
+"Ta test uporablja Pylint in preverja, če modul ustreza python standardom "
+"kodiranja. Poglejte http://www.logilab.org/project/name/pylint za dodatne "
+"informacije.\n"
+" "
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:116
 #, python-format
 msgid "Error in Read method: %s"
-msgstr ""
+msgstr "Napaka v metodi branja: %s"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:129
 #, python-format
 msgid "No Workflow define"
-msgstr ""
+msgstr "Ni določenega delokroga"
 
 #. module: base_module_quality
 #: selection:module.quality.detail,state:0
@@ -476,12 +496,12 @@ msgstr "Zaključeno"
 #. module: base_module_quality
 #: view:quality.check:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: base_module_quality
 #: view:save.report:0
 msgid "Close"
-msgstr ""
+msgstr "Zaključi"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:32
@@ -490,11 +510,14 @@ msgid ""
 "\n"
 "PEP-8 Test , copyright of py files check, method can not call from loops\n"
 msgstr ""
+"\n"
+"PEP-8 Test, avtorske pravice preverjenih py datotek, metoda ne more biti "
+"klicana iz zank\n"
 
 #. module: base_module_quality
 #: field:module.quality.check,final_score:0
 msgid "Final Score (%)"
-msgstr "Končni rezultat (%)"
+msgstr "Končni izid (%)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:61
@@ -502,23 +525,24 @@ msgstr "Končni rezultat (%)"
 msgid ""
 "Error. Is pylint correctly installed? (http://pypi.python.org/pypi/pylint)"
 msgstr ""
+"Napaka. Je pylint pravilno nameščen? (http://pypi.python.org/pypi/pylint)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:125
 #, python-format
 msgid "Efficient"
-msgstr ""
+msgstr "Učinkovito"
 
 #. module: base_module_quality
 #: field:module.quality.check,name:0
 msgid "Rated Module"
-msgstr "Ocenjevani modul"
+msgstr "Ocenjeni modul"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:33
 #, python-format
 msgid "Workflow Test"
-msgstr ""
+msgstr "Test delokroga"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/unit_test/unit_test.py:36
@@ -529,6 +553,10 @@ msgid ""
 "'unit_test/test.py' is needed in module.\n"
 "\n"
 msgstr ""
+"\n"
+"Test preverja testne primere enot (PyUnit) v modulu. Upoštevajte, da je v "
+"modulu potrebna datoteka 'unit_test/test.py'.\n"
+"\n"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/method_test/method_test.py:32
@@ -538,6 +566,9 @@ msgid ""
 "This test checks if the module classes are raising exception when calling "
 "basic methods or not.\n"
 msgstr ""
+"\n"
+"Test preveri, če razredi v modulu sprožajo izjeme ob klicanju osnovnih "
+"metod.\n"
 
 #. module: base_module_quality
 #: field:module.quality.detail,detail:0
@@ -548,43 +579,43 @@ msgstr "Podrobnosti"
 #: code:addons/base_module_quality/speed_test/speed_test.py:119
 #, python-format
 msgid "Warning! Not enough demo data"
-msgstr ""
+msgstr "Pozor! Ni dovolj vzorčnih podatkov"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pylint_test/pylint_test.py:31
 #, python-format
 msgid "Pylint Test"
-msgstr ""
+msgstr "Pylint Test"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:31
 #, python-format
 msgid "PEP-8 Test"
-msgstr ""
+msgstr "PEP-8 Test"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:187
 #, python-format
 msgid "Field name"
-msgstr ""
+msgstr "Naziv polja"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:151
 #, python-format
 msgid "1"
-msgstr ""
+msgstr "1"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:132
 #, python-format
 msgid "Warning! Object has no demo data"
-msgstr ""
+msgstr "Pozor! Objekt nima vzorčnih podatkov"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:140
 #, python-format
 msgid "Tag Name"
-msgstr ""
+msgstr "Naziv oznake"
 
 #. module: base_module_quality
 #: model:ir.model,name:base_module_quality.model_module_quality_check
@@ -594,42 +625,42 @@ msgstr "module.quality.check"
 #. module: base_module_quality
 #: field:module.quality.detail,name:0
 msgid "Name"
-msgstr "Ime"
+msgstr "Naziv"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:177
 #: code:addons/base_module_quality/workflow_test/workflow_test.py:136
 #, python-format
 msgid "Result of views in %"
-msgstr ""
+msgstr "Rezultat pogledov v %"
 
 #. module: base_module_quality
 #: field:module.quality.detail,score:0
 msgid "Score (%)"
-msgstr "Rezultat (%)"
+msgstr "Izid (%)"
 
 #. module: base_module_quality
 #: help:save.report,name:0
 msgid "Save report as .html format"
-msgstr "Shrani poročilo v fomratu html"
+msgstr "Shrani poročilo v html format"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/base_module_quality.py:269
 #, python-format
 msgid "The module has to be installed before running this test."
-msgstr ""
+msgstr "Modul mora biti pred testiranjem nameščen"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/speed_test/speed_test.py:123
 #, python-format
 msgid "O(1)"
-msgstr ""
+msgstr "O(1)"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/object_test/object_test.py:177
 #, python-format
 msgid "Result of fields in %"
-msgstr ""
+msgstr "Rezultat polj v %"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/unit_test/unit_test.py:70
@@ -645,27 +676,27 @@ msgstr "Povzetek"
 #: field:save.report,name:0
 #, python-format
 msgid "File Name"
-msgstr ""
+msgstr "Naziv datoteke"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/pep8_test/pep8_test.py:274
 #, python-format
 msgid "Line number"
-msgstr ""
+msgstr "Številka vrstice"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/structure_test/structure_test.py:32
 #, python-format
 msgid "Structure Test"
-msgstr ""
+msgstr "Test strukture"
 
 #. module: base_module_quality
 #: field:module.quality.detail,quality_check_id:0
 msgid "Quality"
-msgstr "Kakovost"
+msgstr "Kvaliteta"
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/terp_test/terp_test.py:140
 #, python-format
 msgid "Feed back About terp file of Module"
-msgstr ""
+msgstr "Povratne informacije o terp datoteki v modulu"

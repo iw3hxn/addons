@@ -8,29 +8,29 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Simon Vidmar <Unknown>\n"
+"PO-Revision-Date: 2014-07-27 14:28+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:14+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-28 06:36+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: product_expiry
 #: model:ir.model,name:product_expiry.model_stock_production_lot
 msgid "Production lot"
-msgstr ""
+msgstr "Proizvodni lot"
 
 #. module: product_expiry
 #: model:product.template,name:product_expiry.product_product_from_product_template
 msgid "Ham"
-msgstr "Ham"
+msgstr "Šunka"
 
 #. module: product_expiry
 #: model:product.template,name:product_expiry.product_product_lait_product_template
 msgid "Cow milk"
-msgstr "Cow milk"
+msgstr "Kravje mleko"
 
 #. module: product_expiry
 #: field:product.product,life_time:0
@@ -41,7 +41,7 @@ msgstr "Življenska doba izdelka"
 #: help:stock.production.lot,use_date:0
 msgid ""
 "The date on which the lot starts deteriorating without becoming dangerous."
-msgstr ""
+msgstr "Datum, ko se prične propadanje lota ne da bi bilo nevarno."
 
 #. module: product_expiry
 #: field:product.product,use_time:0
@@ -53,53 +53,56 @@ msgstr "Čas uporabnosti izdelka"
 msgid ""
 "The combination of serial number and internal reference must be unique !"
 msgstr ""
+"Kombinacija serijske številke in notranjega sklica mora biti unikatna!"
 
 #. module: product_expiry
 #: help:stock.production.lot,removal_date:0
 msgid "The date on which the lot should be removed."
-msgstr ""
+msgstr "Datum, na katerega se proizvodni lot odstrani."
 
 #. module: product_expiry
 #: model:ir.model,name:product_expiry.model_product_product
 msgid "Product"
-msgstr "Izdelek"
+msgstr "Proizvod"
 
 #. module: product_expiry
 #: help:product.product,alert_time:0
 msgid ""
 "The number of days after which an alert should be notified about the "
 "production lot."
-msgstr ""
+msgstr "Število dni, po katerih se sproži opozorilo glede proizvodnega lota"
 
 #. module: product_expiry
 #: field:product.product,removal_time:0
 msgid "Product Removal Time"
-msgstr "Čas za umik izdelka"
+msgstr "Čas umika proizvoda"
 
 #. module: product_expiry
 #: field:stock.production.lot,removal_date:0
 msgid "Removal Date"
-msgstr "Datum umika izdelka"
+msgstr "Datum umika"
 
 #. module: product_expiry
 #: help:stock.production.lot,life_date:0
 msgid ""
 "The date on which the lot may become dangerous and should not be consumed."
 msgstr ""
+"Datum, po katerem se lot smatra kot nevaren in neprimeren za potrošnjo."
 
 #. module: product_expiry
 #: model:product.template,name:product_expiry.product_product_pain_product_template
 msgid "Bread"
-msgstr "Bread"
+msgstr "Kruh"
 
 #. module: product_expiry
 #: model:product.uom,name:product_expiry.product_uom_ltr
 #: model:product.uom.categ,name:product_expiry.product_uom_categ_vol
 msgid "LTR"
-msgstr ""
+msgstr "L->D"
 
 #. module: product_expiry
 #: view:product.product:0
+#: view:stock.production.lot:0
 msgid "Dates"
 msgstr "Datumi"
 
@@ -116,12 +119,12 @@ msgstr "Najboljše za uporabo do"
 #. module: product_expiry
 #: model:product.template,name:product_expiry.product_product_jambon_product_template
 msgid "French cheese Camenbert"
-msgstr "French cheese Camenbert"
+msgstr "Francoski sir Camenbert"
 
 #. module: product_expiry
 #: help:product.product,removal_time:0
 msgid "The number of days before a production lot should be removed."
-msgstr ""
+msgstr "Število dni preden se proizvodni lot umakne."
 
 #. module: product_expiry
 #: field:stock.production.lot,alert_date:0
@@ -134,11 +137,13 @@ msgid ""
 "The number of days before a production lot starts deteriorating without "
 "becoming dangerous."
 msgstr ""
+"Število dni preden proizvodni lot prične s propadanjem ne da bi postal "
+"nevaren"
 
 #. module: product_expiry
 #: constraint:product.product:0
 msgid "Error: Invalid ean code"
-msgstr "Napaka: neveljavna EAN črtna koda"
+msgstr "Napaka: neveljavna ean koda"
 
 #. module: product_expiry
 #: help:product.product,life_time:0
@@ -146,14 +151,15 @@ msgid ""
 "The number of days before a production lot may become dangerous and should "
 "not be consumed."
 msgstr ""
+"Število dni preden proizvodni lot postane nevaren in neprimeren za potrošnjo"
 
 #. module: product_expiry
 #: help:stock.production.lot,alert_date:0
 msgid ""
 "The date on which an alert should be notified about the production lot."
-msgstr ""
+msgstr "Datum opozorila glede proizvodnega lota"
 
 #. module: product_expiry
 #: field:product.product,alert_time:0
 msgid "Product Alert Time"
-msgstr "Datum opozorila"
+msgstr "Čas opozorila glede proizvoda"

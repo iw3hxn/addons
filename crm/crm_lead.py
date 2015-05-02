@@ -595,7 +595,7 @@ class crm_lead(crm_case, osv.osv):
                     'comment': lead.description,
                     'section_id': lead.section_id.id or False,
                     'address': []
-        })
+        }, context=context)
         return partner_id
 
     def _lead_set_partner(self, cr, uid, lead, partner_id, context=None):

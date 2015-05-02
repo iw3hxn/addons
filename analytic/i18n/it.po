@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 21:22+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:34+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: analytic
 #: field:account.analytic.account,child_ids:0
@@ -38,7 +38,7 @@ msgid "State"
 msgstr "Stato"
 
 #. module: analytic
-#: field:account.analytic.account,manager_id:0
+#: field:account.analytic.account,user_id:0
 msgid "Account Manager"
 msgstr "Gestore Conti"
 
@@ -120,7 +120,7 @@ msgid "Company"
 msgstr "Azienda"
 
 #. module: analytic
-#: code:addons/analytic/analytic.py:160
+#: code:addons/analytic/analytic.py:138
 #, python-format
 msgid ""
 "If you set a company, the currency selected has to be the same as it's "
@@ -253,8 +253,6 @@ msgid "Full Account Name"
 msgstr "Nome Conto completa"
 
 #. module: analytic
-#: view:account.analytic.account:0
-#: selection:account.analytic.account,type:0
 #: field:account.analytic.line,account_id:0
 #: model:ir.model,name:analytic.model_account_analytic_account
 msgid "Analytic Account"

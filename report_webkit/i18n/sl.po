@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2013-02-23 22:08+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-07-25 13:05+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:20+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-26 07:07+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: report_webkit
 #: view:ir.actions.report.xml:0
 msgid "Webkit Template (used if Report File is not found)"
-msgstr ""
+msgstr "Webkit predloga (uporabljena, če se ne najde datoteka poročila)"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -30,23 +30,23 @@ msgstr "Tabloid 29 279.4 x 431.8 mm"
 #. module: report_webkit
 #: field:res.company,lib_path:0
 msgid "Webkit Executable Path"
-msgstr ""
+msgstr "Webkit pot do izvršljive datoteke"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
 msgid "Ledger  28  431.8 x 279.4 mm"
-msgstr "Ledger  28  431.8 x 279.4 mm"
+msgstr "Register  28  431.8 x 279.4 mm"
 
 #. module: report_webkit
-#: code:addons/report_webkit/webkit_report.py:233
+#: code:addons/report_webkit/webkit_report.py:223
 #, python-format
 msgid "No header defined for this Webkit report!"
-msgstr ""
+msgstr "Za to Webkit poročilo ni definirane glave"
 
 #. module: report_webkit
 #: help:ir.header_img,type:0
 msgid "Image type(png,gif,jpeg)"
-msgstr ""
+msgstr "Tip slike (png,gif,jpeg)"
 
 #. module: report_webkit
 #: help:ir.actions.report.xml,precise_mode:0
@@ -56,6 +56,8 @@ msgid ""
 "                                                         but memory and disk "
 "usage is wider"
 msgstr ""
+"Ta način omogoča natančnejše umeščanje elementov, saj je vsak objekt "
+"natisnjen v ločen HTML, je pa poraba spomina in diska večja."
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -72,12 +74,12 @@ msgstr "Podjetje"
 #: code:addons/report_webkit/webkit_report.py:100
 #, python-format
 msgid "path to Wkhtmltopdf is not absolute"
-msgstr ""
+msgstr "pot do Wkhtmltopdf ni absolutna"
 
 #. module: report_webkit
 #: view:ir.header_webkit:0
 msgid "Company and Page Setup"
-msgstr ""
+msgstr "Nastavitve podjetja in strani"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -97,7 +99,7 @@ msgstr "B7  21  88 x 125 mm"
 #: code:addons/report_webkit/webkit_report.py:296
 #, python-format
 msgid "Webkit render"
-msgstr ""
+msgstr "Webkit render"
 
 #. module: report_webkit
 #: view:res.company:0
@@ -107,7 +109,7 @@ msgstr "Glave"
 #. module: report_webkit
 #: help:ir.header_img,name:0
 msgid "Name of Image"
-msgstr ""
+msgstr "Naziv slike"
 
 #. module: report_webkit
 #: code:addons/report_webkit/webkit_report.py:94
@@ -117,18 +119,21 @@ msgid ""
 "                                'Given path is not executable or path is "
 "wrong"
 msgstr ""
+"Napačna pot do Wkhtmltopdf določena v podjetju'+\n"
+"                                'Dana pot ni nastavljena kot izvršljiva ali "
+"pa je napačna"
 
 #. module: report_webkit
 #: code:addons/report_webkit/webkit_report.py:167
 #, python-format
 msgid "Webkit raise an error"
-msgstr ""
+msgstr "Webkit sproži napako"
 
 #. module: report_webkit
 #: model:ir.actions.act_window,name:report_webkit.action_header_webkit
 #: model:ir.ui.menu,name:report_webkit.menu_header_webkit
 msgid "Webkit Headers/Footers"
-msgstr ""
+msgstr "Webkit glave/noge"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -158,6 +163,14 @@ msgid ""
 "form.'+\n"
 "                             'Minimal version is 0.9.9"
 msgstr ""
+"Namestite izvršilno datoteko v svoj sistem'+\n"
+"                             ' (sudo apt-get install wkhtmltopdf) ali pa jo "
+"prenesite od tu:'+\n"
+"                             ' "
+"http://code.google.com/p/wkhtmltopdf/downloads/list in nastavite'+\n"
+"                             ' pot do izvršljive datoteke v obrazcu "
+"podjetje.'+\n"
+"                             'Minimal verzija je 0.9.9"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -167,7 +180,7 @@ msgstr "B6  20  125 x 176 mm"
 #. module: report_webkit
 #: view:report.webkit.actions:0
 msgid "_Cancel"
-msgstr ""
+msgstr "_Preklic"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -182,12 +195,12 @@ msgstr "ir.header_img"
 #. module: report_webkit
 #: field:ir.actions.report.xml,precise_mode:0
 msgid "Precise Mode"
-msgstr ""
+msgstr "Natančni način"
 
 #. module: report_webkit
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr ""
+msgstr "Napaka! Ne morete ustvariti rekurzivnih podjetij."
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -202,23 +215,23 @@ msgstr "C5E 24  163 x 229 mm"
 #. module: report_webkit
 #: field:ir.header_img,type:0
 msgid "Type"
-msgstr "Vrsta"
+msgstr "Tip"
 
 #. module: report_webkit
-#: code:addons/report_webkit/wizard/report_webkit_actions.py:133
+#: code:addons/report_webkit/wizard/report_webkit_actions.py:137
 #, python-format
 msgid "Client Actions Connections"
-msgstr ""
+msgstr "Povezave dejanj odjemalca"
 
 #. module: report_webkit
 #: field:res.company,header_image:0
 msgid "Available Images"
-msgstr ""
+msgstr "Razpoložljive slike"
 
 #. module: report_webkit
 #: field:ir.header_webkit,html:0
 msgid "webkit header"
-msgstr ""
+msgstr "webkit glava"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -233,13 +246,13 @@ msgstr "A1  6   594 x 841 mm"
 #. module: report_webkit
 #: help:ir.actions.report.xml,webkit_header:0
 msgid "The header linked to the report"
-msgstr ""
+msgstr "Glava povezana s poročilom"
 
 #. module: report_webkit
 #: code:addons/report_webkit/webkit_report.py:81
 #, python-format
 msgid "Wkhtmltopdf library path is not set in company"
-msgstr ""
+msgstr "pot do Wkhtmltopdf knjižnic v podjetju ni nastavljena"
 
 #. module: report_webkit
 #: view:ir.actions.report.xml:0
@@ -250,7 +263,7 @@ msgstr "Webkit"
 #. module: report_webkit
 #: help:ir.header_webkit,format:0
 msgid "Select Proper Paper size"
-msgstr "Izberite velikost papirja"
+msgstr "Izberite primerno velikost papirja"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -271,6 +284,7 @@ msgstr "A6  10  105 x 148 mm"
 #: help:ir.actions.report.xml,report_webkit_data:0
 msgid "This template will be used if the main report file is not found"
 msgstr ""
+"Ta predloga bo uporabljena, če se datoteka glavnega poročila ne najde"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -280,13 +294,13 @@ msgstr "Folio 27  210 x 330 mm"
 #. module: report_webkit
 #: field:ir.header_webkit,margin_top:0
 msgid "Top Margin (mm)"
-msgstr ""
+msgstr "Gornji rob (mm)"
 
 #. module: report_webkit
 #: code:addons/report_webkit/webkit_report.py:224
 #, python-format
 msgid "Please set a header in company settings"
-msgstr ""
+msgstr "Nastavite glavo v nastavitvah podjetja"
 
 #. module: report_webkit
 #: view:report.webkit.actions:0
@@ -299,6 +313,8 @@ msgid ""
 "Check this to add a Print action for this Report in the sidebar of the "
 "corresponding document types"
 msgstr ""
+"Označite za dodajanje dejanja Tiskaj za to poročilo v stransko vrstico "
+"ustrezajočih tipov dokumentov"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -308,12 +324,12 @@ msgstr "B3  18  353 x 500 mm"
 #. module: report_webkit
 #: field:ir.actions.report.xml,webkit_header:0
 msgid "Webkit Header"
-msgstr ""
+msgstr "Glava webkit"
 
 #. module: report_webkit
 #: help:ir.actions.report.xml,webkit_debug:0
 msgid "Enable the webkit engine debugger"
-msgstr ""
+msgstr "Omogoči webkit razhroščevalnik"
 
 #. module: report_webkit
 #: field:ir.header_img,img:0
@@ -323,7 +339,7 @@ msgstr "Slika"
 #. module: report_webkit
 #: field:res.company,header_webkit:0
 msgid "Available html"
-msgstr ""
+msgstr "Razpoložljiv html"
 
 #. module: report_webkit
 #: help:report.webkit.actions,open_action:0
@@ -331,6 +347,7 @@ msgid ""
 "Check this to view the newly added internal print action after creating it "
 "(technical view) "
 msgstr ""
+"Označi za pogled novo dodanega dejanja tiskaj po nastanku (tehnični pogled) "
 
 #. module: report_webkit
 #: view:res.company:0
@@ -360,7 +377,7 @@ msgstr "A2  7   420 x 594 mm"
 #. module: report_webkit
 #: field:report.webkit.actions,print_button:0
 msgid "Add print button"
-msgstr ""
+msgstr "Dodaj gumb natisni"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -370,7 +387,7 @@ msgstr "A9  13  37 x 52 mm"
 #. module: report_webkit
 #: view:ir.header_webkit:0
 msgid "Footer"
-msgstr ""
+msgstr "Noga"
 
 #. module: report_webkit
 #: model:ir.model,name:report_webkit.model_res_company
@@ -380,27 +397,27 @@ msgstr "Podjetja"
 #. module: report_webkit
 #: field:ir.header_webkit,margin_bottom:0
 msgid "Bottom Margin (mm)"
-msgstr ""
+msgstr "Spodnji rob (mm)"
 
 #. module: report_webkit
 #: model:ir.model,name:report_webkit.model_report_webkit_actions
 msgid "Webkit Actions"
-msgstr ""
+msgstr "Webkit dejanja"
 
 #. module: report_webkit
 #: field:report.webkit.actions,open_action:0
 msgid "Open added action"
-msgstr ""
+msgstr "Odpri dodano dejanje"
 
 #. module: report_webkit
 #: field:ir.header_webkit,margin_right:0
 msgid "Right Margin (mm)"
-msgstr ""
+msgstr "Desni rob (mm)"
 
 #. module: report_webkit
 #: field:ir.header_webkit,orientation:0
 msgid "Orientation"
-msgstr "Smer prikaza"
+msgstr "Usmerjenost"
 
 #. module: report_webkit
 #: help:res.company,lib_path:0
@@ -409,11 +426,14 @@ msgid ""
 "Install a static version of the library if you experience missing "
 "header/footers on Linux."
 msgstr ""
+"Polna pot do izvršilne datoteke wkhtmltopdf. Zahtevana verzija 0.9.9. "
+"Namestite statično verzijo knjižnic v kolikor se vam pojavljajo manjkajoče "
+"glave/noge (Linux)"
 
 #. module: report_webkit
 #: help:ir.header_webkit,html:0
 msgid "Set Webkit Report Header"
-msgstr ""
+msgstr "Nastavi glavo Webkit poročila"
 
 #. module: report_webkit
 #: field:ir.header_webkit,format:0
@@ -423,7 +443,7 @@ msgstr "Velikost papirja"
 #. module: report_webkit
 #: view:ir.header_webkit:0
 msgid "Header"
-msgstr ""
+msgstr "Glava"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -433,12 +453,12 @@ msgstr ":B10    16  31 x 44 mm"
 #. module: report_webkit
 #: view:ir.header_webkit:0
 msgid "CSS Style"
-msgstr ""
+msgstr "CSS stil"
 
 #. module: report_webkit
 #: field:ir.header_webkit,css:0
 msgid "Header CSS"
-msgstr ""
+msgstr "Glava CSS"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -449,7 +469,7 @@ msgstr "B4  19  250 x 353 mm"
 #: model:ir.actions.act_window,name:report_webkit.action_header_img
 #: model:ir.ui.menu,name:report_webkit.menu_header_img
 msgid "Webkit Logos"
-msgstr ""
+msgstr "Webkit logotipi"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -459,17 +479,17 @@ msgstr "A3  8   297 x 420 mm"
 #. module: report_webkit
 #: field:ir.actions.report.xml,report_webkit_data:0
 msgid "Webkit Template"
-msgstr ""
+msgstr "Webkit predloga"
 
 #. module: report_webkit
 #: field:ir.header_webkit,footer_html:0
 msgid "webkit footer"
-msgstr ""
+msgstr "webkit noga"
 
 #. module: report_webkit
 #: field:ir.actions.report.xml,webkit_debug:0
 msgid "Webkit debug"
-msgstr ""
+msgstr "Webkit razhroščevanje"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -484,7 +504,7 @@ msgstr "B0  14  1000 x 1414 mm"
 #. module: report_webkit
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Naziv podjetja mora biti unikaten!"
 
 #. module: report_webkit
 #: field:ir.header_img,name:0
@@ -506,7 +526,7 @@ msgstr "A8  12  52 x 74 mm"
 #: model:ir.actions.act_window,name:report_webkit.wizard_ofdo_report_actions
 #: view:report.webkit.actions:0
 msgid "Add Print Buttons"
-msgstr ""
+msgstr "Dodaj gumbe 'Natisni'"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -517,15 +537,15 @@ msgstr "Comm10E 25  105 x 241 mm, U.S. Common 10 Envelope"
 #: code:addons/report_webkit/webkit_report.py:218
 #, python-format
 msgid "Webkit Report template not found !"
-msgstr ""
+msgstr "Predloga Webkit poročila ni najdena!"
 
 #. module: report_webkit
 #: field:ir.header_webkit,margin_left:0
 msgid "Left Margin (mm)"
-msgstr ""
+msgstr "Levi rob (mm)"
 
 #. module: report_webkit
-#: code:addons/report_webkit/webkit_report.py:228
+#: code:addons/report_webkit/webkit_report.py:218
 #, python-format
 msgid "Error!"
 msgstr "Napaka!"
@@ -533,7 +553,7 @@ msgstr "Napaka!"
 #. module: report_webkit
 #: help:ir.header_webkit,footer_html:0
 msgid "Set Webkit Report Footer."
-msgstr ""
+msgstr "Nastavi nogo Webkit poročila"
 
 #. module: report_webkit
 #: selection:ir.header_webkit,format:0
@@ -543,4 +563,4 @@ msgstr "B9  23  33 x 62 mm"
 #. module: report_webkit
 #: model:ir.model,name:report_webkit.model_ir_actions_report_xml
 msgid "ir.actions.report.xml"
-msgstr ""
+msgstr "ir.actions.report.xml"

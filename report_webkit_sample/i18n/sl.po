@@ -1,0 +1,123 @@
+# Slovenian translation for matmoz
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the matmoz package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: matmoz\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-02-08 00:37+0000\n"
+"PO-Revision-Date: 2014-07-25 13:07+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
+"Language-Team: Slovenian <sl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-07-26 07:07+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:37
+msgid "Refund"
+msgstr "Dobropis"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:22
+msgid "Fax"
+msgstr "Faks"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "Disc.(%)"
+msgstr "Popust (%)"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:19
+msgid "Tel"
+msgstr "Tel"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "Description"
+msgstr "Opis"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:35
+msgid "Supplier Invoice"
+msgstr "Račun dobavitelja"
+
+#. module: report_webkit_sample
+#: model:ir.actions.report.xml,name:report_webkit_sample.report_webkit_html
+msgid "WebKit invoice"
+msgstr "WebKit račun"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "Price"
+msgstr "Cena"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:44
+msgid "Invoice Date"
+msgstr "Datum računa"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "Taxes"
+msgstr "Davki"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "QTY"
+msgstr "KOL"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:25
+msgid "E-mail"
+msgstr "E-pošta"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:64
+msgid "Amount"
+msgstr "Znesek"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:64
+msgid "Base"
+msgstr "Osnova"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:33
+msgid "Invoice"
+msgstr "Račun"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:39
+msgid "Supplier Refund"
+msgstr "Dobropis dobavitelja"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:44
+msgid "Document"
+msgstr "Dokument"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:49
+msgid "Unit Price"
+msgstr "Cena enote"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:44
+msgid "Partner Ref."
+msgstr "Sklic partnerja"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:28
+msgid "VAT"
+msgstr "DDV"
+
+#. module: report_webkit_sample
+#: report:addons/report_webkit_sample/report/report_webkit_html.mako:76
+msgid "Total"
+msgstr "Skupaj"

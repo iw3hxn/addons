@@ -1,0 +1,36 @@
+# Slovenian translation for matmoz
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the matmoz package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: matmoz\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-02-08 00:36+0000\n"
+"PO-Revision-Date: 2014-07-26 12:42+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
+"Language-Team: Slovenian <sl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-07-27 06:22+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
+
+#. module: fetchmail_hr_recruitment
+#: model:ir.actions.act_window,help:fetchmail_hr_recruitment.action_link_applicant_to_email_account
+msgid ""
+"You can synchronize the job email account (e.g. job@yourcompany.com) with "
+"OpenERP so that new applicants are created automatically in OpenERP for the "
+"followup of the recruitment process. Attachments are automatically stored in "
+"the DMS of OpenERP so that you get an indexation of all the CVs received."
+msgstr ""
+"Sinhronizirate lahko e-poštni račun delovnega mesta (npr. "
+"delo@podjetje.com), da ob prejemu e-pošte samodejno ustvarja prosilce za "
+"spremljanje procesa kadrovanja. Priloge se samodejno shranijo v DMS, tako da "
+"se vsi CV indeksirajo."
+
+#. module: fetchmail_hr_recruitment
+#: model:ir.actions.act_window,name:fetchmail_hr_recruitment.action_link_applicant_to_email_account
+msgid "Create Applicants from Email Account"
+msgstr "Ustvari prosilce iz e-poštnega računa"

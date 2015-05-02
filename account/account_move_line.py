@@ -1063,6 +1063,9 @@ class account_move_line(osv.osv):
             elif field == 'credit':
                 f.set('sum', _("Total credit"))
 
+            elif field == 'residual':
+                f.set('sum', _("Total residual"))
+
             elif field == 'move_id':
                 f.set('required', 'False')
 
@@ -1172,7 +1175,7 @@ class account_move_line(osv.osv):
         if ('account_id' in vals) and not account_obj.read(cr, uid, vals['account_id'], ['active'])['active']:
             raise osv.except_osv(_('Bad account!'), _('You can not use an inactive account!'))
         if update_check:
-            if ('account_id' in vals) or ('journal_id' in vals) or ('period_id' in vals) or ('move_id' in vals) or ('debit' in vals) or ('credit' in vals) or ('date' in vals):
+            if ('account_id' in vals) or ('journal_id' in vals) or ('period_id' in vals) or ('debit' in vals) or ('credit' in vals) or ('date' in vals): #SC: or ('move_id' in vals) #removed to add entries in reconcilied entries
                 self._update_check(cr, uid, ids, context)
 
         todo_date = None
@@ -1197,7 +1200,7 @@ class account_move_line(osv.osv):
             if journal.centralisation:
                 self._check_moves(cr, uid, context=ctx)
         result = super(account_move_line, self).write(cr, uid, ids, vals, context)
-        if check:
+        if check and not context.get('novalidate'):
             done = []
             for line in self.browse(cr, uid, ids):
                 if line.move_id.id not in done:
@@ -1394,7 +1397,7 @@ class account_move_line(osv.osv):
                     self.create(cr, uid, data, context)
             del vals['account_tax_id']
 
-        if check and ((not context.get('no_store_function')) or journal.entry_posted):
+        if check and ((not context.get('no_store_function')) or journal.entry_posted) and not context.get('novalidate'):
             tmp = move_obj.validate(cr, uid, [vals['move_id']], context)
             if journal.entry_posted and tmp:
                 move_obj.button_validate(cr,uid, [vals['move_id']], context)

@@ -101,10 +101,10 @@ class crm_make_sale(osv.osv_memory):
                     'partner_shipping_id': partner_addr['delivery'],
                     'date_order': fields.date.context_today(self,cr,uid,context=context),
                     'fiscal_position': fpos,
-                    'payment_term':payment_term,
+                    'payment_term': payment_term,
+                    'user_id': make.user_id.id,
                 }
-                if partner.id:
-                    vals['user_id'] = partner.user_id and partner.user_id.id or uid
+
                 new_id = sale_obj.create(cr, uid, vals, context=context)
                 sale_order = sale_obj.browse(cr, uid, new_id, context=context)
                 case_obj.write(cr, uid, [case.id], {'ref': 'sale.order,%s' % new_id})
@@ -112,7 +112,7 @@ class crm_make_sale(osv.osv_memory):
                 message = _("Opportunity  '%s' is converted to Quotation.") % (case.name)
                 self.log(cr, uid, case.id, message)
                 case_obj.message_append(cr, uid, [case], _("Converted to Sales Quotation(%s).") % (sale_order.name), context=context)
-
+                
             if make.close:
                 case_obj.case_close(cr, uid, data)
             if not new_ids:
@@ -148,11 +148,13 @@ class crm_make_sale(osv.osv_memory):
         'shop_id': fields.many2one('sale.shop', 'Shop', required=True),
         'partner_id': fields.many2one('res.partner', 'Customer', required=True, domain=[('customer','=',True)]),
         'close': fields.boolean('Close Opportunity', help='Check this to close the opportunity after having created the sale order.'),
+        'user_id': fields.many2one('res.users', 'User To Assign'),
     }
     _defaults = {
          'shop_id': _get_shop_id,
          'close': False,
          'partner_id': _selectPartner,
+         'user_id': lambda obj, cr, uid, context: uid,
     }
 
 crm_make_sale()

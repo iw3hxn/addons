@@ -444,6 +444,11 @@ class purchase_order(osv.osv):
         }
          
     def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
+
+        price_unit = 0
+        if order_line.product_qty != 0.0:
+            price_unit = order_line.price_subtotal / order_line.product_qty
+
         return {
             'name': order.name + ': ' + (order_line.name or ''),
             'product_id': order_line.product_id.id,
@@ -461,7 +466,7 @@ class purchase_order(osv.osv):
             'state': 'draft',
             'purchase_line_id': order_line.id,
             'company_id': order.company_id.id,
-            'price_unit': order_line.price_unit
+            'price_unit': price_unit
         }
 
     def _create_pickings(self, cr, uid, order, order_lines, picking_id=False, context=None):

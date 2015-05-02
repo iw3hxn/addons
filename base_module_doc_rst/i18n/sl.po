@@ -7,19 +7,19 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Fabien (Open ERP) <fp@tinyerp.com>\n"
+"PO-Revision-Date: 2014-07-26 12:01+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:51+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-27 06:22+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: base_module_doc_rst
 #: view:ir.module.module:0
 msgid "You can save this image as .png file"
-msgstr ""
+msgstr "To sliko lahko sharnite kot .png datoteko"
 
 #. module: base_module_doc_rst
 #: wizard_view:tech.guide.rst,init:0
@@ -29,12 +29,12 @@ msgstr "Tehnična navodila v rst formatu"
 #. module: base_module_doc_rst
 #: wizard_button:create.relation.graph,init,end:0
 msgid "Ok"
-msgstr ""
+msgstr "V redu"
 
 #. module: base_module_doc_rst
 #: wizard_view:create.relation.graph,init:0
 msgid "(Relationship Graphs generated)"
-msgstr ""
+msgstr "Graf relacij generiran"
 
 #. module: base_module_doc_rst
 #: wizard_view:tech.guide.rst,init:0
@@ -45,7 +45,7 @@ msgstr ""
 #. module: base_module_doc_rst
 #: model:ir.model,name:base_module_doc_rst.model_ir_module_module
 msgid "Module"
-msgstr ""
+msgstr "Modul"
 
 #. module: base_module_doc_rst
 #: wizard_field:tech.guide.rst,init,name:0
@@ -60,14 +60,14 @@ msgstr "Izdelaj RST tehnična navodila"
 #. module: base_module_doc_rst
 #: model:ir.actions.wizard,name:base_module_doc_rst.wiz_gen_graph
 msgid "Generate Relationship Graph"
-msgstr ""
+msgstr "Generiraj graf relacij"
 
 #. module: base_module_doc_rst
 #: wizard_view:create.relation.graph,init:0
 #: view:ir.module.module:0
 #: field:ir.module.module,file_graph:0
 msgid "Relationship Graph"
-msgstr ""
+msgstr "Relacijski graf"
 
 #. module: base_module_doc_rst
 #: wizard_field:tech.guide.rst,init,rst_file:0
@@ -82,7 +82,7 @@ msgstr "Zapri"
 #. module: base_module_doc_rst
 #: model:ir.actions.report.xml,name:base_module_doc_rst.report_proximity_graph
 msgid "Proximity graph"
-msgstr ""
+msgstr "Graf relativne sosedščine (Gabrielov graf)"
 
 #. module: base_module_doc_rst
 #: wizard_view:tech.guide.rst,init:0

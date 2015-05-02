@@ -7,34 +7,34 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2013-01-27 18:06+0000\n"
-"Last-Translator: Stanko Zvonar <stanko.zvonar@mentis.si>\n"
+"PO-Revision-Date: 2014-08-07 12:07+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:46+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-08 06:45+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: account_followup
 #: view:account_followup.followup:0
 msgid "Search Followup"
-msgstr ""
+msgstr "Iskalnik opominov"
 
 #. module: account_followup
 #: view:account_followup.stat:0
-#: view:res.partner:0
 msgid "Group By..."
-msgstr "Združeno po..."
+msgstr "Združi po..."
 
 #. module: account_followup
 #: view:res.company:0
 #: field:res.company,follow_up_msg:0
 msgid "Follow-up Message"
-msgstr ""
+msgstr "Besedilo opomina"
 
 #. module: account_followup
-#: field:account_followup.print,followup_id:0
+#: view:account_followup.followup:0
+#: field:account_followup.followup,followup_line:0
 msgid "Follow-Up"
 msgstr "Opomin"
 
@@ -42,7 +42,7 @@ msgstr "Opomin"
 #: help:account.followup.print.all,test_print:0
 msgid ""
 "Check if you want to print followups without changing followups level."
-msgstr ""
+msgstr "Potrdi za tisk opominov brez spreminjanja nivoja opominov."
 
 #. module: account_followup
 #: model:account_followup.followup.line,description:account_followup.demo_followup_line2
@@ -67,6 +67,12 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Spoštovani,\n"
+"Iz naših poslovnih knjig je razvidno, da imate zapadle obveznosti do našega "
+"podjetja.\n"
+"Prosimo, da svoj dolg takoj poravnate na naš račun.\n"
+"Če ste svoj dolg že poravnali, upoštevajte opomin za brezpredmeten.\n"
 
 #. module: account_followup
 #: field:account_followup.followup,company_id:0
@@ -74,17 +80,15 @@ msgstr ""
 #: field:account_followup.stat,company_id:0
 #: field:account_followup.stat.by.partner,company_id:0
 msgid "Company"
-msgstr "Družba"
+msgstr "Podjetje"
 
 #. module: account_followup
 #: report:account_followup.followup.print:0
-#: code:addons/account_followup/account_followup.py:259
-#, python-format
 msgid "Invoice Date"
 msgstr "Datum računa"
 
 #. module: account_followup
-#: field:account_followup.print,email_subject:0
+#: field:account.followup.print.all,email_subject:0
 msgid "Email Subject"
 msgstr "Predmet e-pošte"
 
@@ -92,7 +96,7 @@ msgstr "Predmet e-pošte"
 #: model:ir.actions.act_window,help:account_followup.action_followup_stat
 msgid ""
 "Follow up on the reminders sent over to your partners for unpaid invoices."
-msgstr ""
+msgstr "Opomini poslani partnerjem za neplačane račune."
 
 #. module: account_followup
 #: view:account.followup.print.all:0
@@ -103,7 +107,7 @@ msgstr "Legenda"
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Follow up Entries with period in current year"
-msgstr ""
+msgstr "Postavke opominov po obdobjih v tekočem letu."
 
 #. module: account_followup
 #: view:account.followup.print.all:0
@@ -112,15 +116,13 @@ msgstr "V redu"
 
 #. module: account_followup
 #: report:account_followup.followup.print:0
-#: code:addons/account_followup/account_followup.py:263
-#, python-format
 msgid "Amount"
 msgstr "Znesek"
 
 #. module: account_followup
 #: sql_constraint:account.move.line:0
 msgid "Wrong credit or debit value in accounting entry !"
-msgstr "Napačna kreditna ali debetna vrednost na temeljnici !"
+msgstr "Napačna vrednost računovodskega vnosa v dobro ali v breme!"
 
 #. module: account_followup
 #: selection:account_followup.followup.line,start:0
@@ -131,7 +133,7 @@ msgstr "Neto dni"
 #: model:ir.actions.act_window,name:account_followup.action_account_followup_definition_form
 #: model:ir.ui.menu,name:account_followup.account_followup_menu
 msgid "Follow-Ups"
-msgstr ""
+msgstr "Opomini"
 
 #. module: account_followup
 #: view:account_followup.stat.by.partner:0
@@ -149,16 +151,16 @@ msgid ""
 "The date of your Journal Entry is not in the defined period! You should "
 "change the date or remove this constraint from the journal."
 msgstr ""
+"Datum vašega vnosa v dnevnik ni v določenem obdobju! Morali bi spremeniti "
+"datum ali odstraniti omejitve."
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(heading)s: Move line header"
-msgstr ""
+msgstr "%(heading)s: Naslov postavke premika"
 
 #. module: account_followup
-#: view:account_followup.followup:0
-#: field:account_followup.followup,followup_line:0
-#: view:res.partner:0
+#: field:account.followup.print,followup_id:0
 msgid "Follow-up"
 msgstr "Opomin"
 
@@ -171,7 +173,6 @@ msgstr "DDV:"
 #: view:account_followup.stat:0
 #: field:account_followup.stat,partner_id:0
 #: field:account_followup.stat.by.partner,partner_id:0
-#: model:ir.model,name:account_followup.model_res_partner
 msgid "Partner"
 msgstr "Partner"
 
@@ -181,12 +182,12 @@ msgid "Date :"
 msgstr "Datum:"
 
 #. module: account_followup
-#: field:account_followup.print,partner_ids:0
+#: field:account.followup.print.all,partner_ids:0
 msgid "Partners"
 msgstr "Partnerji"
 
 #. module: account_followup
-#: code:addons/account_followup/wizard/account_followup_print.py:254
+#: code:addons/account_followup/wizard/account_followup_print.py:142
 #, python-format
 msgid "Invoices Reminder"
 msgstr "Opomnik za račune"
@@ -194,22 +195,22 @@ msgstr "Opomnik za račune"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_followup
 msgid "Account Follow Up"
-msgstr "Konto opomina"
+msgstr "Računovodski opomin"
 
 #. module: account_followup
 #: selection:account_followup.followup.line,start:0
 msgid "End of Month"
-msgstr "Zaključek meseca"
+msgstr "Konec meseca"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Not Litigation"
-msgstr "Nepravno"
+msgstr "Ni sporno"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(user_signature)s: User name"
-msgstr "%(user_signature)s: Ime uporabnika"
+msgstr "%(user_signature)s: Naziv uporabnika"
 
 #. module: account_followup
 #: field:account_followup.stat,debit:0
@@ -223,6 +224,9 @@ msgid ""
 "You can send them the default message for unpaid invoices or manually enter "
 "a message should you need to remind them of a specific information."
 msgstr ""
+"Ta funkcija omogoča pošiljanje opominov  partnerjem z nezaprtimi računi. "
+"Pošilja se lahko privzeto sporočilo o  neporavnanih računih ali pa ročno "
+"vnese specifično besedilo."
 
 #. module: account_followup
 #: report:account_followup.followup.print:0
@@ -232,32 +236,32 @@ msgstr "Sklic"
 #. module: account_followup
 #: help:account_followup.followup.line,sequence:0
 msgid "Gives the sequence order when displaying a list of follow-up lines."
-msgstr "Omogoča določiti zaporedje vrstic na listi opomina."
+msgstr "Zaporedje v seznamu postavk opomina"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 #: field:account.followup.print.all,email_body:0
 msgid "Email body"
-msgstr "Tekst sporočila"
+msgstr "Vsebina sporočila"
 
 #. module: account_followup
 #: field:account.move.line,followup_line_id:0
-#: view:account_followup.stat:0
 msgid "Follow-up Level"
 msgstr "Nivo opomina"
 
 #. module: account_followup
 #: field:account_followup.stat,date_followup:0
+#: field:account_followup.stat.by.partner,date_followup:0
 msgid "Latest followup"
 msgstr "Zadnji opomin"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "Select Partners to Remind"
-msgstr ""
+msgstr "Izbira partnerjev za opomin"
 
 #. module: account_followup
-#: field:account_followup.print,partner_lang:0
+#: field:account.followup.print.all,partner_lang:0
 msgid "Send Email in Partner Language"
 msgstr "Pošlji email v jeziku partnerja"
 
@@ -282,6 +286,12 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Spoštovani,\n"
+"Iz naših poslovnih knjig je razvidno, da imate zapadle obveznosti do našega "
+"podjetja.\n"
+"Prosimo, da svoj dolg takoj poravnate na naš račun.\n"
+"Če ste svoj dolg že poravnali, upoštevajte opomin za brezpredmeten.\n"
 
 #. module: account_followup
 #: field:account_followup.followup.line,description:0
@@ -295,7 +305,7 @@ msgstr "Izpisano sporočilo"
 #: model:ir.actions.act_window,name:account_followup.action_account_followup_print_all
 #: model:ir.ui.menu,name:account_followup.account_followup_print_menu
 msgid "Send followups"
-msgstr ""
+msgstr "Pošlji opomine"
 
 #. module: account_followup
 #: view:account_followup.stat.by.partner:0
@@ -316,6 +326,9 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Vsi e-maili so bili uspešno poslani partnerjem:\n"
+"\n"
+"%s"
 
 #. module: account_followup
 #: constraint:account_followup.followup.line:0
@@ -333,21 +346,23 @@ msgid ""
 "currency. You should remove the secondary currency on the account or select "
 "a multi-currency view on the journal."
 msgstr ""
+"Izbrani konto zahteva sekundarno valuto. Odstranite sekundarno valuto na "
+"kontu ali pa izberite več-valutni pogled."
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "Send Mails"
-msgstr ""
+msgstr "Pošlji e-pošto"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_stat_by_partner
 msgid "Followup Statistics by Partner"
-msgstr ""
+msgstr "Statistika opominov partnerjem"
 
 #. module: account_followup
 #: view:account_followup.followup.line:0
 msgid "Message"
-msgstr ""
+msgstr "Sporočilo"
 
 #. module: account_followup
 #: field:account_followup.stat,blocked:0
@@ -364,15 +379,19 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"\n"
+"\n"
+"E-mail je bil uspešno poslan naslednjim partnerjem.!\n"
+"%s"
 
 #. module: account_followup
-#: help:account_followup.print,date:0
+#: help:account.followup.print,date:0
 msgid ""
 "This field allow you to select a forecast date to plan your follow-ups"
-msgstr "To polje omogoča napoved  datuma za plan opominov."
+msgstr "Izbira predvidenega datuma opominov"
 
 #. module: account_followup
-#: field:account_followup.print,date:0
+#: field:account.followup.print,date:0
 msgid "Follow-up Sending Date"
 msgstr "Datum pošiljanja opomina"
 
@@ -380,7 +399,7 @@ msgstr "Datum pošiljanja opomina"
 #: code:addons/account_followup/wizard/account_followup_print.py:56
 #, python-format
 msgid "Select Partners"
-msgstr ""
+msgstr "Izbira partnerjev"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
@@ -390,7 +409,7 @@ msgstr "Nastavitve e-pošte"
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "Print Follow Ups"
-msgstr ""
+msgstr "Tiskanje opominov"
 
 #. module: account_followup
 #: field:account.move.line,followup_date:0
@@ -400,12 +419,12 @@ msgstr "Zadnji opomin"
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_stat
 msgid "Followup Statistics"
-msgstr ""
+msgstr "Statistika opominov"
 
 #. module: account_followup
 #: view:account_followup.followup.line:0
 msgid "%(user_signature)s: User Name"
-msgstr ""
+msgstr "%(user_signature)s: Uporabnik"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_move_line
@@ -415,7 +434,7 @@ msgstr "Postavke dnevnika"
 #. module: account_followup
 #: constraint:account.move.line:0
 msgid "You can not create journal items on an account of type view."
-msgstr ""
+msgstr "Ne morete ustvariti dnevniške postavke na kontu tipa pogled"
 
 #. module: account_followup
 #: field:account.followup.print.all,email_conf:0
@@ -430,20 +449,21 @@ msgstr "Skupaj:"
 #. module: account_followup
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr ""
+msgstr "Napaka! Ne morete ustvariti rekurzivnih podjetij."
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(company_name)s: User's Company name"
-msgstr "%(company_name)s: Ime podjetja uporabnika"
+msgstr "%(company_name)s: Naziv uporabnikovega podjetja"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_res_company
 msgid "Companies"
-msgstr ""
+msgstr "Podjetja"
 
 #. module: account_followup
-#: field:account_followup.print,summary:0
+#: view:account.followup.print.all:0
+#: field:account.followup.print.all,summary:0
 msgid "Summary"
 msgstr "Povzetek"
 
@@ -460,20 +480,19 @@ msgstr "Datum zapadlosti"
 #. module: account_followup
 #: view:account_followup.followup.line:0
 msgid "%(partner_name)s: Partner Name"
-msgstr ""
+msgstr "%(partner_name)s: Naziv parterja"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Follow-Up lines"
-msgstr ""
+msgstr "Postavke opomina"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(company_currency)s: User's Company Currency"
-msgstr ""
+msgstr "%(company_currency)s: valuta podjetja"
 
 #. module: account_followup
-#: field:account.move.line,result:0
 #: view:account_followup.stat:0
 #: field:account_followup.stat,balance:0
 #: field:account_followup.stat.by.partner,balance:0
@@ -483,29 +502,29 @@ msgstr "Stanje"
 #. module: account_followup
 #: field:account_followup.followup.line,start:0
 msgid "Type of Term"
-msgstr ""
+msgstr "Vrsta termina"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_print
 #: model:ir.model,name:account_followup.model_account_followup_print_all
 msgid "Print Followup & Send Mail to Customers"
-msgstr ""
+msgstr "Natisni opomine & pošlji e-pošto kupcem"
 
 #. module: account_followup
 #: field:account_followup.stat,date_move_last:0
 #: field:account_followup.stat.by.partner,date_move_last:0
 msgid "Last move"
-msgstr "Zadnja sprememba"
+msgstr "Zadnji premik"
 
 #. module: account_followup
 #: model:ir.actions.report.xml,name:account_followup.account_followup_followup_report
 msgid "Followup Report"
-msgstr ""
+msgstr "Poročilo o opominjanju"
 
 #. module: account_followup
 #: view:account_followup.followup.line:0
 msgid "Follow-Up Steps"
-msgstr ""
+msgstr "Koraki pri opominjanju"
 
 #. module: account_followup
 #: field:account_followup.stat,period_id:0
@@ -513,20 +532,21 @@ msgid "Period"
 msgstr "Obdobje"
 
 #. module: account_followup
-#: code:addons/account_followup/wizard/account_followup_print.py:300
+#: code:addons/account_followup/wizard/account_followup_print.py:307
 #, python-format
 msgid "Followup Summary"
-msgstr ""
+msgstr "Povzetek opomina"
 
 #. module: account_followup
-#: view:account_followup.print:0
+#: view:account.followup.print:0
+#: view:account.followup.print.all:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Litigation"
-msgstr "Pravdanje"
+msgstr "Spor"
 
 #. module: account_followup
 #: field:account_followup.stat.by.partner,max_followup_id:0
@@ -536,12 +556,12 @@ msgstr "Maksimalni  nivo opomina"
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.action_view_account_followup_followup_form
 msgid "Review Invoicing Follow-Ups"
-msgstr ""
+msgstr "Pregled obračunskih opominov"
 
 #. module: account_followup
 #: constraint:account.move.line:0
 msgid "Company must be the same for its related account and period."
-msgstr ""
+msgstr "Podjetje mora biti enako za povezan konto in obdobje."
 
 #. module: account_followup
 #: model:ir.actions.act_window,help:account_followup.action_account_followup_definition_form
@@ -551,11 +571,14 @@ msgid ""
 "code to adapt the email content to the good context (good name, good date) "
 "and you can manage the multi language of messages."
 msgstr ""
+"Določite nivoje opomina, njegova besedila in odloge. Za vsak korak se določi "
+"sporočilo in dan odloga. Uporabite legendo za kodo e-poštne vsebine. "
+"Sporočila so lahko večjezična."
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.act_account_partner_account_move_payable_all
 msgid "Payable Items"
-msgstr ""
+msgstr "Plačljive postavke"
 
 #. module: account_followup
 #: code:addons/account_followup/wizard/account_followup_print.py:298
@@ -565,17 +588,20 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
+"Naslednjim partnerjem e-pošta ni bila poslana, e-poštni naslov ni na voljo!\n"
+"\n"
+"%s"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(followup_amount)s: Total Amount Due"
-msgstr "%(followup_amount)s: Skupaj dolgovani znesek"
+msgstr "%(followup_amount)s: Skupaj zapadli znesek"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 #: view:account_followup.followup.line:0
 msgid "%(date)s: Current Date"
-msgstr "%(date)s: Trenutni datum"
+msgstr "%(date)s: Tekoči datum"
 
 #. module: account_followup
 #: view:account_followup.stat:0
@@ -585,25 +611,23 @@ msgstr "Dnevnik spornih postavk"
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Followup Level"
-msgstr ""
+msgstr "Nivo Opomina"
 
 #. module: account_followup
+#: field:account_followup.followup,description:0
 #: report:account_followup.followup.print:0
-#: field:account_followup.sending.results,description:0
-#: code:addons/account_followup/account_followup.py:260
-#, python-format
 msgid "Description"
 msgstr "Opis"
 
 #. module: account_followup
 #: constraint:account_followup.followup:0
 msgid "Only One Followup by Company."
-msgstr ""
+msgstr "Samo en opomin na podjetje"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "This Fiscal year"
-msgstr "To poslovno leto"
+msgstr "To fiskalno leto"
 
 #. module: account_followup
 #: view:account.move.line:0
@@ -611,45 +635,47 @@ msgid "Partner entries"
 msgstr "Postavke parterja"
 
 #. module: account_followup
-#: help:account_followup.print,partner_lang:0
+#: help:account.followup.print.all,partner_lang:0
 msgid ""
 "Do not change message text, if you want to send email in partner language, "
 "or configure from company"
 msgstr ""
-"Ne spreminjajte besedilo sporočila, če želite poslati e-pošto v jeziku "
-"partnerja ali konfigurirajte iz družbe"
+"Če želite poslati e-pošto v jeziku partnerja, ne spreminjajte besedila "
+"sporočila ali pa ga nastavite v obrazcu podjetja."
 
 #. module: account_followup
 #: model:ir.actions.act_window,name:account_followup.act_account_partner_account_move_all
 msgid "Receivable Items"
-msgstr ""
+msgstr "Postavke terjatev"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 #: model:ir.actions.act_window,name:account_followup.action_followup_stat
+#: model:ir.ui.menu,name:account_followup.menu_action_followup_stat_follow
 msgid "Follow-ups Sent"
 msgstr "Opomini so poslani"
 
 #. module: account_followup
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Naziv podjetja mora biti unikaten!"
 
 #. module: account_followup
 #: field:account_followup.followup,name:0
+#: field:account_followup.followup.line,name:0
 msgid "Name"
-msgstr "Ime"
+msgstr "Naziv"
 
 #. module: account_followup
 #: field:account_followup.stat,date_move:0
 #: field:account_followup.stat.by.partner,date_move:0
 msgid "First move"
-msgstr "Prva sprememba"
+msgstr "Prvi premik"
 
 #. module: account_followup
 #: report:account_followup.followup.print:0
 msgid "Li."
-msgstr "Li"
+msgstr "Obveznost"
 
 #. module: account_followup
 #: view:account.followup.print:0
@@ -690,16 +716,27 @@ msgid ""
 "\n"
 "Best Regards,\n"
 msgstr ""
+"\n"
+"Spoštovani,\n"
+"\n"
+"Kljub številnim opominom, vaš dolg še vedno ni poravnan.\n"
+"\n"
+"Prosimo, da vaše spodaj navedene obveznosti poravnate v  8 dneh ali pa bomo "
+"prisiljeni dolg sodno izterjati.\n"
+"\n"
+"Za morebitna dodatna pojasnila smo vam na voljo.\n"
+"\n"
+"V veri, da tovrsten ukrep ne bo potreben vas lepo pozdravljamo.\n"
 
 #. module: account_followup
 #: constraint:account.move.line:0
 msgid "You can not create journal items on closed account."
-msgstr ""
+msgstr "Na zaprtem kontu ni mogoče ustvariti dnevniških postavk"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(line)s: Ledger Posting lines"
-msgstr ""
+msgstr "%(line)s: Postavke glavne knjige"
 
 #. module: account_followup
 #: field:account_followup.followup.line,sequence:0
@@ -709,7 +746,7 @@ msgstr "Zaporedje"
 #. module: account_followup
 #: view:account_followup.followup.line:0
 msgid "%(company_name)s: User's Company Name"
-msgstr ""
+msgstr "%(company_name)s: Naziv uporabnikovega podjetja"
 
 #. module: account_followup
 #: report:account_followup.followup.print:0
@@ -717,21 +754,21 @@ msgid "Customer Ref :"
 msgstr "Sklic stranke:"
 
 #. module: account_followup
-#: field:account_followup.print,test_print:0
+#: field:account.followup.print.all,test_print:0
 msgid "Test Print"
-msgstr "Print test"
+msgstr "Poskusno tiskanje"
 
 #. module: account_followup
 #: view:account.followup.print.all:0
 msgid "%(partner_name)s: Partner name"
-msgstr ""
+msgstr "%(partner_name)s: Naziv partnerja"
 
 #. module: account_followup
 #: view:account_followup.stat:0
 msgid "Latest Followup Date"
-msgstr ""
+msgstr "Datum zadnjega opomina"
 
 #. module: account_followup
 #: model:ir.model,name:account_followup.model_account_followup_followup_line
 msgid "Follow-Up Criteria"
-msgstr ""
+msgstr "Kriteriji opomina"

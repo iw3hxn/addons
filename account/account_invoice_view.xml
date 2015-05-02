@@ -66,7 +66,7 @@
                     <separator string="Notes" colspan="4"/>
                     <field colspan="4" name="note" nolabel="1"/>
                     <separator colspan="4" string="Taxes"/>
-                    <field colspan="4" name="invoice_line_tax_id" context="{'type':parent.type}" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]" nolabel="1"/>
+                    <field colspan="4" name="invoice_line_tax_id" context="{'type':parent.type}" domain="[('parent_id','=',False),('company_id', '=', parent.company_id)]" nolabel="1" required="1"/>
                 </form>
             </field>
         </record>
@@ -168,12 +168,12 @@
                             <field name="reference_type" nolabel="1" size="0"/>
                             <field name="reference" nolabel="1"/>
                             <field name="date_due"/>
-                            <field name="tax_calculation_rounding_method"/>
+                            <field name="tax_calculation_rounding_method" invisible="1"/>
                             <field colspan="4" context="{'address_invoice_id': address_invoice_id, 'partner_id': partner_id, 'price_type': 'price_type' in dir() and price_type or False, 'type': type}" name="invoice_line" nolabel="1">
                                 <tree string="Invoice lines">
                                     <field name="product_id" on_change="product_id_change(product_id, uos_id, quantity, name, parent.type, parent.partner_id, parent.fiscal_position, price_unit, parent.address_invoice_id, parent.currency_id, context, parent.company_id)"/>
                                     <field domain="[('company_id', '=', parent.company_id), ('journal_id', '=', parent.journal_id), ('type', '&lt;&gt;', 'view')]" name="account_id" on_change="onchange_account_id(product_id,parent.partner_id,parent.type,parent.fiscal_position,account_id)"/>
-                                    <field name="invoice_line_tax_id" view_mode="2" context="{'type':parent.type}" domain="[('parent_id','=',False)]"/>
+                                    <field name="invoice_line_tax_id" view_mode="2" context="{'type':parent.type}" domain="[('parent_id','=',False)]" required="1"/>
                                     <field domain="[('type','&lt;&gt;','view'), ('company_id', '=', parent.company_id), ('parent_id', '!=', False)]" name="account_analytic_id" groups="analytic.group_analytic_accounting"/>
                                     <field name="quantity"/>
                                     <field name="price_unit"/>
@@ -312,7 +312,7 @@
                                     <button name="%(action_account_invoice_refund)d" type='action' string='Refund' states='open,paid' icon="gtk-execute"/>
                                     <button name="invoice_proforma2" states="draft" string="PRO-FORMA" icon="terp-gtk-media-pause" groups="account.group_account_user"/>
                                     <button name="invoice_open" states="draft,proforma2" string="Validate" icon="gtk-go-forward"/>
-                                    <button name="%(account_invoices)d" string="Print Invoice" type="action" icon="gtk-print" states="open,paid,proforma,sale,proforma2"/>
+                                    <button name="%(account_invoices)d" string="Print Invoice" type="action" icon="gtk-print" />
                                 </group>
                             </group>
                         </page>

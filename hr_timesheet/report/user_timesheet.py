@@ -75,7 +75,7 @@ class report_custom(report_rml):
                 "and line.user_id=%s and line.date >= %s and line.date < %s "
                 "order by line.date",
                 (user_id, som.strftime('%Y-%m-%d'), eom.strftime('%Y-%m-%d')))
-
+            
             for presence in cr.dictfetchall():
                 day = int(presence['date'][-2:])
                 account = accounts.setdefault((presence['account_id'], presence['name']), {})

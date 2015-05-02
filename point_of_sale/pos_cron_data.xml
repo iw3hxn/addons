@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="1">
+
+        <record id="ir_cron_pos_close_action" model="ir.cron">
+            <field name="name">Close POS Register (remember to change user_id)</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="active">False</field>
+            <field name="numbercall">-1</field>
+            <field eval="False" name="doall"/>
+            <field eval="'pos.close.statement'" name="model"/>
+            <field eval="'_autoclose'" name="function"/>
+            <field eval="'()'" name="args"/>
+        </record>
+
+    </data>
+</openerp>

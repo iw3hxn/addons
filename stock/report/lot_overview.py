@@ -25,20 +25,29 @@ from report import report_sxw
 class lot_overview(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(lot_overview, self).__init__(cr, uid, name, context=context)
+        self.context = context
         self.price_total = 0.0
         self.grand_total = 0.0
         self.localcontext.update({
             'time': time,
-            'process':self.process,
+            'process': self.process,
             'price_total': self._price_total,
-            'grand_total_price':self._grand_total,
+            'grand_total_price': self._grand_total,
         })
 
-    def process(self,location_id):
+    def process(self, location_id):
         location_obj = pooler.get_pool(self.cr.dbname).get('stock.location')
-        data = location_obj._product_get_report(self.cr,self.uid, [location_id])
+        # search product_ids
+        stock_move_obj = pooler.get_pool(self.cr.dbname).get('stock.move')
+        move_ids = stock_move_obj.search(self.cr, self.uid, ['|', ('location_id', 'child_of', location_id), ('location_dest_id', 'child_of', location_id)])
+        product_ids = []
+        for move in stock_move_obj.browse(self.cr, self.uid, move_ids, self.context):
+            if move.product_id.id not in product_ids:
+                product_ids.append(move.product_id.id)
 
-        data['location_name'] = location_obj.read(self.cr, self.uid, [location_id],['complete_name'])[0]['complete_name']
+        data = location_obj._product_get_report(self.cr, self.uid, [location_id], product_ids, self.context, recursive=False)
+
+        data['location_name'] = location_obj.browse(self.cr, self.uid, [location_id], context=self.context)[0].complete_name
         self.price_total = 0.0
         self.price_total += data['total_price']
         self.grand_total += data['total_price']
@@ -50,7 +59,7 @@ class lot_overview(report_sxw.rml_parse):
     def _grand_total(self):
         return self.grand_total
 
-report_sxw.report_sxw('report.lot.stock.overview', 'stock.location', 'addons/stock/report/lot_overview.rml', parser=lot_overview,header='internal')
+report_sxw.report_sxw('report.lot.stock.overview', 'stock.location', 'addons/stock/report/lot_overview.rml', parser=lot_overview, header='internal')
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

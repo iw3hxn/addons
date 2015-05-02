@@ -8,77 +8,77 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2013-01-16 19:21+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-08-08 10:43+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:07+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-09 05:35+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: lunch
 #: view:lunch.cashbox.clean:0
 msgid "Reset cashbox"
-msgstr ""
+msgstr "Ponastavi blagajno"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "Box amount in current year"
-msgstr ""
+msgstr "Blagajniški znesek v tekočem letu"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_order_form
 #: model:ir.ui.menu,name:lunch.menu_lunch_order_form
 #: model:ir.ui.menu,name:lunch.menu_lunch_reporting_order
 msgid "Lunch Orders"
-msgstr ""
+msgstr "Naročila kosil"
 
 #. module: lunch
 #: view:lunch.order.cancel:0
 msgid "Are you sure you want to cancel this order ?"
-msgstr ""
+msgstr "Ste prepričani, da želite preklicati to naročilo?"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_cashmove_form
 #: model:ir.ui.menu,name:lunch.menu_lunch_cashmove_form
 msgid "Cash Moves"
-msgstr ""
+msgstr "Premiki gotovine"
 
 #. module: lunch
-#: view:lunch.cashmove:0
-#: view:lunch.order.line:0
+#: view:lunch.cashmove:0 view:lunch.order:0 view:report.lunch.amount:0
+#: view:report.lunch.order:0
 msgid "Group By..."
-msgstr "Združeno po..."
+msgstr "Združi po..."
 
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_order_confirm
 msgid "confirm Order"
-msgstr ""
+msgstr "potrdi naročilo"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "    7 Days    "
-msgstr ""
+msgstr "    7 dni    "
 
 #. module: lunch
-#: view:lunch.order.line:0
+#: view:lunch.cashmove:0 view:lunch.order:0
 msgid "Today"
 msgstr "Danes"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "March"
 msgstr "Marec"
 
 #. module: lunch
-#: report:lunch.order.line:0
+#: report:lunch.order:0
 msgid "Total :"
 msgstr "Skupaj:"
 
 #. module: lunch
-#: field:lunch.alert,specific_day:0
-#: field:report.lunch.order.line,day:0
+#: field:report.lunch.amount,day:0 view:report.lunch.order:0
+#: field:report.lunch.order,day:0
 msgid "Day"
 msgstr "Dan"
 
@@ -88,7 +88,7 @@ msgstr "Dan"
 #: model:ir.model,name:lunch.model_lunch_order_cancel view:lunch.order:0
 #: view:lunch.order.cancel:0
 msgid "Cancel Order"
-msgstr ""
+msgstr "Preklic naročila"
 
 #. module: lunch
 #: model:ir.actions.act_window,help:lunch.action_create_cashbox
@@ -96,208 +96,209 @@ msgid ""
 "You can create on cashbox by employee if you want to keep track of the "
 "amount due by employee according to what have been ordered."
 msgstr ""
+"Ustvarite lahko blagajne po kadrih, če želite spremljati dolgove kadrov "
+"glede na, kaj je bilo naročeno."
 
 #. module: lunch
-#: field:lunch.cashmove,amount:0
+#: field:lunch.cashmove,amount:0 field:report.lunch.amount,amount:0
 msgid "Amount"
 msgstr "Znesek"
 
 #. module: lunch
-#: model:ir.actions.act_window,name:lunch.action_lunch_products
-#: model:ir.ui.menu,name:lunch.menu_lunch_products
-#: field:lunch.order,order_line_ids:0
+#: model:ir.actions.act_window,name:lunch.action_lunch_product_form
+#: model:ir.ui.menu,name:lunch.menu_lunch_product_form view:lunch.product:0
 msgid "Products"
 msgstr "Izdelki"
 
 #. module: lunch
 #: model:ir.model,name:lunch.model_report_lunch_amount
 msgid "Amount available by user and box"
-msgstr ""
+msgstr "Razpoložljivi znesek po uporabniku in blagajni"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "   Month   "
-msgstr ""
+msgstr "   Mesec   "
 
 #. module: lunch
-#: model:ir.model,name:lunch.model_report_lunch_order_line
+#: model:ir.model,name:lunch.model_report_lunch_order
 msgid "Lunch Orders Statistics"
-msgstr ""
+msgstr "Statistika naročil kosil"
 
 #. module: lunch
 #: view:lunch.cashmove:0 field:lunch.order,cashmove:0
 msgid "CashMove"
-msgstr ""
+msgstr "Premik gotovine"
 
 #. module: lunch
-#: selection:lunch.order,state:0
+#: view:lunch.order:0 selection:lunch.order,state:0
 msgid "Confirmed"
 msgstr "Potrjeno"
 
 #. module: lunch
-#: view:lunch.order.line:0
+#: view:lunch.order.confirm:0
 msgid "Confirm"
 msgstr "Potrdi"
 
 #. module: lunch
 #: view:lunch.order:0
 msgid "Search Lunch Order"
-msgstr ""
+msgstr "Iskanje naročil kosil"
 
 #. module: lunch
 #: field:lunch.order,state:0
 msgid "State"
-msgstr ""
+msgstr "Stanje"
 
 #. module: lunch
 #: selection:lunch.order,state:0
-#: selection:lunch.order.line,state:0
 msgid "New"
 msgstr "Novo"
 
 #. module: lunch
-#: field:report.lunch.order.line,price_total:0
+#: field:report.lunch.order,price_total:0
 msgid "Total Price"
-msgstr "Skupna cena"
+msgstr "Skupaj cena"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "Box Amount by User"
-msgstr ""
+msgstr "Blagajniški znesek po uporabniku"
 
 #. module: lunch
 #: field:lunch.cashmove,create_date:0
 msgid "Creation Date"
-msgstr ""
+msgstr "Datum nastanka"
 
 #. module: lunch
-#: report:lunch.order.line:0
+#: report:lunch.order:0
 msgid "Name/Date"
-msgstr ""
+msgstr "Naziv/datum"
 
 #. module: lunch
 #: field:lunch.order,descript:0
 msgid "Description Order"
-msgstr ""
+msgstr "Opis naročila"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "Box amount in last month"
-msgstr ""
+msgstr "Blagajniški znesek v zadnjem mesecu"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_order_confirm
 #: model:ir.actions.act_window,name:lunch.action_lunch_order_confirm_values
 #: view:lunch.order:0 view:lunch.order.confirm:0
 msgid "Confirm Order"
-msgstr ""
+msgstr "Potrdi naročilo"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "July"
 msgstr "Julij"
 
 #. module: lunch
 #: view:lunch.cashmove:0 view:report.lunch.amount:0 view:report.lunch.order:0
 msgid "Box"
-msgstr ""
+msgstr "Blagajna"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "  365 Days  "
-msgstr ""
+msgstr "  365 dni  "
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "    Month-1    "
-msgstr ""
+msgstr "    Mesec-1    "
 
 #. module: lunch
 #: field:report.lunch.amount,date:0
 msgid "Created Date"
-msgstr ""
+msgstr "Ustvarjeno dne"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_category_form
 msgid " Product Categories "
-msgstr ""
+msgstr " Kategorije proizvodov "
 
 #. module: lunch
 #: view:lunch.cashbox.clean:0
 msgid "Set to Zero"
-msgstr ""
+msgstr "Nastavi na ničlo"
 
 #. module: lunch
-#: field:lunch.order.line,cashmove:0
+#: model:ir.model,name:lunch.model_lunch_cashmove
 msgid "Cash Move"
-msgstr ""
+msgstr "Premik gotovine"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "Tasks performed in last 365 days"
-msgstr ""
+msgstr "Opravila opravljena v zadnjih 365 dneh"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "April"
 msgstr "April"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "September"
 msgstr "September"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "December"
 msgstr "December"
 
 #. module: lunch
-#: field:report.lunch.order.line,month:0
+#: field:report.lunch.amount,month:0 view:report.lunch.order:0
+#: field:report.lunch.order,month:0
 msgid "Month"
 msgstr "Mesec"
 
 #. module: lunch
 #: field:lunch.order.confirm,confirm_cashbox:0
 msgid "Name of box"
-msgstr ""
+msgstr "Naziv blagajne"
 
 #. module: lunch
 #: view:lunch.order.cancel:0
 msgid "Yes"
-msgstr ""
+msgstr "Da"
 
 #. module: lunch
+#: model:ir.model,name:lunch.model_lunch_category view:lunch.category:0
+#: view:lunch.order:0 field:lunch.order,category:0
 #: field:lunch.product,category_id:0
-#: field:lunch.product.category,name:0
 msgid "Category"
 msgstr "Kategorija"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "  Year  "
-msgstr ""
+msgstr "  Leto  "
 
 #. module: lunch
-#: model:ir.actions.act_window,name:lunch.action_lunch_product_categories
-#: model:ir.ui.menu,name:lunch.menu_lunch_product_categories
+#: model:ir.ui.menu,name:lunch.menu_lunch_category_form
 msgid "Product Categories"
-msgstr "Skupine izdelkov"
+msgstr "Kategorije proizvodov"
 
 #. module: lunch
 #: view:lunch.cashbox.clean:0 view:lunch.order.cancel:0
 msgid "No"
-msgstr ""
+msgstr "Ne"
 
 #. module: lunch
 #: view:lunch.order.confirm:0
 msgid "Orders Confirmation"
-msgstr ""
+msgstr "Potrditev naročil"
 
 #. module: lunch
 #: view:lunch.cashbox.clean:0
 msgid "Are you sure you want to reset this cashbox ?"
-msgstr ""
+msgstr "Ste prepričani, da želite ponastaviti blagajno?"
 
 #. module: lunch
 #: model:ir.actions.act_window,help:lunch.view_lunch_product_form_installer
@@ -307,9 +308,13 @@ msgid ""
 "by supplier. It will be easier for the lunch manager to filter lunch orders "
 "by categories."
 msgstr ""
+"Določite vse proizvode, ki jih kadri lahko naročajo za kosilo. Če kosila "
+"naročate na različnih krajih, lahko uporabite kategorije proizvodov za "
+"razdelitev po dobaviteljih. Tako bo za upravitelja kosil lažje filtrirati "
+"naročila."
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "August"
 msgstr "Avgust"
 
@@ -317,165 +322,153 @@ msgstr "Avgust"
 #: model:ir.actions.act_window,name:lunch.action_report_lunch_order_all
 #: view:report.lunch.order:0
 msgid "Lunch Order Analysis"
-msgstr ""
+msgstr "Analiza naročil kosil"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "June"
 msgstr "Junij"
 
 #. module: lunch
-#: field:lunch.cashmove,user_id:0
-#: field:lunch.order,user_id:0
-#: field:report.lunch.order.line,user_id:0
+#: field:lunch.cashmove,user_cashmove:0 field:lunch.order,user_id:0
+#: field:report.lunch.amount,user_id:0 field:report.lunch.order,user_id:0
 msgid "User Name"
 msgstr "Uporabniško ime"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "Sales Analysis"
-msgstr ""
+msgstr "Prodajne analize"
 
 #. module: lunch
-#: model:ir.module.category,name:lunch.module_lunch_category
-#: model:ir.ui.menu,name:lunch.menu_lunch
-#: model:ir.ui.menu,name:lunch.menu_lunch_title
+#: model:ir.ui.menu,name:lunch.menu_lunch_category_root_configuration
 msgid "Lunch"
-msgstr ""
+msgstr "Kosilo"
 
 #. module: lunch
-#: field:lunch.order.line,user_id:0
-#: model:res.groups,name:lunch.group_lunch_user
+#: view:lunch.cashmove:0 view:report.lunch.order:0
 msgid "User"
 msgstr "Uporabnik"
 
 #. module: lunch
-#: field:lunch.cashmove,date:0
-#: field:lunch.order,date:0
-#: field:lunch.order.line,date:0
+#: view:lunch.cashmove:0 field:lunch.order,date:0
 msgid "Date"
 msgstr "Datum"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "November"
 msgstr "November"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "October"
 msgstr "Oktober"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "January"
 msgstr "Januar"
 
 #. module: lunch
 #: field:lunch.cashmove,box:0 field:report.lunch.amount,box:0
 msgid "Box Name"
-msgstr ""
+msgstr "Naziv blagajne"
 
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_cashbox_clean
 msgid "clean cashbox"
-msgstr ""
+msgstr "čista blagajna"
 
 #. module: lunch
 #: field:lunch.cashmove,active:0 field:lunch.product,active:0
 msgid "Active"
-msgstr ""
+msgstr "Aktiven"
 
 #. module: lunch
-#: field:report.lunch.order.line,date:0
+#: field:report.lunch.order,date:0
 msgid "Date Order"
 msgstr "Datum naročila"
 
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_cashbox
 msgid "Cashbox for Lunch "
-msgstr ""
+msgstr "Blagajna za kosila "
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_cashbox_clean
 #: model:ir.actions.act_window,name:lunch.action_lunch_cashbox_clean_values
 msgid "Set CashBox to Zero"
-msgstr ""
+msgstr "Nastavi blagajno na ničlo"
 
 #. module: lunch
 #: view:lunch.product:0
 msgid "General Information"
-msgstr ""
+msgstr "Splošni podatki"
 
 #. module: lunch
-#: view:lunch.cancel:0
-#: view:lunch.order.line:0
-#: view:lunch.order.order:0
-#: view:lunch.validation:0
+#: view:lunch.order.confirm:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_lunch_cashbox_form
 msgid " Cashboxes "
-msgstr ""
+msgstr " Blagajne "
 
 #. module: lunch
-#: report:lunch.order.line:0
+#: report:lunch.order:0
 msgid "Unit Price"
 msgstr "Cena enote"
 
 #. module: lunch
-#: field:lunch.order.line,product_id:0
-#: field:lunch.product,name:0
+#: field:lunch.order,product:0
 msgid "Product"
-msgstr "Izdelek"
+msgstr "Proizvod"
 
 #. module: lunch
-#: field:lunch.cashmove,description:0
-#: report:lunch.order.line:0
+#: field:lunch.cashmove,name:0 report:lunch.order:0 view:lunch.product:0
 #: field:lunch.product,description:0
 msgid "Description"
 msgstr "Opis"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "May"
 msgstr "Maj"
 
 #. module: lunch
-#: field:lunch.order.line,price:0
-#: field:lunch.product,price:0
+#: field:lunch.order,price:0 field:lunch.product,price:0
 msgid "Price"
 msgstr "Cena"
 
 #. module: lunch
 #: view:lunch.cashmove:0
 msgid "Search CashMove"
-msgstr ""
+msgstr "Iskanje premikov gotovine"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "Total box"
-msgstr ""
+msgstr "Skupaj blagajna"
 
 #. module: lunch
 #: model:ir.model,name:lunch.model_lunch_product
 msgid "Lunch Product"
-msgstr ""
+msgstr "Proizvod za kosila"
 
 #. module: lunch
 #: field:lunch.cashbox,sum_remain:0
 msgid "Total Remaining"
-msgstr ""
+msgstr "Skupaj preostalo"
 
 #. module: lunch
 #: view:lunch.order:0
 msgid "Total price"
-msgstr ""
+msgstr "Skupaj cena"
 
 #. module: lunch
-#: selection:report.lunch.order.line,month:0
+#: selection:report.lunch.amount,month:0 selection:report.lunch.order,month:0
 msgid "February"
 msgstr "Februar"
 
@@ -483,86 +476,83 @@ msgstr "Februar"
 #: field:lunch.cashbox,name:0 field:lunch.category,name:0
 #: field:lunch.product,name:0 field:report.lunch.order,box_name:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: lunch
 #: view:lunch.cashmove:0
 msgid "Total amount"
-msgstr ""
+msgstr "Skupni znesek"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "Tasks performed in last 30 days"
-msgstr ""
+msgstr "Opravila opravljena v zadnjih 30 dneh"
 
 #. module: lunch
 #: view:lunch.category:0
 msgid "Category related to Products"
-msgstr ""
+msgstr "Kategorije v zvezi s proizvodi"
 
 #. module: lunch
 #: model:ir.ui.menu,name:lunch.menu_lunch_cashbox_form view:lunch.cashbox:0
 msgid "Cashboxes"
-msgstr ""
+msgstr "Blagajne"
 
 #. module: lunch
-#: field:lunch.cashmove,order_id:0
-#: selection:lunch.cashmove,state:0
-#: report:lunch.order.line:0
-#: view:lunch.order.line:0
-#: field:lunch.order.line,order_id:0
+#: view:lunch.category:0 report:lunch.order:0 view:lunch.order:0
 msgid "Order"
 msgstr "Naročilo"
 
 #. module: lunch
 #: model:ir.actions.report.xml,name:lunch.report_lunch_order
 #: model:ir.model,name:lunch.model_lunch_order
-#: report:lunch.order.line:0
+#: model:ir.ui.menu,name:lunch.menu_lunch report:lunch.order:0
 msgid "Lunch Order"
-msgstr ""
+msgstr "Naročilo kosila"
 
 #. module: lunch
 #: view:report.lunch.amount:0
 msgid "Box amount in current month"
-msgstr ""
+msgstr "Znesek blagajne v tekočem mesecu"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.view_lunch_product_form_installer
 msgid "Define Your Lunch Products"
-msgstr ""
+msgstr "Določite svoje proizvode za kosila"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "Tasks during last 7 days"
-msgstr ""
+msgstr "Opravila zadnjih 7 dni"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_report_lunch_amount_tree
 #: model:ir.ui.menu,name:lunch.menu_lunch_report_amount_tree
 msgid "Cash Position by User"
-msgstr ""
+msgstr "Gotovinsko stanje po uporabnikih"
 
 #. module: lunch
-#: model:res.groups,name:lunch.group_lunch_manager
+#: field:lunch.cashbox,manager:0
 msgid "Manager"
-msgstr "Vodja"
+msgstr "Upravitelj"
 
 #. module: lunch
 #: view:report.lunch.order:0
 msgid "   30 Days   "
-msgstr ""
+msgstr "   30 Dni   "
 
 #. module: lunch
 #: view:lunch.order:0
 msgid "To Confirm"
-msgstr ""
+msgstr "Za potrditev"
 
 #. module: lunch
-#: field:report.lunch.order.line,year:0
+#: field:report.lunch.amount,year:0 view:report.lunch.order:0
+#: field:report.lunch.order,year:0
 msgid "Year"
 msgstr "Leto"
 
 #. module: lunch
 #: model:ir.actions.act_window,name:lunch.action_create_cashbox
 msgid "Create Lunch Cash Boxes"
-msgstr ""
+msgstr "Ustvari blagajne za kosila"

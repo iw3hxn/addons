@@ -23,6 +23,7 @@
 -
   !record {model: account.invoice, id: account_invoice_supplier0}:
     account_id: account.a_pay
+    type: in_invoice
     address_contact_id: base.res_partner_address_3000
     address_invoice_id: base.res_partner_address_3000
     check_total: 3000.0
@@ -40,12 +41,17 @@
     journal_id: account.expenses_journal
     partner_id: base.res_partner_desertic_hispafuentes
     reference_type: none
-    type: in_invoice
+    
 -
   I check that Initially supplier invoice state is "Draft"
 -
   !assert {model: account.invoice, id: account_invoice_supplier0}:
     - state == 'draft'
+-
+  I check that the supplier invoice is a "Supplier Invoice"
+-
+  !assert {model: account.invoice, id: account_invoice_supplier0, string: This is not a supplier invoice}:
+    - type == 'in_invoice'
 -
   I change the state of invoice to open by clicking Validate button
 -

@@ -8,19 +8,19 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-08-01 12:59+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:58+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-02 06:24+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: document_ftp
 #: model:ir.model,name:document_ftp.model_document_ftp_configuration
 msgid "Auto Directory Configuration"
-msgstr "Avto konfiguracija map"
+msgstr "Samodejna nastavitev map"
 
 #. module: document_ftp
 #: view:document.ftp.configuration:0
@@ -31,11 +31,15 @@ msgid ""
 "format is HOST:PORT and the default host (localhost) is only suitable for "
 "access from the server machine itself.."
 msgstr ""
+"Določa omrežni naslov, na katerem bo dosegljiv vaš OpenERP strežnik za "
+"končne uporabnike. To je odvisno od topologije in nastavitev vašega omrežja. "
+"Vpliva samo na povezavo, ki se izpiše uporabniku. Format je HOST:PORT in "
+"privzeti strežnik (localhost) je primeren samo za dostop iz strežnika samega."
 
 #. module: document_ftp
-#: model:ir.actions.act_url,name:document_ftp.action_document_browse
+#: model:ir.actions.url,name:document_ftp.action_document_browse
 msgid "Browse Files"
-msgstr "Brskanje Datoteke"
+msgstr "Brskanje po datotekah"
 
 #. module: document_ftp
 #: field:document.ftp.configuration,config_logo:0
@@ -73,12 +77,12 @@ msgstr ""
 #. module: document_ftp
 #: model:ir.ui.menu,name:document_ftp.menu_document_browse
 msgid "Shared Repository (FTP)"
-msgstr ""
+msgstr "Deljeni repozitorij (FTP)"
 
 #. module: document_ftp
 #: view:document.ftp.browse:0
 msgid "_Cancel"
-msgstr "_Prekliči"
+msgstr "_Preklic"
 
 #. module: document_ftp
 #: view:document.ftp.configuration:0
@@ -88,27 +92,27 @@ msgstr "Konfiguriraj FTP strežnik"
 #. module: document_ftp
 #: view:document.ftp.configuration:0
 msgid "title"
-msgstr "naslov"
+msgstr "naziv"
 
 #. module: document_ftp
 #: model:ir.model,name:document_ftp.model_document_ftp_browse
 msgid "Document FTP Browse"
-msgstr ""
+msgstr "FTP brskanje po dokumentih"
 
 #. module: document_ftp
 #: view:document.ftp.configuration:0
 msgid "Knowledge Application Configuration"
-msgstr ""
+msgstr "Nastavitev aplikacije baze znanja"
 
 #. module: document_ftp
 #: model:ir.actions.act_window,name:document_ftp.action_ftp_browse
 msgid "Document Browse"
-msgstr ""
+msgstr "Brskanje po dokumentih"
 
 #. module: document_ftp
 #: view:document.ftp.browse:0
 msgid "Browse Document"
-msgstr ""
+msgstr "Brskanje po dokumentu"
 
 #. module: document_ftp
 #: view:document.ftp.configuration:0

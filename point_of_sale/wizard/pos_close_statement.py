@@ -30,6 +30,16 @@ class pos_close_statement(osv.osv_memory):
         if context.get('cancel_action'):
             return context['cancel_action']
 
+    def _autoclose(self, cr, uid, automatic=False, use_new_cursor=False, context=None):
+        """
+        This Function is call by scheduler.
+        """
+        context = context or {}
+        context['no_error'] = True
+        self.close_statement(cr, uid, 1, context=context) # in the future need to create a single cron where in
+        # 'account.bank.statement' there are a flag indicate if autoclose or not
+        return
+
     def close_statement(self, cr, uid, ids, context=None):
         """
              Close the statements
@@ -47,10 +57,14 @@ class pos_close_statement(osv.osv_memory):
         j_ids = journal_obj.search(cr, uid, [('journal_user','=',1)], context=context)
         ids = statement_obj.search(cr, uid, [('state', '!=', 'confirm'), ('user_id', '=', uid), ('journal_id', 'in', j_ids)], context=context)
         if not ids:
-            raise osv.except_osv(_('Message'), _('Cash registers are already closed.'))
+            if not context.get('no_error', False):
+                raise osv.except_osv(_('Message'), _('Cash registers are already closed.'))
+            else:
+                return
         for statement in statement_obj.browse(cr, uid, ids, context=context):
             statement_obj.write(cr, uid, [statement.id], {
-                'balance_end_real': statement.balance_end
+                'balance_end_real': statement.balance_end,
+                'pos_close': True,
             }, context=context)
             if not statement.journal_id.check_dtls:
                 statement_obj.button_confirm_cash(cr, uid, [statement.id], context=context)

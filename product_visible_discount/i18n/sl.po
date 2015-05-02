@@ -8,20 +8,20 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Simon Vidmar <Unknown>\n"
+"PO-Revision-Date: 2014-07-27 14:42+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:14+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-28 06:36+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: product_visible_discount
-#: code:addons/product_visible_discount/product_visible_discount.py:149
+#: code:addons/product_visible_discount/product_visible_discount.py:153
 #, python-format
 msgid "No Sale Pricelist Found!"
-msgstr "Ni prodajne cene !"
+msgstr "Ni prodajnega cenika!"
 
 #. module: product_visible_discount
 #: field:product.pricelist,visible_discount:0
@@ -29,10 +29,10 @@ msgid "Visible Discount"
 msgstr "Vidni popust"
 
 #. module: product_visible_discount
-#: code:addons/product_visible_discount/product_visible_discount.py:141
+#: code:addons/product_visible_discount/product_visible_discount.py:145
 #, python-format
 msgid "No Purchase Pricelist Found!"
-msgstr "Ni nabavne cene !"
+msgstr "Ni nabavnega cenika!"
 
 #. module: product_visible_discount
 #: model:ir.model,name:product_visible_discount.model_account_invoice_line
@@ -45,18 +45,18 @@ msgid "Pricelist"
 msgstr "Cenik"
 
 #. module: product_visible_discount
-#: code:addons/product_visible_discount/product_visible_discount.py:141
+#: code:addons/product_visible_discount/product_visible_discount.py:145
 #, python-format
 msgid "You must first define a pricelist on the supplier form!"
-msgstr "Najprej morate določiti cenik na dobavitelju !"
+msgstr "Najprej morate določiti cenik na obrazcu dobavitelja!"
 
 #. module: product_visible_discount
 #: model:ir.model,name:product_visible_discount.model_sale_order_line
 msgid "Sales Order Line"
-msgstr "Postavka prodajnega naročila"
+msgstr "Postavka prodajnega naloga"
 
 #. module: product_visible_discount
-#: code:addons/product_visible_discount/product_visible_discount.py:149
+#: code:addons/product_visible_discount/product_visible_discount.py:153
 #, python-format
 msgid "You must first define a pricelist on the customer form!"
-msgstr "Najprej morate določiti cenik na kupcu !"
+msgstr "Najprej morate določiti cenik na obrazcu kupca!"

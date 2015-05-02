@@ -142,7 +142,7 @@ send an Email to Invited Person')
                                        self._columns['type'].selection))
                     raise osv.except_osv(_('Error!'), _("%s must have an email  address to send mail") %(name[0]))
                 att_obj._send_mail(cr, uid, attendees, mail_to, \
-                       email_from = current_user.user_email or tools.config.get('email_from', False))
+                       email_from = current_user.user_email or tools.config.get('email_from', False), context=context)
 
         return {'type': 'ir.actions.act_window_close'}
 

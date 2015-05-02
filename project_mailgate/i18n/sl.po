@@ -1,0 +1,78 @@
+# Slovenian translation for matmoz
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the matmoz package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: matmoz\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2012-02-08 00:37+0000\n"
+"PO-Revision-Date: 2014-07-25 08:05+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
+"Language-Team: Slovenian <sl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2014-07-26 07:06+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
+
+#. module: project_mailgate
+#: view:project.task:0
+msgid "History Information"
+msgstr "Kronološke informacije"
+
+#. module: project_mailgate
+#: model:ir.model,name:project_mailgate.model_project_task
+msgid "Task"
+msgstr "Opravilo"
+
+#. module: project_mailgate
+#: constraint:project.task:0
+msgid "Error ! You cannot create recursive tasks."
+msgstr "Napaka ! Ne morete ustvarjati rekurzivnih opravil."
+
+#. module: project_mailgate
+#: field:project.task,message_ids:0
+msgid "Messages"
+msgstr "Sporočila"
+
+#. module: project_mailgate
+#: code:addons/project_mailgate/project_mailgate.py:90
+#, python-format
+msgid "Draft"
+msgstr "Osnutek"
+
+#. module: project_mailgate
+#: constraint:project.task:0
+msgid "Error ! Task end-date must be greater then task start-date"
+msgstr "Začetni datum mora biti pred končnim."
+
+#. module: project_mailgate
+#: code:addons/project_mailgate/project_mailgate.py:116
+#, python-format
+msgid "Cancel"
+msgstr "Preklic"
+
+#. module: project_mailgate
+#: code:addons/project_mailgate/project_mailgate.py:110
+#, python-format
+msgid "Done"
+msgstr "Opravljeno"
+
+#. module: project_mailgate
+#: code:addons/project_mailgate/project_mailgate.py:96
+#, python-format
+msgid "Open"
+msgstr "Odpri"
+
+#. module: project_mailgate
+#: code:addons/project_mailgate/project_mailgate.py:102
+#, python-format
+msgid "Pending"
+msgstr "Na čakanju"
+
+#. module: project_mailgate
+#: view:project.task:0
+msgid "History"
+msgstr "Zgodovina"

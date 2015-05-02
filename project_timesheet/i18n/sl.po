@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:37+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Fabien (Open ERP) <fp@tinyerp.com>\n"
+"PO-Revision-Date: 2014-07-25 09:03+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:18+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-26 07:06+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: project_timesheet
 #: model:ir.actions.act_window,help:project_timesheet.action_project_timesheet_bill_task
@@ -24,12 +24,16 @@ msgid ""
 "pricelist and the field 'Invoice Task Work' on the tab 'Billing' of\n"
 "the project form."
 msgstr ""
+"Delo opravljeno na opravilih za obračun.\n"
+"Za obračun časa porabljenega na projektu, se določi\n"
+"cenik in polje 'Obračun opravljenega dela' na zavihku 'Obračun'\n"
+"v obrazcu projekta."
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:55
 #, python-format
 msgid "No employee defined for user \"%s\". You must create one."
-msgstr ""
+msgstr "Za uporabnika \"%s\" ni določen povezan kader. Ustvarite kader."
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:63
@@ -38,26 +42,28 @@ msgid ""
 "No journal defined on the related employee.\n"
 "Fill in the timesheet tab of the employee form."
 msgstr ""
+"Za povezani kader ni definiran dnevnik.\n"
+"Izpolnite v zavihku časovnica v obrazcu kadri."
 
 #. module: project_timesheet
 #: model:process.node,name:project_timesheet.process_node_timesheettask0
 msgid "Timesheet task"
-msgstr ""
+msgstr "Opravilo časovnice"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Group by year of date"
-msgstr ""
+msgstr "Združi po letnicah datuma"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Task Hours in current month"
-msgstr ""
+msgstr "Ure na opravilih v tekočem mesecu"
 
 #. module: project_timesheet
 #: constraint:project.task:0
 msgid "Error ! Task end-date must be greater then task start-date"
-msgstr ""
+msgstr "Začetni datum mora biti pred končnim."
 
 #. module: project_timesheet
 #: field:project.task.work,hr_analytic_timesheet_id:0
@@ -67,12 +73,12 @@ msgstr "Povezana oznaka časovnice"
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Tasks by User"
-msgstr "Naloge po uporabniku"
+msgstr "Opravila po uporabniku"
 
 #. module: project_timesheet
 #: model:ir.model,name:project_timesheet.model_project_task_work
 msgid "Project Task Work"
-msgstr ""
+msgstr "Delo na projektnih opravilih"
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:231
@@ -81,16 +87,18 @@ msgid ""
 "You cannot delete a partner which is assigned to project, we suggest you to "
 "uncheck the active box!"
 msgstr ""
+"Ni možen izbris partnerja, ki je dodeljen projektu, raje odznačite polje "
+"'aktiven'!"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Group By..."
-msgstr "Združeno po..."
+msgstr "Združi po ..."
 
 #. module: project_timesheet
 #: model:process.node,note:project_timesheet.process_node_triggerinvoice0
 msgid "Trigger invoices from sale order lines"
-msgstr ""
+msgstr "Sproži račune iz postavk prodajnega naloga"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -100,29 +108,29 @@ msgstr "Oktober"
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Timesheet/Task hours Report Per Month"
-msgstr ""
+msgstr "Mesečno poročilo Časovnica/Ure na opravilu"
 
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Billable"
-msgstr "Plačljivo"
+msgstr "Zaračunljivo"
 
 #. module: project_timesheet
 #: model:ir.actions.act_window,help:project_timesheet.action_account_analytic_overdue
 msgid ""
 "You will find here the contracts related to your customer projects in order "
 "to track the invoicing progress."
-msgstr ""
+msgstr "Pogodbe projektov kupcev za sledenje obračunu."
 
 #. module: project_timesheet
 #: view:account.analytic.line:0
 msgid "Analytic account/project"
-msgstr ""
+msgstr "Analitični konto/projekt"
 
 #. module: project_timesheet
 #: field:report.timesheet.task.user,task_hrs:0
 msgid "Task Hours"
-msgstr "Ure po nalogi"
+msgstr "Ure na opravilu"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -133,12 +141,12 @@ msgstr "Leto"
 #. module: project_timesheet
 #: constraint:project.project:0
 msgid "Error! project start-date must be lower then project end-date."
-msgstr ""
+msgstr "Začetni datum mora biti pred končnim."
 
 #. module: project_timesheet
 #: model:ir.actions.act_window,name:project_timesheet.action_account_analytic_overdue
 msgid "Customer Projects"
-msgstr ""
+msgstr "Projekti kupca"
 
 #. module: project_timesheet
 #: model:ir.model,name:project_timesheet.model_account_analytic_line
@@ -153,12 +161,12 @@ msgstr "Avgust"
 #. module: project_timesheet
 #: model:process.transition,name:project_timesheet.process_transition_taskinvoice0
 msgid "Task invoice"
-msgstr ""
+msgstr "Obračun opravila"
 
 #. module: project_timesheet
 #: model:process.node,name:project_timesheet.process_node_taskwork0
 msgid "Task Work"
-msgstr "Delo na nalogi"
+msgstr "Delo na opravilu"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -168,23 +176,23 @@ msgstr "Maj"
 #. module: project_timesheet
 #: constraint:project.task:0
 msgid "Error ! You cannot create recursive tasks."
-msgstr ""
+msgstr "Napaka ! Ne morete ustvarjati rekurzivnih opravil."
 
 #. module: project_timesheet
 #: model:ir.ui.menu,name:project_timesheet.menu_project_working_hours
 msgid "Timesheet Lines"
-msgstr ""
+msgstr "Postavke časovnice"
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:231
 #, python-format
 msgid "Invalid action !"
-msgstr ""
+msgstr "Nepravilno dejanje!"
 
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Billable Project"
-msgstr ""
+msgstr "Zaračunljiv projekt"
 
 #. module: project_timesheet
 #: model:ir.ui.menu,name:project_timesheet.menu_invoicing_contracts
@@ -199,18 +207,17 @@ msgstr "Prijavi/odjavi se iz projekta"
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Group by month of date"
-msgstr ""
+msgstr "Združi po mesecih datuma"
 
 #. module: project_timesheet
 #: model:ir.model,name:project_timesheet.model_project_task
 msgid "Task"
-msgstr "Naloga"
+msgstr "Opravilo"
 
 #. module: project_timesheet
-#: model:ir.actions.act_window,name:project_timesheet.action_project_timesheet_bill_task
 #: model:ir.ui.menu,name:project_timesheet.menu_project_billing_line
 msgid "Invoice Tasks Work"
-msgstr ""
+msgstr "Obračun dela na opravilih"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
@@ -221,10 +228,9 @@ msgstr "Uporabnik"
 #. module: project_timesheet
 #: constraint:project.project:0
 msgid "Error! You cannot assign escalation to the same project!"
-msgstr ""
+msgstr "Napaka! Projekta ne morete stopnjevati v samega sebe!"
 
 #. module: project_timesheet
-#: view:report.timesheet.task.user:0
 #: field:report.timesheet.task.user,name:0
 msgid "Date"
 msgstr "Datum"
@@ -237,22 +243,22 @@ msgstr "Julij"
 #. module: project_timesheet
 #: model:process.node,note:project_timesheet.process_node_timesheettask0
 msgid "Complete Your Timesheet."
-msgstr ""
+msgstr "Izpolni svojo časovnico"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Task Hours in current year"
-msgstr ""
+msgstr "Ure na opravilu za tekoče leto"
 
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Customer"
-msgstr ""
+msgstr "Kupec"
 
 #. module: project_timesheet
 #: model:process.node,note:project_timesheet.process_node_taskwork0
 msgid "Work on task"
-msgstr "Delo na nalogi"
+msgstr "Delo na opravilu"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -262,22 +268,22 @@ msgstr "Februar"
 #. module: project_timesheet
 #: model:ir.actions.act_window,name:project_timesheet.action_project_timesheet_bill_task
 msgid "Bill Tasks Works"
-msgstr ""
+msgstr "Obračun dela na opravilih"
 
 #. module: project_timesheet
 #: field:report.timesheet.task.user,timesheet_hrs:0
 msgid "Timesheet Hours"
-msgstr ""
+msgstr "Ure časovnice"
 
 #. module: project_timesheet
 #: model:process.transition,name:project_timesheet.process_transition_taskencoding0
 msgid "Task encoding"
-msgstr ""
+msgstr "Knjiženje opravil"
 
 #. module: project_timesheet
 #: model:process.transition,note:project_timesheet.process_transition_filltimesheet0
 msgid "Task summary is comes into the timesheet line"
-msgstr ""
+msgstr "Povzetek opravila kot bo prikazano na postavki časovnice"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -287,7 +293,7 @@ msgstr "Januar"
 #. module: project_timesheet
 #: model:process.node,name:project_timesheet.process_node_triggerinvoice0
 msgid "Trigger Invoice"
-msgstr ""
+msgstr "Sproži obračun"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -297,7 +303,7 @@ msgstr "November"
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid "Task hours of last month"
-msgstr ""
+msgstr "Ure na opravilu za prejšnji mesec"
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -317,12 +323,12 @@ msgstr "April"
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Invoicing Data"
-msgstr ""
+msgstr "Datum obračuna"
 
 #. module: project_timesheet
 #: model:process.transition,note:project_timesheet.process_transition_taskencoding0
 msgid "Encode how much time u spent on your task"
-msgstr ""
+msgstr "Vknjiži čas porabljen na opravilu"
 
 #. module: project_timesheet
 #: model:ir.model,name:project_timesheet.model_res_partner
@@ -330,10 +336,10 @@ msgid "Partner"
 msgstr "Partner"
 
 #. module: project_timesheet
-#: code:addons/project_timesheet/project_timesheet.py:294
+#: code:addons/project_timesheet/project_timesheet.py:247
 #, python-format
 msgid "Invalid Analytic Account !"
-msgstr ""
+msgstr "Neveljaven analitični konto !"
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:59
@@ -342,12 +348,14 @@ msgid ""
 "No product defined on the related employee.\n"
 "Fill in the timesheet tab of the employee form."
 msgstr ""
+"Proizvod ni definiran za povezani kader.\n"
+"Izpolnite v zavihku časovnica na obrazcu kadri."
 
 #. module: project_timesheet
-#: code:addons/project_timesheet/project_timesheet.py:84
-#: code:addons/project_timesheet/project_timesheet.py:88
-#: code:addons/project_timesheet/project_timesheet.py:92
-#: code:addons/project_timesheet/project_timesheet.py:99
+#: code:addons/project_timesheet/project_timesheet.py:54
+#: code:addons/project_timesheet/project_timesheet.py:58
+#: code:addons/project_timesheet/project_timesheet.py:62
+#: code:addons/project_timesheet/project_timesheet.py:69
 #, python-format
 msgid "Bad Configuration !"
 msgstr "Nepravilna konfiguracija!"
@@ -355,12 +363,12 @@ msgstr "Nepravilna konfiguracija!"
 #. module: project_timesheet
 #: model:ir.ui.menu,name:project_timesheet.menu_project_billing
 msgid "Invoicing"
-msgstr "Fakturiranje"
+msgstr "Obračun"
 
 #. module: project_timesheet
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr ""
+msgstr "Napaka! Rekurzivno pridruženih članov ne morete ustvariti."
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:247
@@ -368,11 +376,12 @@ msgstr ""
 msgid ""
 "You cannot select a Analytic Account which is in Close or Cancelled state"
 msgstr ""
+"Ni možna izbira analitičnega konta v stanju 'Zaključeno' ali 'Preklicano'"
 
 #. module: project_timesheet
 #: view:report.timesheet.task.user:0
 msgid " Month-1 "
-msgstr ""
+msgstr " Mesec-1 "
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -387,7 +396,7 @@ msgstr "December"
 #. module: project_timesheet
 #: model:process.transition,note:project_timesheet.process_transition_taskinvoice0
 msgid "After task is completed, Create its invoice."
-msgstr ""
+msgstr "Po dokončanju opravila ustvari račun."
 
 #. module: project_timesheet
 #: selection:report.timesheet.task.user,month:0
@@ -408,17 +417,19 @@ msgstr "Mesec"
 #. module: project_timesheet
 #: model:ir.ui.menu,name:project_timesheet.menu_act_project_management_timesheet_sheet_form
 msgid "My Timesheet"
-msgstr ""
+msgstr "Moja časovnica"
 
 #. module: project_timesheet
 #: constraint:account.analytic.line:0
 msgid "You can not create analytic line on view account."
 msgstr ""
+"Ustvarjanje analitičnih postavk na kontu tipa 'Pogled' (zbirni konto) ni "
+"mogoče."
 
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Invoice Task Work"
-msgstr ""
+msgstr "Obračun dela na opravilu"
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:70
@@ -428,15 +439,17 @@ msgid ""
 "employee.\n"
 "Fill in the timesheet tab of the employee form."
 msgstr ""
+"Za ta kader ni določen proizvod in Konto lastnosti kategorije proizvoda.\n"
+"Izpolnite v zavihku časovnica v obrazcu kadri."
 
 #. module: project_timesheet
 #: model:ir.actions.act_window,name:project_timesheet.action_report_timesheet_task_user
 #: model:ir.ui.menu,name:project_timesheet.menu_timesheet_task_user
 #: view:report.timesheet.task.user:0
 msgid "Task Hours Per Month"
-msgstr ""
+msgstr "Delovne ure na opravilih po mesecih"
 
 #. module: project_timesheet
 #: model:process.transition,name:project_timesheet.process_transition_filltimesheet0
 msgid "Fill Timesheet"
-msgstr ""
+msgstr "Izpolni časovnico"

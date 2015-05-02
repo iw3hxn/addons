@@ -33,6 +33,7 @@ import decimal_precision as dp
 
 _logger = logging.getLogger(__name__)
 
+
 class pos_config_journal(osv.osv):
     """ Point of Sale journal configuration"""
     _name = 'pos.config.journal'
@@ -44,7 +45,29 @@ class pos_config_journal(osv.osv):
         'journal_id': fields.many2one('account.journal', "Journal")
     }
 
-pos_config_journal()
+
+class sale_shop(osv.osv):
+    _inherit = 'sale.shop'
+    _columns= {
+        'pos_user_id': fields.many2one('res.users', 'POS User'),
+        'property_account_receivable': fields.property(
+            'account.account',
+            type='many2one',
+            relation='account.account',
+            string="Account Receivable",
+            view_load=True,
+            domain="[('type', '=', 'receivable')]",
+            help="This account will be used instead of the default one as the receivable account for the current shop" ),
+    }
+
+    _defaults = {
+        'pos_user_id': lambda obj, cr, uid, context: uid,
+    }
+
+    _sql_constraints = [
+        ('pos_user_id_uniq', 'unique(pos_user_id)', 'iPos User must be unique!'),
+    ]
+
 
 class pos_order(osv.osv):
     _name = "pos.order"
@@ -102,7 +125,7 @@ class pos_order(osv.osv):
         return {'value': {'pricelist_id': pricelist}}
 
     def _amount_all(self, cr, uid, ids, name, args, context=None):
-        tax_obj = self.pool.get('account.tax')
+        #tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
         res = {}
         for order in self.browse(cr, uid, ids, context=context):
@@ -128,7 +151,7 @@ class pos_order(osv.osv):
         return res and res[0] or False
 
     def _default_shop(self, cr, uid, context=None):
-        res = self.pool.get('sale.shop').search(cr, uid, [])
+        res = self.pool.get('sale.shop').search(cr, uid, [('pos_user_id', '=', uid)] )
         return res and res[0] or False
 
     def copy(self, cr, uid, id, default=None, context=None):
@@ -147,6 +170,7 @@ class pos_order(osv.osv):
         return super(pos_order, self).copy(cr, uid, id, d, context=context)
 
     _columns = {
+        'active': fields.boolean('Active'),
         'name': fields.char('Order Ref', size=64, required=True,
             states={'draft': [('readonly', False)]}, readonly=True),
         'company_id':fields.many2one('res.company', 'Company', required=True, readonly=True),
@@ -176,12 +200,14 @@ class pos_order(osv.osv):
         'note': fields.text('Internal Notes'),
         'nb_print': fields.integer('Number of Print', readonly=True),
         'sale_journal': fields.many2one('account.journal', 'Journal', required=True, states={'draft': [('readonly', False)]}, readonly=True),
+        'pos_discount': fields.boolean('Discount?')
     }
 
     def _default_pricelist(self, cr, uid, context=None):
-        res = self.pool.get('sale.shop').search(cr, uid, [], context=context)
+#        res = self.pool.get('sale.shop').search(cr, uid, [], context=context)
+        res = self._default_shop(cr, uid, context=None)
         if res:
-            shop = self.pool.get('sale.shop').browse(cr, uid, res[0], context=context)
+            shop = self.pool.get('sale.shop').browse(cr, uid, res, context=context)
             return shop.pricelist_id and shop.pricelist_id.id or False
         return False
 
@@ -195,6 +221,7 @@ class pos_order(osv.osv):
         'sale_journal': _default_sale_journal,
         'shop_id': _default_shop,
         'pricelist_id': _default_pricelist,
+        'active': 1,
     }
 
     def test_paid(self, cr, uid, ids, context=None):
@@ -214,14 +241,15 @@ class pos_order(osv.osv):
         picking_obj = self.pool.get('stock.picking')
         partner_obj = self.pool.get('res.partner')
         move_obj = self.pool.get('stock.move')
+        # hr_employee_obj = self.pool.get('hr.employee') and self.pool['hr.employee'] or False
 
         for order in self.browse(cr, uid, ids, context=context):
-            if not order.state=='draft':
+            if not order.state == 'draft':
                 continue
-            addr = order.partner_id and partner_obj.address_get(cr, uid, [order.partner_id.id], ['delivery']) or {}
+            address = order.partner_id and partner_obj.address_get(cr, uid, [order.partner_id.id], ['delivery']) or {}
             picking_id = picking_obj.create(cr, uid, {
                 'origin': order.name,
-                'address_id': addr.get('delivery',False),
+                'address_id': address.get('delivery', False),
                 'type': 'out',
                 'company_id': order.company_id.id,
                 'move_type': 'direct',
@@ -234,13 +262,17 @@ class pos_order(osv.osv):
             output_id = order.shop_id.warehouse_id.lot_output_id.id
 
             for line in order.lines:
-                if line.product_id and line.product_id.type == 'service':
+                if line.product_id and line.product_id.type == 'service' or line.employee_id:
                     continue
                 if line.qty < 0:
                     location_id, output_id = output_id, location_id
 
+                price_unit = 0
+                if line.qty != 0.0:
+                    price_unit = line.price_subtotal / abs(line.qty)
+                #import pdb; pdb.set_trace()
                 move_obj.create(cr, uid, {
-                    'name': line.name,
+                    'name': line.name[:250],
                     'product_uom': line.product_id.uom_id.id,
                     'product_uos': line.product_id.uom_id.id,
                     'picking_id': picking_id,
@@ -251,9 +283,9 @@ class pos_order(osv.osv):
                     'state': 'draft',
                     'location_id': location_id,
                     'location_dest_id': output_id,
+                    'company_id': order.shop_id.company_id.id,
+                    'price_unit': price_unit
                 }, context=context)
-                if line.qty < 0:
-                    location_id, output_id = output_id, location_id
 
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
@@ -261,10 +293,11 @@ class pos_order(osv.osv):
         return True
 
     def set_to_draft(self, cr, uid, ids, *args):
+        context = {}
         if not len(ids):
             return False
         for order in self.browse(cr, uid, ids, context=context):
-            if order.state<>'cancel':
+            if order.state <> 'cancel':
                 raise osv.except_osv(_('Error!'), _('In order to set to draft a sale, it must be cancelled.'))
         self.write(cr, uid, ids, {'state': 'draft'})
         wf_service = netsvc.LocalService("workflow")
@@ -278,6 +311,7 @@ class pos_order(osv.osv):
         """
         stock_picking_obj = self.pool.get('stock.picking')
         for order in self.browse(cr, uid, ids, context=context):
+            wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'stock.picking', order.picking_id.id, 'button_cancel', cr)
             if stock_picking_obj.browse(cr, uid, order.picking_id.id, context=context).state <> 'cancel':
                 raise osv.except_osv(_('Error!'), _('Unable to cancel the picking.'))
@@ -288,7 +322,7 @@ class pos_order(osv.osv):
         """Create a new payment for the order"""
         statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool.get('account.bank.statement.line')
-        prod_obj = self.pool.get('product.product')
+        #prod_obj = self.pool.get('product.product')
         property_obj = self.pool.get('ir.property')
         curr_c = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
         curr_company = curr_c.id
@@ -304,7 +338,7 @@ class pos_order(osv.osv):
             args['name'] = args['name'] + ': ' + data['payment_name']
         account_def = property_obj.get(cr, uid, 'property_account_receivable', 'res.partner', context=context)
         args['account_id'] = (order.partner_id and order.partner_id.property_account_receivable \
-                             and order.partner_id.property_account_receivable.id) or (account_def and account_def.id) or False
+                             and order.partner_id.property_account_receivable.id) or order.shop_id and order.shop_id.property_account_receivable and order.shop_id.property_account_receivable.id or (account_def and account_def.id) or False
         args['partner_id'] = order.partner_id and order.partner_id.id or None
 
         if not args['account_id']:
@@ -629,6 +663,7 @@ class account_bank_statement(osv.osv):
     _inherit = 'account.bank.statement'
     _columns= {
         'user_id': fields.many2one('res.users', 'User', readonly=True),
+        'pos_close': fields.boolean('Close by POS'),
     }
     _defaults = {
         'user_id': lambda self,cr,uid,c={}: uid
@@ -663,28 +698,27 @@ class pos_order_line(osv.osv):
         return res
 
     def onchange_product_id(self, cr, uid, ids, pricelist, product_id, qty=0, partner_id=False, context=None):
-       context = context or {}
-       if not product_id:
+        context = context or {}
+        if not product_id:
             return {}
-       if not pricelist:
+        if not pricelist:
            raise osv.except_osv(_('No Pricelist !'),
                _('You have to select a pricelist in the sale form !\n' \
                'Please set one before choosing a product.'))
 
-       price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
+        price = self.pool.get('product.pricelist').price_get(cr, uid, [pricelist],
                product_id, qty or 1.0, partner_id)[pricelist]
 
-       result = self.onchange_qty(cr, uid, ids, product_id, 0.0, qty, price, context=context)
-       result['value']['price_unit'] = price
-       return result
+        result = self.onchange_qty(cr, uid, ids, product_id, 0.0, qty, price, context=context)
+        result['value']['price_unit'] = price
+        return result
 
     def onchange_qty(self, cr, uid, ids, product, discount, qty, price_unit, context=None):
         result = {}
         if not product:
             return result
         account_tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
-
+        #cur_obj = self.pool.get('res.currency')
         prod = self.pool.get('product.product').browse(cr, uid, product, context=context)
 
         taxes = prod.taxes_id
@@ -696,6 +730,7 @@ class pos_order_line(osv.osv):
         return {'value': result}
 
     _columns = {
+        'active': fields.boolean('Active'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'name': fields.char('Line No', size=32, required=True),
         'notice': fields.char('Discount Notice', size=128),
@@ -707,9 +742,15 @@ class pos_order_line(osv.osv):
         'discount': fields.float('Discount (%)', digits=(16, 2)),
         'order_id': fields.many2one('pos.order', 'Order Ref', ondelete='cascade'),
         'create_date': fields.datetime('Creation Date', readonly=True),
+        'pos_discount': fields.boolean('Discount?'),
+        'shop_id': fields.related('order_id', 'shop_id', type='many2one', relation='sale.shop', string='Shop', store=True),
+        'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store=True),
+        'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference') ,
+        'employee_id': fields.integer('ID employee'),
     }
 
     _defaults = {
+        'active': 1,
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'pos.order.line'),
         'qty': lambda *a: 1,
         'discount': lambda *a: 0.0,
@@ -723,6 +764,20 @@ class pos_order_line(osv.osv):
             'name': self.pool.get('ir.sequence').get(cr, uid, 'pos.order.line')
         })
         return super(pos_order_line, self).copy_data(cr, uid, id, default, context=context)
+
+    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
+        new_args = []
+        #import pdb; pdb.set_trace()
+        for arg in args:
+            if arg[0] == 'shop_id':
+                new_args.append(('order_id.shop_id', '=', arg[2] ))
+            elif arg[0] == 'user_id':
+                new_args.append(('order_id.user_id', '=', arg[2] ))
+            else:
+                new_args.append(arg)
+
+        return super(pos_order_line, self).search(cr, uid, new_args, offset=offset, limit=limit, order=order, context=context, count=count)
+
 
 pos_order_line()
 
@@ -747,13 +802,12 @@ class pos_category(osv.osv):
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
             return []
-        reads = self.read(cr, uid, ids, ['name','parent_id'], context=context)
         res = []
-        for record in reads:
-            name = record['name']
-            if record['parent_id']:
-                name = record['parent_id'][1]+' / '+name
-            res.append((record['id'], name))
+        for record in self.browse(cr, uid, ids, context=context):
+            name = record.name
+            if record.parent_id:
+                name = record.parent_id.name +' / ' + name
+            res.append((record.id, name))
         return res
 
     def _name_get_fnc(self, cr, uid, ids, prop, unknow_none, context=None):
@@ -773,6 +827,7 @@ import io, StringIO
 
 class product_product(osv.osv):
     _inherit = 'product.product'
+
     def _get_small_image(self, cr, uid, ids, prop, unknow_none, context=None):
         result = {}
         for obj in self.browse(cr, uid, ids, context=context):
@@ -781,8 +836,22 @@ class product_product(osv.osv):
                 continue
 
             image_stream = io.BytesIO(obj.product_image.decode('base64'))
-            img = Image.open(image_stream)
+            img = Image.open(image_stream).convert('RGB')
             img.thumbnail((120, 100), Image.ANTIALIAS)
+            img_stream = StringIO.StringIO()
+            img.save(img_stream, "JPEG")
+            result[obj.id] = img_stream.getvalue().encode('base64')
+        return result
+
+    def _get_medium_image(self, cr, uid, ids, prop, unknow_none, context=None):
+        result = {}
+        for obj in self.browse(cr, uid, ids, context=context):
+            if not obj.product_image:
+                result[obj.id] = False
+                continue
+            image_stream = io.BytesIO(obj.product_image.decode('base64'))
+            img = Image.open(image_stream).convert('RGB')
+            img.thumbnail((150, 150), Image.ANTIALIAS)
             img_stream = StringIO.StringIO()
             img.save(img_stream, "JPEG")
             result[obj.id] = img_stream.getvalue().encode('base64')
@@ -796,8 +865,17 @@ class product_product(osv.osv):
         'product_image_small': fields.function(_get_small_image, string='Small Image', type="binary",
             store = {
                 'product.product': (lambda self, cr, uid, ids, c={}: ids, ['product_image'], 10),
-            })
+            }),
+        'product_image_medium': fields.function(_get_medium_image, string='Medium Image', type="binary",
+            store = {
+                'product.product': (lambda self, cr, uid, ids, c={}: ids, ['product_image'], 10),
+            }),
+        'available_in_pos': fields.boolean('Available in the Point of Sale', help='Check if you want this product to appear in the Point of Sale'),
     }
+    _defaults = {
+        'available_in_pos': True,
+    }
+
 product_product()
 
 

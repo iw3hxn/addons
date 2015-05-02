@@ -30,7 +30,7 @@ class pos_confirm(osv.osv_memory):
     def action_confirm(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
         order_obj = self.pool.get('pos.order')
-        ids = order_obj.search(cr, uid, [('state','=','paid')], context=context)
+        ids = order_obj.search(cr, uid, [('state', '=', 'paid')], context=context)
         for order in order_obj.browse(cr, uid, ids, context=context):
             todo = True
             for line in order.statement_ids:

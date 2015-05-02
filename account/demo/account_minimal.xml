@@ -92,6 +92,15 @@
             <field name="user_type" ref="data_account_type_receivable"/>
         </record>
 
+        <record id="a_recview" model="account.account">
+            <field name="code">X11002V</field>
+            <field name="name">Debtors View - (test)</field>
+            <field ref="cas" name="parent_id"/>
+            <field name="type">view</field>
+            <field eval="False" name="reconcile"/>
+            <field name="user_type" ref="data_account_type_view"/>
+        </record>
+
         <record id="ova" model="account.account">
             <field name="code">X11003</field>
             <field name="name">Output VAT - (test)</field>
@@ -148,6 +157,15 @@
             <field name="type">payable</field>
             <field eval="True" name="reconcile"/>
             <field name="user_type" ref="data_account_type_payable"/>
+        </record>
+
+        <record id="a_payview" model="account.account">
+            <field name="code">X1111V</field>
+            <field name="name">Creditors View - (test)</field>
+            <field ref="cli" name="parent_id"/>
+            <field name="type">view</field>
+            <field eval="False" name="reconcile"/>
+            <field name="user_type" ref="data_account_type_view"/>
         </record>
 
         <record id="iva" model="account.account">
@@ -298,7 +316,7 @@
         </record>
 
         <record forcecreate="True" id="property_reserve_and_surplus_account" model="ir.property">
-            <field name="name">property_account_receivable</field>
+            <field name="name">property_reserve_and_surplus_account</field>
             <field name="fields_id" search="[('model','=','res.company'),('name','=','property_reserve_and_surplus_account')]"/>
             <field eval="'account.account,'+str(rsa)" name="value"/>
             <field name="company_id" ref="base.main_company"/>

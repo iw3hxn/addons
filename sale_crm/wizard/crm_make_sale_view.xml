@@ -12,6 +12,7 @@
                 <group colspan="4">
                     <field name="partner_id" required="1"/>
                     <field name="shop_id" required="1" widget="selection"/>
+                    <field name="user_id" required="1" />
                     <field name="close"/>
                 </group>
                 <newline/>

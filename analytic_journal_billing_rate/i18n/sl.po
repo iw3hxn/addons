@@ -7,19 +7,19 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-06-09 18:18+0000\n"
-"Last-Translator: Dušan Laznik (Mentis) <laznik@mentis.si>\n"
+"PO-Revision-Date: 2014-07-30 11:44+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-31 06:56+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: analytic_journal_billing_rate
 #: sql_constraint:account.invoice:0
 msgid "Invoice Number must be unique per Company!"
-msgstr "Številka računa se ne sme ponoviti!"
+msgstr "Številka računa mora biti unikatna za vsako podjetje!"
 
 #. module: analytic_journal_billing_rate
 #: field:analytic_journal_rate_grid,journal_id:0
@@ -29,7 +29,7 @@ msgstr "Analitični dnevnik"
 #. module: analytic_journal_billing_rate
 #: constraint:account.invoice:0
 msgid "Invalid BBA Structured Communication !"
-msgstr ""
+msgstr "Neveljavna BBA strukturirana komunikacija !"
 
 #. module: analytic_journal_billing_rate
 #: view:analytic_journal_rate_grid:0
@@ -50,7 +50,7 @@ msgstr "Tabela odnosov med dnevniki in tarifami zaračunavanja"
 #. module: analytic_journal_billing_rate
 #: field:account.analytic.account,journal_rate_ids:0
 msgid "Invoicing Rate per Journal"
-msgstr "Fakturna stopnja za dnevnik"
+msgstr "Obračunska stopnja za dnevnik"
 
 #. module: analytic_journal_billing_rate
 #: model:ir.model,name:analytic_journal_billing_rate.model_account_invoice
@@ -61,16 +61,17 @@ msgstr "Račun"
 #: constraint:hr.analytic.timesheet:0
 msgid "You cannot modify an entry in a Confirmed/Done timesheet !."
 msgstr ""
+"Vnosa v časovnico, ki je v stanju Potrjeno/Opravljeno, ni možno spreminjati!"
 
 #. module: analytic_journal_billing_rate
 #: field:analytic_journal_rate_grid,rate_id:0
 msgid "Invoicing Rate"
-msgstr "Fakturna stopnja"
+msgstr "Obračunska stopnja"
 
 #. module: analytic_journal_billing_rate
 #: constraint:account.analytic.account:0
 msgid "Error! You can not create recursive analytic accounts."
-msgstr "Napaka! Ne morete kreirati rekurzivnih analitičnih kontov."
+msgstr "Napaka! Ne morete ustvariti rekurzivnih analitičnih kontov."
 
 #. module: analytic_journal_billing_rate
 #: model:ir.model,name:analytic_journal_billing_rate.model_hr_analytic_timesheet

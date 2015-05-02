@@ -207,6 +207,7 @@
             <field name="arch" type="xml">
                 <tree editable="top" string="Task Work">
                     <field name="date"/>
+                    <field name="task_id" required="1" />
                     <field name="name"/>
                     <field name="hours" widget="float_time"/>
                     <field name="user_id"/>
@@ -460,7 +461,7 @@
             <field name="type">gantt</field>
             <field eval="2" name="priority"/>
             <field name="arch" type="xml">
-                <gantt date_start="date_start" date_stop="date_end" string="Tasks" default_group_by="project_id">
+                <gantt date_start="date_start" date_stop="date_end" progress="progress" assigned_to="user_id" string="Tasks" default_group_by="project_id">                
                 </gantt>
             </field>
         </record>

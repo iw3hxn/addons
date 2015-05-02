@@ -7,17 +7,17 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 21:38+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:49+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:37+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: audittrail
-#: code:addons/audittrail/audittrail.py:76
+#: code:addons/audittrail/audittrail.py:75
 #, python-format
 msgid "WARNING: audittrail is not part of the pool"
 msgstr "ATTENZIONE: audittrail non è parte del gruppo"
@@ -48,7 +48,6 @@ msgid "Subscribed Rule"
 msgstr "Regola sottoscritta"
 
 #. module: audittrail
-#: view:audittrail.rule:0
 #: model:ir.model,name:audittrail.model_audittrail_rule
 msgid "Audittrail Rule"
 msgstr "Regola audit"
@@ -56,7 +55,7 @@ msgstr "Regola audit"
 #. module: audittrail
 #: view:audittrail.view.log:0
 #: model:ir.actions.act_window,name:audittrail.action_audittrail_log_tree
-#: model:ir.ui.menu,name:audittrail.menu_audit_logs
+#: model:ir.ui.menu,name:audittrail.menu_action_audittrail_log_tree
 msgid "Audit Logs"
 msgstr "Log di verifica"
 
@@ -230,7 +229,7 @@ msgid "Log Reads"
 msgstr "Log letture"
 
 #. module: audittrail
-#: code:addons/audittrail/audittrail.py:77
+#: code:addons/audittrail/audittrail.py:76
 #, python-format
 msgid "Change audittrail depends -- Setting rule as DRAFT"
 msgstr "Cambio dipendente audittrail -- Imposto la regola a BOZZA"
@@ -331,7 +330,6 @@ msgid "Draft  Rule"
 msgstr "Regola bozza"
 
 #. module: audittrail
-#: view:audittrail.log:0
 #: model:ir.model,name:audittrail.model_audittrail_log
 msgid "Audittrail Log"
 msgstr "Log audit"

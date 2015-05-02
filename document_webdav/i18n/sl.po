@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Mantavya Gajjar (Open ERP) <Unknown>\n"
+"PO-Revision-Date: 2014-08-04 08:50+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:58+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-05 06:33+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,create_date:0
@@ -26,7 +26,7 @@ msgstr "Datum nastanka"
 #. module: document_webdav
 #: model:ir.ui.menu,name:document_webdav.menu_document_props
 msgid "Documents"
-msgstr ""
+msgstr "Dokumenti"
 
 #. module: document_webdav
 #: constraint:document.directory:0
@@ -37,7 +37,7 @@ msgstr "Napaka! Ne morete izdelati rekurzivnih imenikov."
 #: view:document.webdav.dir.property:0
 #: view:document.webdav.file.property:0
 msgid "Search Document properties"
-msgstr ""
+msgstr "Iskanje lastnosti dokumenta"
 
 #. module: document_webdav
 #: view:document.webdav.dir.property:0
@@ -61,54 +61,54 @@ msgstr "document.webdav.file.property"
 #: view:document.webdav.dir.property:0
 #: view:document.webdav.file.property:0
 msgid "Group By..."
-msgstr "Združi po ..."
+msgstr "Združi po..."
 
 #. module: document_webdav
 #: view:document.directory:0
 msgid "These properties will be added to WebDAV requests"
-msgstr ""
+msgstr "Te lastnosti bodo dodane k WebDAV zahtevkom"
 
 #. module: document_webdav
 #: model:ir.actions.act_window,name:document_webdav.action_file_props_form
 msgid "DAV Properties for Documents"
-msgstr ""
+msgstr "DAV lastnosti za dokumente"
 
 #. module: document_webdav
 #: code:addons/document_webdav/webdav.py:37
 #, python-format
 msgid "PyWebDAV Import Error!"
-msgstr ""
+msgstr "PyWebDAV napaka uvoza!"
 
 #. module: document_webdav
 #: view:document.webdav.file.property:0
 #: field:document.webdav.file.property,file_id:0
 msgid "Document"
-msgstr ""
+msgstr "Dokument"
 
 #. module: document_webdav
 #: model:ir.ui.menu,name:document_webdav.menu_folder_props
 msgid "Folders"
-msgstr ""
+msgstr "Mape"
 
 #. module: document_webdav
 #: sql_constraint:document.directory:0
 msgid "Directory cannot be parent of itself!"
-msgstr ""
+msgstr "Register ne more biti nadrejen sam sebi!"
 
 #. module: document_webdav
 #: view:document.directory:0
 msgid "Dynamic context"
-msgstr ""
+msgstr "Dinamični kontekst"
 
 #. module: document_webdav
 #: view:document.directory:0
 msgid "WebDAV properties"
-msgstr ""
+msgstr "WebDAV lastnosti"
 
 #. module: document_webdav
 #: sql_constraint:document.directory:0
 msgid "The directory name must be unique !"
-msgstr ""
+msgstr "Ime registra mora biti unikatno!"
 
 #. module: document_webdav
 #: code:addons/document_webdav/webdav.py:37
@@ -118,77 +118,80 @@ msgid ""
 "http://code.google.com/p/pywebdav/downloads/detail?name=PyWebDAV-"
 "0.9.4.tar.gz&can=2&q=/"
 msgstr ""
+"Namestite PyWebDAV iz "
+"http://code.google.com/p/pywebdav/downloads/detail?name=PyWebDAV-"
+"0.9.4.tar.gz&can=2&q=/"
 
 #. module: document_webdav
 #: model:ir.actions.act_window,name:document_webdav.action_dir_props_form
 msgid "DAV Properties for Folders"
-msgstr ""
+msgstr "DAV lastnosti za mape"
 
 #. module: document_webdav
 #: view:document.directory:0
 #: view:document.webdav.dir.property:0
 #: view:document.webdav.file.property:0
 msgid "Properties"
-msgstr ""
+msgstr "Lastnosti"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,name:0
 #: field:document.webdav.file.property,name:0
 msgid "Name"
-msgstr ""
+msgstr "Naziv"
 
 #. module: document_webdav
 #: model:ir.model,name:document_webdav.model_document_webdav_dir_property
 msgid "document.webdav.dir.property"
-msgstr ""
+msgstr "document.webdav.dir.property"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,value:0
 #: field:document.webdav.file.property,value:0
 msgid "Value"
-msgstr ""
+msgstr "Vrednost"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,dir_id:0
 #: model:ir.model,name:document_webdav.model_document_directory
 msgid "Directory"
-msgstr ""
+msgstr "Imenik"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,write_uid:0
 #: field:document.webdav.file.property,write_uid:0
 msgid "Last Modification User"
-msgstr ""
+msgstr "Uporabnik, ki je zadnji spreminjal"
 
 #. module: document_webdav
 #: view:document.webdav.dir.property:0
 msgid "Dir"
-msgstr ""
+msgstr "Mapa"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,write_date:0
 #: field:document.webdav.file.property,write_date:0
 msgid "Date Modified"
-msgstr ""
+msgstr "Datum spremembe"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,create_uid:0
 #: field:document.webdav.file.property,create_uid:0
 msgid "Creator"
-msgstr ""
+msgstr "Avtor"
 
 #. module: document_webdav
 #: model:ir.ui.menu,name:document_webdav.menu_properties
 msgid "DAV Properties"
-msgstr ""
+msgstr "DAV lastnosti"
 
 #. module: document_webdav
 #: sql_constraint:document.directory:0
 msgid "Directory must have a parent or a storage"
-msgstr ""
+msgstr "Register mora imeti nadrejenega ali skladišče"
 
 #. module: document_webdav
 #: field:document.webdav.dir.property,do_subst:0
 #: field:document.webdav.file.property,do_subst:0
 msgid "Substitute"
-msgstr ""
+msgstr "Zamenjava"

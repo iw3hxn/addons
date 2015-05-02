@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 16:39+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:00+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:54+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: hr_attendance
 #: model:ir.ui.menu,name:hr_attendance.menu_hr_time_tracking
@@ -81,7 +81,7 @@ msgstr ""
 "La funzionalità di tracciamento temporale ha come obiettivo quello di "
 "gestire le presenze impiegato dalle sue azioni di Ingresso / Uscita. E' "
 "inoltre possibile collegare queste caratteristiche a un dispositivo di "
-"presenza usando le catatteristiche web service di OpenERP"
+"presenza usando le catatteristiche web service di SimplERP"
 
 #. module: hr_attendance
 #: view:hr.action.reason:0
@@ -121,7 +121,9 @@ msgid "Define attendance reason"
 msgstr "Definisci Motivi Presenza"
 
 #. module: hr_attendance
+#: code:addons/hr_attendance/report/attendance_by_month.py:184
 #: model:ir.actions.act_window,name:hr_attendance.action_hr_attendance_month
+#, python-format
 msgid "Attendances By Month"
 msgstr "Presenze per mese"
 
@@ -153,7 +155,7 @@ msgid "Ending Date"
 msgstr "Data finale"
 
 #. module: hr_attendance
-#: code:addons/hr_attendance/hr_attendance.py:161
+#: code:addons/hr_attendance/hr_attendance.py:140
 #, python-format
 msgid "Warning"
 msgstr "Attenzione"
@@ -171,7 +173,6 @@ msgid "A sign-in must be right after a sign-out !"
 msgstr "Una entrata deve essere registrata appena dopo un'uscita"
 
 #. module: hr_attendance
-#: view:hr.attendance:0
 #: field:hr.employee,state:0
 #: model:ir.model,name:hr_attendance.model_hr_attendance
 msgid "Attendance"
@@ -229,10 +230,8 @@ msgid "Min Delay"
 msgstr "Minuti di Ritardoa"
 
 #. module: hr_attendance
-#: code:addons/hr_attendance/hr_attendance.py:154
 #: selection:hr.attendance,action:0
 #: view:hr.employee:0
-#, python-format
 msgid "Sign In"
 msgstr "Entrata"
 
@@ -365,6 +364,8 @@ msgstr "Gennaio"
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
+#: view:hr.sign.in.out:0
+#: view:hr.sign.in.out.ask:0
 msgid "Sign in"
 msgstr "Entrata"
 
@@ -399,7 +400,7 @@ msgid ""
 "encode their time with this action button."
 msgstr ""
 "Se è necessario che il personale registri l'ingresso appena giunga al lavoro "
-"e l'uscita alla fine della giornata, OpenERP vi  permette di gestire il "
+"e l'uscita alla fine della giornata, SimplERP vi  permette di gestire il "
 "tutto con questo strumento. Se ogni impiegato è collegato all'utente del "
 "sistema, essi possono codificare il loro tempo con questo bottone azione."
 
@@ -418,6 +419,8 @@ msgstr "ID Impiegato"
 #: view:hr.attendance.error:0
 #: view:hr.attendance.month:0
 #: view:hr.attendance.week:0
+#: view:hr.sign.in.out:0
+#: view:hr.sign.in.out.ask:0
 msgid "Cancel"
 msgstr "Annulla"
 
@@ -441,6 +444,8 @@ msgstr "Stampa report presenze mensili"
 
 #. module: hr_attendance
 #: selection:hr.action.reason,action_type:0
+#: view:hr.sign.in.out:0
+#: view:hr.sign.in.out.ask:0
 msgid "Sign out"
 msgstr "Uscita"
 
@@ -451,7 +456,6 @@ msgstr "Ritardo"
 
 #. module: hr_attendance
 #: view:hr.attendance:0
-#: field:hr.attendance,employee_id:0
 #: model:ir.model,name:hr_attendance.model_hr_employee
 msgid "Employee"
 msgstr "Dipendente"
@@ -495,10 +499,8 @@ msgid "Your last sign in"
 msgstr "Ultima Entrata"
 
 #. module: hr_attendance
-#: code:addons/hr_attendance/hr_attendance.py:154
 #: selection:hr.attendance,action:0
 #: view:hr.employee:0
-#, python-format
 msgid "Sign Out"
 msgstr "Uscita"
 

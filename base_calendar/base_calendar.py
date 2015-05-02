@@ -208,6 +208,21 @@ html_invitation = """
 </html>
 """
 
+def set_local_timezone(obj, cr, uid, dt, context=None):
+    '''
+    This method will convert datetime in logged in user's timezone
+    dt: will be the datetime in string
+    '''
+    if len(dt) <= 10:
+        return datetime.strptime(dt, '%Y-%m-%d')
+    else:
+        tz_info = context.get('tz') or 'UTC'
+        local_tz = pytz.timezone(tz_info)
+        local_time = tools.misc.server_to_local_timestamp(dt, '%Y-%m-%d %H:%M:%S', '%Y-%m-%d %H:%M:%S', tz_info)
+        event_date = local_tz.localize(datetime.strptime(local_time, '%Y-%m-%d %H:%M:%S'), is_dst=True)
+        return event_date
+
+
 class calendar_attendee(osv.osv):
     """
     Calendar Attendee Information
@@ -502,9 +517,11 @@ property or property parameter."),
                     att_infos.append(((att2.user_id and att2.user_id.name) or \
                                  (att2.partner_id and att2.partner_id.name) or \
                                     att2.email) + ' - Status: ' + att2.state.title())
+                start_date = set_local_timezone(self, cr, uid, res_obj.date, context=context).strftime('%Y-%m-%d %I:%M:%S %p %Z')
+                end_date = res_obj.date_deadline and set_local_timezone(self, cr, uid, res_obj.date_deadline, context=context).strftime('%Y-%m-%d %I:%M:%S %p %Z') or False
                 body_vals = {'name': res_obj.name,
-                            'start_date': res_obj.date,
-                            'end_date': res_obj.date_deadline or False,
+                            'start_date': start_date,
+                            'end_date': end_date,
                             'description': res_obj.description or '-',
                             'location': res_obj.location or '-',
                             'attendees': '<br>'.join(att_infos),
@@ -883,6 +900,7 @@ class calendar_alarm(osv.osv):
 
                 if alarm.action == 'email':
                     sub = '[Openobject Reminder] %s' % (alarm.name)
+                    event = set_local_timezone(self, cr, uid, alarm.event_date, context=context).strftime('%Y-%m-%d %I:%M:%S %p %Z')
                     body = """
 Event: %s
 Event Date: %s
@@ -894,7 +912,7 @@ From:
 ----
 %s
 
-"""  % (alarm.name, alarm.trigger_date, alarm.description, \
+"""  % (alarm.name, event, alarm.description, \
                         alarm.user_id.name, alarm.user_id.signature)
                     mail_to = [alarm.user_id.user_email]
                     for att in alarm.attendee_ids:

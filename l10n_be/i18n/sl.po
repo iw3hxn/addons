@@ -7,51 +7,51 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2011-12-23 09:56+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Fabien (Open ERP) <fp@tinyerp.com>\n"
+"PO-Revision-Date: 2014-08-08 10:11+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:05+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-09 05:35+0000\n"
+"X-Generator: Launchpad (build 17156)\n"
 
 #. module: l10n_be
 #: field:partner.vat.intra,test_xml:0
 msgid "Test XML file"
-msgstr "Test XML file"
+msgstr "Testna XML datoteka"
 
 #. module: l10n_be
 #: view:partner.vat.list_13:0
 msgid "You can remove customers which you do not want in exported xml file"
-msgstr ""
+msgstr "Kupce, ki jih ne želite v izvoženi xml datoteki lahko odstranite"
 
 #. module: l10n_be
-#: view:partner.vat:0
+#: view:partner.vat_13:0
 msgid ""
 "This wizard will create an XML file for VAT details and total invoiced "
 "amounts per partner."
 msgstr ""
-"This wizard will create an XML file for VAT details and total invoiced "
-"amounts per partner."
+"Ta čarovnik ustvari XML datoteko za DDV podrobnosti in skupaj obračunane "
+"zneske po partnerjih."
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tiers_receiv
 msgid "Tiers - Recevable"
-msgstr ""
+msgstr "Stopnje - terjatve"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:102
 #, python-format
 msgid "Wrong Period Code"
-msgstr ""
+msgstr "Napačna koda obdobja"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:52
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:109
 #, python-format
 msgid "No partner has a VAT Number asociated with him."
-msgstr ""
+msgstr "Noben partner ni povezan z ID za DDV."
 
 #. module: l10n_be
 #: constraint:res.company:0
@@ -61,205 +61,209 @@ msgstr "Napaka! Ne morete ustvariti rekurzivnih podjetij."
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tiers
 msgid "Tiers"
-msgstr ""
+msgstr "Stopnje"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,period_id:0
 msgid "Period"
-msgstr "Period"
+msgstr "Obdobje"
 
 #. module: l10n_be
 #: field:partner.vat.intra,period_ids:0
 msgid "Period (s)"
-msgstr "Period (s)"
+msgstr "Obdobja"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 #: view:partner.vat.intra:0
-#: view:partner.vat.list:0
 msgid "Save the File with '.xml' extension."
-msgstr "Save the File with '.xml' extension."
+msgstr "Shrani datoteko v .xml format."
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_charge
 msgid "Charge"
-msgstr ""
+msgstr "Breme"
 
 #. module: l10n_be
-#: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:265
+#: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:47
+#: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:52
+#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:105
+#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:109
 #, python-format
 msgid "Data Insufficient!"
-msgstr "Data Insufficient!"
+msgstr "Premalo podatkov!"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
-#: view:partner.vat.list:0
+#: view:partner.vat.list_13:0
 msgid "Create XML"
-msgstr "Create XML"
+msgstr "Ustvari XML"
 
 #. module: l10n_be
-#: model:account.financial.report,name:l10n_be.account_financial_report_capital2
+#: model:account.account.type,name:l10n_be.user_type_capitaux
 msgid "Capital"
-msgstr "Capital"
+msgstr "Kapital"
 
 #. module: l10n_be
-#: view:partner.vat.list:0
+#: view:partner.vat.list_13:0
 msgid "Print"
-msgstr "Print"
+msgstr "Natisni"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Save XML"
-msgstr "Save XML"
+msgstr "Shrani XML"
 
 #. module: l10n_be
-#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:258
+#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:219
 #, python-format
 msgid "Save"
-msgstr "Save"
+msgstr "Shrani"
 
 #. module: l10n_be
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Naziv podjetja mora biti unikaten!"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,msg:0
 #: field:partner.vat.intra,msg:0
+#: field:partner.vat.list_13,msg:0
 msgid "File created"
-msgstr "File created"
+msgstr "Datoteka ustvarjena"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "_Close"
-msgstr ""
+msgstr "_Zapri"
 
 #. module: l10n_be
-#: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:201
+#: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:131
 #, python-format
 msgid "Save XML For Vat declaration"
-msgstr "Save XML For Vat declaration"
+msgstr "Shrani XML za DDV napoved"
 
 #. module: l10n_be
-#: view:partner.vat.list:0
+#: view:partner.vat.list_13:0
 msgid "Customers"
-msgstr "Customers"
+msgstr "Kupci"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax_in
 msgid "Taxes à l'entrée"
-msgstr ""
+msgstr "Vhodni davki"
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,ask_restitution:0
 msgid "It indicates whether a resitution is to made or not?"
-msgstr ""
+msgstr "Prikazije, če je potrebno povračilo ali ne."
 
 #. module: l10n_be
 #: model:ir.actions.act_window,name:l10n_be.action_vat_declaration
 msgid "Vat Declaraion"
-msgstr ""
+msgstr "DDV napoved"
 
 #. module: l10n_be
+#: view:partner.vat.intra:0
 #: field:partner.vat.intra,no_vat:0
 msgid "Partner With No VAT"
-msgstr "Partner With No VAT"
+msgstr "Partner brez DDV"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_immo
 msgid "Immobilisation"
-msgstr ""
+msgstr "Dolgoročna sredstva"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 #: view:partner.vat.intra:0
-#: field:partner.vat.intra,tax_code_id:0
 msgid "Company"
-msgstr "Company"
+msgstr "Podjetje"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_13
 msgid "partner.vat_13"
-msgstr ""
+msgstr "partner.vat_13"
 
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.partner_vat_listing
 msgid "Annual Listing Of VAT-Subjected Customers"
-msgstr "Annual Listing Of VAT-Subjected Customers"
+msgstr "Letni spisek DDV zavezanih kupcev"
 
 #. module: l10n_be
-#: view:partner.vat.list:0
+#: view:partner.vat.list_13:0
 msgid "XML File has been Created."
-msgstr "XML File has been Created."
+msgstr "Datoteka XML je ustvarjena."
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,client_nihil:0
 msgid ""
 "Tick this case only if it concerns only the last statement on the civil or "
 "cessation of activity"
-msgstr ""
+msgstr "Označite le, če zadeva le zadnjo napoved ali prenehanje dejavnosti"
 
 #. module: l10n_be
 #: view:partner.vat.list_13:0
 msgid "Select Fiscal Year"
-msgstr "Izberi davčno leto"
+msgstr "Izberi fiskalno leto"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,ask_restitution:0
 msgid "Ask Restitution"
-msgstr "Ask Restitution"
+msgstr "Zahtevaj povračilo"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_intra
 #: model:ir.ui.menu,name:l10n_be.l10_be_vat_intra
 msgid "Partner VAT Intra"
-msgstr "Partner VAT Intra"
+msgstr "Partner EU DDV zavezanec"
 
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.l10_be_vat_declaration
 #: view:l1on_be.vat.declaration:0
 msgid "Periodical VAT Declaration"
-msgstr "Periodical VAT Declaration"
+msgstr "Periodična DDV napoved"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Note: "
-msgstr "Note: "
+msgstr "Opomba: "
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "_Preview"
-msgstr "_Preview"
+msgstr "_Predogled"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tiers_payable
 msgid "Tiers - Payable"
-msgstr ""
+msgstr "Stopnje - obveznosti"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,tax_code_id:0
+#: field:partner.vat.intra,tax_code_id:0
 msgid "Tax Code"
-msgstr "Tax Code"
+msgstr "Davčna koda"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Periods"
-msgstr "Periods"
+msgstr "Obdobja"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_produit
 msgid "Produit"
-msgstr ""
+msgstr "Proizvod"
 
 #. module: l10n_be
 #: help:partner.vat.intra,test_xml:0
 msgid "Sets the XML output as test file"
-msgstr "Sets the XML output as test file"
+msgstr "Nastavi dobljen XML kot testno datoteko"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_view
 msgid "Vue"
-msgstr "Vue"
+msgstr "Pogled"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
@@ -269,18 +273,19 @@ msgstr "V redu"
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,ask_payment:0
 msgid "Ask Payment"
-msgstr "Ask Payment"
+msgstr "Zahtevaj plačilo"
 
 #. module: l10n_be
 #: help:partner.vat.intra,no_vat:0
 msgid ""
 "The Partner whose VAT number is not defined they doesn't include in XML File."
 msgstr ""
+"Partner, za katerega ni določena ID za DDV, ni vključen v XML datoteko."
 
 #. module: l10n_be
-#: field:partner.vat,limit_amount:0
+#: field:partner.vat_13,limit_amount:0
 msgid "Limit Amount"
-msgstr "Limit Amount"
+msgstr "Mejni znesek"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_res_company
@@ -290,40 +295,39 @@ msgstr "Podjetja"
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Create _XML"
-msgstr "Create _XML"
+msgstr "Ustvari _XML"
 
 #. module: l10n_be
 #: help:partner.vat.intra,period_ids:0
 msgid ""
 "Select here the period(s) you want to include in your intracom declaration"
-msgstr ""
-"Select here the period(s) you want to include in your intracom declaration"
+msgstr "Izberite obdobja, ki jih želite vključiti v intracom napoved"
 
 #. module: l10n_be
-#: view:partner.vat:0
+#: view:partner.vat_13:0
 msgid "View Customers"
-msgstr "View Customers"
+msgstr "Pregled kupcev"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:102
 #, python-format
 msgid "The period code you entered is not valid."
-msgstr ""
+msgstr "Koda obdobja ni veljavna"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Is Last Declaration"
-msgstr "Is Last Declaration"
+msgstr "je zadnja napoved"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_stock
 msgid "Stock et Encours"
-msgstr "Stock et Encours"
+msgstr "Stanje zaloge"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,client_nihil:0
 msgid "Last Declaration of Enterprise"
-msgstr ""
+msgstr "Zadnja napoved podjetja"
 
 #. module: l10n_be
 #: help:partner.vat.intra,mand_id:0
@@ -331,6 +335,7 @@ msgid ""
 "This identifies the representative of the sending company. This is a string "
 "of 14 characters"
 msgstr ""
+"Določi predstavnika pošiljajočega podjetja. Besedilo sestoji iz 14 znakov."
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_account_vat_declaration.py:75
@@ -338,44 +343,44 @@ msgstr ""
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:98
 #, python-format
 msgid "Data Insufficient"
-msgstr ""
+msgstr "Pomanjkljivi podatki"
 
 #. module: l10n_be
 #: model:ir.ui.menu,name:l10n_be.menu_finance_belgian_statement
 msgid "Belgium Statements"
-msgstr "Belgium Statements"
+msgstr "Belgijske napovedi"
 
 #. module: l10n_be
 #: model:ir.actions.act_window,name:l10n_be.action_vat_intra
 msgid "Partner Vat Intra"
-msgstr "Partner Vat Intra"
+msgstr "Partner EU DDV zavezanec"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Declare Periodical VAT"
-msgstr "Declare Periodical VAT"
+msgstr "Periodična napoved DDV"
 
 #. module: l10n_be
 #: model:ir.model,name:l10n_be.model_partner_vat_list_13
 msgid "partner.vat.list_13"
-msgstr ""
+msgstr "partner.vat.list_13"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 msgid "Save xml"
-msgstr "Save xml"
+msgstr "Shrani xml"
 
 #. module: l10n_be
 #: field:partner.vat.intra,mand_id:0
 msgid "MandataireId"
-msgstr ""
+msgstr "ID pooblaščenca"
 
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,file_save:0
 #: field:partner.vat.intra,file_save:0
-#: field:partner.vat.list,file_save:0
+#: field:partner.vat.list_13,file_save:0
 msgid "Save File"
-msgstr "Save File"
+msgstr "Shrani datoteko"
 
 #. module: l10n_be
 #: help:partner.vat.intra,period_code:0
@@ -403,14 +408,14 @@ msgstr ""
 #. module: l10n_be
 #: field:l1on_be.vat.declaration,name:0
 #: field:partner.vat.intra,name:0
-#: field:partner.vat.list,name:0
+#: field:partner.vat.list_13,name:0
 msgid "File Name"
-msgstr "File Name"
+msgstr "Naziv datoteke"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax_out
 msgid "Taxes à la sortie"
-msgstr ""
+msgstr "Izstopni davki"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_tax
@@ -423,84 +428,80 @@ msgstr "Davek"
 #: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:98
 #, python-format
 msgid "No VAT Number Associated with Main Company!"
-msgstr ""
+msgstr "Za glavno podjetje ni povezane ID številke za DDV!"
 
 #. module: l10n_be
-#: model:ir.actions.act_window,name:l10n_be.action_vat_declaration
 #: model:ir.model,name:l10n_be.model_l1on_be_vat_declaration
 msgid "Vat Declaration"
-msgstr "Vat Declaration"
+msgstr "DDV napoved"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 #: field:partner.vat.intra,country_ids:0
 msgid "European Countries"
-msgstr "European Countries"
+msgstr "Evropske države"
 
 #. module: l10n_be
-#: model:ir.actions.act_window,name:l10n_be.action_partner_vat_listing
-#: view:partner.vat:0
+#: model:ir.actions.act_window,name:l10n_be.action_partner_vat_listing_13
+#: view:partner.vat_13:0
 msgid "Partner VAT Listing"
-msgstr "Partner VAT Listing"
+msgstr "Seznam Partnerjev DDV zavezancev"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "General Information"
-msgstr "General Information"
+msgstr "Splošni podatki"
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Create an XML file for Vat Intra"
-msgstr ""
+msgstr "Ustvari XML datoteko za EU DDV"
 
 #. module: l10n_be
 #: field:partner.vat.intra,period_code:0
 msgid "Period Code"
-msgstr "Period Code"
+msgstr "Koda obdobja"
 
 #. module: l10n_be
 #: model:account.account.type,name:l10n_be.user_type_financiers
 msgid "Financier"
-msgstr ""
+msgstr "Financiranje"
 
 #. module: l10n_be
-#: field:partner.vat,year:0
+#: field:partner.vat_13,year:0
 msgid "Year"
-msgstr "Year"
+msgstr "Leto"
 
 #. module: l10n_be
-#: view:l1on_be.vat.declaration:0
-#: view:partner.vat:0
-#: view:partner.vat.intra:0
-#: view:partner.vat.list:0
+#: view:partner.vat_13:0
 msgid "Cancel"
-msgstr "Cancel"
+msgstr "Preklic"
 
 #. module: l10n_be
 #: view:l1on_be.vat.declaration:0
 #: view:partner.vat.intra:0
 #: view:partner.vat.list_13:0
 msgid "Close"
-msgstr "Zapri"
+msgstr "Zaključi"
 
 #. module: l10n_be
-#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:119
+#: code:addons/l10n_be/wizard/l10n_be_vat_intra.py:105
 #, python-format
 msgid "Please select at least one Period."
-msgstr "Please select at least one Period."
+msgstr "Izberite vsaj eno obdobje."
 
 #. module: l10n_be
 #: help:l1on_be.vat.declaration,ask_payment:0
 msgid "It indicates whether a payment is to made or not?"
-msgstr ""
+msgstr "Prikazuje, če je potrebno plačilo ali ne."
 
 #. module: l10n_be
 #: view:partner.vat.intra:0
 msgid "Partner VAT intra"
-msgstr "Partner VAT intra"
+msgstr "Partner EU DDV zavezanec"
 
 #. module: l10n_be
 #: code:addons/l10n_be/wizard/l10n_be_partner_vat_listing.py:47
 #, python-format
 msgid "No data for the selected Year."
-msgstr ""
+msgstr "Ni podatkov za izbrano leto"

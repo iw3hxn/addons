@@ -848,6 +848,13 @@ class stock_picking(osv.osv):
         """ Changes picking state to done.
         @return: True
         """
+        pickings = self.browse(cr, uid, ids, context=context)
+        order_ids = []
+        for picking in pickings:
+            if picking.sale_id:
+                order_ids.append(picking.sale_id.id)
+        if order_ids:
+           self.pool['sale.order'].write(cr, uid, order_ids, {'shipped': '1'}, context=context)
         self.write(cr, uid, ids, {'state': 'done', 'date_done': time.strftime('%Y-%m-%d %H:%M:%S')})
         return True
 
@@ -1022,6 +1029,7 @@ class stock_picking(osv.osv):
             @param: invoice_vals: dict used to created the invoice
             @return: dict that will be used to create the invoice line
         """
+
         if group:
             name = (picking.name or '') + '-' + move_line.name
         else:
@@ -1051,6 +1059,9 @@ class stock_picking(osv.osv):
         if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
             uos_id = move_line.product_uom.id
 
+        price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'])
+        discount = self._get_discount_invoice(cr, uid, move_line)
+
         return {
             'name': name,
             'origin': origin,
@@ -1058,8 +1069,8 @@ class stock_picking(osv.osv):
             'uos_id': uos_id,
             'product_id': move_line.product_id.id,
             'account_id': account_id,
-            'price_unit': self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type']),
-            'discount': self._get_discount_invoice(cr, uid, move_line),
+            'price_unit': price_unit,
+            'discount': discount,
             'quantity': move_line.product_uos_qty or move_line.product_qty,
             'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
@@ -1075,7 +1086,6 @@ class stock_picking(osv.osv):
         """
         if context is None:
             context = {}
-
         invoice_obj = self.pool.get('account.invoice')
         invoice_line_obj = self.pool.get('account.invoice.line')
         invoices_group = {}

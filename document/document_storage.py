@@ -493,7 +493,12 @@ class document_storage(osv.osv):
                 # On a migrated db, some files may have the wrong storage type
                 # try to fix their directory.
                 if ira.file_size:
-                    self._doclog.warning( "ir.attachment #%d does not have a filename, but is at filestore, fix it!" % ira.id)
+                    # carlo try to use database
+                    cr.execute('SELECT db_datas FROM ir_attachment WHERE id = %s', (ira.id,))
+                    res = cr.fetchone()
+                    if res:
+                        return res[0]
+                self._doclog.warning( "ir.attachment #%d does not have a filename, but is at filestore, fix it!" % ira.id)
                 return None
             fpath = os.path.join(boo.path, ira.store_fname)
             return file(fpath, 'rb').read()

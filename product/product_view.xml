@@ -347,12 +347,14 @@
             <field name="view_id" ref="product_category_tree_view"/>
             <field name="help">Here is a list of all your products classified by category. You can click a category to get the list of all products linked to this category or to a child of this category.</field>
         </record>
+<!--
         <menuitem
             action="product_category_action"
             id="product.menu_products_category"
             groups="base.group_extended"
             parent="base.menu_product"
             sequence="0"/>
+-->
         <record id="product_category_action_form" model="ir.actions.act_window">
             <field name="name">Product Categories</field>
             <field name="type">ir.actions.act_window</field>

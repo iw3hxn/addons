@@ -22,7 +22,7 @@
 
 {
     'name': 'Point Of Sale',
-    'version': '1.0.1',
+    'version': '2.1.9.2',
     'category': 'Point Of Sale',
     "sequence": 6,
     'description': """
@@ -39,7 +39,13 @@ Main features :
     * Allow to refund former sales.
     """,
     'author': 'OpenERP SA',
-    'images': ['images/cash_registers.jpeg', 'images/pos_analysis.jpeg','images/register_analysis.jpeg','images/sale_order_pos.jpeg','images/product_pos.jpeg'],
+    'images': [
+        'images/cash_registers.jpeg',
+        'images/pos_analysis.jpeg',
+        'images/register_analysis.jpeg',
+        'images/sale_order_pos.jpeg',
+        'images/product_pos.jpeg'
+    ],
     'depends': ['sale'],
     'init_xml': [],
 
@@ -67,6 +73,7 @@ Main features :
         'point_of_sale_workflow.xml',
         'account_statement_view.xml',
         'account_statement_report.xml',
+        'pos_cron_data.xml',
     ],
     'demo_xml': [
         'point_of_sale_demo.xml',
@@ -80,7 +87,7 @@ Main features :
     ],
     'installable': True,
     'application': True,
-    'certificate' : '001156338024966477869',
+    'certificate': '001156338024966477869',
     # Web client
     'js': ['static/lib/backbone/backbone-0.5.3.js', 'static/src/js/pos.js'],
     'css': ['static/src/css/pos.css'],

@@ -7,15 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-03-13 12:44+0000\n"
-"Last-Translator: Leonardo Pistone - Agile BG - Domsense "
-"<leonardo.pistone@agilebg.com>\n"
+"PO-Revision-Date: 2014-07-23 17:55+0000\n"
+"Last-Translator: Leonardo Pistone - Agile BG - Domsense <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:52+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:41+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: base_setup
 #: field:user.preferences.config,menu_tips:0
@@ -130,6 +129,7 @@ msgstr ""
 
 #. module: base_setup
 #: view:base.setup.terminology:0
+#: view:user.preferences.config:0
 msgid "res_config_contents"
 msgstr "Copy text   \t res_config_contents"
 

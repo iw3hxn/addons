@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
+"PO-Revision-Date: 2014-07-23 18:43+0000\n"
 "Last-Translator: simone.sandri <lexluxsox@hotmail.it>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:56+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:48+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: crm_partner_assign
 #: field:crm.lead.forward.to.partner,send_to:0
@@ -74,7 +74,7 @@ msgid "Geo Localize"
 msgstr "Geo localizzazione"
 
 #. module: crm_partner_assign
-#: help:crm.lead.forward.to.partner,body:0
+#: help:crm.lead.forward.to.partner,body_text:0
 msgid "Plain-text version of the message"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgid "#Partner"
 msgstr ""
 
 #. module: crm_partner_assign
-#: selection:crm.lead.forward.to.partner,history_mode:0
+#: selection:crm.lead.forward.to.partner,history:0
 msgid "Whole Story"
 msgstr "Storia intera"
 
@@ -135,7 +135,7 @@ msgid "Highest"
 msgstr "Maggiore"
 
 #. module: crm_partner_assign
-#: field:crm.lead.forward.to.partner,body:0
+#: field:crm.lead.forward.to.partner,body_text:0
 msgid "Text contents"
 msgstr ""
 
@@ -151,7 +151,7 @@ msgid "Message unique identifier"
 msgstr "Identificativo univoco messaggio"
 
 #. module: crm_partner_assign
-#: selection:crm.lead.forward.to.partner,history_mode:0
+#: selection:crm.lead.forward.to.partner,history:0
 msgid "Latest email"
 msgstr "Ultima email"
 
@@ -208,10 +208,10 @@ msgid "Blind carbon copy message recipients"
 msgstr ""
 
 #. module: crm_partner_assign
+#: field:crm.lead.forward.to.partner,partner_id:0
+#: selection:crm.lead.forward.to.partner,send_to:0
 #: view:crm.lead.report.assign:0
 #: field:crm.lead.report.assign,partner_assigned_id:0
-#: view:crm.partner.report.assign:0
-#: field:crm.partner.report.assign,partner_id:0
 #: model:ir.model,name:crm_partner_assign.model_res_partner
 msgid "Partner"
 msgstr "Partner"
@@ -240,6 +240,7 @@ msgstr "Da"
 #. module: crm_partner_assign
 #: model:ir.actions.act_window,name:crm_partner_assign.res_partner_grade_action
 #: model:ir.ui.menu,name:crm_partner_assign.menu_res_partner_grade_action
+#: field:res.partner,grade_id:0
 #: view:res.partner.grade:0
 msgid "Partner Grade"
 msgstr "Qualità del Partner"
@@ -278,13 +279,12 @@ msgid "Overpassed Deadline"
 msgstr "Scadenza superata"
 
 #. module: crm_partner_assign
-#: field:crm.lead.forward.to.partner,type:0
 #: field:crm.lead.report.assign,type:0
 msgid "Type"
 msgstr "Tipo"
 
 #. module: crm_partner_assign
-#: field:res.partner.activation,name:0
+#: view:crm.partner.report.assign:0
 msgid "Name"
 msgstr "Nome"
 
@@ -352,7 +352,7 @@ msgid "Related Document model"
 msgstr ""
 
 #. module: crm_partner_assign
-#: code:addons/crm_partner_assign/wizard/crm_forward_to_partner.py:74
+#: code:addons/crm_partner_assign/wizard/crm_forward_to_partner.py:192
 #, python-format
 msgid "Fwd"
 msgstr "Inoltra"
@@ -369,13 +369,12 @@ msgid "Opportunities Assignment Analysis"
 msgstr "Analisi assegnamento opportunità"
 
 #. module: crm_partner_assign
-#: view:crm.lead.forward.to.partner:0
 #: view:res.partner:0
 msgid "Cancel"
 msgstr "Annulla"
 
 #. module: crm_partner_assign
-#: field:crm.lead.forward.to.partner,history_mode:0
+#: field:crm.lead.forward.to.partner,history:0
 msgid "Send history"
 msgstr "Invia storico"
 
@@ -385,6 +384,7 @@ msgid "Contact"
 msgstr "Contatto"
 
 #. module: crm_partner_assign
+#: view:crm.lead.forward.to.partner:0
 #: view:res.partner:0
 msgid "Close"
 msgstr "Chiudi"
@@ -539,6 +539,8 @@ msgid "Delay to Open"
 msgstr "Ritardo di apertura"
 
 #. module: crm_partner_assign
+#: selection:crm.lead.forward.to.partner,send_to:0
+#: field:crm.lead.forward.to.partner,user_id:0
 #: field:crm.lead.report.assign,user_id:0
 #: field:crm.partner.report.assign,user_id:0
 msgid "User"
@@ -728,7 +730,6 @@ msgid "Reply-To"
 msgstr ""
 
 #. module: crm_partner_assign
-#: view:crm.lead:0
 #: field:crm.lead,partner_assigned_id:0
 msgid "Assigned Partner"
 msgstr "Partner assegnato"
@@ -833,12 +834,11 @@ msgid "Error ! You cannot create recursive associated members."
 msgstr ""
 
 #. module: crm_partner_assign
-#: selection:crm.lead.forward.to.partner,history_mode:0
+#: selection:crm.lead.forward.to.partner,history:0
 msgid "Case Information"
 msgstr ""
 
 #. module: crm_partner_assign
-#: field:res.partner.activation,sequence:0
 #: field:res.partner.grade,sequence:0
 msgid "Sequence"
 msgstr "Sequenza"

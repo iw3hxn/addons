@@ -25,6 +25,7 @@ from report import report_sxw
 class lot_overview_all(report_sxw.rml_parse):
     def __init__(self, cr, uid, name, context):
         super(lot_overview_all, self).__init__(cr, uid, name, context=context)
+        self.context = context
         self.price_total = 0.0
         self.grand_total = 0.0
         self.localcontext.update({
@@ -36,7 +37,16 @@ class lot_overview_all(report_sxw.rml_parse):
 
     def process(self,location_id):
         location_obj = pooler.get_pool(self.cr.dbname).get('stock.location')
-        data = location_obj._product_get_all_report(self.cr,self.uid, [location_id])
+        # search product_ids
+        stock_move_obj = pooler.get_pool(self.cr.dbname).get('stock.move')
+        move_ids = stock_move_obj.search(self.cr, self.uid, ['|', ('location_id', 'child_of', location_id), ('location_dest_id', 'child_of', location_id)])
+        product_ids = []
+        for move in stock_move_obj.browse(self.cr, self.uid, move_ids, self.context):
+            if move.product_id.id not in product_ids:
+                product_ids.append(move.product_id.id)
+
+        data = location_obj._product_get_all_report(self.cr, self.uid, [location_id], product_ids, self.context)
+
         data['location_name'] = location_obj.read(self.cr, self.uid, [location_id],['complete_name'])[0]['complete_name']
         self.price_total = 0.0
         self.price_total += data['total_price']

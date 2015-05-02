@@ -1,61 +1,62 @@
-# Translation of OpenERP Server.
-# This file contains the translation of the following modules:
-# 	* project
+# Slovenian translation for matmoz
+# Copyright (c) 2014 Rosetta Contributors and Canonical Ltd 2014
+# This file is distributed under the same license as the matmoz package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, 2014.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: OpenERP Server 6.0dev\n"
-"Report-Msgid-Bugs-To: support@openerp.com\n"
+"Project-Id-Version: matmoz\n"
+"Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 01:37+0100\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Mantavya Gajjar (Open ERP) <Unknown>\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2014-08-06 11:53+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
+"Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:15+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-07 06:15+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "New tasks"
-msgstr "Nove naloge"
+msgstr "Nova opravila"
 
 #. module: project
 #: help:project.task.delegate,new_task_description:0
 msgid "Reinclude the description of the task in the task of the user"
-msgstr "Vključi opis naloge v nalogo uporabnika"
+msgstr "Vključi opis opravila v uporabnikovo opravilo"
 
 #. module: project
 #: code:addons/project/project.py:951
 #, python-format
 msgid "The task '%s' has been delegated to %s."
-msgstr ""
+msgstr "Za opravilo '%s' je zadolžen %s."
 
 #. module: project
 #: constraint:res.users:0
 msgid "The chosen company is not in the allowed companies for this user"
-msgstr ""
+msgstr "Izbrano podjetje ni med dovoljenimi podjetji za tega uporabnika"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Previous Month"
-msgstr ""
+msgstr "Prejšnji mesec"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "My tasks"
-msgstr "Moje naloge"
+msgstr "Moja opravila"
 
 #. module: project
 #: field:project.project,warn_customer:0
 msgid "Warn Partner"
-msgstr ""
+msgstr "Opozori partnerja"
 
 #. module: project
 #: help:project.task.reevaluate,remaining_hours:0
 msgid "Put here the remaining hours required to close the task."
-msgstr "Potrebne ure za zaključek naloge"
+msgstr "Preostale ure potrebne za zaključek naloge"
 
 #. module: project
 #: view:project.task:0
@@ -66,7 +67,7 @@ msgstr "Roki"
 #: code:addons/project/project.py:155
 #, python-format
 msgid "Operation Not Permitted !"
-msgstr ""
+msgstr "Nedovoljena operacija !"
 
 #. module: project
 #: code:addons/project/wizard/project_task_delegate.py:69
@@ -80,7 +81,7 @@ msgstr "POTRDI: "
 #. module: project
 #: field:project.task,user_email:0
 msgid "User Email"
-msgstr "Email"
+msgstr "Uporabnikova e-pošta"
 
 #. module: project
 #: field:project.task,work_ids:0
@@ -88,15 +89,16 @@ msgid "Work done"
 msgstr "Opravljeno delo"
 
 #. module: project
-#: code:addons/project/project.py:932
+#: code:addons/project/project.py:358 code:addons/project/project.py:789
+#: code:addons/project/project.py:1148
 #, python-format
 msgid "Warning !"
-msgstr "Opozorilo!"
+msgstr "Opozorilo !"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_delegate
 msgid "Task Delegate"
-msgstr "Delegiranje naloge"
+msgstr "Delegiranje opravila"
 
 #. module: project
 #: field:project.task.delegate,planned_hours_me:0
@@ -106,14 +108,16 @@ msgstr "Ure za potrditev"
 #. module: project
 #: view:project.project:0
 msgid "Pending Projects"
-msgstr "Projekti na čakanju"
+msgstr "Čakajoči projekti"
 
 #. module: project
 #: help:project.task,remaining_hours:0
 msgid ""
 "Total remaining time, can be re-estimated periodically by the assignee of "
 "the task."
-msgstr "Skupni preostali čas."
+msgstr ""
+"Skupni preostali čas, zadolženec za opravilo ga občasno lahko ponovno "
+"ovrednoti"
 
 #. module: project
 #: view:project.project:0
@@ -123,7 +127,7 @@ msgstr "Ponovno odprite projekt"
 #. module: project
 #: help:project.project,priority:0
 msgid "Gives the sequence order when displaying the list of projects"
-msgstr "Zaporedje prikaza projektov"
+msgstr "Zaporedje prikaza projektov na seznamu"
 
 #. module: project
 #: constraint:project.project:0
@@ -133,12 +137,12 @@ msgstr "Začetni datum mora biti pred končnim."
 #. module: project
 #: view:project.task.reevaluate:0
 msgid "Reevaluation Task"
-msgstr ""
+msgstr "Ponovno ovrednotenje"
 
 #. module: project
 #: field:project.project,members:0
 msgid "Project Members"
-msgstr "Člani projekta"
+msgstr "Udeleženci projekta"
 
 #. module: project
 #: model:process.node,name:project.process_node_taskbydelegate0
@@ -153,12 +157,12 @@ msgstr "Marec"
 #. module: project
 #: view:project.task:0
 msgid "Delegated tasks"
-msgstr "Delegirane naloge"
+msgstr "Delegirana opravila"
 
 #. module: project
 #: field:project.task,child_ids:0
 msgid "Delegated Tasks"
-msgstr "Delegirane naloge"
+msgstr "Delegirana opravila"
 
 #. module: project
 #: help:project.project,warn_header:0
@@ -166,42 +170,38 @@ msgid ""
 "Header added at the beginning of the email for the warning message sent to "
 "the customer when a task is closed."
 msgstr ""
+"Glava sporočila pri opozorilnih sporočilih stranki ob zaključevanju opravil"
 
 #. module: project
-#: view:board.board:0
-#: model:ir.actions.act_window,name:project.my_open_tasks_action
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 msgid "My Tasks"
-msgstr "Moje naloge"
+msgstr "Moja opravila"
 
 #. module: project
 #: constraint:project.task:0
 msgid "Error ! You cannot create recursive tasks."
-msgstr "Napaka ! Ne morete kreirati rekurzivnih nalog"
+msgstr "Napaka ! Ne morete ustvarjati rekurzivnih opravil."
 
 #. module: project
-#: field:project.task,company_id:0
-#: field:project.task.work,company_id:0
-#: view:report.project.task.user:0
-#: field:report.project.task.user,company_id:0
+#: field:project.task,company_id:0 field:project.task.work,company_id:0
+#: view:report.project.task.user:0 field:report.project.task.user,company_id:0
 msgid "Company"
 msgstr "Podjetje"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Pending tasks"
-msgstr "Čakajoče naloge"
+msgstr "Čakajoča opravila"
 
 #. module: project
 #: field:project.task.delegate,prefix:0
 msgid "Your Task Title"
-msgstr ""
+msgstr "Vaš naziv opravila"
 
 #. module: project
 #: field:project.task.type,name:0
 msgid "Stage Name"
-msgstr "Ime faze"
+msgstr "Naziv stopnje"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_openpendingtask0
@@ -221,7 +221,7 @@ msgstr "Določite zahteve in planirajte ure"
 #. module: project
 #: view:project.task:0
 msgid "Change Stage"
-msgstr ""
+msgstr "Spremeni stopnjo"
 
 #. module: project
 #: view:project.project:0
@@ -231,7 +231,7 @@ msgstr "Nov projekt na osnovi predloge"
 #. module: project
 #: constraint:project.project:0
 msgid "Error! You cannot assign escalation to the same project!"
-msgstr ""
+msgstr "Napaka! Projekta ne morete stopnjevati v samega sebe!"
 
 #. module: project
 #: selection:report.project.task.user,priority:0
@@ -242,23 +242,23 @@ msgstr "Zelo nujno"
 #: help:project.task.delegate,project_id:0
 #: help:project.task.delegate,user_id:0
 msgid "User you want to delegate this task to"
-msgstr "Uporabnik , ki mu želite delegirati to nalogo"
+msgstr "Uporabnik , ki mu želite poveriti to opravilo"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "My Task"
-msgstr "Moja naloga"
+msgstr "Moje opravilo"
 
 #. module: project
-#: view:report.project.task.user:0
-#: field:report.project.task.user,day:0
+#: view:report.project.task.user:0 field:report.project.task.user,day:0
+#: field:task.by.days,day:0
 msgid "Day"
 msgstr "Dan"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_project_config_project
 msgid "Projects and Stages"
-msgstr ""
+msgstr "Projekti in stopnje"
 
 #. module: project
 #: view:project.project:0
@@ -268,57 +268,53 @@ msgstr "Nastavite kot predlogo"
 #. module: project
 #: model:process.node,name:project.process_node_drafttask0
 msgid "Draft task"
-msgstr "Osnutek naloge"
+msgstr "Osnutek opravila"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task
-#: view:project.config.settings:0
-#: view:project.project:0
-#: view:project.task:0
 #: field:project.task.history,task_id:0
 #: field:project.task.history.cumulative,task_id:0
-#: field:project.task.work,task_id:0
-#: view:report.project.task.user:0
+#: field:project.task.work,task_id:0 view:report.project.task.user:0
 msgid "Task"
 msgstr "Opravilo"
 
 #. module: project
 #: view:project.project:0
 msgid "Members"
-msgstr ""
+msgstr "Udeleženci"
 
 #. module: project
 #: view:board.board:0
 #: model:ir.actions.act_window,name:project.my_open_tasks_action
 msgid "My Open Tasks"
-msgstr "Moje odprte naloge"
+msgstr "Moja odprta opravila"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:43
 #, python-format
 msgid ""
 "Please specify the Project Manager or email address of Project Manager."
-msgstr ""
+msgstr "Določite prosim projektnega vodjo ter njegov e-poštni naslov."
 
 #. module: project
 #: view:project.task:0
 msgid "For cancelling the task"
-msgstr ""
+msgstr "Za preklic opravila"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_work
 msgid "Project Task Work"
-msgstr "Delo na nalogah"
+msgstr "Delo na projektnih opravilih"
 
 #. module: project
-#: field:project.task,notes:0
+#: view:project.project:0 view:project.task:0 field:project.task,notes:0
 msgid "Notes"
 msgstr "Opombe"
 
 #. module: project
 #: view:project.vs.hours:0
 msgid "Project vs remaining hours"
-msgstr ""
+msgstr "Projekt po preostalih urah"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -333,65 +329,64 @@ msgid ""
 "boolean 'active' field: if the task is linked to a template or unactivated "
 "project, it will be hidden unless specifically asked."
 msgstr ""
+"To polje je samodejno obdelano in se obnaša enako kot preklopno polje "
+"(boolean) 'aktivno: če je opravilo povezano s predlogo ali ne zagnanim "
+"projektom, bo skrito razen če ne posebej zahtevano."
 
 #. module: project
-#: field:project.task,name:0
-#: field:report.project.task.user,name:0
+#: field:project.task,name:0 field:report.project.task.user,name:0
 msgid "Task Summary"
 msgstr "Povzetek opravila"
 
 #. module: project
 #: field:project.task,active:0
 msgid "Not a Template Task"
-msgstr "Ni predloga naloge"
+msgstr "Ni predloga opravila"
 
 #. module: project
-#: view:res.partner:0
+#: view:project.task:0 view:res.partner:0
 msgid "Start Task"
-msgstr "Začetek naloge"
+msgstr "Začetek opravila"
 
 #. module: project
 #: model:process.node,note:project.process_node_donetask0
 msgid "Task is Completed"
-msgstr "Naloga je končana"
+msgstr "Opravilo je dokončano"
 
 #. module: project
 #: view:project.project:0
 msgid ""
 "Automatic variables for headers and footer. Use exactly the same notation."
 msgstr ""
+"Samodejne spremenljivke za glave in noge. Uporaba povsem enakega zapisa."
 
 #. module: project
 #: view:project.task:0
 msgid "Show only tasks having a deadline"
-msgstr "Pokaži samo naloge , ki imajo določen rok"
+msgstr "Prikaži samo opravila z določenim rokom izvedbe"
 
 #. module: project
-#: selection:project.project,state:0
-#: selection:project.task,state:0
-#: selection:project.task.history,state:0
+#: selection:project.task,state:0 selection:project.task.history,state:0
 #: selection:project.task.history.cumulative,state:0
-#: model:project.task.type,name:project.project_tt_cancel
-#: selection:project.task.type,state:0
-#: selection:report.project.task.user,state:0
+#: selection:project.vs.hours,state:0
+#: selection:report.project.task.user,state:0 selection:task.by.days,state:0
 msgid "Cancelled"
 msgstr "Preklicano"
 
 #. module: project
-#: field:project.task,date_end:0
-#: field:report.project.task.user,date_end:0
+#: field:project.task,date_end:0 field:report.project.task.user,date_end:0
 msgid "Ending Date"
 msgstr "Končni datum"
 
 #. module: project
 #: view:project.project:0 field:project.project,warn_header:0
 msgid "Mail Header"
-msgstr ""
+msgstr "Glava pošte"
 
 #. module: project
 #: view:project.task:0
 msgid "Change to Next Stage"
-msgstr ""
+msgstr "Spremeni v naslednjo stopnjo"
 
 #. module: project
 #: model:process.node,name:project.process_node_donetask0
@@ -399,37 +394,34 @@ msgid "Done task"
 msgstr "Končana naloga"
 
 #. module: project
-#: field:project.project,color:0
 #: field:project.task,color:0
 msgid "Color Index"
-msgstr "Barvni index"
+msgstr "Barvni indeks"
 
 #. module: project
 #: model:ir.ui.menu,name:project.menu_definitions view:res.company:0
 msgid "Configuration"
-msgstr "Konfiguracija"
+msgstr "Nastavitve"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Current Month"
-msgstr ""
+msgstr "Tekoči mesec"
 
 #. module: project
 #: model:process.transition,note:project.process_transition_delegate0
 msgid "Delegates tasks to the other user"
-msgstr "Delegirane naloge"
+msgstr "Poveri opravilo drugemu uporabniku"
 
 #. module: project
-#: view:project.project:0
-#: view:project.task:0
-#: view:report.project.task.user:0
+#: view:project.project:0 view:project.task:0 view:report.project.task.user:0
 msgid "Group By..."
 msgstr "Združeno po..."
 
 #. module: project
 #: field:project.task.work,user_id:0
 msgid "Done by"
-msgstr "Naredil"
+msgstr "Opravil"
 
 #. module: project
 #: help:project.project,warn_customer:0
@@ -437,6 +429,8 @@ msgid ""
 "If you check this, the user will have a popup when closing a task that "
 "propose a message to send by email to the customer."
 msgstr ""
+"Če se to označi, bo uporabnik dobil pojavno okno ob zaključku opravila, s "
+"predlogom e-poštnega sporočila kupcu."
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_testing
@@ -447,10 +441,11 @@ msgstr "Preizkušanje"
 #: code:addons/project/project.py:829
 #, python-format
 msgid "Task '%s' closed"
-msgstr ""
+msgstr "Opravilo  '%s' je zaključeno"
 
 #. module: project
 #: model:ir.model,name:project.model_account_analytic_account
+#: field:project.project,analytic_account_id:0
 msgid "Analytic Account"
 msgstr "Analitični konto"
 
@@ -460,21 +455,20 @@ msgid "Computed using the sum of the task work done."
 msgstr "Vsota opravljenega dela."
 
 #. module: project
-#: view:project.config.settings:0
+#: view:project.task:0
 msgid "Planning"
 msgstr "Načrtovanje"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task,date_deadline:0
+#: view:project.task:0 field:project.task,date_deadline:0
 #: field:report.project.task.user,date_deadline:0
 msgid "Deadline"
-msgstr "Rok"
+msgstr "Rok izvedbe"
 
 #. module: project
 #: view:project.task.delegate:0 view:project.task.reevaluate:0
 msgid "_Cancel"
-msgstr ""
+msgstr "_Preklic"
 
 #. module: project
 #: view:project.task.history.cumulative:0
@@ -484,58 +478,56 @@ msgstr "Pripravljeno"
 #. module: project
 #: view:project.task:0
 msgid "Change Color"
-msgstr ""
+msgstr "Spremeni barvo"
 
 #. module: project
 #: constraint:account.analytic.account:0
 msgid "Error! You can not create recursive analytic accounts."
-msgstr ""
+msgstr "Napaka! Ne morete ustvariti rekurzivnih analitičnih kontov."
 
 #. module: project
 #: code:addons/project/project.py:264 code:addons/project/project.py:303
 #, python-format
 msgid " (copy)"
-msgstr ""
+msgstr " (kopija)"
 
 #. module: project
 #: view:project.task:0
 msgid "New Tasks"
-msgstr "Nove naloge"
+msgstr "Nova opravila"
 
 #. module: project
-#: view:report.project.task.user:0
-#: field:report.project.task.user,nbr:0
+#: view:report.project.task.user:0 field:report.project.task.user,nbr:0
 msgid "# of tasks"
-msgstr "# nalog"
+msgstr "# opravil"
 
 #. module: project
 #: view:project.task:0
 msgid "Previous"
-msgstr ""
+msgstr "Predhodni"
 
 #. module: project
-#: field:report.project.task.user,user_id:0
+#: field:project.vs.hours,user_id:0 field:report.project.task.user,user_id:0
 msgid "Assigned To"
 msgstr "Dodeljeno"
 
 #. module: project
 #: view:project.project:0
 msgid "Date Stop: %(date)s"
-msgstr ""
+msgstr "Končni datum: %(date)s"
 
 #. module: project
 #: sql_constraint:res.users:0
 msgid "You can not have two users with the same login !"
-msgstr ""
+msgstr "Ne morete imeti dveh uporabnikov z istim prijavnim imenom!"
 
 #. module: project
 #: view:project.project:0
 msgid "Reset as Project"
-msgstr "Po nastavi kot projekt"
+msgstr "Ponastavi kot projekt"
 
 #. module: project
-#: view:project.project:0
-#: selection:project.project,state:0
+#: view:project.project:0 selection:project.vs.hours,state:0
 msgid "Template"
 msgstr "Predloga"
 
@@ -547,12 +539,12 @@ msgstr "Moji projekti"
 #. module: project
 #: constraint:res.company:0
 msgid "Error! You can not create recursive companies."
-msgstr ""
+msgstr "Napaka! Ne morete ustvariti rekurzivnih podjetij."
 
 #. module: project
 #: view:project.task:0
 msgid "Next"
-msgstr ""
+msgstr "Naslednje"
 
 #. module: project
 #: model:process.transition,note:project.process_transition_draftopentask0
@@ -560,8 +552,7 @@ msgid "From draft state, it will come into the open state."
 msgstr "Iz osnutka bo spremenjeno v odprto."
 
 #. module: project
-#: view:report.project.task.user:0
-#: field:report.project.task.user,no_of_days:0
+#: view:report.project.task.user:0 field:report.project.task.user,no_of_days:0
 msgid "# of Days"
 msgstr "# dni"
 
@@ -571,39 +562,36 @@ msgid "Open Projects"
 msgstr "Odprti projekti"
 
 #. module: project
-#: code:addons/project/project.py:432
+#: code:addons/project/project.py:358
 #, python-format
 msgid "You must assign members on the project '%s' !"
-msgstr "Določiti morate člane projekta:'%s' !"
+msgstr "Določiti morate udeležence projekta:'%s' !"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "In progress tasks"
-msgstr "Naloge v delu"
+msgstr "Opravila v teku"
 
 #. module: project
 #: help:project.project,progress_rate:0
 msgid "Percent of tasks closed according to the total of tasks todo."
-msgstr "Odstotek končanja naloge"
+msgstr "Odstotek zaključenih opravil glede na vsa opravila za izvedbo"
 
 #. module: project
 #: view:project.task.delegate:0
 #: field:project.task.delegate,new_task_description:0
 msgid "New Task Description"
-msgstr "Opis naloge"
+msgstr "Nov opis opravila"
 
 #. module: project
 #: model:res.request.link,name:project.req_link_task
 msgid "Project task"
-msgstr "Projektna naloga"
+msgstr "Projektno opravilo"
 
 #. module: project
-#: selection:project.project,state:0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.task:0 selection:project.task,state:0
 #: selection:project.task.history,state:0
 #: selection:project.task.history.cumulative,state:0
-#: selection:project.task.type,state:0
 #: view:report.project.task.user:0
 msgid "New"
 msgstr "Novo"
@@ -628,17 +616,15 @@ msgstr "Efektivne ure"
 #. module: project
 #: view:project.task.delegate:0
 msgid "Validation Task Title"
-msgstr "Validacija naslova naloge"
+msgstr "Validacija naziva opravila"
 
 #. module: project
 #: view:project.task:0
 msgid "Reevaluate"
-msgstr ""
+msgstr "Prevrednoti"
 
 #. module: project
-#: code:addons/project/project.py:356
-#: code:addons/project/project.py:377
-#: code:addons/project/project.py:709
+#: code:addons/project/project.py:597
 #, python-format
 msgid "%s (copy)"
 msgstr "%s (kopija)"
@@ -655,16 +641,14 @@ msgid "Medium"
 msgstr "Srednje"
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 msgid "Pending Tasks"
-msgstr "Čakajoče naloge"
+msgstr "Čakajoča opravila"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task,remaining_hours:0
+#: view:project.task:0 field:project.task,remaining_hours:0
 #: field:project.task.reevaluate,remaining_hours:0
-#: view:report.project.task.user:0
+#: field:project.vs.hours,remaining_hours:0 view:report.project.task.user:0
 #: field:report.project.task.user,remaining_hours:0
 msgid "Remaining Hours"
 msgstr "Preostale ure"
@@ -672,7 +656,7 @@ msgstr "Preostale ure"
 #. module: project
 #: model:ir.model,name:project.model_mail_compose_message
 msgid "E-mail composition wizard"
-msgstr ""
+msgstr "Čarovnik za sestavljanje e-sporočil"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -680,8 +664,7 @@ msgid "Creation Date"
 msgstr "Ustvarjeno dne"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task.history,remaining_hours:0
+#: view:project.task:0 field:project.task.history,remaining_hours:0
 #: field:project.task.history.cumulative,remaining_hours:0
 msgid "Remaining Time"
 msgstr "Preostali čas"
@@ -696,39 +679,37 @@ msgstr "Planirani čas"
 #. module: project
 #: view:project.task:0
 msgid "Information"
-msgstr "Informacije"
+msgstr "Podrobnosti"
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 msgid "Unassigned Tasks"
-msgstr "Ne dodeljene naloge"
+msgstr "Nedodeljena opravila"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Non Assigned Tasks to users"
-msgstr "Ne dodeljene naloge"
+msgstr "Nedodeljena opravila"
 
 #. module: project
 #: help:project.project,planned_hours:0
 msgid ""
 "Sum of planned hours of all tasks related to this project and its child "
 "projects."
-msgstr "Vsota planiranih ur"
+msgstr ""
+"Vsota planiranih ur vseh opravil dotičnega projekta in njemu podrejenih "
+"projektov."
 
 #. module: project
-#: view:project.project:0
-#: selection:project.project,state:0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.project:0 view:project.task:0 selection:project.task,state:0
 #: selection:project.task.delegate,state:0
 #: selection:project.task.history,state:0
+#: view:project.task.history.cumulative:0
 #: selection:project.task.history.cumulative,state:0
-#: selection:project.task.type,state:0
-#: view:report.project.task.user:0
-#: selection:report.project.task.user,state:0
+#: selection:project.vs.hours,state:0 view:report.project.task.user:0
+#: selection:report.project.task.user,state:0 selection:task.by.days,state:0
 msgid "Pending"
-msgstr "Čakajoči"
+msgstr "Na čakanju"
 
 #. module: project
 #: field:project.task.delegate,name:0
@@ -736,8 +717,7 @@ msgid "Delegated Title"
 msgstr "Naziv delegacije"
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 #: view:report.project.task.user:0
 msgid "My Projects"
 msgstr "Moji projekti"
@@ -755,32 +735,29 @@ msgstr "Julij"
 #. module: project
 #: view:project.task.history.burndown:0
 msgid "Burndown Chart of Tasks"
-msgstr ""
+msgstr "Burndown diagram opravil"
 
 #. module: project
-#: field:project.task,date_start:0
-#: field:report.project.task.user,date_start:0
+#: field:project.task,date_start:0 field:report.project.task.user,date_start:0
 msgid "Starting Date"
 msgstr "Začetni datum"
 
 #. module: project
-#: code:addons/project/project.py:398
+#: code:addons/project/project.py:324
 #: model:ir.actions.act_window,name:project.open_view_project_all
-#: model:ir.ui.menu,name:project.menu_projects
-#: view:project.project:0
-#: field:project.task.type,project_ids:0
-#: view:res.company:0
+#: model:ir.ui.menu,name:project.menu_open_view_project_all
+#: view:project.project:0 field:project.task.type,project_ids:0
 #, python-format
 msgid "Projects"
 msgstr "Projekti"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task,stage_id:0
+#: view:project.task:0 field:project.task,type_id:0
 #: field:project.task.history,type_id:0
 #: field:project.task.history.cumulative,type_id:0
+#: view:report.project.task.user:0 field:report.project.task.user,type_id:0
 msgid "Stage"
-msgstr "Faza"
+msgstr "Stopnja"
 
 #. module: project
 #: model:ir.actions.act_window,help:project.open_task_type_form
@@ -789,12 +766,15 @@ msgid ""
 "task, up to the closing of the task or issue. You will use these stages in "
 "order to track the progress in solving a task or an issue."
 msgstr ""
+"Določi korake, ki bodo uporabljeni v projektu od nastanka opravila do "
+"zaključka opravila ali zadeve. Te stopnje koristijo spremljanju napredovanja "
+"opravil in reševanja zadev."
 
 #. module: project
 #: code:addons/project/project.py:903
 #, python-format
 msgid "The task '%s' is opened."
-msgstr ""
+msgstr "Opravilo '%s' je odprto."
 
 #. module: project
 #: view:project.task:0
@@ -804,7 +784,7 @@ msgstr "Datumi"
 #. module: project
 #: help:project.task.delegate,name:0
 msgid "New title of the task delegated to the user"
-msgstr "Novi naziv delegirane naloge"
+msgstr "Novi naziv delegiranega opravila"
 
 #. module: project
 #: code:addons/project/project.py:155
@@ -813,16 +793,17 @@ msgid ""
 "You cannot delete a project containing tasks. I suggest you to desactivate "
 "it."
 msgstr ""
+"Projekta, ki vsebuje opravila, ne morete izbrisati. Lahko ga de-aktivirate."
 
 #. module: project
 #: view:project.vs.hours:0
 msgid "Project vs Planned and Total Hours"
-msgstr ""
+msgstr "Projekt po planiranih in vseh delovnih urah"
 
 #. module: project
 #: model:process.transition,name:project.process_transition_draftopentask0
 msgid "Draft Open task"
-msgstr "Osnutek odprte naloge"
+msgstr "Osnutek odprtega opravila"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -844,7 +825,7 @@ msgstr "Zelo pomembno"
 #: model:ir.ui.menu,name:project.menu_project_task_user_tree
 #: view:report.project.task.user:0
 msgid "Tasks Analysis"
-msgstr "Analiza nalog"
+msgstr "Analiza opravil"
 
 #. module: project
 #: model:process.transition,name:project.process_transition_delegate0
@@ -858,20 +839,19 @@ msgid ""
 "If you check this field, the project manager will receive an email each time "
 "a task is completed by his team."
 msgstr ""
+"Če označeno, bo vodja projekta prejel e-poštno sporočilo vsakič, ko bo v "
+"njegovi ekipi dokončano kako opravilo."
 
 #. module: project
-#: model:ir.actions.act_window,name:project.open_board_project
 #: model:ir.model,name:project.model_project_project
-#: model:ir.ui.menu,name:project.menu_project_dashboard
 #: model:ir.ui.menu,name:project.menu_project_management
-#: view:project.project:0
-#: view:project.task:0
-#: field:project.task,project_id:0
+#: view:project.project:0 view:project.task:0 field:project.task,project_id:0
 #: field:project.task.delegate,project_id:0
 #: field:project.task.history.cumulative,project_id:0
-#: view:report.project.task.user:0
+#: field:project.vs.hours,project:0 view:report.project.task.user:0
 #: field:report.project.task.user,project_id:0
 #: model:res.request.link,name:project.req_link_project
+#: field:res.users,context_project_id:0 field:task.by.days,project_id:0
 msgid "Project"
 msgstr "Projekt"
 
@@ -887,16 +867,18 @@ msgstr "Moja nadzorna plošča"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.open_task_type_form
+#: model:ir.ui.menu,name:project.menu_task_types_view
 msgid "Stages"
-msgstr "Faze"
+msgstr "Stopnje"
 
 #. module: project
 #: view:project.task:0
 msgid "Change to Previous Stage"
-msgstr ""
+msgstr "Spremeni v prejšnjo stopnjo"
 
 #. module: project
-#: view:project.config.settings:0
+#: model:ir.actions.todo.category,name:project.category_project_config
+#: view:res.company:0
 msgid "Project Management"
 msgstr "Upravljanje projektov"
 
@@ -914,20 +896,18 @@ msgstr "V teku"
 #: model:ir.actions.act_window,name:project.action_project_task_delegate
 #: view:project.task.delegate:0
 msgid "Project Task Delegate"
-msgstr "Delegiranje projektnih nalog"
+msgstr "Delegiranje projektnih opravil"
 
 #. module: project
-#: field:account.analytic.account,use_tasks:0
 #: model:ir.actions.act_window,name:project.act_project_project_2_project_task_all
 #: model:ir.actions.act_window,name:project.action_view_task
 #: model:ir.ui.menu,name:project.menu_action_view_task
+#: model:ir.ui.menu,name:project.menu_tasks_config
+#: model:ir.ui.menu,name:project.project_report_task
 #: model:process.process,name:project.process_process_tasksprocess0
-#: view:project.project:0
-#: view:project.task:0
-#: view:res.partner:0
-#: field:res.partner,task_ids:0
+#: view:project.task:0 view:res.partner:0 field:res.partner,task_ids:0
 msgid "Tasks"
-msgstr "Naloge"
+msgstr "Opravila"
 
 #. module: project
 #: view:project.project:0
@@ -937,7 +917,7 @@ msgstr "Nadrejeni"
 #. module: project
 #: view:project.task:0
 msgid "Mark as Blocked"
-msgstr ""
+msgstr "Označi kot blokirano"
 
 #. module: project
 #: model:ir.actions.act_window,help:project.action_view_task
@@ -951,6 +931,15 @@ msgid ""
 "configuration. With the project_mrp module, sales orders can create tasks "
 "automatically when they are confirmed."
 msgstr ""
+"Opravilo predstavlja delo, ki mora biti opravljeno. Vsak uporabnik dela na "
+"svojem seznamu opravil, kjer beleži opravljeno delo v urah. Na opravilu "
+"lahko dela sam in ga zaključi, lahko pa ga poveri/delegira drugemu "
+"uporabniku. Ko se delegira opravilo drugemu uporabniku, se izvorno opravilo "
+"prestavi v čakajoče stanje in bo ponovno odprto, ko bo potrebno pregledati "
+"delo delegiranca. Le se namesti modul project_timesheet, se opravljeno delo "
+"na opravilih lahko zaračunava glede na nastavitve projekta. Z modulom "
+"project_mrp delovni nalogi samodejno ustvarjajo opravila glede na postavke, "
+"ko so potrjeni."
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -976,14 +965,19 @@ msgid ""
 "         \n"
 " If the task is over, the states is set to 'Done'."
 msgstr ""
+"Ob nastanku opravila je v stanju 'Osnutek'.\n"
+" Ob zagonu opravila preide v stanje 'V teku'.\n"
+" Če je potreben pregled preide v 'Čakanje'.                                  "
+"\n"
+" Ko je opravilo dokončano gre v stanje 'Opravljeno'."
 
 #. module: project
 #: view:project.task.reevaluate:0
 msgid "Reevaluate Task"
-msgstr "Ponovno ovrednotenje naloge"
+msgstr "Ponovno ovrednotenje opravila"
 
 #. module: project
-#: view:report.project.task.user:0
+#: view:project.task.history.cumulative:0 view:report.project.task.user:0
 #: field:report.project.task.user,month:0
 msgid "Month"
 msgstr "Mesec"
@@ -991,43 +985,44 @@ msgstr "Mesec"
 #. module: project
 #: model:ir.actions.act_window,name:project.dblc_proj
 msgid "Project's tasks"
-msgstr "Naloge na projektu"
+msgstr "Projektna opravila"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_type
 #: view:project.task.type:0
 msgid "Task Stage"
-msgstr "Faza naloge"
+msgstr "Stopnja opravila"
 
 #. module: project
-#: model:project.task.type,name:project.project_tt_design
+#: model:project.task.type,name:project.project_tt_specification
 msgid "Design"
-msgstr "Design"
+msgstr "Oblikovanje"
 
 #. module: project
+#: field:project.task,planned_hours:0
 #: field:project.task.delegate,planned_hours:0
-#: view:report.project.task.user:0
+#: field:project.vs.hours,planned_hours:0 view:report.project.task.user:0
 #: field:report.project.task.user,hours_planned:0
 msgid "Planned Hours"
-msgstr "Načrovane ure"
+msgstr "Načrtovane ure"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_review_task_stage
 msgid "Review Task Stages"
-msgstr ""
+msgstr "Pregled stopenj opravil"
 
 #. module: project
 #: view:project.project:0
 msgid "Status: %(state)s"
-msgstr ""
+msgstr "Stanje: %(state)s"
 
 #. module: project
 #: help:project.task,sequence:0
 msgid "Gives the sequence order when displaying a list of tasks."
-msgstr "Zaporedje prikaza nalog"
+msgstr "Zaporedje prikaza opravil na seznamu opravil"
 
 #. module: project
-#: view:project.task:0
+#: view:project.project:0 view:project.task:0
 msgid "Start Date"
 msgstr "Začetni datum"
 
@@ -1036,16 +1031,14 @@ msgstr "Začetni datum"
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
 msgid "Ready To Pull"
-msgstr ""
+msgstr "Pripravljeno za prenos"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task,parent_ids:0
+#: view:project.task:0 field:project.task,parent_ids:0
 msgid "Parent Tasks"
-msgstr "Nadrejene naloge"
+msgstr "Nadrejena opravila"
 
 #. module: project
-#: view:project.task:0
 #: selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: view:project.task.history.cumulative:0
@@ -1059,12 +1052,13 @@ msgid ""
 "If the task has a progress of 99.99% you should close the task if it's "
 "finished or reevaluate the time"
 msgstr ""
-"Če je naloga 99.99% končana , bi jo morali zapreti ali ponovno ovrednotiti."
+"Če je opravilo 99.99% dokončano, bi ga morali zaključiti ali ponovno "
+"ovrednotiti."
 
 #. module: project
 #: view:project.project:0
 msgid "Contact Address"
-msgstr ""
+msgstr "Naslov stika"
 
 #. module: project
 #: help:project.task,kanban_state:0
@@ -1074,25 +1068,29 @@ msgid ""
 " * Blocked indicates something is preventing the progress of this task\n"
 " * Ready To Pull indicates the task is ready to be pulled to the next stage"
 msgstr ""
+"Kanban stanje opravila prikazuje stanja, ki nanj vplivajo:\n"
+" * Normalno je privzeto stanje\n"
+" * Blokirano pomeni, da nekaj preprečuje napredovanje tega opravila\n"
+" * Pripravljeno za prenos pomeni, da je opravilo pripravljeno za prenos v "
+"naslednjo stopnjo"
 
 #. module: project
 #: view:project.project:0
 msgid "User: %(user_id)s"
-msgstr ""
+msgstr "Uporabnik: %(user_id)s"
 
 #. module: project
 #: view:project.project:0
 msgid "Billing"
-msgstr ""
+msgstr "Izdaja računov"
 
 #. module: project
 #: view:project.task:0
 msgid "For changing to delegate state"
-msgstr ""
+msgstr "Sprememba v delegirano stanje"
 
 #. module: project
-#: field:project.task,priority:0
-#: field:report.project.task.user,priority:0
+#: field:project.task,priority:0 field:report.project.task.user,priority:0
 msgid "Priority"
 msgstr "Prioriteta"
 
@@ -1116,27 +1114,27 @@ msgstr "project.task.reevaluate"
 #: code:addons/project/wizard/project_task_delegate.py:81
 #, python-format
 msgid "CHECK: %s"
-msgstr "Potrjeno:%s"
+msgstr "POTRDI: %s"
 
 #. module: project
 #: view:project.project:0
 msgid "Member"
-msgstr "Član"
+msgstr "Udeleženec"
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 msgid "Project Tasks"
-msgstr "Naloge projekta"
+msgstr "Projektna opravila"
 
 #. module: project
 #: help:project.task.delegate,planned_hours:0
 msgid "Estimated time to close this task by the delegated user"
-msgstr "Predvideni čas do zaključka delegirane naloge."
+msgstr "Predvideni čas do zaključka delegiranega opravila"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_opendrafttask0
-#: selection:report.project.task.user,state:0
+#: view:project.task:0 selection:project.vs.hours,state:0
+#: selection:report.project.task.user,state:0 selection:task.by.days,state:0
 msgid "Draft"
 msgstr "Osnutek"
 
@@ -1144,19 +1142,18 @@ msgstr "Osnutek"
 #: selection:project.task,priority:0
 #: selection:report.project.task.user,priority:0
 msgid "Low"
-msgstr "Nizko"
+msgstr "Nizka"
 
 #. module: project
-#: field:project.task,kanban_state:0
-#: field:project.task.history,kanban_state:0
+#: field:project.task,kanban_state:0 field:project.task.history,kanban_state:0
 #: field:project.task.history.cumulative,kanban_state:0
 msgid "Kanban State"
-msgstr "Kanban State"
+msgstr "Kanban stanje"
 
 #. module: project
 #: view:project.project:0
 msgid "Performance"
-msgstr ""
+msgstr "Delovni učinek"
 
 #. module: project
 #: model:ir.actions.act_window,help:project.action_project_task_user_tree
@@ -1164,35 +1161,38 @@ msgid ""
 "This report allows you to analyse the performance of your projects and "
 "users. You can analyse the quantities of tasks, the hours spent compared to "
 "the planned hours, the average number of days to open or close a task, etc."
-msgstr "Analiza učinkovitosti projektov in sodelavcev"
+msgstr ""
+"To poročilo omogoča analizo delovnega učinka projektov in udeležencev. "
+"Analizira se lahko količino opravil, porabljeni čas glede na načrtovani čas, "
+"povprečno število dni do odprtja ali zaključka opravil, ipd."
 
 #. module: project
 #: view:project.task:0
 msgid "Change Type"
-msgstr ""
+msgstr "Tip spremembe"
 
 #. module: project
 #: help:project.project,members:0
 msgid ""
 "Project's members are users who can have an access to the tasks related to "
 "this project."
-msgstr "Člani projekta so uporabniki , ki imajo dostop do nalog projekta."
-
-#. module: project
-#: view:project.project:0
-#: field:project.task,manager_id:0
-msgid "Project Manager"
-msgstr "Vodja projekta"
-
-#. module: project
-#: view:res.partner:0
-msgid "For changing to done state"
 msgstr ""
+"Udeleženci projekta so uporabniki , ki imajo dostop do opravil projekta."
+
+#. module: project
+#: view:project.project:0 field:project.task,manager_id:0
+msgid "Project Manager"
+msgstr "Upravitelj projekta"
+
+#. module: project
+#: view:project.task:0 view:res.partner:0
+msgid "For changing to done state"
+msgstr "Za spremembo v stanje Opravljeno"
 
 #. module: project
 #: model:ir.model,name:project.model_report_project_task_user
 msgid "Tasks by user and project"
-msgstr "Naloge po uporabnikih in projektih"
+msgstr "Opravila po uporabnikih in projektih"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -1200,24 +1200,22 @@ msgid "August"
 msgstr "Avgust"
 
 #. module: project
-#: view:project.task:0
-#: selection:project.task,kanban_state:0
+#: view:project.task:0 selection:project.task,kanban_state:0
 #: selection:project.task.history,kanban_state:0
 #: selection:project.task.history.cumulative,kanban_state:0
 msgid "Normal"
 msgstr "Običajno"
 
 #. module: project
-#: view:project.project:0
-#: field:project.project,complete_name:0
+#: view:project.project:0 field:project.project,complete_name:0
 msgid "Project Name"
-msgstr "Ime projekta"
+msgstr "Naziv projekta"
 
 #. module: project
 #: model:ir.model,name:project.model_project_task_history
 #: model:ir.model,name:project.model_project_task_history_cumulative
 msgid "History of Tasks"
-msgstr "Zgodovina nalog"
+msgstr "Zgodovina opravil"
 
 #. module: project
 #: help:project.task.delegate,state:0
@@ -1225,12 +1223,14 @@ msgid ""
 "New state of your own task. Pending will be reopened automatically when the "
 "delegated task is closed"
 msgstr ""
+"Novo stanje vašega opravila. Opravilo na čakanju se samodejno ponovno odpre "
+"ko se delegirano opravilo zaključi."
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:45
 #, python-format
 msgid "Please specify the Customer or email address of Customer."
-msgstr ""
+msgstr "Določite naročnika ali njegov e-poštni naslov"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -1246,13 +1246,13 @@ msgstr "Skupni čas"
 #: view:report.project.task.user:0
 #: field:report.project.task.user,closing_days:0
 msgid "Days to Close"
-msgstr "Dnevi do končanja"
+msgstr "Dnevi do zaključka"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.open_board_project
 #: model:ir.ui.menu,name:project.menu_board_project
 msgid "Project Dashboard"
-msgstr ""
+msgstr "Projektna nadzorna plošča"
 
 #. module: project
 #: view:project.task:0
@@ -1267,7 +1267,7 @@ msgstr "Uporabnik"
 #. module: project
 #: field:project.project,active:0
 msgid "Active"
-msgstr "Aktivno"
+msgstr "Aktiven"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -1283,23 +1283,23 @@ msgstr "November"
 #. module: project
 #: model:ir.actions.act_window,name:project.action_create_initial_projects_installer
 msgid "Create your Firsts Projects"
-msgstr ""
+msgstr "Ustvarite vaše prve projekte"
 
 #. module: project
 #: code:addons/project/project.py:229
 #, python-format
 msgid "The project '%s' has been closed."
-msgstr ""
+msgstr "Projekt '%s' je zaključen."
 
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Tasks's Cumulative Flow"
-msgstr "Kumulativni tok nalog"
+msgstr "Kumulativni tok opravil"
 
 #. module: project
 #: view:project.task:0
 msgid "Task edition"
-msgstr ""
+msgstr "Urejanje opravil"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -1309,7 +1309,7 @@ msgstr "Oktober"
 #. module: project
 #: view:project.task:0
 msgid "Validate planned time and open task"
-msgstr ""
+msgstr "Potrdi planirani čas in odpri opravilo"
 
 #. module: project
 #: help:project.task,delay_hours:0
@@ -1321,19 +1321,21 @@ msgstr "Razlika med načrtovanimi  in dejanskimi urami."
 #. module: project
 #: view:project.task:0
 msgid "Delegations History"
-msgstr ""
+msgstr "Zgodovina delegiranj"
 
 #. module: project
 #: model:ir.model,name:project.model_res_users
 msgid "res.users"
-msgstr ""
+msgstr "res.users"
 
 #. module: project
 #: help:project.project,active:0
 msgid ""
 "If the active field is set to False, it will allow you to hide the project "
 "without removing it."
-msgstr "De aktiviranje , brez brisanja"
+msgstr ""
+"Če se polje aktivno nastavi na 'False', bo projekt skrit ne da bi bil "
+"izbrisan."
 
 #. module: project
 #: view:project.task:0
@@ -1348,30 +1350,29 @@ msgstr "Podjetja"
 #. module: project
 #: view:project.project:0
 msgid "Projects in which I am a member."
-msgstr "Projekti v katerih sem član"
+msgstr "Projekti kjer sem udeležen"
 
 #. module: project
 #: view:project.project:0
 msgid "Search Project"
-msgstr "Iskanje"
+msgstr "Iskanje projektov"
 
 #. module: project
 #: code:addons/project/project.py:251
 #, python-format
 msgid "The project '%s' has been opened."
-msgstr ""
+msgstr "Projekt '%s' je odprt."
 
 #. module: project
 #: field:project.task.history,date:0
-#: field:project.task.history.cumulative,date:0
-#: field:project.task.work,date:0
+#: field:project.task.history.cumulative,date:0 field:project.task.work,date:0
 msgid "Date"
 msgstr "Datum"
 
 #. module: project
 #: model:ir.ui.menu,name:project.next_id_86
 msgid "Dashboard"
-msgstr ""
+msgstr "Nadzorna plošča"
 
 #. module: project
 #: help:res.company,project_time_mode_id:0
@@ -1379,43 +1380,45 @@ msgid ""
 "This will set the unit of measure used in projects and tasks.\n"
 "If you use the timesheet linked to projects (project_timesheet module), "
 "don't forget to setup the right unit of measure in your employees."
-msgstr "Nastavitev enote mere za projekte in naloge."
+msgstr ""
+"Nastavitev merske enote za projekte in opravila.\n"
+"Ob uporabi časovnic povezanih s projekti (modul project_timesheet), "
+"nastavite pravo enoto mere tudi pri kadrih."
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:43
 #: code:addons/project/wizard/mail_compose_message.py:45
 #, python-format
 msgid "Error"
-msgstr ""
+msgstr "Napaka"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_project
 msgid "User's projects"
-msgstr ""
+msgstr "Uporabnikovi projekti"
 
 #. module: project
 #: view:project.task.delegate:0
 msgid "_Delegate"
-msgstr "_Delagacija"
+msgstr "_Delegiraj"
 
 #. module: project
 #: help:report.project.task.user,opening_days:0
 msgid "Number of Days to Open the task"
-msgstr "Dnevi do odprtja naloge"
+msgstr "Dnevi do odprtja opravila"
 
 #. module: project
 #: field:project.task,delegated_user_id:0
 msgid "Delegated To"
-msgstr "Delegirano k"
+msgstr "Zadolžen"
 
 #. module: project
 #: view:res.partner:0
 msgid "History"
-msgstr ""
+msgstr "Zgodovina"
 
 #. module: project
-#: field:project.task,user_id:0
-#: view:report.project.task.user:0
+#: field:project.task,user_id:0 view:report.project.task.user:0
 msgid "Assigned to"
 msgstr "Dodeljeno k"
 
@@ -1424,12 +1427,14 @@ msgstr "Dodeljeno k"
 msgid ""
 "Estimated time to do the task, usually set by the project manager when the "
 "task is in draft state."
-msgstr "Predvideni čas"
+msgstr ""
+"Predvideni čas za dokončanje opravila, nastavi ga upravitelj projekta, ko je "
+"opravilo v stanju osnutka."
 
 #. module: project
 #: help:project.task.delegate,prefix:0
 msgid "Title for your validation task"
-msgstr "Naziv"
+msgstr "Naziv potrjevalnega opravila"
 
 #. module: project
 #: view:report.project.task.user:0
@@ -1437,12 +1442,13 @@ msgid "Extended Filters..."
 msgstr "Razširjeni filtri..."
 
 #. module: project
-#: code:addons/project/project.py:1318
+#: code:addons/project/project.py:1148
 #, python-format
 msgid "Please delete the project linked with this account first."
 msgstr "Najprej morate izbrisati povezani projekt."
 
 #. module: project
+#: field:project.task,total_hours:0 field:project.vs.hours,total_hours:0
 #: view:report.project.task.user:0
 #: field:report.project.task.user,total_hours:0
 msgid "Total Hours"
@@ -1455,24 +1461,24 @@ msgstr "Ure skupaj"
 #: field:project.vs.hours,state:0 view:report.project.task.user:0
 #: field:report.project.task.user,state:0 field:task.by.days,state:0
 msgid "State"
-msgstr ""
+msgstr "Stanje"
 
 #. module: project
-#: code:addons/project/project.py:1021
+#: code:addons/project/project.py:925
 #, python-format
 msgid "Delegated User should be specified"
-msgstr "Določiti morate uporabnika , ki mu delegirate nalogo ."
+msgstr "Določiti morate uporabnika, kateremu delegirate opravilo."
 
 #. module: project
 #: code:addons/project/project.py:862
 #, python-format
 msgid "Task '%s' set in progress"
-msgstr ""
+msgstr "Opravilo '%s' je v teku."
 
 #. module: project
 #: view:project.project:0
 msgid "Date Start: %(date_start)s"
-msgstr ""
+msgstr "Začetni datum: %(date_start)s"
 
 #. module: project
 #: help:project.project,analytic_account_id:0
@@ -1483,83 +1489,76 @@ msgid ""
 msgstr "Povežite ta projekt z analitičnim kontom."
 
 #. module: project
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.project:0 view:project.task:0 selection:project.task,state:0
 #: selection:project.task.delegate,state:0
 #: selection:project.task.history,state:0
 #: selection:project.task.history.cumulative,state:0
-#: model:project.task.type,name:project.project_tt_deployment
-#: selection:project.task.type,state:0
-#: view:report.project.task.user:0
-#: selection:report.project.task.user,state:0
-#: view:res.partner:0
+#: view:report.project.task.user:0 selection:report.project.task.user,state:0
+#: view:res.partner:0 selection:task.by.days,state:0
 msgid "Done"
-msgstr "Zaključeno"
+msgstr "Opravljeno"
 
 #. module: project
-#: view:report.project.task.user:0
-#: field:report.project.task.user,year:0
+#: view:report.project.task.user:0 field:report.project.task.user,year:0
 msgid "Year"
 msgstr "Leto"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_draftcanceltask0
 #: model:process.transition.action,name:project.process_transition_action_opencanceltask0
-#: view:project.config.settings:0
-#: view:project.task.delegate:0
-#: view:project.task.reevaluate:0
+#: view:project.project:0 view:project.task:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: project
 #: selection:project.vs.hours,state:0
 msgid "Close"
-msgstr ""
+msgstr "Zapri"
 
 #. module: project
 #: model:process.node,name:project.process_node_opentask0
 msgid "Open task"
-msgstr "Odprta naloga"
+msgstr "Odpri opravilo"
 
 #. module: project
 #: model:process.transition.action,name:project.process_transition_action_draftopentask0
-#: view:project.project:0
+#: view:project.project:0 selection:project.vs.hours,state:0
 msgid "Open"
-msgstr "Odpri"
+msgstr "Odprto"
 
 #. module: project
 #: view:project.project:0
 msgid "ID: %(task_id)s"
-msgstr ""
+msgstr "ID: %(task_id)s"
 
 #. module: project
-#: selection:project.project,state:0
-#: view:project.task:0
-#: selection:project.task,state:0
+#: view:project.task:0 selection:project.task,state:0
 #: selection:project.task.history,state:0
+#: view:project.task.history.cumulative:0
 #: selection:project.task.history.cumulative,state:0
-#: selection:project.task.type,state:0
-#: selection:report.project.task.user,state:0
+#: selection:report.project.task.user,state:0 selection:task.by.days,state:0
 msgid "In Progress"
-msgstr "V obdelavi"
+msgstr "V teku"
 
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Task's Analysis"
-msgstr "Analize nalog"
+msgstr "Analiza opravil"
 
 #. module: project
-#: code:addons/project/project.py:932
+#: code:addons/project/project.py:789
 #, python-format
 msgid ""
 "Child task still open.\n"
 "Please cancel or complete child task first."
-msgstr "Podrejena naloga je še vedno odprta."
+msgstr ""
+"Podrejeno opravilo je še vedno odprto.\n"
+"Najprej prekličite ali zaključite podrejeno opravilo."
 
 #. module: project
 #: view:project.task.type:0
 msgid "Stages common to all projects"
-msgstr "Faze skupne vsem projektom"
+msgstr "Stopnje skupne vsem projektom"
 
 #. module: project
 #: constraint:project.task:0
@@ -1570,7 +1569,7 @@ msgstr "Začetni datum mora biti pred končnim."
 #: field:project.task.history,user_id:0
 #: field:project.task.history.cumulative,user_id:0
 msgid "Responsible"
-msgstr "Odgovoren"
+msgstr "Odgovorni"
 
 #. module: project
 #: field:project.project,resource_calendar_id:0
@@ -1580,61 +1579,61 @@ msgstr "Delovni čas"
 #. module: project
 #: view:project.project:0
 msgid "Projects in which I am a manager"
-msgstr "Projekti v katerih sem vodja"
+msgstr "Projekti v katerih sem upravitelj"
 
 #. module: project
 #: code:addons/project/project.py:959
 #, python-format
 msgid "The task '%s' is pending."
-msgstr ""
+msgstr "Opravilo '%s' je na čakanju."
 
 #. module: project
 #: model:ir.model,name:project.model_project_vs_hours
 msgid " Project vs  hours"
-msgstr ""
+msgstr " Projekti po urah"
 
 #. module: project
 #: view:project.task.delegate:0
 msgid "Delegated Task"
-msgstr "Delegirane naloge"
+msgstr "Delegirana opravila"
 
 #. module: project
 #: help:project.project,effective_hours:0
 msgid ""
 "Sum of spent hours of all tasks related to this project and its child "
 "projects."
-msgstr "Vsota ur vseh nalog za ta projekt."
+msgstr "Vsota ur vseh opravil tega projekta in njemu podrejenih projektov."
 
 #. module: project
 #: selection:project.task,priority:0
 #: selection:report.project.task.user,priority:0
 msgid "Very Low"
-msgstr "Zelo nizko"
+msgstr "Zelo nizka"
 
 #. module: project
 #: help:project.project,resource_calendar_id:0
 msgid "Timetable working hours to adjust the gantt diagram report"
-msgstr ""
+msgstr "Delovne ure po urniku za prilagoditev poročila gantovega diagrama"
 
 #. module: project
 #: field:project.project,warn_manager:0
 msgid "Warn Manager"
-msgstr ""
+msgstr "Opozori upravitelja"
 
 #. module: project
 #: field:report.project.task.user,delay_endings_days:0
 msgid "Overpassed Deadline"
-msgstr "Preseženi roki"
+msgstr "Presežen rok izvedbe"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_view_task_tree_deadline
 msgid "My Task's Deadlines"
-msgstr ""
+msgstr "Roki mojih opravil"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_project_task_reevaluate
 msgid "Re-evaluate Task"
-msgstr "Ponovni pregled naloge"
+msgstr "Prevrednoti opravilo"
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_development
@@ -1644,11 +1643,10 @@ msgstr "Razvoj"
 #. module: project
 #: view:board.board:0
 msgid "My Remaining Hours by Project"
-msgstr ""
+msgstr "Moje preostale ure za projekt"
 
 #. module: project
-#: view:project.task:0
-#: field:project.task,description:0
+#: field:project.task,description:0 view:project.task.type:0
 #: field:project.task.type,description:0
 msgid "Description"
 msgstr "Opis"
@@ -1666,96 +1664,95 @@ msgstr "Maj"
 #. module: project
 #: view:project.task.delegate:0
 msgid "Validation Task"
-msgstr "Naloga potrjevanja"
+msgstr "Potrjevalno opravilo"
 
 #. module: project
 #: field:task.by.days,total_task:0
 msgid "Total tasks"
-msgstr ""
+msgstr "Opravil skupaj"
 
 #. module: project
-#: help:project.task.type,case_default:0
+#: help:project.task.type,project_default:0
 msgid ""
 "If you check this field, this stage will be proposed by default on each new "
 "project. It will not assign this stage to existing projects."
-msgstr "Če označite, bo ta faza uporabljena na novih projektih."
+msgstr ""
+"Če označite to polje, bo ta stopnja predlagana (prednastavljena) za vsak nov "
+"projekt. Na že obstoječe projekte ta nastavitev ne vpliva."
 
 #. module: project
 #: view:board.board:0
 #: model:ir.actions.act_window,name:project.action_view_delegate_task_tree
 #: view:project.task:0
 msgid "My Delegated Tasks"
-msgstr ""
+msgstr "Moja delegirana opravila"
 
 #. module: project
 #: view:project.project:0
 msgid "Task: %(name)s"
-msgstr ""
+msgstr "Opravilo: %(name)s"
 
 #. module: project
 #: field:project.task.delegate,user_id:0
 msgid "Assign To"
-msgstr "Dodeljeno k"
+msgstr "Dodeli k:"
 
 #. module: project
-#: field:project.project,progress_rate:0
-#: view:report.project.task.user:0
+#: field:project.project,progress_rate:0 view:report.project.task.user:0
 #: field:report.project.task.user,progress:0
 msgid "Progress"
 msgstr "Potek"
 
 #. module: project
-#: field:project.project,effective_hours:0
-#: field:project.task.work,hours:0
+#: field:project.project,effective_hours:0 field:project.task.work,hours:0
 msgid "Time Spent"
 msgstr "Porabljeni čas"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_my_account
 msgid "My accounts to invoice"
-msgstr ""
+msgstr "Moji konti za obračun"
 
 #. module: project
 #: model:project.task.type,name:project.project_tt_merge
 msgid "Deployment"
-msgstr ""
+msgstr "Izvedba"
 
 #. module: project
 #: field:project.project,tasks:0
 msgid "Project tasks"
-msgstr "Naloge projekta"
+msgstr "Projektna opravila"
 
 #. module: project
 #: code:addons/project/project.py:851
 #, python-format
 msgid "The task '%s' is done"
-msgstr ""
+msgstr "Opravilo '%s' je opravljeno"
 
 #. module: project
 #: help:project.project,total_hours:0
 msgid ""
 "Sum of total hours of all tasks related to this project and its child "
 "projects."
-msgstr "Vsota ur za ta projekt in podrejene projekte"
+msgstr "Vsota ur na vseh opravilih za ta projekt in njemu podrejene projekte"
 
 #. module: project
-#: field:project.task.type,case_default:0
+#: field:project.task.type,project_default:0
 msgid "Common to All Projects"
-msgstr ""
+msgstr "Skupno vsem projektom"
 
 #. module: project
 #: model:process.transition,note:project.process_transition_opendonetask0
 msgid "When task is completed, it will come into the done state."
-msgstr "Ko je naloga končana , preide v status zaključeno."
+msgstr "Ko je opravilo dokončano, preide v status opravljeno."
 
 #. module: project
-#: field:project.task,partner_id:0
+#: view:project.project:0
 msgid "Customer"
 msgstr "Kupec"
 
 #. module: project
-#: view:project.project:0
-#: view:project.task:0
+#: view:project.project:0 view:project.task:0
 #: field:project.task.history,end_date:0
 #: field:project.task.history.cumulative,end_date:0
 msgid "End Date"
@@ -1770,17 +1767,17 @@ msgstr "Februar"
 #: model:ir.actions.act_window,name:project.action_task_by_days_graph
 #: model:ir.model,name:project.model_task_by_days view:task.by.days:0
 msgid "Task By Days"
-msgstr ""
+msgstr "Opravila po dnevih"
 
 #. module: project
 #: sql_constraint:res.company:0
 msgid "The company name must be unique !"
-msgstr ""
+msgstr "Ime podjetja mora biti unikatno !"
 
 #. module: project
 #: view:project.task:0
 msgid "Edit"
-msgstr ""
+msgstr "Urejanje"
 
 #. module: project
 #: model:process.node,note:project.process_node_opentask0
@@ -1795,17 +1792,17 @@ msgstr "Povzetek dela"
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Month-2"
-msgstr ""
+msgstr "Mesec-2"
 
 #. module: project
 #: help:report.project.task.user,closing_days:0
 msgid "Number of Days to close the task"
-msgstr "Število dni do zaprtja naloge"
+msgstr "Število dni do zaključka opravila"
 
 #. module: project
 #: view:project.task.history.cumulative:0 view:report.project.task.user:0
 msgid "Month-1"
-msgstr ""
+msgstr "Mesec-1"
 
 #. module: project
 #: selection:report.project.task.user,month:0
@@ -1820,12 +1817,12 @@ msgstr "Porabljene ure"
 #. module: project
 #: view:project.project:0 view:project.task:0
 msgid "Miscelleanous"
-msgstr ""
+msgstr "Razno"
 
 #. module: project
 #: model:process.transition,name:project.process_transition_opendonetask0
 msgid "Open Done Task"
-msgstr "Odpiranje končane naloge"
+msgstr "Odpiranje opravljenega opravila"
 
 #. module: project
 #: view:project.task.type:0
@@ -1843,17 +1840,19 @@ msgid ""
 "The stages can be common to all project or specific to one project. Each "
 "task will follow the different stages in order to be closed."
 msgstr ""
+"Stopnje so lahko skupne vsem projektom ali specifične za posamezen projekt. "
+"Vsako opravilo bo sledilo stopnjam preden bo zaključeno."
 
 #. module: project
 #: help:project.project,sequence:0
 msgid "Gives the sequence order when displaying a list of Projects."
-msgstr "Zaporedje prikaza projektov"
+msgstr "Zaporedje prikaza projektov v seznamu"
 
 #. module: project
 #: code:addons/project/wizard/mail_compose_message.py:64
 #, python-format
 msgid "Task '%s' Closed"
-msgstr ""
+msgstr "Opravilo '%s' je zaključeno."
 
 #. module: project
 #: field:project.task,id:0
@@ -1864,33 +1863,31 @@ msgstr "ID"
 #: model:ir.actions.act_window,name:project.action_view_task_history_burndown
 #: model:ir.ui.menu,name:project.menu_action_view_task_history_burndown
 msgid "Burndown Chart"
-msgstr ""
+msgstr "Burndown diagram"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.act_res_users_2_project_task_opened
 msgid "Assigned Tasks"
-msgstr "Dodeljene naloge"
+msgstr "Dodeljena opravila"
 
 #. module: project
 #: model:ir.actions.act_window,name:project.action_view_task_overpassed_draft
 msgid "Overpassed Tasks"
-msgstr "Naloge s prekoračenim rokom"
+msgstr "Opravila s prekoračenim rokom"
 
 #. module: project
 #: view:report.project.task.user:0
 msgid "Current Year"
-msgstr ""
+msgstr "Tekoče leto"
 
 #. module: project
 #: constraint:res.partner:0
 msgid "Error ! You cannot create recursive associated members."
-msgstr ""
+msgstr "Napaka! Ne morete ustvariti rekurzivnih pridruženih članov."
 
 #. module: project
-#: field:project.project,priority:0
-#: field:project.project,sequence:0
-#: field:project.task,sequence:0
-#: field:project.task.type,sequence:0
+#: field:project.project,priority:0 field:project.project,sequence:0
+#: field:project.task,sequence:0 field:project.task.type,sequence:0
 msgid "Sequence"
 msgstr "Zaporedje"
 
@@ -1898,7 +1895,7 @@ msgstr "Zaporedje"
 #: model:ir.actions.act_window,name:project.action_project_vs_remaining_hours_graph
 #: view:project.vs.hours:0
 msgid "Remaining Hours Per Project"
-msgstr ""
+msgstr "Preostale ure na projekt"
 
 #. module: project
 #: help:project.project,warn_footer:0
@@ -1906,6 +1903,8 @@ msgid ""
 "Footer added at the beginning of the email for the warning message sent to "
 "the customer when a task is closed."
 msgstr ""
+"Noga dodana na e-pošto za opozorilno sporočilo poslano kupcu ob zaključku "
+"opravila."
 
 #. module: project
 #: model:ir.actions.act_window,help:project.open_view_project_all
@@ -1919,36 +1918,40 @@ msgid ""
 "to invoice the time spent on a project task, you can find project tasks to "
 "be invoiced in the billing section."
 msgstr ""
+"Projekt vsebuje serijo opravil in zadev, ki bodo izvedene s strani njim "
+"dodeljenih virov. Projekt ima lahko hierarhično strukturo (podrejeni-"
+"nadrejeni). To dovoljuje zasnovo velikih projektnih struktur z različnimi "
+"fazami razpršenimi preko obdobja trajanja projekta. Vsak uporabnik lahko "
+"nastavi svoj  privzeti projekt v uporabniških nastavitvah, ter tako "
+"samodejno filtrira opravila in zadeve na katerih trenutno dela."
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.work:0
+#: view:project.task:0 view:project.task.work:0
 msgid "Task Work"
-msgstr "Delo na nalogi"
+msgstr "Delo na opravilu"
 
 #. module: project
 #: field:project.task.delegate,state:0
 msgid "Validation State"
-msgstr "Faza potrditve"
+msgstr "Stanje potrditve"
 
 #. module: project
 #: code:addons/project/project.py:882
 #, python-format
 msgid "Task '%s' cancelled"
-msgstr ""
+msgstr "Opravilo '%s' je preklicano."
 
 #. module: project
 #: help:project.task.delegate,planned_hours_me:0
 msgid ""
 "Estimated time for you to validate the work done by the user to whom you "
 "delegate this task"
-msgstr "Predviden čas za pregled opravljene , delegirane naloge."
+msgstr "Predviden čas za pregled opravljenega dela na delegiranem opravilu."
 
 #. module: project
-#: view:project.project:0
-#: model:res.groups,name:project.group_project_manager
+#: view:project.project:0 model:res.groups,name:project.group_project_manager
 msgid "Manager"
-msgstr "Vodja"
+msgstr "Upravitelj"
 
 #. module: project
 #: field:project.task,create_date:0
@@ -1959,15 +1962,17 @@ msgstr "Datum nastanka"
 #: code:addons/project/project.py:890
 #, python-format
 msgid "The task '%s' is cancelled."
-msgstr ""
+msgstr "Opravilo '%s' je preklicano."
 
 #. module: project
-#: view:res.partner:0
+#: view:project.task:0 view:res.partner:0
 msgid "For changing to open state"
 msgstr "Sprememba v odprto ..."
 
 #. module: project
-#: model:ir.model,name:project.model_res_partner
+#: model:ir.model,name:project.model_res_partner view:project.project:0
+#: field:project.task,partner_id:0 view:report.project.task.user:0
+#: field:report.project.task.user,partner_id:0
 msgid "Partner"
 msgstr "Partner"
 
@@ -1975,26 +1980,25 @@ msgstr "Partner"
 #: code:addons/project/project.py:804
 #, python-format
 msgid "Send Email after close task"
-msgstr ""
+msgstr "Pošlji e-poštno sporočilo ob zaključku opravila"
 
 #. module: project
-#: field:project.project,type_ids:0
+#: view:project.project:0 field:project.project,type_ids:0
 #: view:project.task.type:0
 msgid "Tasks Stages"
-msgstr "Faze nalog"
+msgstr "Stopnje nalog"
 
 #. module: project
 #: model:process.node,note:project.process_node_taskbydelegate0
 msgid "Delegate your task to the other user"
-msgstr "Delegiranje naloge drugemu uporabniku"
+msgstr "Delegiranje opravila drugemu uporabniku"
 
 #. module: project
 #: view:project.project:0 field:project.project,warn_footer:0
 msgid "Mail Footer"
-msgstr ""
+msgstr "Noga e-pošte"
 
 #. module: project
-#: view:project.task:0
-#: view:project.task.history.cumulative:0
+#: view:project.task:0 view:project.task.history.cumulative:0
 msgid "In Progress Tasks"
-msgstr "Naloge v teku"
+msgstr "Opravila v teku"

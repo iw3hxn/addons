@@ -3,7 +3,7 @@
     <data>
         <menuitem name="PoS Backend" id="menu_point_root" sequence="20"
             icon="terp-partner"
-            groups="group_pos_manager"
+            groups="group_pos_user"
             web_icon="images/pos.png"
             web_icon_hover="images/pos-hover.png"/>
 
@@ -26,13 +26,14 @@
                     <notebook colspan="4">
                         <page string="Sale Order">
                             <field name="lines" colspan="4" nolabel="1">
-                                <tree string="Order lines" editable="bottom">
+                                <tree string="Order lines" editable="bottom" colors="red:pos_discount == True; black:pos_discount == False">
                                     <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,qty,parent.partner_id)"/>
                                     <field name="qty" on_change="onchange_qty(product_id, discount, qty, price_unit, context)"/>
                                     <field name="price_unit" on_change="onchange_qty(product_id, discount, qty, price_unit, context)"/>
                                     <field name="discount"  on_change="onchange_qty(product_id, discount, qty, price_unit, context)"/>
                                     <field name="price_subtotal"/>
                                     <field name="price_subtotal_incl"/>
+                                    <field name="pos_discount" invisible="1" />
                                 </tree>
                                 <form string="Order lines">
                                     <field name="product_id" on_change="onchange_product_id(parent.pricelist_id,product_id,qty,parent.partner_id)"/>
@@ -64,7 +65,7 @@
                             <field name="statement_ids" colspan="4" nolabel="1">
                                 <tree editable="bottom" string="Statement lines">
                                     <field name="journal_id"/>
-                                    <field name="statement_id" />
+                                    <field name="statement_id" domain="[('company_id','=',parent.company_id),('state','=','open')]"/>
                                     <field name="amount"/>
                                 </tree>
                                 <form string="Statement lines">
@@ -120,11 +121,13 @@
                     <field name="name"/>
                     <field name="partner_id"/>
                     <field name="date_order"/>
-                    <field name="user_id"/>
+                    <field name="user_id" groups="point_of_sale.group_pos_manager" /> 
+                    <field name="shop_id" groups="point_of_sale.group_pos_manager" />
                     <field name="invoice_id"/>
                     <field name="amount_total" sum="Amount total"/>
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
+                    <field name="pos_discount" groups="point_of_sale.group_pos_manager"/>
                 </tree>
             </field>
         </record>
@@ -139,12 +142,13 @@
                     <separator orientation="vertical"/>
                     <filter icon="terp-check" string="Invoiced" domain="[('state','=','invoiced')]"/>
                     <filter icon="gtk-convert" string="Posted" domain="[('state','=','done')]"/>
+                    <filter icon="" string="Discounted" domain="[('pos_discount', '=', True)]" />
                     <separator orientation="vertical"/>
                     <filter icon="terp-go-month" string="Today" domain="[('date_order','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('date_order','&lt;=',datetime.date.today().strftime('%%Y-%%m-%%d 23:59:59'))]"/>
                     <filter icon="gtk-go-forward" string="Yesterday" domain="[('date_order','&lt;',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('date_order','&gt;=',(datetime.date.today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
                     <separator orientation="vertical"/>
                     <field name="name"/>
-                    <field name="user_id"/>
+                    <field name="user_id" widget="selection" />
                     <newline/>
                     <group expand="0" string="Group By..." groups="base.group_extended">
                         <filter string="Customer" icon="terp-personal" domain="[]" context="{'group_by':'partner_id'}"/>
@@ -183,15 +187,52 @@
             <field name="model">pos.order.line</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
-                <tree string="POS Order lines">
-                    <field name="product_id" readonly="1"/>
+                <tree string="POS Order lines"  colors="red:pos_discount == True; black:pos_discount == False">
+                    <field name="create_date" invisible="not context.get('pos_line_extended', False)"/>
+                    <field name="shop_id" invisible="not context.get('pos_line_extended', False)"/>
+                    <field name="user_id" invisible="not context.get('pos_line_extended', False)"/>
+                    <field name="default_code" invisible="not context.get('pos_line_extended', False)" />
+                    <field name="product_id" readonly="1"  invisible="context.get('pos_line_extended', False)" />
                     <field name="qty" readonly="1" sum="Total qty"/>
                     <field name="discount" readonly="1"/>
                     <field name="price_unit" readonly="1"/>
                     <field name="price_subtotal" readonly="1" sum="Sum of subtotals"/>
                     <field name="price_subtotal_incl" readonly="1" sum="Sum of subtotals"/>
-                    <field name="create_date" readonly="1"/>
+                    <field name="pos_discount" invisible="1" />
                 </tree>
+            </field>
+        </record>
+
+        <record id="view_pos_order_line_filter" model="ir.ui.view">
+            <field name="name">pos.order.line.select</field>
+            <field name="model">pos.order.line</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Sales Order">
+                    <filter icon="" string="Discounted" domain="[('pos_discount', '=', True)]" />
+                    <separator orientation="vertical"/>
+                    <filter icon="terp-go-month" string="Last Month" name="last_month"
+                        domain="[('create_date', '&lt;', datetime.date.today().strftime('%%Y-%%m-01 00:00:00')), ('create_date', '&gt;=', (datetime.date.today() - relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00'))]"
+                    />
+                    <filter icon="terp-go-month" string="Month"
+                            domain="[('create_date', '&lt;', (datetime.date.today() + relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00')), ('create_date', '&gt;=', (datetime.date.today()).strftime('%%Y-%%m-01 00:00:00'))]"/>
+                    <filter icon="terp-go-month" string="Today" domain="[('create_date','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('create_date','&lt;=',datetime.date.today().strftime('%%Y-%%m-%%d 23:59:59'))]"/>
+                    <filter icon="gtk-go-forward" string="Yesterday" domain="[('create_date','&lt;',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('create_date','&gt;=',(datetime.date.today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                    <separator orientation="vertical"/>
+                    <field name="create_date" />
+                    <field name="shop_id" widget="selection" />
+                    <field name="user_id" widget="selection" />
+                    <field name="product_id" />
+                    <newline/>
+                    <group expand="0" string="Group By..." groups="base.group_extended">
+                        <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'create_date'}"/>
+                        <separator string="" orientation="vertical"/>
+                        <filter string="Shop" icon="terp-personal" domain="[]" context="{'group_by':'shop_id'}"/>
+                        <filter string="Connected Salesman" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
+                        <separator string="" orientation="vertical"/>
+                        <filter string="Product" icon="terp-personal" domain="[]" context="{'group_by':'product_id'}"/>
+                    </group>
+               </search>
             </field>
         </record>
 
@@ -238,7 +279,22 @@
             <field name="domain">[('create_date', '&gt;=', time.strftime('%Y-%m-%d 00:00:00')),('create_date', '&lt;=', time.strftime('%Y-%m-%d 23:59:59'))]</field>
         </record>
 
+        <record model="ir.actions.act_window" id="action_pos_order_line">
+            <field name="name">Sale line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pos.order.line</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_pos_order_line"/>
+            <field name="domain">[]</field>
+            <field name="context">{'pos_line_extended': 1, 'nodelete': '1', 'nocreate': '1', 'noduplicate': '1'}</field>
+        </record>
 
+        <menuitem
+            action="action_pos_order_line"
+            id="menu_pos_order_line_day"
+            parent="menu_point_of_sale" sequence="20"
+            groups="point_of_sale.group_pos_manager"/>
 
         <!-- report -->
 
@@ -258,7 +314,6 @@
                 </form>
             </field>
         </record>
-
 
         <record model="ir.ui.view" id="view_trans_pos_user_tree">
             <field name="name">Sales by user</field>
@@ -599,6 +654,23 @@
             <field name="domain">[('date_order','like',time.strftime('%Y-%m'))]</field>
         </record>
 
+
+        <record id="sale_shop_form_pos_view" model="ir.ui.view">
+            <field name="name">sale.shop.pos.form.inherit</field>
+            <field name="model">sale.shop</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="sale.view_shop_form"/>
+            <field name="arch" type="xml">
+                  <field name="project_id" position="after">
+                      <group colspan="2" col="2" name="POS">
+                          <separator string="Point-of-Sale" colspan="2" />
+                          <field name="pos_user_id" />
+                          <field name="property_account_receivable" />
+                      </group>
+                  </field>
+            </field>
+        </record>
+
         <record id="product_normal_form_pos_view" model="ir.ui.view">
             <field name="name">product.normal.pos.form.inherit</field>
             <field name="model">product.product</field>
@@ -608,6 +680,7 @@
                   <group name="status" position="after">
                       <group colspan="2" col="2" name="pos">
                           <separator string="Point-of-Sale" colspan="2"/>
+                          <field name="available_in_pos" />
                           <field name="pos_categ_id"/>
                       </group>
                   </group>
@@ -668,7 +741,8 @@
         <!-- END -->
 
         <menuitem name="Configuration" parent="menu_point_root"
-            id="menu_point_config_product" sequence="25" groups="group_pos_manager"/>
+            id="menu_point_config_product" sequence="25" 
+            groups="group_pos_manager_configuration" />
 
         <record model="ir.actions.act_window" id="action_product_input">
             <field name="name">Products 'Take Money Out'</field>
@@ -703,12 +777,14 @@
         <menuitem
             parent="menu_point_of_sale"
             action="action_box_entries"
-            id="menu_wizard_enter_jrnl" sequence="2" />
+            id="menu_wizard_enter_jrnl" sequence="2" 
+            groups="group_pos_manager_extended"/>
 
         <menuitem
             parent="menu_point_of_sale"
             action="action_box_out"
-            id="menu_wizard_enter_jrnl2" sequence="3" />
+            id="menu_wizard_enter_jrnl2" sequence="3" 
+            groups="group_pos_manager_extended"/>
 
         <record id="action_account_journal_form" model="ir.actions.act_window">
             <field name="name">Payment Methods</field>
@@ -723,7 +799,7 @@
         <menuitem action="action_account_journal_form"
             id="menu_action_account_journal_form_open"
             parent="menu_point_config_product"
-            sequence="20"/>
+            sequence="20" />
 
         <record model="ir.ui.view" id="view_pos_order_tree_all_sales_lines">
             <field name="name">POS Sales Lines</field>
@@ -786,7 +862,7 @@
 
         <!-- use menuitem to add web_icon and web_icon_hover above -->
         <menuitem id="menu_point_root_touchscreen"
-            web_icon="images/pos.png" web_icon_hover="images/pos-hover.png" groups="point_of_sale.group_pos_manager,point_of_sale.group_pos_user"/>
+            web_icon="images/pos.png" web_icon_hover="images/pos-hover.png" groups="point_of_sale.group_pos_web_user"/>
 
     </data>
 </openerp>

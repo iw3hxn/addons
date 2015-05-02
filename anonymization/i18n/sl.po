@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2013-01-26 21:21+0000\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2014-07-30 13:08+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-31 06:56+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: anonymization
 #: model:ir.model,name:anonymization.model_ir_model_fields_anonymize_wizard
@@ -25,24 +25,23 @@ msgstr "ir.model.fields.anonymize.wizard"
 #. module: anonymization
 #: field:ir.model.fields.anonymization,field_name:0
 msgid "Field Name"
-msgstr "Field Name"
+msgstr "Naziv polja"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,field_id:0
-#: field:ir.model.fields.anonymization.migration.fix,field_name:0
 msgid "Field"
-msgstr "Field"
+msgstr "Polje"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,state:0
 #: field:ir.model.fields.anonymize.wizard,state:0
 msgid "State"
-msgstr ""
+msgstr "Stanje"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymize.wizard,file_import:0
 msgid "Import"
-msgstr "Import"
+msgstr "Uvoz"
 
 #. module: anonymization
 #: model:ir.model,name:anonymization.model_ir_model_fields_anonymization
@@ -85,7 +84,7 @@ msgstr "neznano"
 #. module: anonymization
 #: field:ir.model.fields.anonymization,model_id:0
 msgid "Object"
-msgstr "Object"
+msgstr "Predmet"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization.history,filepath:0
@@ -105,7 +104,7 @@ msgstr "Izvoz"
 #. module: anonymization
 #: view:ir.model.fields.anonymize.wizard:0
 msgid "Reverse the Database Anonymization"
-msgstr "Povratek kodiranja"
+msgstr "Ovrži kodiranje podatkovne zbirke"
 
 #. module: anonymization
 #: view:ir.model.fields.anonymize.wizard:0
@@ -115,7 +114,7 @@ msgstr "Kodiranje podatkovne zbirke"
 #. module: anonymization
 #: model:ir.ui.menu,name:anonymization.menu_administration_anonymization_wizard
 msgid "Anonymize database"
-msgstr "Kodiranje podatkovne zbirke"
+msgstr "Kodiraj podatkovno zbirko"
 
 #. module: anonymization
 #: view:ir.model.fields.anonymization.history:0
@@ -130,6 +129,7 @@ msgid "Clear"
 msgstr "Počisti"
 
 #. module: anonymization
+#: view:ir.model.fields.anonymize.wizard:0
 #: field:ir.model.fields.anonymize.wizard,summary:0
 msgid "Summary"
 msgstr "Povzetek"
@@ -151,13 +151,14 @@ msgstr "Zgodila se je napaka"
 
 #. module: anonymization
 #: selection:ir.model.fields.anonymization,state:0
+#: selection:ir.model.fields.anonymize.wizard,state:0
 msgid "Not Existing"
 msgstr "Ne obstaja"
 
 #. module: anonymization
 #: field:ir.model.fields.anonymization,model_name:0
 msgid "Object Name"
-msgstr "Ime predmeta"
+msgstr "Naziv objekta"
 
 #. module: anonymization
 #: model:ir.actions.act_window,name:anonymization.action_ir_model_fields_anonymization_history_tree
@@ -195,7 +196,7 @@ msgstr "Začeto"
 #. module: anonymization
 #: selection:ir.model.fields.anonymization.history,state:0
 msgid "Done"
-msgstr "Končano"
+msgstr "Opravljeno"
 
 #. module: anonymization
 #: view:ir.model.fields.anonymization.history:0
@@ -205,7 +206,7 @@ msgid "Message"
 msgstr "Sporočilo"
 
 #. module: anonymization
-#: code:addons/anonymization/anonymization.py:65
+#: code:addons/anonymization/anonymization.py:55
 #: sql_constraint:ir.model.fields.anonymization:0
 #, python-format
 msgid "You cannot have two fields with the same name on the same object!"

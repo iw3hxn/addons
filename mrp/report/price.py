@@ -65,7 +65,7 @@ class report_custom(report_rml):
                         })[pricelist.id]
                 main_sp_price = """<b>"""+rml_obj.formatLang(price)+' '+ (company_currency_symbol)+"""</b>\r\n"""
                 sum += prod_qtty*price
-            std_price = product_uom_pool._compute_price(cr, uid, prod.uom_id.id, prod.standard_price, to_uom_id=product_uom.id)
+            std_price = product_uom_pool._compute_price(cr, uid, prod.uom_id.id, prod.cost_price, to_uom_id=product_uom.id)
             main_strd_price = str(std_price) + '\r\n'
             sum_strd = prod_qtty*std_price
             for seller_id in prod.seller_ids:
@@ -147,8 +147,8 @@ class report_custom(report_rml):
             title += "<title>%s</title>" % (to_xml(product.name))
             xml += "<lines style='header'>" + title + prod_header + "</lines>"
             if not bom_id:
-                total_strd = number * product.standard_price
-                total = number * product_pool.price_get(cr, uid, [product.id], 'standard_price')[product.id]
+                total_strd = number * product.cost_price
+                total = number * product_pool.price_get(cr, uid, [product.id], 'cost_price')[product.id]
                 xml += """<lines style='lines'><row>
                     <col para='yes'>-</col>
                     <col para='yes'>-</col>

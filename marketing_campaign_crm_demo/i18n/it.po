@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Nicola Riolini - Micronaet <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 15:11+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: Italian <it@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 07:07+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 07:06+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: marketing_campaign_crm_demo
 #: model:ir.actions.report.xml,name:marketing_campaign_crm_demo.mc_crm_lead_demo_report
@@ -28,8 +28,8 @@ msgid ""
 "Hello,Thanks for generous interest you have shown in the "
 "openERP.Regards,OpenERP Team,"
 msgstr ""
-"Ciao, grazie per il generoso interesse che hai dimostrato in OpenERP. "
-"Cordiali saluti, Il team OpenERP,"
+"Ciao, grazie per il generoso interesse che hai dimostrato in SimplERP. "
+"Cordiali saluti, Il team SimplERP,"
 
 #. module: marketing_campaign_crm_demo
 #: report:crm.lead.demo:0
@@ -39,7 +39,7 @@ msgstr "Azienda"
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_4
 msgid "Thanks for buying the OpenERP book"
-msgstr "Grazie per avere acquistato il libero di OpenERP"
+msgstr "Grazie per avere acquistato il libero di SimplERP"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_6
@@ -57,7 +57,7 @@ msgstr ""
 "              Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci.\n"
 "              Apprezziamo veramente la vostra cooperazione su questo.\n"
-"              Cordiali saluti, il team OpenERP,"
+"              Cordiali saluti, il team SimplERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_5
@@ -82,12 +82,12 @@ msgstr "Partner"
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_1
 msgid "Thanks for showing interest in OpenERP"
-msgstr "Grazie per avere dimostrato interesse in OpenERP"
+msgstr "Grazie per avere dimostrato interesse in SimplERP"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_2
 msgid "Propose to subscribe to the OpenERP Discovery Day on May 2010"
-msgstr "Proposta di sottoscrizione all'OpenERP Discovery Day di Maggio 2010"
+msgstr "Proposta di sottoscrizione all'SimplERP Discovery Day di Maggio 2015"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_7
@@ -118,7 +118,7 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
-"Ciao, grazie per avere mostrato interesse e comprato il libro di OpenERP.\n"
+"Ciao, grazie per avere mostrato interesse e comprato il libro di SimplERP.\n"
 "            se altra informazioni sono necessarie cortesemente fatecelo "
 "sapere.\n"
 "            apprezziamo veramente la vostra cooperazione su questo.\n"
@@ -179,7 +179,7 @@ msgstr ""
 "              Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci.\n"
 "              Apprezziamo veramente la vostra cooperazione su questo.\n"
-"              Cordiali saluti, il team OpenERP,"
+"              Cordiali saluti, il team SimplERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_8
@@ -193,7 +193,7 @@ msgstr ""
 "tecnico. Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci. Apprezziamo veramente la vostra cooperazione su "
 "questo.\n"
-"              Cordiali saluti, il team OpenERP,"
+"              Cordiali saluti, il team SimplERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_6

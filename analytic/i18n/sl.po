@@ -8,14 +8,14 @@ msgstr ""
 "Project-Id-Version: openobject-addons\n"
 "Report-Msgid-Bugs-To: FULL NAME <EMAIL@ADDRESS>\n"
 "POT-Creation-Date: 2012-02-08 00:35+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2014-07-30 11:41+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: Slovenian <sl@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:48+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-31 06:56+0000\n"
+"X-Generator: Launchpad (build 17131)\n"
 
 #. module: analytic
 #: field:account.analytic.account,child_ids:0
@@ -38,14 +38,14 @@ msgid "State"
 msgstr "Stanje"
 
 #. module: analytic
-#: field:account.analytic.account,manager_id:0
+#: field:account.analytic.account,user_id:0
 msgid "Account Manager"
 msgstr "Računovodja"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Closed"
-msgstr "Zaprto"
+msgstr "Zaključeno"
 
 #. module: analytic
 #: field:account.analytic.account,debit:0
@@ -70,6 +70,19 @@ msgid ""
 " If it is to be reviewed then the state is 'Pending'.\n"
 " When the project is completed the state is set to 'Done'."
 msgstr ""
+"* Ob nastanku je konto v stanju 'Osnutek'.                                  "
+"\n"
+"* Če je povezan s partnerjem, je v stanju 'Odprto'.                          "
+"        \n"
+"* Če še ni popolnoma usklajen je v stanju 'Na čakanju'.                      "
+"             \n"
+"* Ko so vse transakcije opravljene je v stanju 'Zaključeno'.                 "
+"                  \n"
+"* Projekt je lahko v stanjih 'Osnutek' ali 'V teku'.\n"
+" Če je osnutek, lahko naredimo projekte po osnutku. Če je v stanju 'V teku' "
+"je navaden projekt.                                 \n"
+" Če mora biti pregledan je v stanju 'Na čakanju'.\n"
+" When the project is completed the state is set to 'Done'."
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
@@ -84,7 +97,7 @@ msgstr "Vrsta konta"
 #. module: analytic
 #: selection:account.analytic.account,state:0
 msgid "Pending"
-msgstr "Čakajoči"
+msgstr "Na čakanju"
 
 #. module: analytic
 #: model:ir.model,name:analytic.model_account_analytic_line
@@ -109,7 +122,7 @@ msgid "Company"
 msgstr "Podjetje"
 
 #. module: analytic
-#: code:addons/analytic/analytic.py:160
+#: code:addons/analytic/analytic.py:138
 #, python-format
 msgid ""
 "If you set a company, the currency selected has to be the same as it's "
@@ -118,7 +131,11 @@ msgid ""
 "analytic account of type 'view'. This can be really usefull for "
 "consolidation purposes of several companies charts with different "
 "currencies, for example."
-msgstr "Če izberete podjetje , mora imeti isti valuto."
+msgstr ""
+"Izbrana valuta mor biti ista kot pri nastavljenem podjetju. \n"
+"Le pri kontih tipa 'pogled' lahko odstranite pripadajoče podjetje in tako "
+"spremenite valuto. To je koristno za namene konsolidacije različnih kontnih "
+"planov podjetij v različnih valutah."
 
 #. module: analytic
 #: field:account.analytic.line,user_id:0
@@ -152,7 +169,7 @@ msgid ""
 "Calculated by multiplying the quantity and the price given in the Product's "
 "cost price. Always expressed in the company main currency."
 msgstr ""
-"Izračunano z množenjem količine in cene podane v ceni vrednosti Izdelka. "
+"Izračunano z množenjem količine in cene podane kot lastna cena proizvoda. "
 "Vedno izraženo v glavni valuti podjetja."
 
 #. module: analytic
@@ -163,7 +180,7 @@ msgstr "Hierarhija konta"
 #. module: analytic
 #: help:account.analytic.account,quantity_max:0
 msgid "Sets the higher limit of time to work on the contract."
-msgstr ""
+msgstr "Nastavi višji časovni limit za delo po pogodbi"
 
 #. module: analytic
 #: field:account.analytic.account,credit:0
@@ -178,12 +195,12 @@ msgstr "Znesek"
 #. module: analytic
 #: field:account.analytic.account,contact_id:0
 msgid "Contact"
-msgstr "Kontakt"
+msgstr "Stik"
 
 #. module: analytic
 #: field:account.analytic.account,code:0
 msgid "Code/Reference"
-msgstr ""
+msgstr "Koda/Sklic"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0
@@ -194,17 +211,17 @@ msgstr "Preklicano"
 #: code:addons/analytic/analytic.py:138
 #, python-format
 msgid "Error !"
-msgstr ""
+msgstr "Napaka!"
 
 #. module: analytic
 #: field:account.analytic.account,balance:0
 msgid "Balance"
-msgstr "Stanje"
+msgstr "Saldo"
 
 #. module: analytic
 #: constraint:account.analytic.account:0
 msgid "Error! You can not create recursive analytic accounts."
-msgstr "Napaka! Ne morete kreirati rekurzivnih analitičnih kontov."
+msgstr "Napaka! Ne morete ustvariti rekurzivnih analitičnih kontov."
 
 #. module: analytic
 #: help:account.analytic.account,type:0
@@ -212,18 +229,17 @@ msgid ""
 "If you select the View Type, it means you won't allow to create journal "
 "entries using that account."
 msgstr ""
-"Če izberete Tip pogleda, to pomeni, da ne boste dovolili ustvarjanje vnosov "
-"v dnevnik s tem kontom."
+"Izbira tipa 'pogled' ne dovoli ustvarjanja dnevniških vpisov za ta konto."
 
 #. module: analytic
 #: field:account.analytic.account,date:0
 msgid "Date End"
-msgstr "Datum konca"
+msgstr "Končni datum"
 
 #. module: analytic
 #: field:account.analytic.account,quantity_max:0
 msgid "Maximum Time"
-msgstr ""
+msgstr "Maksimalni čas"
 
 #. module: analytic
 #: model:res.groups,name:analytic.group_analytic_accounting
@@ -236,8 +252,6 @@ msgid "Full Account Name"
 msgstr "Polni naziv konta"
 
 #. module: analytic
-#: view:account.analytic.account:0
-#: selection:account.analytic.account,type:0
 #: field:account.analytic.line,account_id:0
 #: model:ir.model,name:analytic.model_account_analytic_account
 msgid "Analytic Account"
@@ -252,6 +266,8 @@ msgstr "Valuta"
 #: constraint:account.analytic.line:0
 msgid "You can not create analytic line on view account."
 msgstr ""
+"Ustvarjanje analitičnih postavk na kontu tipa 'Pogled' (zbirni konto) ni "
+"mogoče."
 
 #. module: analytic
 #: selection:account.analytic.account,type:0
@@ -261,12 +277,12 @@ msgstr "Pogled"
 #. module: analytic
 #: field:account.analytic.account,partner_id:0
 msgid "Partner"
-msgstr "Stranka"
+msgstr "Partner"
 
 #. module: analytic
 #: field:account.analytic.account,date_start:0
 msgid "Date Start"
-msgstr "Datum začetka"
+msgstr "Začetni datum"
 
 #. module: analytic
 #: selection:account.analytic.account,state:0

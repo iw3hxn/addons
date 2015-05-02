@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: OpenERP Administrators <Unknown>\n"
+"PO-Revision-Date: 2014-07-23 17:54+0000\n"
+"Last-Translator: Yann Papouin <yann.papouin@gmail.com>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:52+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-07-25 06:41+0000\n"
+"X-Generator: Launchpad (build 17114)\n"
 
 #. module: base_report_designer
 #: model:ir.model,name:base_report_designer.model_base_report_sxw
@@ -24,7 +24,7 @@ msgstr "base.report.sxw"
 #. module: base_report_designer
 #: view:base_report_designer.installer:0
 msgid "OpenERP Report Designer Configuration"
-msgstr "Configurazione Report Designer di OpenERP"
+msgstr "Configurazione Report Designer di SimplERP"
 
 #. module: base_report_designer
 #: view:base_report_designer.installer:0
@@ -32,11 +32,11 @@ msgid ""
 "This plug-in allows you to create/modify OpenERP Reports into OpenOffice "
 "Writer."
 msgstr ""
-"Questo plug in vi permette di creare/modificare i report OpenERP nel Writer "
+"Questo plug in vi permette di creare/modificare i report SimplERP nel Writer "
 "di OpenOffice"
 
 #. module: base_report_designer
-#: view:base.report.sxw:0
+#: view:base.report.file.sxw:0
 msgid "Upload the modified report"
 msgstr "Pubblica il tuo Report modificato"
 
@@ -101,7 +101,7 @@ msgstr "Scarica un Report"
 #: view:base_report_designer.installer:0
 #: model:ir.actions.act_window,name:base_report_designer.action_report_designer_wizard
 msgid "OpenERP Report Designer"
-msgstr "Report Designer di OpenERP"
+msgstr "Report Designer di SimplERP"
 
 #. module: base_report_designer
 #: view:base.report.sxw:0
@@ -153,9 +153,9 @@ msgid ""
 msgstr ""
 "Questo è il modello del vostro Report richiesto\n"
 "Salvatelo come un file: .SXW e apritelo con OpenOffice.\n"
-"Non dimenticate di installare il pacchetto OpenERP SA OpenOffice per "
+"Non dimenticate di installare il pacchetto OpenOffice per "
 "modificarlo.\n"
-"Una volta modificato, ricaricatelo in OpenERP utilizzando il wizard."
+"Una volta modificato, ricaricatelo in SimplERP utilizzando il wizard."
 
 #. module: base_report_designer
 #: field:base_report_designer.installer,config_logo:0
@@ -180,10 +180,13 @@ msgstr "Plug in di OpenObject Report Designer"
 #. module: base_report_designer
 #: model:ir.actions.act_window,name:base_report_designer.action_report_designer_installer
 msgid "OpenERP Report Designer Installation"
-msgstr "Installazione di OpenObject Report Designer"
+msgstr "Installazione di SimplERP Report Designer"
 
 #. module: base_report_designer
+#: view:base.report.file.sxw:0
+#: view:base.report.rml.save:0
 #: view:base.report.sxw:0
+#: view:base_report_designer.installer:0
 msgid "Cancel"
 msgstr "Annulla"
 

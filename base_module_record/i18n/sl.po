@@ -7,14 +7,14 @@ msgstr ""
 "Project-Id-Version: OpenERP Server 6.0dev\n"
 "Report-Msgid-Bugs-To: support@openerp.com\n"
 "POT-Creation-Date: 2012-02-08 00:36+0000\n"
-"PO-Revision-Date: 2012-02-17 09:10+0000\n"
-"Last-Translator: Mantavya Gajjar (Open ERP) <Unknown>\n"
+"PO-Revision-Date: 2014-08-01 12:56+0000\n"
+"Last-Translator: Matjaž Mozetič (Matmoz) <Unknown>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Launchpad-Export-Date: 2013-05-29 06:52+0000\n"
-"X-Generator: Launchpad (build 16640)\n"
+"X-Launchpad-Export-Date: 2014-08-02 06:24+0000\n"
+"X-Generator: Launchpad (build 17147)\n"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,category:0
@@ -41,7 +41,7 @@ msgstr "Konec"
 #: wizard_view:base_module_record.module_record_data,init:0
 #: wizard_view:base_module_record.module_record_objects,init:0
 msgid "Choose objects to record"
-msgstr "Izberi predmete za zapis"
+msgstr "Izberi objekte snemanja"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,author:0
@@ -51,7 +51,7 @@ msgstr "Avtor"
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,directory_name:0
 msgid "Directory Name"
-msgstr "Ime imenika"
+msgstr "Naziv imenika"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_data,init,filter_cond:0
@@ -67,7 +67,7 @@ msgstr "Demonstracijski podatki"
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,save,module_filename:0
 msgid "Filename"
-msgstr "Ime datoteke"
+msgstr "Naziv datoteke"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,version:0
@@ -80,7 +80,7 @@ msgstr "Različica"
 #: wizard_view:base_module_record.module_record_data,save_yaml:0
 #: wizard_view:base_module_record.module_record_objects,init:0
 msgid "Objects Recording"
-msgstr "Zapisovanje predmetov"
+msgstr "Snemanje objektov"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_objects,save:0
@@ -89,12 +89,15 @@ msgid ""
 "publish it on http://www.openerp.com, in the 'Modules' section. You can do "
 "it through the website or using features of the 'base_module_publish' module."
 msgstr ""
+"Če smatrate, da bi vaš modul lahko zanimal tudi druge, ga objavite na "
+"http://www.openerp.com v sekciji Moduli. To lahko naredite preko spletne "
+"strani ali pa s funkcijami modula base_module_publish."
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_data,init,check_date:0
 #: wizard_field:base_module_record.module_record_objects,init,check_date:0
 msgid "Record from Date"
-msgstr "Posnami od dne"
+msgstr "Snemaj od dne"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_data,end:0
@@ -109,7 +112,7 @@ msgstr "Snemanje modulov"
 #: model:ir.actions.wizard,name:base_module_record.wizard_base_module_record_objects
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_record_objects
 msgid "Export Customizations As a Module"
-msgstr "Izvozi prilagoditev kot moduk"
+msgstr "Izvozi prilagoditve kot modul"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_objects,save:0
@@ -120,7 +123,7 @@ msgstr "Vnaprej hvala za vaš prispevek."
 #: help:base_module_record.module_record_data,init,objects:0
 #: help:base_module_record.module_record_objects,init,objects:0
 msgid "List of objects to be recorded"
-msgstr "Seznam predmetov za snemanje"
+msgstr "Seznam objektov za snemanje"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,description:0
@@ -130,13 +133,13 @@ msgstr "Polni opis"
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,name:0
 msgid "Module Name"
-msgstr "Ime modula"
+msgstr "Naziv modula"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_data,init,objects:0
 #: wizard_field:base_module_record.module_record_objects,init,objects:0
 msgid "Objects"
-msgstr "Predmeti"
+msgstr "Objekti"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,save,module_file:0
@@ -147,18 +150,18 @@ msgstr "ZIP datoteka modula"
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_objects,save:0
 msgid "Module successfully created !"
-msgstr "Modul uspešno izdelan!"
+msgstr "Modul uspešno ustvarjen!"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_objects,save_yaml:0
 msgid "YAML file successfully created !"
-msgstr "YAML datoteka uspečno kreirana !"
+msgstr "YAML datoteka uspešno ustvarjena!"
 
 #. module: base_module_record
 #: wizard_view:base_module_record.module_record_data,info:0
 #: wizard_view:base_module_record.module_record_data,save_yaml:0
 msgid "Result, paste this to your module's xml"
-msgstr ""
+msgstr "Rezultat, prilepite to vsebino v xml vašega modula"
 
 #. module: base_module_record
 #: selection:base_module_record.module_record_data,init,filter_cond:0
@@ -175,19 +178,19 @@ msgstr "Hvala ker uporabljate snemalnik modulov"
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,website:0
 msgid "Documentation URL"
-msgstr "Dokumentacijski URL"
+msgstr "URL povezava do dokumentacije"
 
 #. module: base_module_record
 #: selection:base_module_record.module_record_data,init,filter_cond:0
 #: selection:base_module_record.module_record_objects,init,filter_cond:0
 msgid "Modified"
-msgstr "Spremenjeni"
+msgstr "Spremenjeno"
 
 #. module: base_module_record
 #: wizard_button:base_module_record.module_record_data,init,record:0
 #: wizard_button:base_module_record.module_record_objects,init,record:0
 msgid "Record"
-msgstr "Zapis"
+msgstr "Snemaj"
 
 #. module: base_module_record
 #: wizard_button:base_module_record.module_record_objects,info,save:0
@@ -198,7 +201,7 @@ msgstr "Nadaljuj"
 #: model:ir.actions.wizard,name:base_module_record.wizard_base_module_record_data
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_module_record_data
 msgid "Export Customizations As Data File"
-msgstr ""
+msgstr "Izvozi prilagoditve kot datoteko"
 
 #. module: base_module_record
 #: code:addons/base_module_record/wizard/base_module_save.py:129
@@ -209,7 +212,7 @@ msgstr "Napaka"
 #. module: base_module_record
 #: selection:base_module_record.module_record_objects,info,data_kind:0
 msgid "Normal Data"
-msgstr "Normalni podatki"
+msgstr "Običajni podatki"
 
 #. module: base_module_record
 #: wizard_button:base_module_record.module_record_data,end,end:0
@@ -220,7 +223,7 @@ msgstr "V redu"
 #. module: base_module_record
 #: model:ir.ui.menu,name:base_module_record.menu_wizard_base_mod_rec
 msgid "Module Creation"
-msgstr "Izdelava modula"
+msgstr "Ustvarjanje modula"
 
 #. module: base_module_record
 #: wizard_field:base_module_record.module_record_objects,info,data_kind:0
@@ -249,16 +252,16 @@ msgstr "Rezultat"
 #: wizard_button:base_module_record.module_record_objects,info,end:0
 #: wizard_button:base_module_record.module_record_objects,init,end:0
 msgid "Cancel"
-msgstr "Prekliči"
+msgstr "Preklic"
 
 #. module: base_module_record
 #: wizard_button:base_module_record.module_record_objects,save,end:0
 #: wizard_button:base_module_record.module_record_objects,save_yaml,end:0
 msgid "Close"
-msgstr "Zapri"
+msgstr "Zaključi"
 
 #. module: base_module_record
 #: selection:base_module_record.module_record_data,init,filter_cond:0
 #: selection:base_module_record.module_record_objects,init,filter_cond:0
 msgid "Created & Modified"
-msgstr "Izdelano in spremenjeno"
+msgstr "Ustvarjeno in spremenjeno"

@@ -122,10 +122,10 @@
       <!--product menu-->
       <menuitem id="menu_procurement_management_product" name="Products"
           parent="base.menu_purchase_root" sequence="8"/>
-
+<!--
       <menuitem name="Products by Category" id="menu_product_by_category_purchase_form" action="product.product_category_action"
            parent="menu_procurement_management_product" sequence="10"/>
-
+-->
       <menuitem name="Products" id="menu_procurement_partner_contact_form" action="product.product_normal_action_puchased"
           parent="menu_procurement_management_product"/>
 
