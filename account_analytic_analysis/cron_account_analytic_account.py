@@ -70,7 +70,7 @@ class analytic_account(osv.osv):
             subject = '[OPENERP] Reporting: Analytic Accounts'
             body = Template(MAKO_TEMPLATE).render_unicode(user=user, partners=data)
             if user.user_email:
-                mail_message.schedule_with_attach(cr, uid, 'noreply@simplerp.it', [user.user_email],
+                mail_message.schedule_with_attach(cr, uid, 'noreply@didotech.com', [user.user_email],
                                                   subject, body)
 
         return True

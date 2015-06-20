@@ -21,7 +21,7 @@
 
 {
     'name': 'VAT Number Validation',
-    'version': '1.0',
+    'version': '1.0.a',
     "category": 'Hidden/Dependency',
     'complexity': "easy",
     'description': """

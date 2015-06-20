@@ -26,6 +26,11 @@ msgstr ""
 "fornitore. Il preventivo diverrà quindi un ordine di acquisto"
 
 #. module: purchase
+#: view:purchase.order:0
+msgid "Not invoiced"
+msgstr "Non fatturati"
+
+#. module: purchase
 #: model:process.node,note:purchase.process_node_productrecept0
 msgid "Incoming products to control"
 msgstr "Prodotti in ingresso da controllare"
@@ -517,7 +522,7 @@ msgstr "Conferma"
 #: model:ir.ui.menu,name:purchase.menu_action_picking_tree4_picking_to_invoice
 #: selection:purchase.order,invoice_method:0
 msgid "Based on receptions"
-msgstr "Basato sulle ricezioni"
+msgstr "Basato sugli ingressi merci"
 
 #. module: purchase
 #: constraint:res.company:0
@@ -779,7 +784,7 @@ msgid ""
 "match it with the draft invoice and validate it."
 msgstr ""
 "Utilizzate questo menù per controllare le fatture da ricevere dai"
-"vostri fornitori. SimplERP pre-genera fatture in bozza dai vostri"
+"vostri fornitori. LibrERP pre-genera fatture in bozza dai vostri"
 "ordini di acquisto o di ricevimento, a seconda delle impostazioni"
 "inserite. Quando ricevete la fattura dal fornitore, potete collegarla"
 "alla bozza e validarla."
@@ -1140,7 +1145,7 @@ msgstr "Fatture manuali"
 #: model:ir.ui.menu,name:purchase.menu_procurement_management_invoice
 #: view:purchase.order:0
 msgid "Invoice Control"
-msgstr "Controllo Fatturazione"
+msgstr "Politica di Fatturazione"
 
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_purchase_uom_categ_form_action
@@ -1370,11 +1375,6 @@ msgstr "Approvato"
 #: view:purchase.order.line:0
 msgid "General Information"
 msgstr "Informazione generale"
-
-#. module: purchase
-#: view:purchase.order:0
-msgid "Not invoiced"
-msgstr ""
 
 #. module: purchase
 #: report:purchase.order:0 field:purchase.order.line,price_unit:0

@@ -126,7 +126,7 @@
 	            </field>
 	        </record>
 
-	        <record id="track_line" model="ir.actions.act_window">
+	        <record id="stock.split_line" model="ir.actions.act_window">
 	            <field name="name">Split in lots</field>
 	            <field name="type">ir.actions.act_window</field>
 	            <field name="res_model">stock.move.split</field>

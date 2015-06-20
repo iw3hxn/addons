@@ -110,7 +110,7 @@ msgid ""
 "OpenERP."
 msgstr ""
 "Il test verifica se il modulo soddista l'attuale codifica standard "
-"utilizzata da SimplERP."
+"utilizzata da LibrERP."
 
 #. module: base_module_quality
 #: code:addons/base_module_quality/wizard/quality_save_report.py:39

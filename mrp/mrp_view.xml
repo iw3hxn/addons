@@ -668,7 +668,7 @@
                                         icon="gtk-go-forward" context="{'consume': True}"
                                         states="draft,waiting,confirmed,assigned" />
                                     <button
-                                           name="%(stock.track_line)d"
+                                           name="%(stock.split_line)d"
                                            string="Split in production lots"
                                            type="action" icon="gtk-justify-fill"
                                            states="draft,waiting,confirmed,assigned" />
@@ -689,7 +689,7 @@
                                        <field name="state" invisible="1"/>
                                        <field name="scrapped" invisible="1"/>
                                        <button
-                                           name="%(stock.track_line)d"
+                                           name="%(stock.split_line)d"
                                            string="Split in production lots"
                                            type="action" icon="gtk-justify-fill"/>
                                        <button
@@ -740,7 +740,7 @@
                                        <field name="prodlot_id" context="{'product_id': product_id}"/>
                                        <field name="scrapped" invisible="1"/>
                                        <field name="state" invisible="1"/>
-                                       <button name="%(stock.track_line)d"
+                                       <button name="%(stock.split_line)d"
                                             string="Split in production lots" type="action" icon="gtk-justify-fill" states="done,cancel"/>
                                        <button name="%(stock.move_scrap)d"
                                            string="Scrap Products" type="action" icon="gtk-convert"

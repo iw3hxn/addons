@@ -115,7 +115,7 @@ msgid ""
 "the customer."
 msgstr ""
 "Qui troverai i contratti da rinnovare in quanto scaduti o le ore lavorate "
-"sono maggiori di quelle allocate. SimplERP imposta automaticamente questi "
+"sono maggiori di quelle allocate. LibrERP imposta automaticamente questi "
 "conti analitici in stato sospeso, in modo da notificare un avviso durante la "
 "fase di inserimento dei timesheet. I commerciali dovrebbero ricontrollare "
 "tutti i contratti sospesi e riaprirli/chiuderli coerentemente con quanto il "
@@ -160,7 +160,7 @@ msgstr "Tempo Fatturato"
 msgid ""
 "A contract in OpenERP is an analytic account having a partner set on it."
 msgstr ""
-"Un contratto in SimplERP è un conto analitico associato ad un partner."
+"Un contratto in LibrERP è un conto analitico associato ad un partner."
 
 #. module: account_analytic_analysis
 #: field:account.analytic.account,remaining_hours:0

@@ -54,8 +54,8 @@ msgid ""
 "This plug-in allows you to link your e-mail to OpenERP's documents. You can "
 "attach it to any existing one in OpenERP or create a new one."
 msgstr ""
-"Il plug in permette di collegare le e-mail ai documenti di SimplERP. E' "
-"possibile allegarle a documenti già esistenti di SimplERP oppure crearne di "
+"Il plug in permette di collegare le e-mail ai documenti di LibrERP. E' "
+"possibile allegarle a documenti già esistenti di LibrERP oppure crearne di "
 "nuovi"
 
 #. module: plugin_thunderbird

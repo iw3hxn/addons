@@ -19,11 +19,11 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import orm, fields
 from tools.translate import _
 import decimal_precision as dp
 
-class stock_move_consume(osv.osv_memory):
+class stock_move_consume(orm.TransientModel):
     _name = "stock.move.consume"
     _description = "Consume Products"
 
@@ -78,10 +78,8 @@ class stock_move_consume(osv.osv_memory):
                              context=context)
         return {'type': 'ir.actions.act_window_close'}
 
-stock_move_consume()
 
-
-class stock_move_scrap(osv.osv_memory):
+class stock_move_scrap(orm.TransientModel):
     _name = "stock.move.scrap"
     _description = "Scrap Products"
     _inherit = "stock.move.consume"
@@ -102,9 +100,9 @@ class stock_move_scrap(osv.osv_memory):
         if context is None:
             context = {}
         res = super(stock_move_consume, self).default_get(cr, uid, fields, context=context)
-        move = self.pool.get('stock.move').browse(cr, uid, context['active_id'], context=context)
-        location_obj = self.pool.get('stock.location')
-        scrpaed_location_ids = location_obj.search(cr, uid, [('scrap_location','=',True)])
+        move = self.pool['stock.move'].browse(cr, uid, context['active_id'], context=context)
+        location_obj = self.pool['stock.location']
+        scrpaed_location_ids = location_obj.search(cr, uid, [('scrap_location', '=', True)])
 
         if 'product_id' in fields:
             res.update({'product_id': move.product_id.id})
@@ -131,7 +129,7 @@ class stock_move_scrap(osv.osv_memory):
         """
         if context is None:
             context = {}
-        move_obj = self.pool.get('stock.move')
+        move_obj = self.pool['stock.move']
         move_ids = context['active_ids']
         for data in self.browse(cr, uid, ids):
             move_obj.action_scrap(cr, uid, move_ids,
@@ -139,10 +137,8 @@ class stock_move_scrap(osv.osv_memory):
                              context=context)
         return {'type': 'ir.actions.act_window_close'}
 
-stock_move_scrap()
 
-
-class split_in_production_lot(osv.osv_memory):
+class split_in_production_lot(orm.TransientModel):
     _name = "stock.move.split"
     _description = "Split in Production lots"
 
@@ -172,7 +168,7 @@ class split_in_production_lot(osv.osv_memory):
         'line_exist_ids': fields.one2many('stock.move.split.lines', 'wizard_exist_id', 'Production Lots'),
         'use_exist' : fields.boolean('Existing Lots', help="Check this option to select existing lots in the list below, otherwise you should enter new ones line by line."),
         'location_id': fields.many2one('stock.location', 'Source Location')
-     }
+    }
 
     def split_lot(self, cr, uid, ids, context=None):
         """ To split a lot"""
@@ -210,7 +206,7 @@ class split_in_production_lot(osv.osv_memory):
                     quantity = line.quantity
                     total_move_qty += quantity
                     if total_move_qty > move_qty:
-                        raise osv.except_osv(_('Processing Error'), _('Production lot quantity %d of %s is larger than available quantity (%d) !') \
+                        raise orm.except_orm(_('Processing Error'), _('Production lot quantity %d of %s is larger than available quantity (%d) !') \
                                 % (total_move_qty, move.product_id.name, move_qty))
                     if quantity <= 0 or move_qty == 0:
                         continue
@@ -254,9 +250,8 @@ class split_in_production_lot(osv.osv_memory):
 
         return new_move
 
-split_in_production_lot()
 
-class stock_move_split_lines_exist(osv.osv_memory):
+class stock_move_split_lines_exist(orm.TransientModel):
     _name = "stock.move.split.lines"
     _description = "Stock move Split lines"
     _columns = {

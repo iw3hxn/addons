@@ -678,7 +678,7 @@ msgstr "Filtri estesi..."
 #. module: hr_timesheet_invoice
 #: field:report_timesheet.invoice,amount_invoice:0
 msgid "To invoice"
-msgstr "Fa Fatturare"
+msgstr "Da Fatturare"
 
 #. module: hr_timesheet_invoice
 #: report:account.analytic.profit:0

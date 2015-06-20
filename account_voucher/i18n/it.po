@@ -208,7 +208,7 @@ msgid ""
 msgstr ""
 "Gli incassi permettono di registrare i pagamenti ricevuti dai clienti. Per "
 "registrare un pagamento, è necessario selezionare il cliente, il metodo di "
-"pagamento (= il sezionale) e l'importo. SimplERP proporrà automaticamente la "
+"pagamento (= il sezionale) e l'importo. LibrERP proporrà automaticamente la "
 "riconciliazione del pagamento con le fatture o le ricevute di vendita aperte."
 
 #. module: account_voucher
@@ -584,7 +584,7 @@ msgid ""
 msgstr ""
 "Il modulo di pagamento fornitore permette di registrare il pagamento fatto "
 "ai fornitori. Quando viene selezionato un fornitore, il metodo di pagamento "
-"e l'ammontare, SimplERP proporrà di riconciliare il pagamento con le fatture "
+"e l'ammontare, LibrERP proporrà di riconciliare il pagamento con le fatture "
 "o ricevute aperte del fornitore."
 
 #. module: account_voucher

@@ -377,8 +377,8 @@ class product_template(osv.osv):
             new_uom = self.pool.get('product.uom').browse(cr, uid, vals['uom_po_id'], context=context)
             for product in self.browse(cr, uid, ids, context=context):
                 old_uom = product.uom_po_id
-                if old_uom.category_id.id != new_uom.category_id.id:
-                    raise osv.except_osv(_('UoM categories Mismatch!'), _("New UoM '%s' must belong to same UoM category '%s' as of old UoM '%s'. If you need to change the unit of measure, you may desactivate this product from the 'Procurement & Locations' tab and create a new one.") % (new_uom.name, old_uom.category_id.name, old_uom.name,))
+                #if old_uom.category_id.id != new_uom.category_id.id:
+                #    raise osv.except_osv(_('UoM categories Mismatch!'), _("New UoM '%s' must belong to same UoM category '%s' as of old UoM '%s'. If you need to change the unit of measure, you may desactivate this product from the 'Procurement & Locations' tab and create a new one.") % (new_uom.name, old_uom.category_id.name, old_uom.name,))
         return super(product_template, self).write(cr, uid, ids, vals, context=context)
 
     _defaults = {
@@ -688,7 +688,8 @@ class product_product(osv.osv):
         context_wo_lang.pop('lang', None)
         product = self.read(cr, uid, id, ['name'], context=context_wo_lang)
         default = default.copy()
-        default['name'] = product['name'] + ' (copy)'
+        #default['name'] = product['name'] + ' (copy)'
+        default.update(name=_("%s (copy)") % (product['name']))
 
         if context.get('variant',False):
             fields = ['product_tmpl_id', 'active', 'variants', 'default_code',

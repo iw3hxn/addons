@@ -375,7 +375,7 @@ msgid ""
 "track customer contracts."
 msgstr ""
 "Crea una struttura dei conti analitici in base alle tue necessità di analisi "
-"dei costi e dei ricavi. In SimplERP, i conti analitici si usano anche per "
+"dei costi e dei ricavi. In LibrERP, i conti analitici si usano anche per "
 "gestire i contratti con i clienti."
 
 #. module: hr_timesheet

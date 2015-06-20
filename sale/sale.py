@@ -39,7 +39,7 @@ class sale_shop(osv.osv):
         'pricelist_id': fields.many2one('product.pricelist', 'Pricelist'),
         'project_id': fields.many2one('account.analytic.account', 'Analytic Account', domain=[('parent_id', '!=', False)]),
         'company_id': fields.many2one('res.company', 'Company', required=False),
-        'member_ids':fields.many2many('res.users', 'user_sale_shop_rel', 'shop_id', 'member_id', 'Team Members'),
+        'member_ids': fields.many2many('res.users', 'user_sale_shop_rel', 'shop_id', 'member_id', 'Team Members'),
     }
     _defaults = {
         'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid, 'sale.shop', context=c),
@@ -274,7 +274,7 @@ class sale_order(osv.osv):
     _defaults = {
         'picking_policy': 'direct',
         'date_order': fields.date.context_today,
-        'order_policy': 'manual',
+        'order_policy': 'picking',
         'state': 'draft',
         'user_id': lambda obj, cr, uid, context: uid,
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'sale.order'),
@@ -994,7 +994,7 @@ class sale_order_line(osv.osv):
     }
     _order = 'sequence, id'
     _defaults = {
-        'product_uom' : _get_uom_id,
+#        'product_uom' : _get_uom_id,
         'discount': 0.0,
         'delay': 0.0,
         'product_uom_qty': 1,

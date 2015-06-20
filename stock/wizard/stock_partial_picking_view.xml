@@ -18,7 +18,7 @@
                     <field name="hide_tracking" invisible="1"/>
                     <separator colspan="4" string="Products"/>
                     <field name="move_ids" colspan="4" nolabel="1" mode="tree,form" width="550" height="200" context="{'hide_tracking': hide_tracking}">
-                        <tree editable="bottom" string="Product Moves">
+                        <tree editable="bottom" string="Product Moves" colors="red:tracking">
                             <field name="product_id" />
                             <field name="quantity" />
                             <field name="product_uom" />

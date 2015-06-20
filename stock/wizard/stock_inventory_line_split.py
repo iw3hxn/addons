@@ -19,9 +19,9 @@
 #
 ##############################################################################
 
-from osv import fields, osv
+from openerp.osv import orm, fields
 
-class stock_inventory_line_split(osv.osv_memory):
+class stock_inventory_line_split(orm.TransientModel):
     _inherit = "stock.move.split"
     _name = "stock.inventory.line.split"
     _description = "Split inventory lines"
@@ -29,7 +29,7 @@ class stock_inventory_line_split(osv.osv_memory):
     _columns = {
         'line_ids': fields.one2many('stock.inventory.line.split.lines', 'wizard_id', 'Production Lots'),
         'line_exist_ids': fields.one2many('stock.inventory.line.split.lines', 'wizard_exist_id', 'Production Lots'),
-     }
+    }
 
     def default_get(self, cr, uid, fields, context=None):
         if context is None:
@@ -54,9 +54,8 @@ class stock_inventory_line_split(osv.osv_memory):
             context = {}
         assert context.get('active_model') == 'stock.inventory.line',\
              'Incorrect use of the inventory line split wizard'
-        prodlot_obj = self.pool.get('stock.production.lot')
-        ir_sequence_obj = self.pool.get('ir.sequence')
-        line_obj = self.pool.get('stock.inventory.line')
+        prodlot_obj = self.pool['stock.production.lot']
+        line_obj = self.pool['stock.inventory.line']
         new_line = []
         for data in self.browse(cr, uid, ids, context=context):
             for inv_line in line_obj.browse(cr, uid, line_ids, context=context):
@@ -92,7 +91,7 @@ class stock_inventory_line_split(osv.osv_memory):
                             'product_id': inv_line.product_id.id},
                         context=context)
                     line_obj.write(cr, uid, [current_line], {'prod_lot_id': prodlot_id})
-                    prodlot = prodlot_obj.browse(cr, uid, prodlot_id)
+                    # prodlot = prodlot_obj.browse(cr, uid, prodlot_id)
 
                     update_val = {}
                     if quantity_rest > 0:
@@ -101,7 +100,7 @@ class stock_inventory_line_split(osv.osv_memory):
 
         return new_line
 
-class stock_inventory_split_lines(osv.osv_memory):
+class stock_inventory_split_lines(orm.TransientModel):
     _inherit = "stock.move.split.lines"
     _name = "stock.inventory.line.split.lines"
     _description = "Inventory Split lines"

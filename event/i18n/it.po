@@ -158,7 +158,7 @@ msgstr "Evento su Registrazione"
 msgid "The email address put in the 'Reply-To' of all emails sent by OpenERP"
 msgstr ""
 "Indirizzo email da mettere nel campo \"Rispondi A\" per tutte le email "
-"spedite da SimplERP"
+"spedite da LibrERP"
 
 #. module: event
 #: view:event.registration:0

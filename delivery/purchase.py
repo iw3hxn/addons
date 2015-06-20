@@ -18,14 +18,24 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
+from osv import fields, osv
 
-import delivery
-import partner
-import wizard
-import report
-import sale
-import stock
-import purchase
 
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+# Overloaded sale_order to manage carriers :
+class purchase_order(osv.osv):
+    _inherit = 'purchase.order'
+    _columns = {
+        'carrier_id': fields.many2one("delivery.carrier", "Delivery Method", help="Complete this field if you plan to invoice the shipping based on picking."),
+    }
 
+    def onchange_partner_id(self, cr, uid, ids, partner_id):
+        result = super(purchase_order, self).onchange_partner_id(cr, uid, ids, partner_id)
+        if partner_id:
+            dtype = self.pool['res.partner'].browse(cr, uid, partner_id).property_delivery_carrier.id
+            result['value']['carrier_id'] = dtype
+        return result
+
+    # def _prepare_order_picking(self, cr, uid, order, context=None):
+    #     result = super(sale_order, self)._prepare_order_picking(cr, uid, order, context=context)
+    #     result.update(carrier_id=order.carrier_id.id)
+    #     return result

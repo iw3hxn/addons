@@ -213,7 +213,7 @@ class purchase_order(osv.osv):
         'state': 'draft',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'purchase.order'),
         'shipped': 0,
-        'invoice_method': 'order',
+        'invoice_method': 'picking',
         'invoiced': 0,
         'partner_address_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').address_get(cr, uid, [context['partner_id']], ['default'])['default'],
         'pricelist_id': lambda self, cr, uid, context: context.get('partner_id', False) and self.pool.get('res.partner').browse(cr, uid, context['partner_id']).property_product_pricelist_purchase.id,
@@ -663,6 +663,21 @@ class purchase_order_line(osv.osv):
         except Exception, ex:
             return False
 
+    # def _get_product_id(self, cr, uid, context=None):
+    #     order_line_ids = self.search(cr, uid, [(1, '=', 1)], context=context)
+    #     res = False
+    #     if order_line_ids:
+    #         last_line = self.browse(cr, uid, order_line_ids[-1], context=context)
+    #         product_name = last_line.product_id and last_line.product_id.default_code
+    #         product_ids = self.pool['product.product'].search(cr, uid, [('default_code', 'ilike', product_name[0:len(product_name) - 1])], context=context)
+    #         if product_ids:
+    #             res = product_ids.index(last_line.product_id.id) + 1
+    #             if res >= len(product_ids):
+    #                 res = False
+    #             else:
+    #                 res = product_ids[res]
+    #     return res
+
     _columns = {
         'name': fields.char('Description', size=256, required=True),
         'product_qty': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM'), required=True),
@@ -691,6 +706,7 @@ class purchase_order_line(osv.osv):
     }
     _defaults = {
         'product_uom' : _get_uom_id,
+        # 'product_id': _get_product_id,
         'product_qty': lambda *a: 1.0,
         'state': lambda *args: 'draft',
         'invoiced': lambda *a: 0,

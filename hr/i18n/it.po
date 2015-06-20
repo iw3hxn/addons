@@ -171,7 +171,7 @@ msgid ""
 "The Related user field on the Employee form allows to link the OpenERP user "
 "(and her rights) to the employee."
 msgstr ""
-"Il campo dell'utente associato permette di collegare un utente di SimplERP "
+"Il campo dell'utente associato permette di collegare un utente di LibrERP "
 "(ed i suoi diritti) al dipendente."
 
 #. module: hr
@@ -655,7 +655,7 @@ msgstr "Numero posizione previdenziale"
 #. module: hr
 #: model:process.node,note:hr.process_node_openerpuser0
 msgid "Creation of a OpenERP user"
-msgstr "Creazione utente di SimplERP"
+msgstr "Creazione utente di LibrERP"
 
 #. module: hr
 #: field:hr.employee,login:0

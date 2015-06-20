@@ -124,12 +124,12 @@ msgstr "Importa questo documento"
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:33
 msgid "Import it into an existing OpenERP instance"
-msgstr "Importalo dentro un istanza SimplERP"
+msgstr "Importalo dentro un istanza LibrERP"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:36
 msgid "OpenERP instance address:"
-msgstr "Indirizzo istanza SimplERP"
+msgstr "Indirizzo istanza LibrERP"
 
 #. openerp-web
 #: /home/odo/repositories/addons/trunk/edi/static/src/xml/edi.xml:39

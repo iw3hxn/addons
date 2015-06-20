@@ -641,7 +641,7 @@ msgid ""
 "cases in this sales team"
 msgstr ""
 "L'indirizzo email messo nel campo \"Rispondi A\" per tutte le mail inviate "
-"da SimplERP relativo ai casi di questo team di vendita"
+"da LibrERP relativo ai casi di questo team di vendita"
 
 #. module: crm
 #: field:crm.lead.report,creation_month:0
@@ -3698,5 +3698,5 @@ msgstr "Newsletter"
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_case_category_act_leads_all
 msgid "Leads allow you to manage and keep track of all initial contacts with a prospect or partner showing interest in your products or services. A lead is usually the first step in your sales cycle. Once qualified, a lead may be converted into a business opportunity, while creating the related partner for further detailed tracking of any linked activities. You can import a database of prospects, keep track of your business cards or integrate your website's contact form with the OpenERP Leads. Leads can be connected to the email gateway: new emails may create leads, each of them automatically gets the history of the conversation with the prospect."
-msgstr "I Lead consentono di gestire e tenere traccia di tutti i contatti iniziali con un Prospect o Partner interessato ai tuoi prodotti o servizi. Un Lead è di solito il primo passo nel vostro ciclo di vendita. Una volta qualificato, un Lead può essere trasformato in una Opportunità di business, creando un nuovo Business Partner tramite il quale controllare dettagliatamente tutte le attività collegate. È possibile importare un database di potenziali clienti, tenere traccia dei biglietti da visita o integrare il modulo di contatto del vostro sito Web con SimplERP. I Lead possono essere collegati al gateway e-mail: nuove email possono generare Leads, e per ciascuno di essi verrà automaticamente collegata la cronologia delle conversazioni con le relative Opportunità."
+msgstr "I Lead consentono di gestire e tenere traccia di tutti i contatti iniziali con un Prospect o Partner interessato ai tuoi prodotti o servizi. Un Lead è di solito il primo passo nel vostro ciclo di vendita. Una volta qualificato, un Lead può essere trasformato in una Opportunità di business, creando un nuovo Business Partner tramite il quale controllare dettagliatamente tutte le attività collegate. È possibile importare un database di potenziali clienti, tenere traccia dei biglietti da visita o integrare il modulo di contatto del vostro sito Web con LibrERP. I Lead possono essere collegati al gateway e-mail: nuove email possono generare Leads, e per ciascuno di essi verrà automaticamente collegata la cronologia delle conversazioni con le relative Opportunità."
 

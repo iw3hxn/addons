@@ -44,7 +44,7 @@ msgstr ""
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_picking_tree6
 msgid "Internal Moves display all inventory operations you have to perform in your warehouse. All operations can be categorized into stock journals, so that each worker has his own list of operations to perform in his own journal. Most operations are prepared automatically by OpenERP according to your preconfigured logistics rules, but you can also record manual stock operations."
-msgstr "Le Movimentazioni Interne mostrano tutte le operazioni di inventario del tuo magazzino. Tutte le operazioni possono essere classificate in appositi registri, così che ogni dipendente possa utilizzare un proprio elenco di operazioni da eseguire. La maggior parte delle operazioni vengono preparate automaticamente da SimplERP secondo le regole di logistica precedentemente impostate. E' ovviamente possibile registrare anche operazioni manuali di magazzino."
+msgstr "Le Movimentazioni Interne mostrano tutte le operazioni di inventario del tuo magazzino. Tutte le operazioni possono essere classificate in appositi registri, così che ogni dipendente possa utilizzare un proprio elenco di operazioni da eseguire. La maggior parte delle operazioni vengono preparate automaticamente da LibrERP secondo le regole di logistica precedentemente impostate. E' ovviamente possibile registrare anche operazioni manuali di magazzino."
 
 #. module: stock
 #: model:ir.actions.act_window,help:stock.action_picking_tree4
@@ -1560,8 +1560,8 @@ msgstr "Punto di Stoccaggio Cliente"
 #. module: stock
 #: code:addons/stock/stock.py:2321
 #, python-format
-msgid "You can only delete draft moves."
-msgstr "Puoi cancellare solo i movimenti in bozza"
+msgid "You can only delete draft or cancelled moves."
+msgstr "Puoi cancellare solo i movimenti in Bozza o Annullati"
 
 #. module: stock
 #: xsl:stock.move.label:0
@@ -2533,12 +2533,12 @@ msgid ""
 "partner or virtual locations."
 msgstr ""
 "Definisce i punti per rispecchiare la struttura e l'organizzazione del"
-"vostro magazzino. SimplERP può organizzare i luoghi fisici (magazzini,"
+"vostro magazzino. LibrERP può organizzare i luoghi fisici (magazzini,"
 "scaffali, contenitori, etc..), localizzazione dei partner (clienti e"
 "fornitori), e luoghi virtuali che sono la controparte delle operazioni"
 "di stoccaggio come ordini di produzione, inventari, etc... Ogni"
-"operazione di stoccaggio in SimplERP sposta prodotti da un luogo ad un"
-"altro. Per esempio, se ricevete un prodotto da un fornitore, SimplERP"
+"operazione di stoccaggio in LibrERP sposta prodotti da un luogo ad un"
+"altro. Per esempio, se ricevete un prodotto da un fornitore, LibrERP"
 "sposta i prodotti dal fornitore al luogo di stoccaggio. Ciascun report"
 "può essere eseguito su luoghi fisici, su partner o su luoghi virtuali."
 
@@ -2932,7 +2932,12 @@ msgstr ""
 msgid ""
 "If checked, products contained in child locations of selected location will "
 "be included as well."
-msgstr ""
+msgstr "Se seleziona, verranno considerati anche tuttii prodotti nelle locazioni figlie"
+
+#. module: stock
+#: help:stock.fill.inventory,date:0
+msgid "Using 'Fill inventory' wizard, the inventory will be calculated at this date"
+msgstr "L'inventario verrà calcolato a questa data"
 
 #. module: stock
 #: field:stock.inventory,name:0
@@ -3143,7 +3148,7 @@ msgstr "Genitore destro"
 #. module: stock
 #: field:stock.picking,address_id:0
 msgid "Address"
-msgstr "Indirizzo"
+msgstr "Partner"
 
 #. module: stock
 #: report:lot.stock.overview:0
@@ -3780,7 +3785,7 @@ msgstr ""
 #. module: stock
 #: view:stock.picking:0
 msgid "Return Products"
-msgstr "Prodotti Resi"
+msgstr "Ritorna Prodotti"
 
 #. module: stock
 #: view:stock.inventory:0
@@ -3903,6 +3908,12 @@ msgstr ""
 #: field:stock.fill.inventory,set_stock_zero:0
 msgid "Set to zero"
 msgstr "Imposta a zero"
+
+#. module: stock
+#: field:stock.fill.inventory,set_stock_zero:0
+msgid "Date of inventory"
+msgstr "Data dell'inventario"
+
 
 #. module: stock
 #: model:res.groups,name:stock.group_stock_user
@@ -4029,7 +4040,7 @@ msgstr "Tracciabilità"
 #. module: stock
 #: view:stock.picking:0
 msgid "To invoice"
-msgstr "Fa Fatturare"
+msgstr "Da Fatturare"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_location_form

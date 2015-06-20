@@ -27,6 +27,12 @@ msgstr "La nuova Unità di Misura '%s' deve essere della stessa tipologia '%s' c
 msgid "DDR 512MB PC400"
 msgstr "DDR 512MB PC400"
 
+#. module: product
+#: code:addons/product/product.py:732
+#, python-format
+msgid "%s (copy)"
+msgstr "%s (copia)"
+
 #. module: base
 #: model:ir.module.category,name:base.module_category_generic_modules_products
 #: model:ir.ui.menu,name:base.menu_product
@@ -1879,7 +1885,7 @@ msgstr ""
 #: code:addons/product/pricelist.py:376
 #, python-format
 msgid "Partner section of the product form"
-msgstr "Sezione del partner per il form del prodotto"
+msgstr "Prezzo del Fornitore dentro la scheda prodotto"
 
 #. module: product
 #: help:product.price.type,name:0

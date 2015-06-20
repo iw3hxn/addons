@@ -82,7 +82,7 @@ msgid ""
 msgstr ""
 "GTD (Getting Things Done) è un metodo efficiente per organizzare sè stessi e "
 "le propie attività. Questo modulo integra pienamente i principi del GTD con "
-"il modulo di Gestione Progetti di SimplERP."
+"il modulo di Gestione Progetti di LibrERP."
 
 #. module: association
 #: view:profile.association.config.install_modules_wizard:0

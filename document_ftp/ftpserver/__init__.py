@@ -27,7 +27,7 @@ import netsvc
 from tools import config
 
 def start_server():
-    HOST = config.get('ftp_server_host', '127.0.0.1')
+    HOST = config.get('ftp_server_host', '0.0.0.0')
     PORT = int(config.get('ftp_server_port', '8021'))
     PASSIVE_PORTS = None
     pps = config.get('ftp_server_passive_ports', '').split(':')

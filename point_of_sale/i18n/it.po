@@ -339,7 +339,7 @@ msgstr "Ottobre"
 #. module: point_of_sale
 #: view:pos.close.statement:0
 msgid "OpenERP will close all cash registers he can close automatically without validation. He will also open all cash registers for which you have to control the ending balance before closing manually."
-msgstr "SimplERP chiuderà tutti i registri di cassa automaticamente senza obbligo di validarli."
+msgstr "LibrERP chiuderà tutti i registri di cassa automaticamente senza obbligo di validarli."
 
 #. module: point_of_sale
 #: report:pos.details:0

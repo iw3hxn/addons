@@ -76,7 +76,7 @@ msgid ""
 "and phases scheduling, track resource allocation and availability."
 msgstr ""
 "Con il suo sistema di pianificazione globale per tutte le risorse "
-"dell'azienda (persone e materiale), SimplERP vi permette di codificare, e "
+"dell'azienda (persone e materiale), LibrERP vi permette di codificare, e "
 "automaticamente calcolare, attività e fasi della pianificazione, tracciare "
 "l'allocazione di risorse e la disponibilità."
 

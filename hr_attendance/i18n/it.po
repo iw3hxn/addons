@@ -81,7 +81,7 @@ msgstr ""
 "La funzionalità di tracciamento temporale ha come obiettivo quello di "
 "gestire le presenze impiegato dalle sue azioni di Ingresso / Uscita. E' "
 "inoltre possibile collegare queste caratteristiche a un dispositivo di "
-"presenza usando le catatteristiche web service di SimplERP"
+"presenza usando le catatteristiche web service di LibrERP"
 
 #. module: hr_attendance
 #: view:hr.action.reason:0
@@ -400,7 +400,7 @@ msgid ""
 "encode their time with this action button."
 msgstr ""
 "Se è necessario che il personale registri l'ingresso appena giunga al lavoro "
-"e l'uscita alla fine della giornata, SimplERP vi  permette di gestire il "
+"e l'uscita alla fine della giornata, LibrERP vi  permette di gestire il "
 "tutto con questo strumento. Se ogni impiegato è collegato all'utente del "
 "sistema, essi possono codificare il loro tempo con questo bottone azione."
 

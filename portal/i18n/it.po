@@ -161,7 +161,7 @@ msgstr "Portale"
 #: code:addons/portal/wizard/portal_wizard.py:35
 #, python-format
 msgid "Your OpenERP account at %(company)s"
-msgstr "Il tuo account SimplERP presso %(company)s"
+msgstr "Il tuo account LibrERP presso %(company)s"
 
 #. module: portal
 #: code:addons/portal/portal.py:107

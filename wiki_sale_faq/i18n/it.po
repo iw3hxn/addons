@@ -31,7 +31,7 @@ msgstr ""
 "collegato a diverse applicazioni (specifiche di un progetto, FAQ per team di "
 "vendita, ecc.). Le parole chiave possono essere usate per etichettare le "
 "pagine Wiki. E' consigliabile utilizzare l'applicazione con l'interfaccia "
-"web client di SimplERP."
+"web client di LibrERP."
 
 #. module: wiki_sale_faq
 #: model:ir.actions.act_window,help:wiki_sale_faq.action_document_form

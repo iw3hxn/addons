@@ -8,7 +8,7 @@
         <record id="bank_iban" model="res.partner.bank.type">
             <field name="name">IBAN Account</field>
             <field name="code">iban</field>
-            <field name="format_layout">%(bank_name)s: IBAN %(acc_number)s - BIC %(bank_bic)s</field>
+            <field name="format_layout">%(bank_name)s: IBAN %(acc_number)s</field>
         </record>
         <record id="bank_swift_field" model="res.partner.bank.type.field">
             <field name="name">bank_bic</field>

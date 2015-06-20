@@ -21,7 +21,7 @@
 
 {
     'name': 'Sales Management',
-    'version': '2.0a',
+    'version': '2.0b',
     'category': 'Sales Management',
     "sequence": 14,
     'complexity': "easy",

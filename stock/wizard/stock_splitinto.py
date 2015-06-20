@@ -27,7 +27,7 @@ class stock_split_into(osv.osv_memory):
     _name = "stock.split.into"
     _description = "Split into"
     _columns = {
-        'quantity': fields.float('Quantity',digits_compute=dp.get_precision('Product UoM')),
+        'quantity': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM')),
     }
     _defaults = {
         'quantity': lambda *x: 0,
@@ -61,16 +61,16 @@ class stock_split_into(osv.osv_memory):
                     'product_uos': move.product_uom.id,
                 })
 
-            if quantity_rest>0:
+            if quantity_rest > 0:
                 quantity_rest = move.product_qty - quantity
-                tracking_id = track_obj.create(cr, uid, {}, context=context)
+                # tracking_id = track_obj.create(cr, uid, {}, context=context)
                 if quantity == 0.0:
-                    move_obj.write(cr, uid, [move.id], {'tracking_id': tracking_id}, context=context)
+                    move_obj.write(cr, uid, [move.id], {}, context=context)
                 else:
                     default_val = {
                         'product_qty': quantity_rest,
                         'product_uos_qty': quantity_rest,
-                        'tracking_id': tracking_id,
+                        # 'tracking_id': tracking_id,
                         'state': move.state,
                         'product_uos': move.product_uom.id
                     }
@@ -78,9 +78,7 @@ class stock_split_into(osv.osv_memory):
                     if inventory_id and current_move:
                         inventory_obj.write(cr, uid, inventory_id, {'move_ids': [(4, current_move)]}, context=context)
 
-
         return {'type': 'ir.actions.act_window_close'}
-stock_split_into()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

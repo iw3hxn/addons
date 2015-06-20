@@ -116,7 +116,7 @@ msgid ""
 "OpenERP will automatically adds some '0' on the left of the 'Next Number' to "
 "get the required padding size."
 msgstr ""
-"SimplERP aggiungerà automaticamente alcuni \"0\" a sinistra del \"Prossimo "
+"LibrERP aggiungerà automaticamente alcuni \"0\" a sinistra del \"Prossimo "
 "numero\" per avere la \"dimensione\" richiesta."
 
 #. module: account_sequence

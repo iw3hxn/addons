@@ -106,6 +106,11 @@ msgid "Analytic Account"
 msgstr "Contabilità Analitica"
 
 #. module: sale
+#: field:sale.shop,member_ids:0
+msgid "Team Members"
+msgstr "Utenti Ammessi"
+
+#. module: sale
 #: model:ir.actions.act_window,help:sale.action_order_line_tree2
 msgid ""
 "Here is a list of each sales order line to be invoiced. You can invoice "
@@ -158,9 +163,9 @@ msgid ""
 "you just have to confirm it when you want to bill your customer."
 msgstr ""
 "Gli ordini di vendita consentono di gestire preventivi e ordini dai vostri "
-"clienti. SimplERP ti suggerisce di iniziare con la creazione di un "
+"clienti. LibrERP ti suggerisce di iniziare con la creazione di un "
 "preventivo. Una volta confermato, il preventivo sarà convertito in un ordine "
-"di vendita. SimplERP è in grado di gestire diversi tipi di prodotti, in modo "
+"di vendita. LibrERP è in grado di gestire diversi tipi di prodotti, in modo "
 "che un ordine di vendita può trasformarsi in ordini di consegna, ordini di "
 "fabbricazione, acquisti e così via. In base alla configurazione dell 'ordine "
 "di vendita, verrà generata un fattura tipo, in modo che devi solo confermare "
@@ -2291,6 +2296,11 @@ msgstr "Aprile"
 #: view:sale.shop:0
 msgid "Accounting"
 msgstr "Contabilità"
+
+#. module: sale
+#: view:sale.shop:0
+msgid "User"
+msgstr "Utenti Abilitati"
 
 #. module: sale
 #: view:sale.order:0 view:sale.order.line:0

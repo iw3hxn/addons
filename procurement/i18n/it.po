@@ -252,7 +252,7 @@ msgid ""
 "This is automatically completed by OpenERP."
 msgstr ""
 "Riferimento al documento che ha generato questo approvvigionamento.\n"
-"Questo è completato automaticamente da SimplERP."
+"Questo è completato automaticamente da LibrERP."
 
 #. module: procurement
 #: view:stock.warehouse.orderpoint:0
@@ -536,7 +536,7 @@ msgstr ""
 "Questo wizard permette di eseguire tutti gli approvvigionamenti, ordini di "
 "produzione e/o acquisto che dovrebbero essere processati a seconda della "
 "loro configurazione. Di default, il pianificatore viene lanciato "
-"automaticamente ogni notte da SimplERP. E' possibile usare questo menu per "
+"automaticamente ogni notte da LibrERP. E' possibile usare questo menu per "
 "forzarne l'esecuzione. Si noti che viene eseguito in background, è possibile "
 "dover aspettare qualche minuto prima che finisca il calcolo."
 
@@ -864,11 +864,11 @@ msgid ""
 "will generate a procurement request to increase the stock up to the maximum "
 "quantity."
 msgstr ""
-"È possibile definire le regole di scorta minima, così SimplERP creerà "
+"È possibile definire le regole di scorta minima, così LibrERP creerà "
 "automaticamente gli ordini di produzione o preventivi d'acquisto in "
 "relazione al livello delle scorte. Una volta che il magazzino virtuale di un "
 "prodotto (= magazzino effettivo meno tutti gli ordini confermati e "
-"prenotazioni) è al di sotto della quantità minima, SimplERP genererà una "
+"prenotazioni) è al di sotto della quantità minima, LibrERP genererà una "
 "richiesta di acquisto per aumentare lo stock fino al quantitativo massimo."
 
 #. module: procurement

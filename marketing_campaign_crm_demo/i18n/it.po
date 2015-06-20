@@ -28,8 +28,8 @@ msgid ""
 "Hello,Thanks for generous interest you have shown in the "
 "openERP.Regards,OpenERP Team,"
 msgstr ""
-"Ciao, grazie per il generoso interesse che hai dimostrato in SimplERP. "
-"Cordiali saluti, Il team SimplERP,"
+"Ciao, grazie per il generoso interesse che hai dimostrato in LibrERP. "
+"Cordiali saluti, Il team LibrERP,"
 
 #. module: marketing_campaign_crm_demo
 #: report:crm.lead.demo:0
@@ -39,7 +39,7 @@ msgstr "Azienda"
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_4
 msgid "Thanks for buying the OpenERP book"
-msgstr "Grazie per avere acquistato il libero di SimplERP"
+msgstr "Grazie per avere acquistato il libero di LibrERP"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_6
@@ -57,7 +57,7 @@ msgstr ""
 "              Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci.\n"
 "              Apprezziamo veramente la vostra cooperazione su questo.\n"
-"              Cordiali saluti, il team SimplERP,"
+"              Cordiali saluti, il team LibrERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_5
@@ -82,12 +82,12 @@ msgstr "Partner"
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_1
 msgid "Thanks for showing interest in OpenERP"
-msgstr "Grazie per avere dimostrato interesse in SimplERP"
+msgstr "Grazie per avere dimostrato interesse in LibrERP"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_2
 msgid "Propose to subscribe to the OpenERP Discovery Day on May 2010"
-msgstr "Proposta di sottoscrizione all'SimplERP Discovery Day di Maggio 2015"
+msgstr "Proposta di sottoscrizione all'LibrERP Discovery Day di Maggio 2015"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_7
@@ -118,7 +118,7 @@ msgid ""
 "            I really appreciate your co-operation on this.\n"
 "            Regards,OpenERP Team,"
 msgstr ""
-"Ciao, grazie per avere mostrato interesse e comprato il libro di SimplERP.\n"
+"Ciao, grazie per avere mostrato interesse e comprato il libro di LibrERP.\n"
 "            se altra informazioni sono necessarie cortesemente fatecelo "
 "sapere.\n"
 "            apprezziamo veramente la vostra cooperazione su questo.\n"
@@ -179,7 +179,7 @@ msgstr ""
 "              Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci.\n"
 "              Apprezziamo veramente la vostra cooperazione su questo.\n"
-"              Cordiali saluti, il team SimplERP,"
+"              Cordiali saluti, il team LibrERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,body_text:marketing_campaign_crm_demo.email_template_8
@@ -193,7 +193,7 @@ msgstr ""
 "tecnico. Se qualsiasi altra informazione è necessaria a riguardo, "
 "cortesemente contattateci. Apprezziamo veramente la vostra cooperazione su "
 "questo.\n"
-"              Cordiali saluti, il team SimplERP,"
+"              Cordiali saluti, il team LibrERP,"
 
 #. module: marketing_campaign_crm_demo
 #: model:email.template,subject:marketing_campaign_crm_demo.email_template_6

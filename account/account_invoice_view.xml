@@ -158,9 +158,9 @@
                         <newline/>
                         <field name="date_invoice"/>
                         <field name="period_id" domain="[('state', '=', 'draft')]" groups="account.group_account_user" widget="selection"/>
-                        <group colspan="2" col="1" groups="account.group_account_user">
-                            <label align="0.0" string="(keep empty to use the current period)"/>
-                        </group>
+                        <!--<group colspan="2" col="1" groups="account.group_account_user">-->
+                            <!--<label align="0.0" string="(keep empty to use the current period)"/>-->
+                        <!--</group>-->
                     </group>
                     <notebook colspan="4">
                         <page string="Invoice">
