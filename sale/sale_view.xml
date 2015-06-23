@@ -156,7 +156,7 @@
                                             <separator colspan="5" string="Notes"/>
                                             <field colspan="5" name="notes" nolabel="1"/>
                                             <separator colspan="5" string="Taxes"/>
-                                            <field colspan="5" name="tax_id" nolabel="1" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]"/>
+                                            <field colspan="5" name="tax_id" nolabel="1" domain="[('parent_id','=',False),('type_tax_use','&lt;&gt;','purchase')]" widget="many2many_tags"/>
                                             <group colspan="5" col="5" groups="base.group_extended">
                                                 <separator colspan="5" string="States"/>
                                                 <field name="state" widget="statusbar" statusbar_visible="draft,confirmed,done" statusbar_colors='{"exception":"red","cancel":"red"}'/>
