@@ -19,8 +19,8 @@
 					<group colspan="2">
                         <separator string="Sale Taxes" colspan="2"/>
                         <separator string="Purchase Taxes" colspan="2"/>
-                        <field name="taxes_id" nolabel="1" colspan="2" attrs="{'readonly':[('sale_ok','=',0)]}"/>
-                        <field name="supplier_taxes_id" nolabel="1" colspan="2" attrs="{'readonly':[('purchase_ok','=',0)]}"/>
+                        <field name="taxes_id" nolabel="1" colspan="2" attrs="{'readonly':[('sale_ok','=',0)]}" widget="many2many_tags" />
+                        <field name="supplier_taxes_id" nolabel="1" colspan="2" attrs="{'readonly':[('purchase_ok','=',0)]}" widget="many2many_tags"/>
                     </group>
                     </page>
                 </notebook>
@@ -39,8 +39,8 @@
                         <separator string="Purchase Properties" colspan="2"/>
                         <field name="property_account_income" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
                         <field name="property_account_expense" domain="[('type','&lt;&gt;','view'),('type','&lt;&gt;','consolidation')]"/>
-                        <field name="taxes_id"/>
-                        <field name="supplier_taxes_id"/>
+                        <field name="taxes_id" widget="many2many_tags"/>
+                        <field name="supplier_taxes_id" widget="many2many_tags"/>
                     </page>
                 </notebook>
              </field>
