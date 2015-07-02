@@ -543,11 +543,6 @@ msgid "Invoice Ref"
 msgstr "Rif. fattura"
 
 #. module: account_payment
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr ""
-
-#. module: account_payment
 #: field:payment.line,name:0
 msgid "Your Reference"
 msgstr "Vostro riferimento"

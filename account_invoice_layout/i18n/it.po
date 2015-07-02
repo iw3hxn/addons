@@ -262,11 +262,6 @@ msgid "Origin"
 msgstr "Origine"
 
 #. module: account_invoice_layout
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr ""
-
-#. module: account_invoice_layout
 #: selection:account.invoice.line,state:0
 msgid "Separator Line"
 msgstr "Linea di separazione"

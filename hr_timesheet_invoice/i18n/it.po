@@ -158,11 +158,6 @@ msgid "Uninvoiced line with billing rate"
 msgstr "Linee non fatturate con tasso di fatturazione"
 
 #. module: hr_timesheet_invoice
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr ""
-
-#. module: hr_timesheet_invoice
 #: field:report_timesheet.invoice,account_id:0
 msgid "Project"
 msgstr "Progetto"

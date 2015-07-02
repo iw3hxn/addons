@@ -91,11 +91,6 @@ msgid "Account2 Id"
 msgstr "Identificativo di Account2"
 
 #. module: account_analytic_plans
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr ""
-
-#. module: account_analytic_plans
 #: report:account.analytic.account.crossovered.analytic:0
 msgid "Amount"
 msgstr "Quantità"

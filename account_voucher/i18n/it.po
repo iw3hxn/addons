@@ -795,11 +795,6 @@ msgid "Expense Currency Rate"
 msgstr ""
 
 #. module: account_voucher
-#: sql_constraint:account.invoice:0
-msgid "Invoice Number must be unique per Company!"
-msgstr ""
-
-#. module: account_voucher
 #: view:sale.receipt.report:0 field:sale.receipt.report,price_total:0
 msgid "Total Without Tax"
 msgstr "Totale senza imposte"
