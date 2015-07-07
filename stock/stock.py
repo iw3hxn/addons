@@ -1062,7 +1062,7 @@ class stock_picking(osv.osv):
         price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'])
         discount = self._get_discount_invoice(cr, uid, move_line)
 
-        return {
+        vals = {
             'name': name,
             'origin': origin,
             'invoice_id': invoice_id,
@@ -1075,6 +1075,16 @@ class stock_picking(osv.osv):
             'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
         }
+
+        if move_line.sale_line_id and move_line.sale_line_id.product_id.id != move_line.product_id.id:
+            vals['name'] = move_line.sale_line_id.name
+            vals['uos_id'] = move_line.sale_line_id.product_uom.id
+            vals['product_id'] = move_line.sale_line_id.product_id.id
+            vals['price_unit'] = move_line.sale_line_id.price_unit
+            vals['quantity'] = move_line.sale_line_id.product_uom_qty
+
+
+        return vals
 
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
@@ -2648,9 +2658,9 @@ class stock_inventory(osv.osv):
         'name': fields.char('Inventory Reference', size=64, required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'date': fields.datetime('Creation Date', required=True, readonly=True, states={'draft': [('readonly', False)]}),
         'date_done': fields.datetime('Date done'),
-        'inventory_line_id': fields.one2many('stock.inventory.line', 'inventory_id', 'Inventories', states={'done': [('readonly', True)]}),
+        'inventory_line_id': fields.one2many('stock.inventory.line', 'inventory_id', 'Inventories', readonly=True, states={'draft': [('readonly', False)]}),
         'move_ids': fields.many2many('stock.move', 'stock_inventory_move_rel', 'inventory_id', 'move_id', 'Created Moves'),
-        'state': fields.selection( (('draft', 'Draft'), ('done', 'Done'), ('confirm','Confirmed'),('cancel','Cancelled')), 'State', readonly=True, select=True),
+        'state': fields.selection( (('draft', 'Draft'), ('done', 'Done'), ('confirm','Confirmed'), ('cancel', 'Cancelled')), 'State', readonly=True, select=True),
         'company_id': fields.many2one('res.company', 'Company', required=True, select=True, readonly=True, states={'draft':[('readonly',False)]}),
 
     }
@@ -2660,14 +2670,12 @@ class stock_inventory(osv.osv):
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'stock.inventory', context=c)
     }
 
-    def copy_data(self, cr, uid, id, default=None, context=None):
+    def copy(self, cr, uid, id, default=None, context=None):
         if default is None:
             default = {}
-        # force new date, date_done and move_ids on copied datas
-        default.update(date=False, date_done=False, move_ids=[])
-        copied_data = super(stock_inventory, self).copy_data(cr, uid, id, default=default, context=context)
-        copied_data.pop('date',None)
-        return copied_data
+        default = default.copy()
+        default.update({'move_ids': [], 'date_done': False})
+        return super(stock_inventory, self).copy(cr, uid, id, default, context=context)
 
     def _inventory_line_hook(self, cr, uid, inventory_line, move_vals):
         """ Creates a stock move from an inventory line
@@ -2716,12 +2724,13 @@ class stock_inventory(osv.osv):
                 if change:
                     location_id = line.product_id.product_tmpl_id.property_stock_inventory.id
                     value = {
-                        'name': 'INV:' + str(line.inventory_id.id) + ':' + line.inventory_id.name,
+                        'name': _('INV:') + (line.inventory_id.name or ''),
                         'product_id': line.product_id.id,
                         'product_uom': line.product_uom.id,
                         'prodlot_id': lot_id,
                         'date': inv.date,
                     }
+
                     if change > 0:
                         value.update( {
                             'product_qty': change,
@@ -2776,6 +2785,17 @@ class stock_inventory_line(osv.osv):
     _name = "stock.inventory.line"
     _description = "Inventory Line"
     _rec_name = "inventory_id"
+    _order = "inventory_id, location_name, product_code, product_name, prodlot_name"
+
+    def _get_product_name_change(self, cr, uid, ids, context=None):
+        return self.pool.get('stock.inventory.line').search(cr, uid, [('product_id', 'in', ids)], context=context)
+
+    def _get_location_change(self, cr, uid, ids, context=None):
+        return self.pool.get('stock.inventory.line').search(cr, uid, [('location_id', 'in', ids)], context=context)
+        
+    def _get_prodlot_change(self, cr, uid, ids, context=None):
+        return self.pool.get('stock.inventory.line').search(cr, uid, [('prod_lot_id', 'in', ids)], context=context)
+
     _columns = {
         'inventory_id': fields.many2one('stock.inventory', 'Inventory', ondelete='cascade', select=True),
         'location_id': fields.many2one('stock.location', 'Location', required=True),
@@ -2783,8 +2803,33 @@ class stock_inventory_line(osv.osv):
         'product_uom': fields.many2one('product.uom', 'Product UOM', required=True),
         'product_qty': fields.float('Quantity', digits_compute=dp.get_precision('Product UoM')),
         'company_id': fields.related('inventory_id','company_id',type='many2one',relation='res.company',string='Company',store=True, select=True, readonly=True),
-        'prod_lot_id': fields.many2one('stock.production.lot', 'Production Lot', domain="[('product_id','=',product_id)]"),
-        'state': fields.related('inventory_id','state',type='char',string='State',readonly=True),
+        'prod_lot_id': fields.many2one('stock.production.lot', 'Serial Number', domain="[('product_id','=',product_id)]"),
+        'state': fields.related('inventory_id','state',type='char',string='Status',readonly=True),
+        'product_name': fields.related('product_id', 'name', type='char', string='Product name', store={
+                                                                                            'product.product': (_get_product_name_change, ['name', 'default_code'], 20),
+                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
+        'product_code': fields.related('product_id', 'default_code', type='char', string='Product code', store={
+                                                                                            'product.product': (_get_product_name_change, ['name', 'default_code'], 20),
+                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
+        'location_name': fields.related('location_id', 'complete_name', type='char', string='Location name', store={
+                                                                                            'stock.location': (_get_location_change, ['name', 'location_id', 'active'], 20),
+                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['location_id'], 20),}),
+        'prodlot_name': fields.related('prod_lot_id', 'name', type='char', string='Serial Number name', store={
+                                                                                            'stock.production.lot': (_get_prodlot_change, ['name'], 20),
+                                                                                            'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['prod_lot_id'], 20),}),
+    }
+
+    def _default_stock_location(self, cr, uid, context=None):
+        try:
+            location_model, location_id = self.pool.get('ir.model.data').get_object_reference(cr, uid, 'stock', 'stock_location_stock')
+            with tools.mute_logger('openerp.osv.orm'):
+                self.pool.get('stock.location').check_access_rule(cr, uid, [location_id], 'read', context=context)
+        except (orm.except_orm, ValueError):
+            location_id = False
+        return location_id
+
+    _defaults = {
+        'location_id': _default_stock_location
     }
 
     def on_change_product_id(self, cr, uid, ids, location_id, product, uom=False, to_date=False):
@@ -2795,11 +2840,11 @@ class stock_inventory_line(osv.osv):
         @return:  Dictionary of changed values
         """
         if not product:
-            return {'value': {'product_qty': 0.0, 'product_uom': False}}
+            return {'value': {'product_qty': 0.0, 'product_uom': False, 'prod_lot_id': False}}
         obj_product = self.pool.get('product.product').browse(cr, uid, product)
         uom = uom or obj_product.uom_id.id
         amount = self.pool.get('stock.location')._product_get(cr, uid, location_id, [product], {'uom': uom, 'to_date': to_date, 'compute_child': False})[product]
-        result = {'product_qty': amount, 'product_uom': uom}
+        result = {'product_qty': amount, 'product_uom': uom, 'prod_lot_id': False}
         return {'value': result}
 
 stock_inventory_line()
