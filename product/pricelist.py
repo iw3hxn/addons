@@ -93,6 +93,7 @@ class product_pricelist(osv.osv):
 
     _name = "product.pricelist"
     _description = "Pricelist"
+    _order = 'name'
     _columns = {
         'name': fields.char('Pricelist Name',size=64, required=True, translate=True),
         'active': fields.boolean('Active', help="If the active field is set to False, it will allow you to hide the pricelist without removing it."),
@@ -124,218 +125,213 @@ class product_pricelist(osv.osv):
         "currency_id": _get_currency
     }
 
-    #def price_get_multi(self, cr, uid, product_ids, context=None):
-    def price_get_multi(self, cr, uid, pricelist_ids, products_by_qty_by_partner, context=None):
+    def price_get_multi(self, cr, uid, ids, products_by_qty_by_partner, context=None):
+        return dict((key, dict((key, price[0]) for key, price in value.items())) for key, value in self.price_rule_get_multi(cr, uid, ids, products_by_qty_by_partner, context=context).items())
+
+    def price_rule_get_multi(self, cr, uid, ids, products_by_qty_by_partner, context=None):
         """multi products 'price_get'.
-           @param pricelist_ids:
+           @param ids:
            @param products_by_qty:
            @param partner:
            @param context: {
              'date': Date of the pricelist (%Y-%m-%d),}
            @return: a dict of dict with product_id as key and a dict 'price by pricelist' as value
         """
+        if not ids:
+            ids = self.pool.get('product.pricelist').search(cr, uid, [], context=context)
+        results = {}
+        for pricelist in self.browse(cr, uid, ids, context=context):
+            subres = self._price_rule_get_multi(cr, uid, pricelist, products_by_qty_by_partner, context=context)
+            for product_id,price in subres.items():
+                results.setdefault(product_id, {})
+                results[product_id][pricelist.id] = price
+        return results
 
-        def _create_parent_category_list(id, lst):
-            if not id:
-                return []
-            parent = product_category_tree.get(id)
-            if parent:
-                lst.append(parent)
-                return _create_parent_category_list(parent, lst)
-            else:
-                return lst
-        # _create_parent_category_list
+    def _price_get_multi(self, cr, uid, pricelist, products_by_qty_by_partner, context=None):
+        return dict((key, price[0]) for key, price in self._price_rule_get_multi(cr, uid, pricelist, products_by_qty_by_partner, context=context).items())
 
-        if context is None:
-            context = {}
+    def _price_rule_get_multi(self, cr, uid, pricelist, products_by_qty_by_partner, context=None):
+        context = context or {}
+        date = context.get('date') or time.strftime('%Y-%m-%d')
+        date = date[0:10]
 
-        date = time.strftime('%Y-%m-%d')
-        if 'date' in context:
-            date = context['date']
-
+        products = map(lambda x: x[0], products_by_qty_by_partner)
         currency_obj = self.pool.get('res.currency')
-        product_obj = self.pool.get('product.product')
-        product_template_obj = self.pool.get('product.template')
-        product_category_obj = self.pool.get('product.category')
+        product_obj = self.pool.get('product.template')
         product_uom_obj = self.pool.get('product.uom')
         supplierinfo_obj = self.pool.get('product.supplierinfo')
         price_type_obj = self.pool.get('product.price.type')
 
-        # product.pricelist.version:
-        if not pricelist_ids:
-            pricelist_ids = self.pool.get('product.pricelist').search(cr, uid, [], context=context)
+        if not products:
+            return {}
 
-        pricelist_version_ids = self.pool.get('product.pricelist.version').search(cr, uid, [
-                                                        ('pricelist_id', 'in', pricelist_ids),
-                                                        '|',
-                                                        ('date_start', '=', False),
-                                                        ('date_start', '<=', date),
-                                                        '|',
-                                                        ('date_end', '=', False),
-                                                        ('date_end', '>=', date),
-                                                    ])
-        if len(pricelist_ids) != len(pricelist_version_ids):
-            raise osv.except_osv(_('Warning !'), _("At least one pricelist has no active version !\nPlease create or activate one."))
+        version = False
+        for v in pricelist.version_id:
+            if ((v.date_start is False) or (v.date_start <= date)) and ((v.date_end is False) or (v.date_end >= date)):
+                version = v
+                break
+        if not version:
+            raise osv.except_osv(_('Warning!'), _("At least one pricelist has no active version !\nPlease create or activate one."))
+        categ_ids = {}
+        for p in products:
+            categ = p.categ_id
+            while categ:
+                categ_ids[categ.id] = True
+                categ = categ.parent_id
+        categ_ids = categ_ids.keys()
 
-        # product.product:
-        product_ids = [i[0] for i in products_by_qty_by_partner]
-        #products = dict([(item['id'], item) for item in product_obj.read(cr, uid, product_ids, ['categ_id', 'product_tmpl_id', 'uos_id', 'uom_id'])])
-        products = product_obj.browse(cr, uid, product_ids, context=context)
-        products_dict = dict([(item.id, item) for item in products])
+        is_product_template = products[0]._name == "product.template"
+        if is_product_template:
+            prod_tmpl_ids = [tmpl.id for tmpl in products]
+            # all variants of all products
+            prod_ids = [p.id for p in
+                        list(chain.from_iterable([t.product_variant_ids for t in products]))]
+        else:
+            prod_ids = [product.id for product in products]
+            prod_tmpl_ids = [product.product_tmpl_id.id for product in products]
 
-        # product.category:
-        product_category_ids = product_category_obj.search(cr, uid, [])
-        product_categories = product_category_obj.read(cr, uid, product_category_ids, ['parent_id'])
-        product_category_tree = dict([(item['id'], item['parent_id'][0]) for item in product_categories if item['parent_id']])
+        # Load all rules
+        cr.execute(
+            'SELECT i.id '
+            'FROM product_pricelist_item AS i '
+            'WHERE (product_tmpl_id IS NULL OR product_tmpl_id = any(%s)) '
+                'AND (product_id IS NULL OR (product_id = any(%s))) '
+                'AND ((categ_id IS NULL) OR (categ_id = any(%s))) '
+                'AND (price_version_id = %s) '
+            'ORDER BY sequence, min_quantity desc',
+            (prod_tmpl_ids, prod_ids, categ_ids, version.id))
+        
+        item_ids = [x[0] for x in cr.fetchall()]
+        items = self.pool.get('product.pricelist.item').browse(cr, uid, item_ids, context=context)
+
+        price_types = {}
 
         results = {}
-        for product_id, qty, partner in products_by_qty_by_partner:
-            for pricelist_id in pricelist_ids:
-                price = False
+        for product, qty, partner in products_by_qty_by_partner:
+            results[product.id] = 0.0
+            rule_id = False
+            price = False
 
-                tmpl_id = products_dict[product_id].product_tmpl_id and products_dict[product_id].product_tmpl_id.id or False
+            # Final unit price is computed according to `qty` in the `qty_uom_id` UoM.
+            # An intermediary unit price may be computed according to a different UoM, in
+            # which case the price_uom_id contains that UoM.
+            # The final price will be converted to match `qty_uom_id`.
+            qty_uom_id = context.get('uom') or product.uom_id.id
+            price_uom_id = product.uom_id.id
+            qty_in_product_uom = qty
+            if qty_uom_id != product.uom_id.id:
+                try:
+                    qty_in_product_uom = product_uom_obj._compute_qty(
+                        cr, uid, context['uom'], qty, product.uom_id.id or product.uos_id.id)
+                except except_orm:
+                    # Ignored - incompatible UoM in context, use default product UoM
+                    pass
 
-                categ_id = products_dict[product_id].categ_id and products_dict[product_id].categ_id.id or False
-                categ_ids = _create_parent_category_list(categ_id, [categ_id])
-                if categ_ids:
-                    categ_where = '(categ_id IN (' + ','.join(map(str, categ_ids)) + '))'
-                    categ_where_i = '(i.categ_id IN (' + ','.join(map(str, categ_ids)) + '))'
+            for rule in items:
+                if rule.min_quantity and qty_in_product_uom < rule.min_quantity:
+                    continue
+                if is_product_template:
+                    if rule.product_tmpl_id and product.id != rule.product_tmpl_id.id:
+                        continue
+                    if rule.product_id and \
+                            (product.product_variant_count > 1 or product.product_variant_ids[0].id != rule.product_id.id):
+                        # product rule acceptable on template if has only one variant
+                        continue
                 else:
-                    categ_where = '(categ_id IS NULL)'
-                    categ_where_i = '(i.categ_id IS NULL)'
+                    if rule.product_tmpl_id and product.product_tmpl_id.id != rule.product_tmpl_id.id:
+                        continue
+                    if rule.product_id and product.id != rule.product_id.id:
+                        continue
 
-                if partner:
-                    partner_where = 'base <> -2 OR %s IN (SELECT name FROM product_supplierinfo WHERE product_id = %s) '
-                    partner_args = (partner, tmpl_id)
-                else:
-                    partner_where = 'base <> -2 '
-                    partner_args = ()
-                  
-                query = (  
-                'SELECT '
-                    'i.*, pl.currency_id , p.* '
-                'FROM '
-                    'product_pricelist_item AS i '
-                    'JOIN product_pricelist_version AS v '
-                        'ON i.price_version_id = v.id '
-                    'JOIN product_pricelist AS pl '
-                        'ON v.pricelist_id = pl.id '
-                    'LEFT OUTER JOIN ( '
-                        'WITH RECURSIVE subtree(depth, categ_id, parent_id, name) AS ( '
-                                'SELECT 0, id, parent_id, name FROM product_category WHERE parent_id is NULL '
-                            'UNION '
-                                'SELECT depth+1, m.id, m.parent_id, m.name '
-                                'FROM subtree t, product_category m '
-                                'WHERE m.parent_id = t.categ_id '
-                        ') '
-                        'SELECT * '
-                        'FROM subtree '
-                        'WHERE (' + categ_where + ' OR (categ_id IS NULL)) ' 
-                    ') AS p '
-                        'on i.categ_id = p.categ_id '
-                'WHERE '
-                    '(product_tmpl_id IS NULL OR product_tmpl_id = %s) ' 
-                    'AND (product_id IS NULL OR product_id = %s) '
-                    'AND (' + categ_where_i + ' OR (i.categ_id IS NULL)) ' 
-                    'AND (' + partner_where + ') ' 
-                    'AND price_version_id = %s ' 
-                    'AND (min_quantity IS NULL OR min_quantity <= %s) '
-                'ORDER BY ' 
-                    'sequence, depth desc '  
-                ) % ((tmpl_id, product_id) + partner_args + (pricelist_version_ids[0], qty))
-                              
-                cr.execute(query)
-                res1 = cr.dictfetchall()
-                uom_price_already_computed = False
-                for res in res1:
-                    if res:
-                        if res['base'] == -1:
-                            if not res['base_pricelist_id']:
-                                price = 0.0
-                            else:
-                                price_tmp = self.price_get(cr, uid,
-                                        [res['base_pricelist_id']], product_id,
-                                        qty, partner=partner, context=context)[res['base_pricelist_id']]
-                                ptype_src = self.browse(cr, uid, res['base_pricelist_id']).currency_id.id
-                                uom_price_already_computed = True
-                                price = currency_obj.compute(cr, uid, ptype_src, res['currency_id'], price_tmp, round=False)
-                        elif res['base'] == -2:
-                            # this section could be improved by moving the queries outside the loop:
-                            where = []
-                            if partner:
-                                where = [('name', '=', partner) ]
-                            sinfo = supplierinfo_obj.search(cr, uid,
-                                    [('product_id', '=', tmpl_id)] + where)
-                            price = 0.0
-                            if sinfo:
-                                qty_in_product_uom = qty
-                                product_default_uom = product_template_obj.read(cr, uid, [tmpl_id], ['uom_id'])[0]['uom_id'][0]
-                                supplier = supplierinfo_obj.browse(cr, uid, sinfo, context=context)[0]
-                                seller_uom = supplier.product_uom and supplier.product_uom.id or False
-                                if seller_uom and product_default_uom and product_default_uom != seller_uom:
-                                    uom_price_already_computed = True
-                                    qty_in_product_uom = product_uom_obj._compute_qty(cr, uid, product_default_uom, qty, to_uom_id=seller_uom)
-                                cr.execute('SELECT * ' \
-                                        'FROM pricelist_partnerinfo ' \
-                                        'WHERE suppinfo_id IN %s' \
-                                            'AND min_quantity <= %s ' \
-                                        'ORDER BY min_quantity DESC LIMIT 1', (tuple(sinfo),qty_in_product_uom,))
-                                res2 = cr.dictfetchone()
-                                if res2:
-                                    price = res2['price']
-                        else:
-                            price_type = price_type_obj.browse(cr, uid, int(res['base']))
-                            uom_price_already_computed = True
-                            price = currency_obj.compute(cr, uid,
-                                    price_type.currency_id.id, res['currency_id'],
-                                    product_obj.price_get(cr, uid, [product_id],
-                                    price_type.field, context=context)[product_id], round=False, context=context)
-
-                        if price is not False:
-                            surcharge = res['price_surcharge'] or 0.0 
-                            if 'uom' in context: 
-                                product = products_dict[product_id]
-                                uom = product.uos_id or product.uom_id
-                                surcharge = product_uom_obj._compute_price(cr, uid, uom.id, surcharge, context['uom'])
-                            
-                            price_limit = price
-                            price = price * (1.0+(res['price_discount'] or 0.0))
-                            price = rounding(price, res['price_round']) #TOFIX: rounding with tools.float_rouding
-                            price += surcharge
-                            
-                            if res['price_min_margin']:
-                                price = max(price, price_limit+res['price_min_margin'])
-                            if res['price_max_margin']:
-                                price = min(price, price_limit+res['price_max_margin'])
+                if rule.categ_id:
+                    cat = product.categ_id
+                    while cat:
+                        if cat.id == rule.categ_id.id:
                             break
+                        cat = cat.parent_id
+                    if not cat:
+                        continue
 
-                    else:
-                        # False means no valid line found ! But we may not raise an
-                        # exception here because it breaks the search
-                        price = False
+                if rule.base == -1:
+                    if rule.base_pricelist_id:
+                        price_tmp = self._price_get_multi(cr, uid,
+                                rule.base_pricelist_id, [(product,
+                                qty, partner)], context=context)[product.id]
+                        ptype_src = rule.base_pricelist_id.currency_id.id
+                        price_uom_id = qty_uom_id
+                        price = currency_obj.compute(cr, uid,
+                                ptype_src, pricelist.currency_id.id,
+                                price_tmp, round=False,
+                                context=context)
+                elif rule.base == -2:
+                    seller = False
+                    for seller_id in product.seller_ids:
+                        if (not partner) or (seller_id.name.id != partner):
+                            continue
+                        seller = seller_id
+                    if not seller and product.seller_ids:
+                        seller = product.seller_ids[0]
+                    if seller:
+                        qty_in_seller_uom = qty
+                        seller_uom = seller.product_uom.id
+                        if qty_uom_id != seller_uom:
+                            qty_in_seller_uom = product_uom_obj._compute_qty(cr, uid, qty_uom_id, qty, to_uom_id=seller_uom)
+                        price_uom_id = seller_uom
+                        for line in seller.pricelist_ids:
+                            if line.min_quantity <= qty_in_seller_uom:
+                                price = line.price
 
-                if price:
-                    results['item_id'] = res['id']
-                    if 'uom' in context and not uom_price_already_computed:
-                        product = products_dict[product_id]
-                        uom = product.uos_id or product.uom_id
-                        price = product_uom_obj._compute_price(cr, uid, uom.id, price, context['uom'])
-
-                if results.get(product_id):
-                    results[product_id][pricelist_id] = price
                 else:
-                    results[product_id] = {pricelist_id: price}
+                    if rule.base not in price_types:
+                        price_types[rule.base] = price_type_obj.browse(cr, uid, int(rule.base))
+                    price_type = price_types[rule.base]
 
+                    # price_get returns the price in the context UoM, i.e. qty_uom_id
+                    price_uom_id = qty_uom_id
+                    price = currency_obj.compute(
+                            cr, uid,
+                            price_type.currency_id.id, pricelist.currency_id.id,
+                            product_obj._price_get(cr, uid, [product], price_type.field, context=context)[product.id],
+                            round=False, context=context)
+
+                if price is not False:
+                    price_limit = price
+                    price = price * (1.0+(rule.price_discount or 0.0))
+                    if rule.price_round:
+                        price = tools.float_round(price, precision_rounding=rule.price_round)
+
+                    convert_to_price_uom = (lambda price: product_uom_obj._compute_price(
+                                                cr, uid, product.uom_id.id,
+                                                price, price_uom_id))
+                    if rule.price_surcharge:
+                        price_surcharge = convert_to_price_uom(rule.price_surcharge)
+                        price += price_surcharge
+
+                    if rule.price_min_margin:
+                        price_min_margin = convert_to_price_uom(rule.price_min_margin)
+                        price = max(price, price_limit + price_min_margin)
+
+                    if rule.price_max_margin:
+                        price_max_margin = convert_to_price_uom(rule.price_max_margin)
+                        price = min(price, price_limit + price_max_margin)
+
+                    rule_id = rule.id
+                break
+
+            # Final price conversion to target UoM
+            price = product_uom_obj._compute_price(cr, uid, price_uom_id, price, qty_uom_id)
+
+            results[product.id] = (price, rule_id)
         return results
 
     def price_get(self, cr, uid, ids, prod_id, qty, partner=None, context=None):
-        res_multi = self.price_get_multi(cr, uid, pricelist_ids=ids, products_by_qty_by_partner=[(prod_id, qty, partner)], context=context)
+        return dict((key, price[0]) for key, price in self.price_rule_get(cr, uid, ids, prod_id, qty, partner=partner, context=context).items())
+
+    def price_rule_get(self, cr, uid, ids, prod_id, qty, partner=None, context=None):
+        product = self.pool.get('product.product').browse(cr, uid, prod_id, context=context)
+        res_multi = self.price_rule_get_multi(cr, uid, ids, products_by_qty_by_partner=[(product, qty, partner)], context=context)
         res = res_multi[prod_id]
-        res.update({'item_id': {ids[-1]: res_multi.get('item_id', ids[-1])}})
         return res
-
-
-product_pricelist()
 
 
 class product_pricelist_version(osv.osv):
@@ -407,11 +403,26 @@ class product_pricelist_item(osv.osv):
         result.append((-2, _('Partner section of the product form')))
         return result
 
+# Added default function to fetch the Price type Based on Pricelist type.
+    def _get_default_base(self, cr, uid, fields, context=None):
+        product_price_type_obj = self.pool.get('product.price.type')
+        if fields.get('type') == 'purchase':
+            product_price_type_ids = product_price_type_obj.search(cr, uid, [('field', '=', 'standard_price')], context=context)
+        elif fields.get('type') == 'sale':
+            product_price_type_ids = product_price_type_obj.search(cr, uid, [('field','=','list_price')], context=context)
+        else:
+            return -1
+        if not product_price_type_ids:
+            return False
+        else:
+            pricetype = product_price_type_obj.browse(cr, uid, product_price_type_ids, context=context)[0]
+            return pricetype.id
+
     _name = "product.pricelist.item"
     _description = "Pricelist item"
     _order = "sequence, min_quantity desc"
     _defaults = {
-        'base': lambda *a: -1,
+        'base': _get_default_base,
         'min_quantity': lambda *a: 0,
         'sequence': lambda *a: 5,
         'price_discount': lambda *a: 0,
