@@ -20,8 +20,7 @@
 #
 ##############################################################################
 
-from osv import fields, osv
-from tools.translate import _
+from openerp.osv import fields, osv
 
 class product_pricelist(osv.osv):
     _inherit = 'product.pricelist'
@@ -33,7 +32,6 @@ class product_pricelist(osv.osv):
          'visible_discount': True,
     }
 
-product_pricelist()
 
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
@@ -43,128 +41,75 @@ class sale_order_line(osv.osv):
             lang=False, update_tax=True, date_order=False, packaging=False,
             fiscal_position=False, flag=False, context=None):
 
-        def get_real_price(res_dict, product_id, qty, uom, pricelist):
+        def get_real_price_curency(res_dict, product_id, qty, uom, pricelist):
+            """Retrieve the price before applying the pricelist"""
             item_obj = self.pool.get('product.pricelist.item')
             price_type_obj = self.pool.get('product.price.type')
             product_obj = self.pool.get('product.product')
             template_obj = self.pool.get('product.template')
             field_name = 'list_price'
-
-            if res_dict.get('item_id',False) and res_dict['item_id'].get(pricelist,False):
-                item = res_dict['item_id'].get(pricelist,False)
-                item_base = item_obj.read(cr, uid, [item], ['base'])[0]['base']
+            rule_id = res_dict.get(pricelist) and res_dict[pricelist][1] or False
+            currency_id = None
+            if rule_id:
+                item_base = item_obj.read(cr, uid, [rule_id], ['base'])[0]['base']
                 if item_base > 0:
-                    field_name = price_type_obj.browse(cr, uid, item_base).field
+                    price_type = price_type_obj.browse(cr, uid, item_base)
+                    field_name = price_type.field
+                    currency_id = price_type.currency_id
 
             product = product_obj.browse(cr, uid, product_id, context)
-            product_tmpl_id = product.product_tmpl_id.id
+            product_read = product_obj.read(cr, uid, [product_id], [field_name], context=context)[0]
 
-            product_read = template_obj.read(cr, uid, product_tmpl_id, [field_name], context)
-
+            if not currency_id:
+                currency_id = product.company_id.currency_id.id
             factor = 1.0
             if uom and uom != product.uom_id.id:
-                product_uom_obj = self.pool.get('product.uom')
-                uom_data = product_uom_obj.browse(cr, uid,  product.uom_id.id)
-                factor = uom_data.factor
-            return product_read[field_name] * factor
+                # the unit price is in a different uom
+                factor = self.pool['product.uom']._compute_qty(cr, uid, uom, 1.0, product.uom_id.id)
+            return product_read[field_name] * factor, currency_id
+
+        def get_real_price(res_dict, product_id, qty, uom, pricelist):
+            return get_real_price_curency(res_dict, product_id, qty, uom, pricelist)[0]
 
 
-        res=super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
+        res = super(sale_order_line, self).product_id_change(cr, uid, ids, pricelist, product, qty,
             uom, qty_uos, uos, name, partner_id,
             lang, update_tax, date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag, context=context)
 
         context = {'lang': lang, 'partner_id': partner_id}
-        result=res['value']
-        pricelist_obj=self.pool.get('product.pricelist')
+        result = res['value']
+        pricelist_obj = self.pool.get('product.pricelist')
         product_obj = self.pool.get('product.product')
-        if product:
+        if product and pricelist:
             if result.get('price_unit',False):
                 price=result['price_unit']
             else:
                 return res
-
+            uom = result.get('product_uom', uom)
             product = product_obj.browse(cr, uid, product, context)
-            list_price = pricelist_obj.price_get(cr, uid, [pricelist],
-                    product.id, qty or 1.0, partner_id, {'uom': uom,'date': date_order })
+            pricelist_context = dict(context, uom=uom, date=date_order)
+            list_price = pricelist_obj.price_rule_get(cr, uid, [pricelist],
+                    product.id, qty or 1.0, partner_id, context=pricelist_context)
 
-            pricelists = pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
+            so_pricelist = pricelist_obj.browse(cr, uid, pricelist, context=context)
 
-            new_list_price = get_real_price(list_price, product.id, qty, uom, pricelist)
-            if(len(pricelists)>0 and pricelists[0]['visible_discount'] and list_price[pricelist] != 0):
+            new_list_price, currency_id = get_real_price_curency(list_price, product.id, qty, uom, pricelist)
+            if so_pricelist.visible_discount and list_price[pricelist][0] != 0 and new_list_price != 0:
+                if product.company_id and so_pricelist.currency_id.id != product.company_id.currency_id.id:
+                    # new_list_price is in company's currency while price in pricelist currency
+                    ctx = context.copy()
+                    ctx['date'] = date_order
+                    new_list_price = self.pool['res.currency'].compute(cr, uid,
+                        currency_id.id, so_pricelist.currency_id.id,
+                        new_list_price, context=ctx)
                 discount = (new_list_price - price) / new_list_price * 100
-                result['price_unit'] = new_list_price
-                result['discount'] = discount
-            else:
-                result['discount'] = 0.0
-        return res
-
-sale_order_line()
-
-class account_invoice_line(osv.osv):
-    _inherit = "account.invoice.line"
-
-    def product_id_change(self, cr, uid, ids, product, uom, qty=0, name='', type='out_invoice', partner_id=False, fposition_id=False, price_unit=False, address_invoice_id=False, currency_id=False, context=None, company_id=None):
-        res = super(account_invoice_line, self).product_id_change(cr, uid, ids, product, uom, qty, name, type, partner_id, fposition_id, price_unit, address_invoice_id, currency_id, context=context, company_id=company_id)
-
-        def get_real_price(res_dict, product_id, qty, uom, pricelist):
-            item_obj = self.pool.get('product.pricelist.item')
-            price_type_obj = self.pool.get('product.price.type')
-            product_obj = self.pool.get('product.product')
-            template_obj = self.pool.get('product.template')
-            field_name = 'list_price'
-
-            if res_dict.get('item_id',False) and res_dict['item_id'].get(pricelist,False):
-                item = res_dict['item_id'].get(pricelist,False)
-                item_base = item_obj.read(cr, uid, [item], ['base'])[0]['base']
-                if item_base > 0:
-                    field_name = price_type_obj.browse(cr, uid, item_base).field
-
-            product = product_obj.browse(cr, uid, product_id, context)
-            product_tmpl_id = product.product_tmpl_id.id
-
-            product_read = template_obj.read(cr, uid, product_tmpl_id, [field_name], context)
-
-            factor = 1.0
-            if uom and uom != product.uom_id.id:
-                product_uom_obj = self.pool.get('product.uom')
-                uom_data = product_uom_obj.browse(cr, uid,  product.uom_id.id)
-                factor = uom_data.factor
-            return product_read[field_name] * factor
-
-        if product:
-            pricelist_obj = self.pool.get('product.pricelist')
-            partner_obj = self.pool.get('res.partner')
-            product = self.pool.get('product.product').browse(cr, uid, product, context=context)
-            result = res['value']
-            pricelist = False
-            real_price = 0.00
-            if type in ('in_invoice', 'in_refund'):
-                if not price_unit and partner_id:
-                    pricelist =partner_obj.browse(cr, uid, partner_id).property_product_pricelist_purchase.id
-                    if not pricelist:
-                        raise osv.except_osv(_('No Purchase Pricelist Found!'),_("You must first define a pricelist on the supplier form!"))
-                    price_unit_res = pricelist_obj.price_get(cr, uid, [pricelist], product.id, qty or 1.0, partner_id, {'uom': uom})
-                    price_unit = price_unit_res[pricelist]
-                    real_price = get_real_price(price_unit_res, product.id, qty, uom, pricelist)
-            else:
-                if partner_id:
-                    pricelist = partner_obj.browse(cr, uid, partner_id).property_product_pricelist.id
-                    if not pricelist:
-                        raise osv.except_osv(_('No Sale Pricelist Found!'),_("You must first define a pricelist on the customer form!"))
-                    price_unit_res = pricelist_obj.price_get(cr, uid, [pricelist], product.id, qty or 1.0, partner_id, {'uom': uom})
-                    price_unit = price_unit_res[pricelist]
-
-                    real_price = get_real_price(price_unit_res, product.id, qty, uom, pricelist)
-            if pricelist:
-                pricelists=pricelist_obj.read(cr,uid,[pricelist],['visible_discount'])
-                if(len(pricelists)>0 and pricelists[0]['visible_discount'] and real_price != 0):
-                    discount=(real_price-price_unit) / real_price * 100
-                    result['price_unit'] = real_price
+                if discount > 0:
+                    result['price_unit'] = new_list_price
                     result['discount'] = discount
                 else:
-                    result['discount']=0.0
+                    result['discount'] = 0.0
+            else:
+                result['discount'] = 0.0
+        else:
+            result['discount'] = 0.0
         return res
-
-account_invoice_line()
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
