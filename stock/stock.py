@@ -1062,7 +1062,7 @@ class stock_picking(osv.osv):
         price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'])
         discount = self._get_discount_invoice(cr, uid, move_line)
 
-        vals = {
+        return {
             'name': name,
             'origin': origin,
             'invoice_id': invoice_id,
@@ -1075,16 +1075,6 @@ class stock_picking(osv.osv):
             'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
         }
-
-        if move_line.sale_line_id and move_line.sale_line_id.product_id.id != move_line.product_id.id:
-            vals['name'] = move_line.sale_line_id.name
-            vals['uos_id'] = move_line.sale_line_id.product_uom.id
-            vals['product_id'] = move_line.sale_line_id.product_id.id
-            vals['price_unit'] = move_line.sale_line_id.price_unit
-            vals['quantity'] = move_line.sale_line_id.product_uom_qty
-
-
-        return vals
 
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
