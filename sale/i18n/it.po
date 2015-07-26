@@ -2358,3 +2358,19 @@ msgstr "Anno"
 #: selection:sale.config.picking_policy,order_policy:0
 msgid "Invoice Based on Deliveries"
 msgstr "Fattura basata su Consegne"
+
+#. modules: sale
+#: view:sale.order:0
+msgid "Connection Flow"
+msgstr "Documenti Collegati"
+
+#. modules: sale
+#: view:sale.order:0
+msgid "View Delivery Order"
+msgstr "Vai all'uscita merci"
+
+#. modules: sale
+#: view:sale.order:0
+msgid "View Invoice"
+msgstr "Vai alla fattura"
+

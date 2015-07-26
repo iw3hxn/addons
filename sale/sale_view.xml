@@ -113,6 +113,7 @@
                         </group>
                         <group col="2" colspan="2">
                             <field name="invoiced"/>
+                            <field name="invoice_exists" invisible="1"/>
                             <field name="shipped"/>
                         </group>
                     </group>
@@ -218,6 +219,13 @@
                                 <button name="invoice_cancel" states="invoice_except" string="Cancel Order" icon="gtk-cancel"/>
                                 <button name="%(report_sale_order)d" string="Print Quotation" type="action" icon="gtk-print" states="draft"/>
                                 <button name="order_confirm" states="draft" string="Confirm Order" icon="gtk-apply"/>
+
+                            </group>
+                            <newline/>
+                            <group col="4" colspan="4" string="Connection Flow">
+                                <button name="action_view_delivery" string="View Delivery Order" type="object"
+                                    attrs="{'invisible': ['|',('picking_ids','=',False),('picking_ids','=',[])]}" groups="base.group_user"/>
+                                <button name="action_view_invoice" string="View Invoice" type="object" attrs="{'invisible': [('invoice_exists', '=', False)]}" groups="base.group_user"/>
                             </group>
                         </page>
                         <page string="Other Information">

@@ -70,6 +70,10 @@ class sale_order(osv.osv):
             val += c.get('amount', 0.0)
         return val
 
+    def _amount_all_wrapper(self, cr, uid, ids, field_name, arg, context=None):
+        """ Wrapper because of direct method passing as parameter for function fields """
+        return self._amount_all(cr, uid, ids, field_name, arg, context=context)
+
     def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
         cur_obj = self.pool.get('res.currency')
         res = {}
@@ -144,6 +148,14 @@ class sale_order(osv.osv):
                 res[sale.id] = 0.0
         return res
 
+    def _invoice_exists(self, cursor, user, ids, name, arg, context=None):
+        res = {}
+        for sale in self.browse(cursor, user, ids, context=context):
+            res[sale.id] = False
+            if sale.invoice_ids:
+                res[sale.id] = True
+        return res
+
     def _invoiced(self, cursor, user, ids, name, arg, context=None):
         res = {}
         for sale in self.browse(cursor, user, ids, context=context):
@@ -155,7 +167,7 @@ class sale_order(osv.osv):
                     if invoice.state != 'paid':
                         res[sale.id] = False
                         break
-            if not invoice_existence:
+            if not invoice_existence or sale.state == 'manual':
                 res[sale.id] = False
         return res
 
@@ -166,13 +178,12 @@ class sale_order(osv.osv):
         sale_clause = ''
         no_invoiced = False
         for arg in args:
-            if arg[1] == '=':
-                if arg[2]:
-                    clause += 'AND inv.state = \'paid\''
-                else:
-                    clause += 'AND inv.state != \'cancel\' AND sale.state != \'cancel\'  AND inv.state <> \'paid\'  AND rel.order_id = sale.id '
-                    sale_clause = ',  sale_order AS sale '
-                    no_invoiced = True
+            if (arg[1] == '=' and arg[2]) or (arg[1] == '!=' and not arg[2]):
+                clause += 'AND inv.state = \'paid\''
+            else:
+                clause += 'AND inv.state != \'cancel\' AND sale.state != \'cancel\'  AND inv.state <> \'paid\'  AND rel.order_id = sale.id '
+                sale_clause = ',  sale_order AS sale '
+                no_invoiced = True
 
         cursor.execute('SELECT rel.order_id ' \
                 'FROM sale_order_invoice_rel AS rel, account_invoice AS inv '+ sale_clause + \
@@ -194,6 +205,13 @@ class sale_order(osv.osv):
         for line in self.pool.get('sale.order.line').browse(cr, uid, ids, context=context):
             result[line.order_id.id] = True
         return result.keys()
+
+    def _get_default_company(self, cr, uid, context=None):
+        company_id = self.pool.get('res.users')._get_company(cr, uid, context=context)
+        if not company_id:
+            raise osv.except_osv(_('Error!'), _('There is no default company for the current user!'))
+        return company_id
+
 
     _columns = {
         'name': fields.char('Order Reference', size=64, required=True,
@@ -245,22 +263,24 @@ class sale_order(osv.osv):
         'invoiced_rate': fields.function(_invoiced_rate, string='Invoiced', type='float'),
         'invoiced': fields.function(_invoiced, string='Paid',
             fnct_search=_invoiced_search, type='boolean', help="It indicates that an invoice has been paid."),
+        'invoice_exists': fields.function(_invoice_exists, string='Invoiced',
+            fnct_search=_invoiced_search, type='boolean', help="It indicates that sales order has at least one invoice."),
         'note': fields.text('Notes'),
 
-        'amount_untaxed': fields.function(_amount_all, digits_compute= dp.get_precision('Sale Price'), string='Untaxed Amount',
-            store = {
+        'amount_untaxed': fields.function(_amount_all_wrapper, digits_compute=dp.get_precision('Account'), string='Untaxed Amount',
+            store={
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums', help="The amount without tax."),
-        'amount_tax': fields.function(_amount_all, digits_compute= dp.get_precision('Sale Price'), string='Taxes',
-            store = {
+        'amount_tax': fields.function(_amount_all_wrapper, digits_compute=dp.get_precision('Account'), string='Taxes',
+            store={
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
             multi='sums', help="The tax amount."),
-        'amount_total': fields.function(_amount_all, digits_compute= dp.get_precision('Sale Price'), string='Total',
-            store = {
+        'amount_total': fields.function(_amount_all_wrapper, digits_compute=dp.get_precision('Account'), string='Total',
+            store={
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 10),
                 'sale.order.line': (_get_order, ['price_unit', 'tax_id', 'discount', 'product_uom_qty'], 10),
             },
@@ -286,7 +306,7 @@ class sale_order(osv.osv):
     _sql_constraints = [
         ('name_uniq', 'unique(name, company_id)', 'Order Reference must be unique per Company!'),
     ]
-    _order = 'name desc'
+    _order = 'date_order desc, id desc'
 
     # Form filling
     def unlink(self, cr, uid, ids, context=None):
@@ -502,6 +522,59 @@ class sale_order(osv.osv):
             'target': 'current',
             'res_id': inv_ids and inv_ids[0] or False,
         }
+
+    def action_view_delivery(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'stock', 'action_picking_tree')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+
+        #compute the number of delivery orders to display
+        pick_ids = []
+        for so in self.browse(cr, uid, ids, context=context):
+            pick_ids += [picking.id for picking in so.picking_ids]
+
+        #choose the view_mode accordingly
+        if len(pick_ids) > 1:
+            result['domain'] = "[('id','in',[" + ','.join(map(str, pick_ids)) + "])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'stock', 'view_picking_out_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = pick_ids and pick_ids[0] or False
+        result['context'] = {'default_type': 'out', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0}
+        return result
+
+    def action_view_invoice(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing invoices of given sales order ids. It can either be a in a list or in a form view, if there is only one invoice to show.
+        '''
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'account', 'action_invoice_tree1')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        #compute the number of invoices to display
+        inv_ids = []
+        for so in self.browse(cr, uid, ids, context=context):
+            inv_ids += [invoice.id for invoice in so.invoice_ids]
+        #choose the view_mode accordingly
+        if len(inv_ids)>1:
+            result['domain'] = "[('id','in',["+','.join(map(str, inv_ids))+"])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = inv_ids and inv_ids[0] or False
+
+        return result
 
     def action_invoice_create(self, cr, uid, ids, grouped=False, states=['confirmed', 'done', 'exception'], date_inv = False, context=None):
         res = False
