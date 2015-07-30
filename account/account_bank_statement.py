@@ -19,11 +19,10 @@
 #
 ##############################################################################
 
-import time
-
 from osv import fields, osv
 from tools.translate import _
 import decimal_precision as dp
+
 
 class account_bank_statement(osv.osv):
 
@@ -139,8 +138,8 @@ class account_bank_statement(osv.osv):
         'balance_end_real': fields.float('Ending Balance', digits_compute=dp.get_precision('Account'),
             states={'confirm': [('readonly', True)]}),
         'balance_end': fields.function(_end_balance,
-            store = {
-                'account.bank.statement': (lambda self, cr, uid, ids, c={}: ids, ['line_ids','move_line_ids'], 10),
+            store={
+                'account.bank.statement': (lambda self, cr, uid, ids, c={}: ids, ['line_ids', 'move_line_ids', 'balance_start'], 10),
                 'account.bank.statement.line': (_get_statement, ['amount'], 10),
             },
             string="Computed Balance", help='Balance as calculated based on Starting Balance and transaction lines'),
@@ -235,8 +234,8 @@ class account_bank_statement(osv.osv):
 
         acc_cur = ((st_line.amount<=0) and st.journal_id.default_debit_account_id) or st_line.account_id
         context.update({
-                'res.currency.compute.account': acc_cur,
-            })
+            'res.currency.compute.account': acc_cur,
+        })
         amount = res_currency_obj.compute(cr, uid, st.currency.id,
                 company_currency_id, st_line.amount, context=context)
 
@@ -291,7 +290,7 @@ class account_bank_statement(osv.osv):
             'period_id': st.period_id.id,
             'amount_currency': amount_currency,
             'currency_id': currency_id,
-            }, context=context)
+        }, context=context)
 
         for line in account_move_line_obj.browse(cr, uid, [x.id for x in
                 account_move_obj.browse(cr, uid, move_id,
@@ -415,6 +414,7 @@ class account_bank_statement(osv.osv):
 
 account_bank_statement()
 
+
 class account_bank_statement_line(osv.osv):
 
     def onchange_partner_id(self, cr, uid, ids, partner_id, context=None):
@@ -485,7 +485,7 @@ class account_bank_statement_line(osv.osv):
     _defaults = {
 #        'name': lambda self,cr,uid,context={}: self.pool.get('ir.sequence').get(cr, uid, 'account.bank.statement.line'),
         'name': '/',
-        'date': lambda self,cr,uid,context={}: context.get('date', fields.date.context_today(self,cr,uid,context=context)),
+        'date': lambda self, cr, uid, context={}: context.get('date', fields.date.context_today(self, cr, uid, context=context)),
         'type': 'general',
     }
 
