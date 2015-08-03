@@ -140,7 +140,7 @@ class account_bank_statement(osv.osv):
             states={'confirm': [('readonly', True)]}),
         'balance_end': fields.function(_end_balance,
             store = {
-                'account.bank.statement': (lambda self, cr, uid, ids, c={}: ids, ['line_ids','move_line_ids'], 10),
+                'account.bank.statement': (lambda self, cr, uid, ids, c={}: ids, ['line_ids', 'move_line_ids', 'balance_start'], 10),
                 'account.bank.statement.line': (_get_statement, ['amount'], 10),
             },
             string="Computed Balance", help='Balance as calculated based on Starting Balance and transaction lines'),
