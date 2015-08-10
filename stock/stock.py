@@ -1030,10 +1030,10 @@ class stock_picking(osv.osv):
             @return: dict that will be used to create the invoice line
         """
 
-        #if group:
-        #    name = (picking.name or '') + '-' + move_line.name
-        #else:
-        name = move_line.name
+        if group:
+            name = (picking.name or '') + '-' + move_line.name
+        else:
+            name = move_line.name
         origin = move_line.picking_id.name or ''
         if move_line.picking_id.origin:
             origin += ':' + move_line.picking_id.origin
