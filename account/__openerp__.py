@@ -3,6 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    Copyright (c) 2015 Didotech srl (http://www.didotech.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -20,7 +21,7 @@
 ##############################################################################
 {
     "name" : "eInvoicing",
-    "version" : "2.0.0.3",
+    "version" : "2.0.1.3",
     "author" : "OpenERP SA",
     "category": 'Accounting & Finance',
     'complexity': "easy",
