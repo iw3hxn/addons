@@ -152,6 +152,14 @@ class purchase_order(osv.osv):
         ('cancel', 'Cancelled')
     ]
 
+    def _invoice_exists(self, cursor, user, ids, name, arg, context=None):
+        res = {}
+        for purchase in self.browse(cursor, user, ids, context=context):
+            res[purchase.id] = False
+            if purchase.invoice_ids:
+                res[purchase.id] = True
+        return res
+
     _columns = {
         'name': fields.char('Order Reference', size=64, required=True, select=True, help="unique number of the purchase order,computed automatically when the purchase order is created"),
         'origin': fields.char('Source Document', size=64,
@@ -207,6 +215,8 @@ class purchase_order(osv.osv):
         'product_id': fields.related('order_line','product_id', type='many2one', relation='product.product', string='Product'),
         'create_uid':  fields.many2one('res.users', 'Responsible'),
         'company_id': fields.many2one('res.company','Company',required=True,select=1),
+        'invoice_exists': fields.function(_invoice_exists, string='Invoiced',
+            type='boolean', help="It indicates that sales order has at least one invoice."),
     }
     _defaults = {
         'date_order': fields.date.context_today,

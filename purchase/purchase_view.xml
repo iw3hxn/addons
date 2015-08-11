@@ -193,6 +193,7 @@
                                 <field name="amount_tax"/>
                                 <field name="amount_total" sum="Total amount"/>
                                 <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute"/>
+                                <field name="invoice_exists" invisible="1" />
                             </group>
                             <group col="11" colspan="4">
                                 <field name="state" widget="statusbar" statusbar_visible="draft,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue","wait":"blue"}' readonly="1"/>
