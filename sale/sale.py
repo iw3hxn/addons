@@ -51,6 +51,8 @@ class sale_order(osv.osv):
     _name = "sale.order"
     _description = "Sales Order"
 
+    _inherit = ['mail.thread']
+
     def copy(self, cr, uid, id, default=None, context=None):
         if not default:
             default = {}
@@ -214,6 +216,7 @@ class sale_order(osv.osv):
 
 
     _columns = {
+        'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Order Reference', size=64, required=True,
             readonly=True, states={'draft': [('readonly', False)]}, select=True),
         'shop_id': fields.many2one('sale.shop', 'Shop', required=True, readonly=True, states={'draft': [('readonly', False)]}),
@@ -405,7 +408,15 @@ class sale_order(osv.osv):
                 vals.update({'invoice_quantity': 'order'})
             elif vals['order_policy'] == 'picking':
                 vals.update({'invoice_quantity': 'procurement'})
-        return super(sale_order, self).write(cr, uid, ids, vals, context=context)
+
+        res = super(sale_order, self).write(cr, uid, ids, vals, context=context)
+
+        for (id, name) in self.name_get(cr, uid, ids):
+            if vals.get('state', False):
+                text = _("'%s' has been change to '%s' .") % (name, str(self.browse(cr, uid, id, context=context).state))
+                self.log(cr, uid, id, text)
+                self.message_append(cr, uid, [id], text, body_text=text, context=context)
+        return res
 
     def create(self, cr, uid, vals, context=None):
         if vals.get('order_policy', False):

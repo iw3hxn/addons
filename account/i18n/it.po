@@ -11431,3 +11431,19 @@ msgid ""
 msgstr ""
 "L'importo residuo a credito od a debito di una registrazione contabile "
 "espresso nella propria valuta (forse differente dalla valuta aziendale)."
+
+#. module: account
+#: view:account.invoice:0
+msgid "Communication & History"
+msgstr "Comunicazione e Storico"
+
+#. module: account
+#: view:account.invoice:0
+msgid "History Information"
+msgstr "Storico"
+
+#. module: account
+#: code:addons/account/account_invoice.py:428
+#, python-format
+msgid " has been change to "
+msgstr " è cambiato in "

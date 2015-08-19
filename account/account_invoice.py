@@ -214,8 +214,10 @@ class account_invoice(osv.osv):
     _name = "account.invoice"
     _description = 'Invoice'
     _order = "id desc"
+    _inherit = ['mail.thread']
 
     _columns = {
+        'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Description', size=64, select=True, readonly=True, states={'draft':[('readonly',False)]}),
         'origin': fields.char('Source Document', size=64, help="Reference of the document that produced this invoice.", readonly=True, states={'draft':[('readonly',False)]}),
         'type': fields.selection([
@@ -418,6 +420,18 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         view_id = res and res[1] or False
         context['view_id'] = view_id
         return context
+
+    def write(self, cr, uid, ids, vals, context=None):
+
+        res = super(account_invoice, self).write(cr, uid, ids, vals, context=context)
+        for (ids, name) in self.name_get(cr, uid, ids):
+            if context is None:
+                context = self.pool['res.users'].context_get(cr, uid)
+            if vals.get('state', False):
+                text = str(name) + _(' has been change to ') + str(self.browse(cr, uid, ids, context=context).state)
+                self.log(cr, uid, ids, text)
+                self.message_append(cr, uid, [ids], text, body_text=text, context=context)
+        return res
 
     def create(self, cr, uid, vals, context=None):
         if context is None:

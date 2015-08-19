@@ -2374,3 +2374,18 @@ msgstr "Vai all'uscita merci"
 msgid "View Invoice"
 msgstr "Vai alla fattura"
 
+#. module: sale
+#: view:sale.order:0
+msgid "Communication & History"
+msgstr "Comunicazione e Storico"
+
+#. module: sale
+#: view:sale.order:0
+msgid "History Information"
+msgstr "Storico"
+
+#. module: crm
+#: code:addons/sale/sale.py:416
+#, python-format
+msgid "'%s' has been change to '%s' ."
+msgstr "'%s' è cambiato in 's' "

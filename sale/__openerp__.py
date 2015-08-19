@@ -21,7 +21,7 @@
 
 {
     'name': 'Sales Management',
-    'version': '2.0d',
+    'version': '2.0e',
     'category': 'Sales Management',
     "sequence": 14,
     'complexity': "easy",
@@ -66,7 +66,7 @@ Dashboard for Sales Manager that includes:
     'author': 'OpenERP SA',
     'website': 'http://www.openerp.com',
     'images': ['images/deliveries_to_invoice.jpeg','images/sale_dashboard.jpeg','images/Sale_order_line_to_invoice.jpeg','images/sale_order.jpeg','images/sales_analysis.jpeg'],
-    'depends': ['stock', 'procurement', 'board'],
+    'depends': ['stock', 'procurement', 'board', 'mail'],
     'init_xml': [],
     'update_xml': [
         'wizard/sale_make_invoice_advance.xml',
