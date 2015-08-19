@@ -2387,5 +2387,5 @@ msgstr "Storico"
 #. module: crm
 #: code:addons/sale/sale.py:416
 #, python-format
-msgid "'%s' has been change to '%s' ."
-msgstr "'%s' è cambiato in 's' "
+msgid " has been change to "
+msgstr " è cambiato in "

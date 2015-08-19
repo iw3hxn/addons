@@ -413,7 +413,7 @@ class sale_order(osv.osv):
 
         for (id, name) in self.name_get(cr, uid, ids):
             if vals.get('state', False):
-                text = _("'%s' has been change to '%s' .") % (name, str(self.browse(cr, uid, id, context=context).state))
+                text = str(name) + ' has been change to ' + str(self.browse(cr, uid, id, context=context).state)
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
         return res
