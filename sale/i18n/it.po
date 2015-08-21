@@ -17,6 +17,101 @@ msgstr ""
 "X-Generator: Launchpad (build 17114)\n"
 
 #. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:66
+#, python-format
+msgid "Advance of %s %%"
+msgstr "Anticipo su %s %%"
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:98
+#, python-format
+msgid "The value of Advance Amount must be positive."
+msgstr "Il valore di Totale Acconto deve essere positivo."
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:92
+#, python-format
+msgid "There is no income account defined for this product: \"%s\" (id:%d)."
+msgstr "Non c'è un conto di ricavo definito per questo prodotto: \"%s\" (id:%d)."
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:103
+#, python-format
+msgid " ref. order n. "
+msgstr " Riferimento Ordine "
+
+#. module: sale
+#: code:addons/sale/wizard/sale_make_invoice_advance.py:103
+#, python-format
+msgid " of "
+msgstr " del "
+
+#. module: sale
+#: view:sale.advance.payment.inv:sale.view_sale_advance_payment_inv
+msgid "Create and View Invoice"
+msgstr "Crea e mostra fattura"
+
+#. module: sale
+#: view:sale.advance.payment.inv:sale.view_sale_advance_payment_inv
+msgid "Show Lines to Invoice"
+msgstr "Mostra Righe da Fatturare"
+
+#. module: sale
+#: view:sale.advance.payment.inv:sale.view_sale_advance_payment_inv
+msgid ""
+"After clicking 'Show Lines to Invoice', select lines to invoice and create "
+"the invoice from the right menu."
+msgstr ""
+"Dopo aver premuto su 'Mostra le righe da fatturare', selezionare le righe da fatturare"
+"e creare la fattura dal menù di destra."
+
+#. module: sale
+#: field:sale.advance.payment.inv,advance_payment_method:0
+msgid "What do you want to invoice?"
+msgstr "Cosa si vuole fatturare?"
+
+#. module: sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Invoice the whole sales order"
+msgstr "Fattura l'intero ordine di vendita"
+
+#. module: sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Percentage"
+msgstr "Percentuale"
+
+#. module: sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Fixed price (deposit)"
+msgstr "Prezzo Fisso (cauzione)"
+
+#. module: sale
+#: help:sale.advance.payment.inv,advance_payment_method:0
+msgid ""
+"Use Invoice the whole sale order to create the final invoice.\n"
+"                Use Percentage to invoice a percentage of the total amount.\n"
+"                Use Fixed Price to invoice a specific amound in advance.\n"
+"                Use Some Order Lines to invoice a selection of the sales order lines."
+msgstr "Usa \"Fattura l'intero ordine di vendita\" per creare la fattura.\n                Usa \"Percentuale\" per fatturare una percentuale dell'importo totale.                \n                Usa \"Prezzo fisso\" per fatturare un importo specifico.\n                Usa \"Alcune righe dell'ordine\" per fatturare una selezione delle righe dell'ordine di vendita."
+
+#. module: sale
+#: help:sale.advance.payment.inv,product_id:0
+msgid ""
+"Select a product of type service which is called 'Advance Product'.\n"
+"                You may have to create it and set it as a default value on this field."
+msgstr "Selezionare un prodotto di tipo servizio chiamato 'Anticipo'.\n                Potrebbe essere necessario creare tale prodotto e impostarlo come valore prefefinito per questo campo."
+
+#. module: sale
+#: view:sale.advance.payment.inv:sale.view_sale_advance_payment_inv
+msgid "Create and View Invoice"
+msgstr "Crea e mostra fattura"
+
+#. module: sale
+#: selection:sale.advance.payment.inv,advance_payment_method:0
+msgid "Some order lines"
+msgstr "Alcune righe dell'ordine"
+
+#. module: sale
 #: field:sale.config.picking_policy,timesheet:0
 msgid "Based on Timesheet"
 msgstr ""
@@ -971,6 +1066,8 @@ msgstr "Il Riferimento Ordine deve essere unico per azienda!"
 #: model:process.transition,name:sale.process_transition_invoiceafterdelivery0
 #: model:process.transition.action,name:sale.process_transition_action_createinvoice0
 #: view:sale.advance.payment.inv:0 view:sale.order.line:0
+#: model:ir.actions.act_window,name:sale.action_view_sale_order_line_make_invoice
+#: view:sale.advance.payment.inv:sale.view_sale_advance_payment_inv
 msgid "Create Invoice"
 msgstr "Crea fattura"
 
