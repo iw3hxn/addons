@@ -1161,15 +1161,20 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         return True
 
     def name_get(self, cr, uid, ids, context=None):
-        if not ids:
-            return []
-        types = {
-                'out_invoice': 'CI: ',
-                'in_invoice': 'SI: ',
-                'out_refund': 'OR: ',
-                'in_refund': 'SR: ',
-                }
-        return [(r['id'], (r['number']) or types[r['type']] + (r['name'] or '')) for r in self.read(cr, uid, ids, ['type', 'number', 'name'], context, load='_classic_write')]
+
+        TYPES = {
+            'out_invoice': _('Invoice'),
+            'in_invoice': _('Supplier Invoice'),
+            'out_refund': _('Refund'),
+            'in_refund': _('Supplier Refund'),
+        }
+
+        if isinstance(ids, (int, long)):
+            ids = [ids]
+        result = []
+        for inv in self.browse(cr, uid, ids, context):
+            result.append((inv.id, "%s %s" % (inv.number or TYPES[inv.type], inv.name or '')))
+        return result
 
     def name_search(self, cr, user, name, args=None, operator='ilike', context=None, limit=100):
         if not args:

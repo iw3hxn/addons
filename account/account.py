@@ -341,8 +341,8 @@ class account_account(osv.osv):
             self.logger.notifyChannel('addons.'+self._name, netsvc.LOG_DEBUG,
                                       'Status: %s'%cr.statusmessage)
 
-            for res in cr.dictfetchall():
-                accounts[res['id']] = res
+            for row in cr.dictfetchall():
+                accounts[row['id']] = row
 
             # consolidate accounts with direct children
             children_and_consolidated.reverse()
@@ -566,10 +566,18 @@ class account_account(osv.osv):
                 return False
         return True
 
+    def _check_company_account(self, cr, uid, ids, context=None):
+        for account in self.browse(cr, uid, ids, context=context):
+            if account.parent_id:
+                if account.company_id != account.parent_id.company_id:
+                    return False
+        return True
+
     _constraints = [
         (_check_recursion, 'Error ! You can not create recursive accounts.', ['parent_id']),
         (_check_type, 'Configuration Error! \nYou can not define children to an account with internal type different of "View"! ', ['type']),
         (_check_account_type, 'Configuration Error! \nYou can not select an account type with a deferral method different of "Unreconciled" for accounts with internal type "Payable/Receivable"! ', ['user_type','type']),
+        (_check_company_account, 'Error!\nYou cannot create an account which has parent account of different company.', ['parent_id']),
     ]
     _sql_constraints = [
         ('code_company_uniq', 'unique (code,company_id)', 'The code of the account must be unique per company !')
@@ -608,6 +616,8 @@ class account_account(osv.osv):
     def name_get(self, cr, uid, ids, context=None):
         if not ids:
             return []
+        if isinstance(ids, (int, long)):
+                    ids = [ids]
         reads = self.read(cr, uid, ids, ['name', 'code'], context=context)
         res = []
         for record in reads:
@@ -617,13 +627,13 @@ class account_account(osv.osv):
             res.append((record['id'], name))
         return res
 
-    def copy(self, cr, uid, id, default={}, context=None, done_list=[], local=False):
+    def copy(self, cr, uid, id, default=None, context=None, done_list=None, local=False):
+        default = {} if default is None else default.copy()
+        if done_list is None:
+            done_list = []
         account = self.browse(cr, uid, id, context=context)
         new_child_ids = []
-        if not default:
-            default = {}
-        default = default.copy()
-        default['code'] = (account['code'] or '') + '(copy)'
+        default.update(code=_("%s (copy)") % (account['code'] or ''))
         if not local:
             done_list = []
         if account.id in done_list:
@@ -692,6 +702,8 @@ class account_account(osv.osv):
             self._check_moves(cr, uid, ids, "write", context=context)
         if 'type' in vals.keys():
             self._check_allow_type_change(cr, uid, ids, vals['type'], context=context)
+        if 'code' in vals.keys():
+            self._check_allow_code_change(cr, uid, ids, context=context)
         return super(account_account, self).write(cr, uid, ids, vals, context=context)
 
     def unlink(self, cr, uid, ids, context=None):
@@ -851,6 +863,10 @@ class account_journal(osv.osv):
 
         @return: Returns a list of tupples containing id, name
         """
+        if not ids:
+            return []
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         result = self.browse(cr, user, ids, context=context)
         res = []
         for rs in result:
@@ -1463,11 +1479,12 @@ class account_move(osv.osv):
             result = super(account_move, self).create(cr, uid, vals, context)
         return result
 
-    def copy(self, cr, uid, id, default={}, context=None):
-        if context is None:
-            context = {}
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = {} if default is None else default.copy()
+        context = {} if context is None else context.copy()
         default.update({
             'state':'draft',
+            'ref': False,
             'name':'/',
         })
         context.update({
@@ -1478,6 +1495,8 @@ class account_move(osv.osv):
     def unlink(self, cr, uid, ids, context=None, check=True):
         if context is None:
             context = {}
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         toremove = []
         obj_move_line = self.pool.get('account.move.line')
         for move in self.browse(cr, uid, ids, context=context):
@@ -1485,6 +1504,11 @@ class account_move(osv.osv):
                 raise osv.except_osv(_('UserError'),
                         _('You can not delete a posted journal entry "%s"!') % \
                                 move['name'])
+            for line in move.line_id:
+                if line.invoice:
+                    raise osv.except_osv(_('User Error!'),
+                            _("Move cannot be deleted if linked to an invoice. (Invoice: %s - Move ID:%s)") % \
+                                    (line.invoice.number,move.name))
             line_ids = map(lambda x: x.id, move.line_id)
             context['journal_id'] = move.journal_id.id
             context['period_id'] = move.period_id.id
@@ -1852,7 +1876,7 @@ class account_tax_code(osv.osv):
             return []
         if isinstance(ids, (int, long)):
             ids = [ids]
-        reads = self.read(cr, uid, ids, ['name','code'], context, load='_classic_write')
+        reads = self.read(cr, uid, ids, ['name','code'], context=context, load='_classic_write')
         return [(x['id'], (x['code'] and (x['code'] + ' - ') or '') + x['name']) \
                 for x in reads]
 
@@ -1861,6 +1885,7 @@ class account_tax_code(osv.osv):
         if user.company_id:
             return user.company_id.id
         return self.pool.get('res.company').search(cr, uid, [('parent_id', '=', False)])[0]
+
     _defaults = {
         'company_id': _default_company,
         'sign': 1.0,
@@ -1989,15 +2014,17 @@ class account_tax(osv.osv):
         return super(account_tax, self).write(cr, uid, ids, vals, context=context)
 
     def search(self, cr, uid, args, offset=0, limit=None, order=None, context=None, count=False):
+        if context is None:
+            context = {}
         journal_pool = self.pool.get('account.journal')
 
-        if context and context.has_key('type'):
+        if context.get('type'):
             if context.get('type') in ('out_invoice','out_refund'):
                 args += [('type_tax_use','in',['sale','all'])]
             elif context.get('type') in ('in_invoice','in_refund'):
                 args += [('type_tax_use','in',['purchase','all'])]
 
-        if context and context.has_key('journal_id'):
+        if context.get('journal_id'):
             journal = journal_pool.browse(cr, uid, context.get('journal_id'))
             if journal.type in ('sale', 'purchase'):
                 args += [('type_tax_use','in',[journal.type,'all'])]
@@ -2789,7 +2816,7 @@ class account_tax_code_template(osv.osv):
             return []
         if isinstance(ids, (int, long)):
             ids = [ids]
-        reads = self.read(cr, uid, ids, ['name','code'], context, load='_classic_write')
+        reads = self.read(cr, uid, ids, ['name','code'], context=context, load='_classic_write')
         return [(x['id'], (x['code'] and x['code'] + ' - ' or '') + x['name']) \
                 for x in reads]
 
