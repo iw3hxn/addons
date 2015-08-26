@@ -11446,4 +11446,4 @@ msgstr "Storico"
 #: code:addons/account/account_invoice.py:428
 #, python-format
 msgid " has been change to "
-msgstr " è cambiato in "
+msgstr " cambiato in "
