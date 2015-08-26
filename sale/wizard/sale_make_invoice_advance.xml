@@ -18,6 +18,9 @@
                     <group attrs="{'invisible': [('advance_payment_method', 'not in', ('fixed','percentage'))]}">
                         <field name="amount"
                                attrs="{'required': [('advance_payment_method', 'in', ('fixed','percentage'))]}"/>
+                        <group attrs="{'invisible': [('advance_payment_method', '!=', 'percentage')]}">
+                            <label string="perc." "/>
+                        </group>
                     </group>
                     <group attrs="{'invisible': [('advance_payment_method', '!=', 'lines')]}">
                         <label string="After clicking 'Show Lines to Invoice', select lines to invoice and create the invoice from the right menu."/>
