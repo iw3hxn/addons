@@ -19,7 +19,7 @@
                         <field name="amount"
                                attrs="{'required': [('advance_payment_method', 'in', ('fixed','percentage'))]}"/>
                         <group attrs="{'invisible': [('advance_payment_method', '!=', 'percentage')]}">
-                            <label string="perc." "/>
+                            <label string="perc." />
                         </group>
                     </group>
                     <group attrs="{'invisible': [('advance_payment_method', '!=', 'lines')]}">
