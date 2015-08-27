@@ -43,7 +43,7 @@ class purchase_requisition(osv.osv):
         'purchase_ids' : fields.one2many('purchase.order','requisition_id','Purchase Orders',states={'done': [('readonly', True)]}),
         'line_ids' : fields.one2many('purchase.requisition.line','requisition_id','Products to Purchase',states={'done': [('readonly', True)]}),
         'warehouse_id': fields.many2one('stock.warehouse', 'Warehouse'),        
-        'state': fields.selection([('draft','New'),('in_progress','In Progress'),('cancel','Cancelled'),('done','Done')], 'State', required=True)
+        'state': fields.selection([('draft','New'),('in_progress','Sent to Suppliers'),('cancel','Cancelled'),('done','Done')], 'State', required=True)
     }
     _defaults = {
         'date_start': time.strftime('%Y-%m-%d %H:%M:%S'),
@@ -63,26 +63,54 @@ class purchase_requisition(osv.osv):
             'name': self.pool.get('ir.sequence').get(cr, uid, 'purchase.order.requisition'),
         })
         return super(purchase_requisition, self).copy(cr, uid, id, default, context)
+
+    def unlink(self, cr, uid, ids, context=None):
+        """
+        Deletes Requisition and related RFQs 
+        """
+        if context is None: context = {}
+        purchase_obj = self.pool.get('purchase.order')
+        purchase_ids = self._requisition_procurement_cancel(cr, uid, ids, context=context)
+        if purchase_ids:
+            purchase_obj.unlink(cr, uid, purchase_ids, context=context)
+        return super(purchase_requisition, self).unlink(cr, uid, ids, context=context)
+
+    def _requisition_procurement_cancel(self, cr, uid, ids, context=None):
+        """
+        Cancels procurement order related to requisition
+        @param ids: requisition ids
+        @return: Returns purchase orders associated with requisition if any
+        """
+        if context is None: context = {}
+        purchase_ids = []
+        procurement_ids = []
+        procurement_obj = self.pool.get('procurement.order')
+        for requisition in self.browse(cr, uid, ids, context=context):
+            purchase_ids.extend(purchase.id for purchase in requisition.purchase_ids)
+            if requisition.state == 'cancel':
+                continue
+            procurement_ids.extend(procurement_obj.search(cr, uid,
+                [('requisition_id', '=', requisition.id)], context=context))
+        if procurement_ids:
+            procurement_obj.action_cancel(cr, uid, procurement_ids)
+        return purchase_ids
+
     def tender_cancel(self, cr, uid, ids, context=None):
+        if context is None: context = {}
         purchase_order_obj = self.pool.get('purchase.order')
-        for purchase in self.browse(cr, uid, ids, context=context):
-            for purchase_id in purchase.purchase_ids:
-                if str(purchase_id.state) in('draft','wait'):
-                    purchase_order_obj.action_cancel(cr,uid,[purchase_id.id])
-        self.write(cr, uid, ids, {'state': 'cancel'})
-        return True
+        purchase_ids = self._requisition_procurement_cancel(cr, uid, ids, context=context)
+        if purchase_ids:
+            purchase_order_obj.action_cancel(cr, uid, purchase_ids, context=context)
+        return self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
 
     def tender_in_progress(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state':'in_progress'} ,context=context)
-        return True
+        return self.write(cr, uid, ids, {'state':'in_progress'} ,context=context)
 
     def tender_reset(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state': 'draft'})
-        return True
+        return self.write(cr, uid, ids, {'state': 'draft'})
 
     def tender_done(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state':'done', 'date_end':time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
-        return True
+        return self.write(cr, uid, ids, {'state':'done', 'date_end':time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
 
     def _planned_date(self, requisition, delay=0.0):
         company = requisition.company_id
@@ -110,7 +138,7 @@ class purchase_requisition(osv.osv):
                 seller_delay = product_supplier.delay
                 seller_qty = product_supplier.qty
         supplier_pricelist = supplier.property_product_pricelist_purchase or False
-        seller_price = pricelist.price_get(cr, uid, [supplier_pricelist.id], product.id, qty, False, {'uom': default_uom_po_id})[supplier_pricelist.id]
+        seller_price = pricelist.price_get(cr, uid, [supplier_pricelist.id], product.id, qty, supplier.id, {'uom': default_uom_po_id})[supplier_pricelist.id]
         if seller_qty:
             qty = max(qty,seller_qty)
         date_planned = self._planned_date(requisition_line.requisition_id, seller_delay)
@@ -205,13 +233,14 @@ class purchase_order(osv.osv):
     _columns = {
         'requisition_id' : fields.many2one('purchase.requisition','Purchase Requisition')
     }
+
     def wkf_confirm_order(self, cr, uid, ids, context=None):
         res = super(purchase_order, self).wkf_confirm_order(cr, uid, ids, context=context)
         proc_obj = self.pool.get('procurement.order')
         for po in self.browse(cr, uid, ids, context=context):
             if po.requisition_id and (po.requisition_id.exclusive=='exclusive'):
                 for order in po.requisition_id.purchase_ids:
-                    if order.id<>po.id:
+                    if order.id != po.id:
                         proc_ids = proc_obj.search(cr, uid, [('purchase_id', '=', order.id)])
                         if proc_ids and po.state=='confirmed':
                             proc_obj.write(cr, uid, proc_ids, {'purchase_id': po.id})
@@ -235,33 +264,78 @@ class product_product(osv.osv):
 product_product()
 
 class procurement_order(osv.osv):
-
     _inherit = 'procurement.order'
     _columns = {
         'requisition_id' : fields.many2one('purchase.requisition','Latest Requisition')
     }
+
+    def _get_warehouse(self, procurement, user_company):
+        """
+            Return the warehouse containing the procurment stock location (or one of it ancestors)
+            If none match, returns then first warehouse of the company
+        """
+        # NOTE This method is a copy of the one on the procurement.order defined in purchase
+        #      module. It's been copied to ensure it been always available, even if module
+        #      purchase is not up to date.
+        #      Do not forget to update both version in case of modification.
+        Orderpoint = self.pool['stock.warehouse.orderpoint']
+        ids = Orderpoint.search(
+                procurement._cr, procurement._uid,
+                [('procurement_id','=', procurement.id)],
+                context=procurement._context)
+        if ids:
+            return Orderpoint.browse(
+                    procurement._cr, procurement._uid, ids[0],
+                    context=procurement._context).warehouse_id.id
+
+        company_id = (procurement.company_id or user_company).id
+        domains = [
+            [
+                '&', ('company_id', '=', company_id),
+                '|', '&', ('lot_stock_id.parent_left', '<', procurement.location_id.parent_left),
+                          ('lot_stock_id.parent_right', '>', procurement.location_id.parent_right),
+                     ('lot_stock_id', '=', procurement.location_id.id)
+            ],
+            [('company_id', '=', company_id)]
+        ]
+
+        cr, uid = procurement._cr, procurement._uid
+        context = procurement._context
+        Warehouse = self.pool['stock.warehouse']
+        for domain in domains:
+            ids = Warehouse.search(cr, uid, domain, context=context)
+            if ids:
+                return ids[0]
+        return False
+
     def make_po(self, cr, uid, ids, context=None):
-        sequence_obj = self.pool.get('ir.sequence')
-        res = super(procurement_order, self).make_po(cr, uid, ids, context=context)
-        for proc_id, po_id in res.items():
-            procurement = self.browse(cr, uid, proc_id, context=context)
-            requisition_id=False
+        res = {}
+        requisition_obj = self.pool.get('purchase.requisition')
+        non_requisition = []
+        for procurement in self.browse(cr, uid, ids, context=context):
             if procurement.product_id.purchase_requisition:
-                requisition_id=self.pool.get('purchase.requisition').create(cr, uid, {
-                    'name': sequence_obj.get(cr, uid, 'purchase.order.requisition'),
+                user_company = self.pool['res.users'].browse(cr, uid, uid, context=context).company_id
+                req = res[procurement.id] = requisition_obj.create(cr, uid, {
                     'origin': procurement.origin,
                     'date_end': procurement.date_planned,
-                    'warehouse_id':procurement.purchase_id and procurement.purchase_id.warehouse_id.id,
-                    'company_id':procurement.company_id.id,
-                    'line_ids': [(0,0,{
+                    'warehouse_id': self._get_warehouse(procurement, user_company),
+                    'company_id': procurement.company_id.id,
+                    'line_ids': [(0, 0, {
                         'product_id': procurement.product_id.id,
                         'product_uom_id': procurement.product_uom.id,
                         'product_qty': procurement.product_qty
-
                     })],
-                    'purchase_ids': [(6,0,[po_id])]
                 })
-            self.write(cr,uid,proc_id,{'requisition_id':requisition_id})
+                procurement.write({
+                    'state': 'running',
+                    'requisition_id': req
+                })
+            else:
+                non_requisition.append(procurement.id)
+
+        if non_requisition:
+            res.update(super(procurement_order, self).make_po(cr, uid, non_requisition, context=context))
+
         return res
 
 procurement_order()

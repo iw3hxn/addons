@@ -25,8 +25,8 @@ msgstr ""
 #. module: purchase_requisition
 #: view:purchase.requisition:0
 #: selection:purchase.requisition,state:0
-msgid "In Progress"
-msgstr "In progresso"
+msgid "Sent to Suppliers"
+msgstr "Spediti a Fornitori"
 
 #. module: purchase_requisition
 #: code:addons/purchase_requisition/wizard/purchase_requisition_partner.py:42
