@@ -93,7 +93,8 @@ class stock_fill_inventory(osv.osv_memory):
         for location in location_ids:
             datas = {}
             res[location] = {}
-            move_ids = move_obj.search(cr, uid, ['|',('location_dest_id','=',location),('location_id','=',location),('state','=','done'),('date','<=',fill_inventory.date)], context=context)
+            inventory_date = fill_inventory.date or context.get('date')
+            move_ids = move_obj.search(cr, uid, ['|', ('location_dest_id', '=', location), ('location_id', '=', location),('state','=','done'), ('date', '<=', inventory_date)], context=context)
 
             for move in move_obj.browse(cr, uid, move_ids, context=context):
                 lot_id = move.prodlot_id.id
