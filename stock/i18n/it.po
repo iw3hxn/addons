@@ -3004,8 +3004,8 @@ msgstr ""
 #: view:stock.picking:0
 #: selection:stock.picking,state:0
 #: report:stock.picking.list:0
-msgid "Done"
-msgstr "Completato"
+msgid "Transferred"
+msgstr "Trasferiti"
 
 #. module: stock
 #: model:ir.actions.act_window,name:stock.action_view_change_standard_price
@@ -3602,8 +3602,13 @@ msgstr "Quantità totale in uscita"
 #: selection:stock.move,state:0
 #: selection:stock.picking,state:0
 #: report:stock.picking.list:0
-msgid "New"
+msgid "Draft"
 msgstr "Nuovo"
+
+#. module: stock
+#: selection:stock.move,state:0
+msgid "Waiting Another Move"
+msgstr "In attesa di altro movimento"
 
 #. module: stock
 #: help:stock.partial.move.line,cost:0
