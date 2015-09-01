@@ -2089,23 +2089,25 @@ class stock_move(osv.osv):
                         r = res.pop(0)
                         move_id = self.copy(cr, uid, move.id, {'product_qty': r[0], 'location_id': r[1]})
                         done.append(move_id)
-                #Else: Check if is any qty in location for a partial picking
+                # Else: Check if is any qty in location for a partial picking
                 elif move.picking_id and move.picking_id.move_type == 'direct':
                     ctx = dict(context)
                     ctx.update({
-                        'location' : [move.location_id.id],
-                        'states' : ['done', 'assigned', 'waiting'],
-                        'what' : ('in','out')
+                        'location': [move.location_id.id],
+                        'states': ['done', 'assigned', 'waiting'],
+                        'what': ('in', 'out')
                     })
                     
-                    qty_prod_available = self.pool.get('product.product').get_product_available(cr, uid, [move.product_id.id], context=ctx)
-
+                    qty_prod_available = self.pool['product.product'].get_product_available(cr, uid, [move.product_id.id], context=ctx)
                     if qty_prod_available.get(move.product_id.id, 0.0) > 0:
                         pickings[move.picking_id.id] = 1
                         waiting_qty = move.product_qty - qty_prod_available[move.product_id.id]
-                        move_id = self.copy(cr, uid, move.id, {'product_qty': qty_prod_available[move.product_id.id], 'location_id': move.location_id.id})
-                        self.write(cr, uid, [move.id], {'product_qty': waiting_qty})
-                        done.append(move_id)
+                        if waiting_qty == 0:
+                            done.append(move.id)
+                        else:
+                            move_id = self.copy(cr, uid, move.id, {'product_qty': qty_prod_available[move.product_id.id], 'location_id': move.location_id.id})
+                            self.write(cr, uid, [move.id], {'product_qty': waiting_qty})
+                            done.append(move_id)
                         
         if done:
             count += len(done)
