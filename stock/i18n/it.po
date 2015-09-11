@@ -3008,6 +3008,32 @@ msgid "Done"
 msgstr "Completato"
 
 #. module: stock
+#: selection:report.stock.inventory,state:0
+#: view:report.stock.move:0
+#: selection:report.stock.move,state:0
+#: selection:stock.inventory,state:0
+#: view:stock.move:0
+#: selection:stock.move,state:0
+#: view:stock.picking:0
+#: selection:stock.picking,state:0
+#: report:stock.picking.list:0
+msgid "Transfered"
+msgstr "Trasferito"
+
+#. module: stock
+#: selection:report.stock.inventory,state:0
+#: view:report.stock.move:0
+#: selection:report.stock.move,state:0
+#: selection:stock.inventory,state:0
+#: view:stock.move:0
+#: selection:stock.move,state:0
+#: view:stock.picking:0
+#: selection:stock.picking,state:0
+#: report:stock.picking.list:0
+msgid "Ready to Transfer"
+msgstr "Pronto al Trasferimento"
+
+#. module: stock
 #: model:ir.actions.act_window,name:stock.action_view_change_standard_price
 #: model:ir.model,name:stock.model_stock_change_standard_price
 #: view:stock.change.standard.price:0
