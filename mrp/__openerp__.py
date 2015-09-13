@@ -22,7 +22,7 @@
 
 {
     "name" : "MRP",
-    "version" : "1.1.a",
+    "version" : "1.1.b",
     "author" : "OpenERP SA",
     "website" : "http://www.openerp.com",
     "category" : "Manufacturing",

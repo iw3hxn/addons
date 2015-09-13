@@ -108,6 +108,7 @@ class mrp_routing_workcenter(osv.osv):
     """
     _name = 'mrp.routing.workcenter'
     _description = 'Work Center Usage'
+    _order = 'sequence'
     _columns = {
         'workcenter_id': fields.many2one('mrp.workcenter', 'Work Center', required=True),
         'name': fields.char('Name', size=64, required=True),
@@ -228,6 +229,7 @@ class mrp_bom(osv.osv):
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'mrp.bom', context=c),
     }
     _order = "sequence"
+    _parent_name = "bom_id"
     _sql_constraints = [
         ('bom_qty_zero', 'CHECK (product_qty>0)',  'All product quantities must be greater than 0.\n' \
             'You should install the mrp_subproduct module if you want to manage extra products on BoMs !'),

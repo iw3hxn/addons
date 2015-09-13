@@ -249,7 +249,7 @@
                         <field name="name"/>
                         <field name="code"/>
                         <field name="active" groups="base.group_extended"/>
-                        <field name="location_id"/>
+                        <field name="location_id" domain="[('usage','!=', 'view')]"/>
                         <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     </group>
                     <notebook colspan="4">
