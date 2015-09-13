@@ -66,22 +66,22 @@ class pos_make_payment(osv.osv_memory):
                     else:
                         sign_action = {'type': 'sign_out'}
                     line_deactive.append(line.id)
-            else:
-                list_price = self.pool['product.product']._product_price(cr, uid, [line.product_id.id], False, False, context=context)[line.product_id.id]
-                pos_price = line.price_unit
-                if float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
-                    discount = (list_price - pos_price) / list_price * 100
-                    line_data = {
-                        'price_unit': list_price,
-                        'discount': discount,
-                        'pos_discount': True,
-                    }
-                    order_line_obj.write(cr, uid, line.id, line_data, context=context)
+
+            list_price = self.pool['product.product']._product_price(cr, uid, [line.product_id.id], False, False, context=context)[line.product_id.id]
+            pos_price = line.price_unit
+            if float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
+                discount = (list_price - pos_price) / list_price * 100
+                line_data = {
+                    'price_unit': list_price,
+                    'discount': discount,
+                    'pos_discount': True,
+                }
+                order_line_obj.write(cr, uid, line.id, line_data, context=context)
 
         if line_deactive:
             order_line_obj.write(cr, uid, line_deactive, line_data_deactivate, context=context)
 
-        if hr_employee and len(order.lines) == 1: # i have set only one employee
+        if hr_employee and len(order.lines) == 1:  # i have set only one employee
             result = hr_employee_obj.attendance_action_change(cr, hr_employee.user_id.id, [hr_employee.id], type=sign_action, context=context, dt=order.date_order)
 
             order_obj.write(cr, uid, active_id, {'active': False, 'note': result}, context=context)

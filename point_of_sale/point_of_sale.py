@@ -214,7 +214,7 @@ class pos_order(osv.osv):
     _defaults = {
         'user_id': lambda self, cr, uid, context: uid,
         'state': 'draft',
-        'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'pos.order'),
+        'name': '/', #  lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'pos.order'),
         'date_order': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'nb_print': 0,
         'company_id': lambda self,cr,uid,c: self.pool.get('res.users').browse(cr, uid, uid, c).company_id.id,
@@ -223,6 +223,14 @@ class pos_order(osv.osv):
         'pricelist_id': _default_pricelist,
         'active': 1,
     }
+
+    def create(self, cr, uid, vals, context=None):
+        if not context:
+            context = {}
+
+        if vals.get('name', '/') == '/':
+            vals.update({'name': self.pool['ir.sequence'].get(cr, uid, 'pos.order', context=context)})
+        return super(pos_order, self).create(cr, uid, vals, context=context)
 
     def test_paid(self, cr, uid, ids, context=None):
         """A Point of Sale is paid when the sum
