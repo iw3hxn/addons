@@ -62,8 +62,8 @@
                             <group col="2" colspan="2">
                                 <separator colspan="4" string="Categorization"/>
                                 <field name="priority"/>
-                                <field name="categ_id" context="{'object_id':'crm.helpdesk'}"/>
-                                <field name="channel_id"/>
+                                <field name="categ_id" context="{'object_id':'crm.helpdesk'}" widget="selection"/>
+                                <field name="channel_id" widget="selection"/>
                             </group>
 
                             <separator colspan="4" string="Notes"/>
