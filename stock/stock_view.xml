@@ -763,7 +763,7 @@
                                     <group colspan="2" col="2">
                                         <separator string="Locations" colspan="2" />
                                         <field name="location_id" domain="[('usage','&lt;&gt;','view')]" />
-                                        <field name="location_dest_id" domain="[('usage','=','internal')]" />
+                                        <field name="location_dest_id" domain="[('usage','&lt;&gt;','view')]" />
                                     </group>
 
                                     <group colspan="2" col="2">
