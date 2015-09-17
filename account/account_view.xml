@@ -21,15 +21,7 @@
                     <field name="end_journal_period_id" groups="base.group_extended"/>
                     </group>
                     <separator colspan="4" string="Periods"/>
-                    <field colspan="4" name="period_ids" nolabel="1" widget="one2many_list">
-                        <form string="Period">
-                            <field name="name"/>
-                            <field name="code"/>
-                            <field name="date_start"/>
-                            <field name="date_stop"/>
-                            <field name="special"/>
-                        </form>
-                    </field>
+                    <field colspan="4" name="period_ids" nolabel="1" widget="one2many" />
                     <separator colspan="4" string="States"/>
                     <group>
                         <field name="state" select="1" readonly="1"/>
