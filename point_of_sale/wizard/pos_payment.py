@@ -51,6 +51,7 @@ class pos_make_payment(osv.osv_memory):
         hr_employee = False
         vals = {}
         line_deactive = []
+        product_customer_id = order.shop_id.product_customer_id and order.shop_id.product_customer_id.id or False
 
         for line in order.lines:
             if hr_employee_obj:
@@ -69,6 +70,14 @@ class pos_make_payment(osv.osv_memory):
 
             list_price = self.pool['product.product']._product_price(cr, uid, [line.product_id.id], False, False, context=context)[line.product_id.id]
             pos_price = line.price_unit
+
+            if line.product_id.id == product_customer_id:
+                if line.notice:
+                    partner_id = self.pool['res.partner'].search(cr, uid, [('property_customer_ref', '=', line.notice[len(order.shop_id.product_customer_id.default_code):-1])])
+                    if partner_id:
+                        order.write({'partner_id': partner_id[0]})
+                        line.write({'active': False})
+
             if float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
                 discount = (list_price - pos_price) / list_price * 100
                 line_data = {

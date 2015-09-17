@@ -30,6 +30,7 @@ from osv import fields, osv
 from tools.translate import _
 from decimal import Decimal
 import decimal_precision as dp
+import io, StringIO
 
 _logger = logging.getLogger(__name__)
 
@@ -48,8 +49,9 @@ class pos_config_journal(osv.osv):
 
 class sale_shop(osv.osv):
     _inherit = 'sale.shop'
-    _columns= {
+    _columns = {
         'pos_user_id': fields.many2one('res.users', 'POS User'),
+        'product_customer_id': fields.many2one('product.product', 'Product for Fidelity Card', domain="[('type', '=', 'service')]"),
         'property_account_receivable': fields.property(
             'account.account',
             type='many2one',
@@ -831,7 +833,6 @@ class pos_category(osv.osv):
     }
 pos_category()
 
-import io, StringIO
 
 class product_product(osv.osv):
     _inherit = 'product.product'
@@ -885,6 +886,12 @@ class product_product(osv.osv):
     }
 
 product_product()
+
+class res_partner(osv.osv):
+    _inherit = 'res.partner'
+    _columns = {
+        'property_customer_ref': fields.char('Customer Ref.', size=16, help="The reference attributed by the partner to the current company as a customer of theirs."),
+    }
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

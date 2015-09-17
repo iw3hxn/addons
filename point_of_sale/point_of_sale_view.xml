@@ -666,6 +666,7 @@
                           <separator string="Point-of-Sale" colspan="2" />
                           <field name="pos_user_id" />
                           <field name="property_account_receivable" />
+                          <field name="product_customer_id" />
                       </group>
                   </field>
             </field>
