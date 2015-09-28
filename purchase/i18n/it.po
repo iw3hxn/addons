@@ -1995,3 +1995,18 @@ msgstr ""
 #: model:ir.ui.menu,name:purchase.menu_board_purchase
 msgid "Purchase Dashboard"
 msgstr "Dashboard acquisti"
+
+#. modules: purchase
+#: view:purchase.order:0
+msgid "Connection Flow"
+msgstr "Documenti Collegati"
+
+#. modules: purchase
+#: view:purchase.order:0
+msgid "View Delivery Order"
+msgstr "Vai all'uscita merci"
+
+#. modules: purchase
+#: view:purchase.order:0
+msgid "View Invoice"
+msgstr "Vai alla fattura"
