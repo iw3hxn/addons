@@ -100,7 +100,7 @@ class sale_order_line(osv.osv):
                     ctx = context.copy()
                     ctx['date'] = date_order
                     new_list_price = self.pool['res.currency'].compute(cr, uid,
-                        currency_id.id, so_pricelist.currency_id.id,
+                        currency_id, so_pricelist.currency_id,
                         new_list_price, context=ctx)
                 discount = (new_list_price - price) / new_list_price * 100
                 if discount > 0:
