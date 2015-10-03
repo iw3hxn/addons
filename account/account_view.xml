@@ -599,7 +599,7 @@
                     <notebook colspan="4">
                         <page string="Transaction" name="statement_line_ids">
                             <field colspan="4" name="line_ids" nolabel="1" context="{'date':date}">
-                                <tree editable="bottom" string="Statement lines">
+                                <tree editable="top" string="Statement lines">
                                     <field name="sequence" readonly="1" invisible="1"/>
                                     <field name="date" groups="base.group_extended"/>
                                     <field name="name"/>
@@ -2601,7 +2601,7 @@ action = pool.get('res.config').next(cr, uid, [], context)
                     <field name="journal_id"/>
                     <field name="balance_start"/>
                     <field name="balance_end_real"/>
-                    <field name="balance_end"/>
+                    <field name="balance_end" sum="Amount total"/>
                     <field name="state"/>
                     <button type="object" string="Cancel" name="button_cancel" states="confirm" icon="gtk-cancel"/>
                     <button type="object" string="Open" name="button_open" states="draft" icon="terp-camera_test"/>
