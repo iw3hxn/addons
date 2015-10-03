@@ -48,9 +48,10 @@ class pos_make_payment(osv.osv_memory):
         order = order_obj.browse(cr, uid, active_id, context=context)
         context['pricelist'] = order.pricelist_id and order.pricelist_id.id or 1
         discount = False
-        hr_employee = False
+        hr_employee = []
         vals = {}
         line_deactive = []
+        sign_action = []
         product_customer_id = order.shop_id.product_customer_id and order.shop_id.product_customer_id.id or False
 
         for line in order.lines:
@@ -61,12 +62,15 @@ class pos_make_payment(osv.osv_memory):
                         'employee_id': hr_employee_ids[0],
                         'active': False
                     }
-                    hr_employee = hr_employee_obj.browse(cr, SUPERUSER_ID, hr_employee_ids[0], context=context)
+                    hr_employee.append(hr_employee_obj.browse(cr, SUPERUSER_ID, hr_employee_ids[0], context=context))
                     if line.qty > 0:
-                        sign_action = {'type': 'sign_in'}
+                        sign_action.append({'type': 'sign_in'})
                     else:
-                        sign_action = {'type': 'sign_out'}
+                        sign_action.append({'type': 'sign_out'})
+
                     line_deactive.append(line.id)
+                    order_line_obj.write(cr, uid, line.id, line_data_deactivate, context=context)
+                    continue
 
             list_price = self.pool['product.product']._product_price(cr, uid, [line.product_id.id], False, False, context=context)[line.product_id.id]
             pos_price = line.price_unit
@@ -87,41 +91,35 @@ class pos_make_payment(osv.osv_memory):
                 }
                 order_line_obj.write(cr, uid, line.id, line_data, context=context)
 
-        if line_deactive:
-            order_line_obj.write(cr, uid, line_deactive, line_data_deactivate, context=context)
-
-        if hr_employee and len(order.lines) == 1:  # i have set only one employee
-            result = hr_employee_obj.attendance_action_change(cr, hr_employee.user_id.id, [hr_employee.id], type=sign_action, context=context, dt=order.date_order)
+        if hr_employee and len(order.lines) == len(line_deactive):  # i have set only one employee
+            result = []
+            while hr_employee:
+                employee = hr_employee.pop()
+                result.append(hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=context, dt=order.date_order))
 
             order_obj.write(cr, uid, active_id, {'active': False, 'note': result}, context=context)
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'pos.order', active_id, 'cancel', cr)
             return {'type': 'ir.actions.act_window_close'}
-            # return {
-            #     'type': 'ir.actions.act_window',
-            #     'view_type': 'form',
-            #     'view_mode': 'tree,form',
-            #     'res_model': 'pos.order',
-            # }
 
         if discount:
             vals['pos_discount'] = True
         if hr_employee and len(order.lines) >= 1:
-            vals['user_id'] = hr_employee.user_id and hr_employee.user_id.id or order.user_id.id
+            vals['user_id'] = hr_employee[0].user_id and hr_employee[0].user_id.id or order.user_id.id
         if vals:
             order_obj.write(cr, uid, active_id, vals, context=context)
 
         amount = float_round(order.amount_total, precision_digits=2) - float_round(order.amount_paid, precision_digits=2)
         data = self.read(cr, uid, ids, context=context)[0]
         # this is probably a problem of osv_memory as it's not compatible with normal OSV's
-        #data['journal'] = data['journal'][0]
+        # data['journal'] = data['journal'][0]
 
         if amount != 0.0:
-           order_obj.add_payment(cr, uid, active_id, data, context=context)
+            order_obj.add_payment(cr, uid, active_id, data, context=context)
         if order_obj.test_paid(cr, uid, [active_id]):
-           wf_service = netsvc.LocalService("workflow")
-           wf_service.trg_validate(uid, 'pos.order', active_id, 'paid', cr)
-           return self.print_report(cr, uid, ids, context=context)
+            wf_service = netsvc.LocalService("workflow")
+            wf_service.trg_validate(uid, 'pos.order', active_id, 'paid', cr)
+            return self.print_report(cr, uid, ids, context=context)
 
         return self.launch_payment(cr, uid, ids, context=context)
 
@@ -139,7 +137,7 @@ class pos_make_payment(osv.osv_memory):
 
     def print_report(self, cr, uid, ids, context=None):
         active_id = context.get('active_id', [])
-        datas = {'ids' : [active_id]}
+        datas = {'ids': [active_id]}
         ## TODO  based on POS config return {'type': 'ir.actions.act_window_close'}
         return {
             'type': 'ir.actions.report.xml',
@@ -161,7 +159,7 @@ class pos_make_payment(osv.osv_memory):
 
     _columns = {
         'journal': fields.selection(pos_box_entries.get_journal, "Payment Mode", required=True),
-        'amount': fields.float('Amount', digits=(16,2), required= True),
+        'amount': fields.float('Amount', digits=(16, 2), required= True),
         'payment_name': fields.char('Payment Reference', size=32),
         'payment_date': fields.date('Payment Date', required=True),
     }
