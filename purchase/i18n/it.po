@@ -2003,7 +2003,7 @@ msgstr "Documenti Collegati"
 
 #. modules: purchase
 #: view:purchase.order:0
-msgid "View Delivery Order"
+msgid "View Incoming Shipment"
 msgstr "Vai all'uscita merci"
 
 #. modules: purchase

@@ -209,7 +209,7 @@
                             </group>
                             <group col="4" colspan="4" string="Connection Flow">
                                 <field name="picking_ids" invisible="1" />
-                                <button name="action_view_delivery" string="View Delivery Order" type="object"
+                                <button name="action_view_delivery" string="View Incoming Shipment" type="object"
                                     attrs="{'invisible': ['|',('picking_ids','=',False),('picking_ids','=',[])]}" groups="base.group_user"/>
                                 <button name="action_view_invoice" string="View Invoice" type="object" attrs="{'invisible': [('invoice_exists', '=', False)]}" groups="base.group_user"/>
                             </group>

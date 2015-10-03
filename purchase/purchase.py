@@ -360,24 +360,23 @@ class purchase_order(osv.osv):
 
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
-
-        result = mod_obj.get_object_reference(cr, uid, 'stock', 'action_picking_tree')
+        result = mod_obj.get_object_reference(cr, uid, 'stock', 'action_picking_tree4')
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
 
-        #compute the number of delivery orders to display
+        # compute the number of delivery orders to display
         pick_ids = []
         for po in self.browse(cr, uid, ids, context=context):
             pick_ids += [picking.id for picking in po.picking_ids]
 
-        #choose the view_mode accordingly
+        # choose the view_mode accordingly
         if len(pick_ids) > 1:
             result['domain'] = "[('id','in',[" + ','.join(map(str, pick_ids)) + "])]"
         else:
-            res = mod_obj.get_object_reference(cr, uid, 'stock', 'view_picking_out_form')
+            res = mod_obj.get_object_reference(cr, uid, 'stock', 'view_picking_in_form')
             result['views'] = [(res and res[1] or False, 'form')]
             result['res_id'] = pick_ids and pick_ids[0] or False
-        result['context'] = {'default_type': 'out', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0}
+        result['context'] = {'default_type': 'in', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0}
         return result
 
     def action_view_invoice(self, cr, uid, ids, context=None):
