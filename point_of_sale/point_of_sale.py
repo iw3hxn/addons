@@ -755,8 +755,9 @@ class pos_order_line(osv.osv):
         'pos_discount': fields.boolean('Discount?'),
         'shop_id': fields.related('order_id', 'shop_id', type='many2one', relation='sale.shop', string='Shop', store=True),
         'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store=True),
-        'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference') ,
+        'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference'),
         'employee_id': fields.integer('ID employee'),
+        'categ_id': fields.related('product_id', 'product_tmpl_id', 'categ_id', type='many2one', relation='product.category', string='Category', store=True),
     }
 
     _defaults = {

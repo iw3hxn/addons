@@ -123,6 +123,11 @@ msgid "Reference"
 msgstr "Referenza"
 
 #. module: point_of_sale
+#: field:pos.order.line,categ_id:0
+msgid "Category"
+msgstr "Categoria"
+
+#. module: point_of_sale
 #: report:pos.invoice:0
 msgid "Tax"
 msgstr "Tassa"

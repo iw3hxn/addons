@@ -128,6 +128,7 @@
                     <field name="company_id" groups="base.group_multi_company"/>
                     <field name="state"/>
                     <field name="pos_discount" groups="point_of_sale.group_pos_manager"/>
+                    <field name="lines" />
                 </tree>
             </field>
         </record>
@@ -148,6 +149,7 @@
                     <filter icon="gtk-go-forward" string="Yesterday" domain="[('date_order','&lt;',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('date_order','&gt;=',(datetime.date.today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
                     <separator orientation="vertical"/>
                     <field name="name"/>
+                    <field name="shop_id" widget="selection" />
                     <field name="user_id" widget="selection" />
                     <newline/>
                     <group expand="0" string="Group By..." groups="base.group_extended">
@@ -199,6 +201,7 @@
                     <field name="price_subtotal" readonly="1" sum="Sum of subtotals"/>
                     <field name="price_subtotal_incl" readonly="1" sum="Sum of subtotals"/>
                     <field name="pos_discount" invisible="1" />
+                    <field name="categ_id" />
                 </tree>
             </field>
         </record>
