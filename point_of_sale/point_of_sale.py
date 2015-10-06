@@ -175,7 +175,7 @@ class pos_order(osv.osv):
         'active': fields.boolean('Active'),
         'name': fields.char('Order Ref', size=64, required=True,
             states={'draft': [('readonly', False)]}, readonly=True),
-        'company_id':fields.many2one('res.company', 'Company', required=True, readonly=True),
+        'company_id': fields.many2one('res.company', 'Company', required=True, readonly=True),
         'shop_id': fields.many2one('sale.shop', 'Shop', required=True,
             states={'draft': [('readonly', False)]}, readonly=True),
         'date_order': fields.datetime('Date Ordered', readonly=True, select=True),
@@ -242,7 +242,7 @@ class pos_order(osv.osv):
             if order.lines and not order.amount_total:
                 return True
             if (not order.lines) or (not order.statement_ids) or \
-                (abs(order.amount_total-order.amount_paid) > 0.00001):
+                (abs(order.amount_total - order.amount_paid) > 0.00001):
                 return False
         return True
 
@@ -280,7 +280,7 @@ class pos_order(osv.osv):
                 price_unit = 0
                 if line.qty != 0.0:
                     price_unit = line.price_subtotal / abs(line.qty)
-                #import pdb; pdb.set_trace()
+                # import pdb; pdb.set_trace()
                 move_obj.create(cr, uid, {
                     'name': line.name[:250],
                     'product_uom': line.product_id.uom_id.id,
@@ -307,7 +307,7 @@ class pos_order(osv.osv):
         if not len(ids):
             return False
         for order in self.browse(cr, uid, ids, context=context):
-            if order.state <> 'cancel':
+            if order.state != 'cancel':
                 raise osv.except_osv(_('Error!'), _('In order to set to draft a sale, it must be cancelled.'))
         self.write(cr, uid, ids, {'state': 'draft'})
         wf_service = netsvc.LocalService("workflow")
@@ -671,14 +671,14 @@ pos_order()
 
 class account_bank_statement(osv.osv):
     _inherit = 'account.bank.statement'
-    _columns= {
+    _columns = {
         'user_id': fields.many2one('res.users', 'User', readonly=True),
         'pos_close': fields.boolean('Close by POS'),
     }
+
     _defaults = {
-        'user_id': lambda self,cr,uid,c={}: uid
+        'user_id': lambda self, cr, uid, c={}: uid
     }
-account_bank_statement()
 
 class account_bank_statement_line(osv.osv):
     _inherit = 'account.bank.statement.line'

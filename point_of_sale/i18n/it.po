@@ -153,7 +153,7 @@ msgstr "Cliente"
 #: report:pos.details:0
 #: report:pos.details_summary:0
 msgid "Total of the day"
-msgstr "Totale del Giorno"
+msgstr "Totale del Periodo"
 
 #. module: point_of_sale
 #: view:report.pos.order:0
@@ -496,7 +496,7 @@ msgstr "Post Entries"
 #. module: point_of_sale
 #: report:pos.details_summary:0
 msgid "Mode of Taxes"
-msgstr "Modalità Tasse"
+msgstr "Tasse"
 
 #. module: point_of_sale
 #: code:addons/point_of_sale/wizard/pos_close_statement.py:61
@@ -691,7 +691,7 @@ msgstr "Listino Prezzi"
 #: report:pos.details:0
 #: report:pos.details_summary:0
 msgid "Total invoiced"
-msgstr "Totale Fatturato"
+msgstr "Totale Fatture"
 
 #. module: point_of_sale
 #: view:report.pos.order:0
@@ -854,7 +854,7 @@ msgstr "Control Balance Before Closing"
 #. module: point_of_sale
 #: model:ir.model,name:point_of_sale.model_pos_order_line
 msgid "Lines of Point of Sale"
-msgstr "Righe Punto Vendita"
+msgstr "Righe Scontrini"
 
 #. module: point_of_sale
 #: view:pos.order:0
@@ -911,7 +911,7 @@ msgstr "Web User"
 #: report:pos.details:0
 #: report:pos.details_summary:0
 msgid "Start Period"
-msgstr "Periodo di inizio"
+msgstr "Data Iniziale"
 
 #. module: point_of_sale
 #: report:account.statement:0
@@ -1195,7 +1195,7 @@ msgstr "Pagamento POS"
 #: report:pos.details:0
 #: report:pos.details_summary:0
 msgid "End Period"
-msgstr "Periodo finale"
+msgstr "Data finale"
 
 #. module: point_of_sale
 #: field:account.journal,auto_cash:0
@@ -1477,7 +1477,7 @@ msgstr "Dettagli vendita"
 #. module: point_of_sale
 #: field:pos.order,date_order:0
 msgid "Date Ordered"
-msgstr "Ordinato per data"
+msgstr "Data Scontrino"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_payment_report_user

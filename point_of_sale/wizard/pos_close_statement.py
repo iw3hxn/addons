@@ -54,7 +54,7 @@ class pos_close_statement(osv.osv_memory):
         statement_obj = self.pool.get('account.bank.statement')
         journal_obj = self.pool.get('account.journal')
 
-        j_ids = journal_obj.search(cr, uid, [('journal_user','=',1)], context=context)
+        j_ids = journal_obj.search(cr, uid, [('journal_user', '=', 1)], context=context)
         ids = statement_obj.search(cr, uid, [('state', '!=', 'confirm'), ('user_id', '=', uid), ('journal_id', 'in', j_ids)], context=context)
         if not ids:
             if not context.get('no_error', False):
