@@ -1480,6 +1480,16 @@ msgid "Date Ordered"
 msgstr "Data Scontrino"
 
 #. module: point_of_sale
+#: field:pos.order,date_from:0
+msgid "Date from"
+msgstr "Dal"
+
+#. module: point_of_sale
+#: field:pos.order,date_to:0
+msgid "Date to"
+msgstr "Al"
+
+#. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_payment_report_user
 #: model:ir.model,name:point_of_sale.model_pos_payment_report_user
 msgid "Sales lines by Users"

@@ -57,7 +57,7 @@
         <field name="groups" eval="[(4, ref('group_pos_user'))]"/>
     </record>
 
-    <record id="bank_statement_personal_rule" model="ir.rule">
+    <record id="bank_statement_all_rule" model="ir.rule">
         <field name="name">All Bank Statement</field>
         <field ref="account.model_account_bank_statement" name="model_id"/>
         <field name="domain_force">[(1,'=',1)]</field>
