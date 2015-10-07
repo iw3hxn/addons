@@ -520,9 +520,13 @@
                         <filter string="Open" name="state_open" domain="[('state','=','open')]" icon="terp-check"/>
                         <filter string="Confirmed" name="state_confirmed" domain="[('state','=','confirm')]" icon="terp-camera_test"/>
                         <separator orientation="vertical"/>
+                        <field name="date_from" filter_domain="[('date','&gt;=',self)]"/>
+                        <field name="date_to" filter_domain="[('date','&lt;=',self)]"/>
+                        <separator orientation="vertical"/>
                         <field name="date"/>
                         <field name="name"/>
                         <field name="journal_id" widget='selection' domain="[('type', '=', 'cash')]" />
+                        <field name="user_id"  />
                     </group>
                     <newline/>
                     <group expand="0" string="Group By...">
