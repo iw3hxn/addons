@@ -256,8 +256,6 @@ class pos_order(osv.osv):
         # hr_employee_obj = self.pool.get('hr.employee') and self.pool['hr.employee'] or False
 
         for order in self.browse(cr, uid, ids, context=context):
-            if not order.state == 'draft':
-                continue
             address = order.partner_id and partner_obj.address_get(cr, uid, [order.partner_id.id], ['delivery']) or {}
             picking_id = picking_obj.create(cr, uid, {
                 'origin': order.name,
@@ -282,7 +280,6 @@ class pos_order(osv.osv):
                 price_unit = 0
                 if line.qty != 0.0:
                     price_unit = line.price_subtotal / abs(line.qty)
-                # import pdb; pdb.set_trace()
                 move_obj.create(cr, uid, {
                     'name': line.name[:250],
                     'product_uom': line.product_id.uom_id.id,
