@@ -525,7 +525,7 @@ msgstr "POS ordered created during current year"
 #: model:ir.ui.menu,name:point_of_sale.menu_point_ofsale
 #: view:pos.order:0
 msgid "PoS Orders"
-msgstr "Scontrinati"
+msgstr "Scontrini"
 
 #. module: point_of_sale
 #: report:pos.details:0

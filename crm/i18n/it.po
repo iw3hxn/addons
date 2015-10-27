@@ -402,7 +402,7 @@ msgstr "Martedì"
 #. module: crm
 #: field:crm.lead,write_date:0
 msgid "Update Date"
-msgstr "Aggiorna data"
+msgstr "Data ultima azione"
 
 #. module: crm
 #: field:crm.case.section,user_id:0
