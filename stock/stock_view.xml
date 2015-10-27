@@ -1396,8 +1396,8 @@
                         states="draft,assigned,confirmed,done"/>
                     <field name="location_id" groups="stock.group_locations"/>
                     <field name="location_dest_id" groups="stock.group_locations"/>
-                    <field name="date" groups="base.group_no_one"/>
-                    <field name="date_expected"/>
+                    <field name="date" />
+                    <field name="date_expected" groups="base.group_no_one"/>
                     <field name="state"/>
                     <button name="action_done" states="confirmed,assigned" string="Process" type="object" icon="gtk-go-forward"/>
                 </tree>
