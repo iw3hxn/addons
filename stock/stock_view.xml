@@ -882,6 +882,7 @@
                 </tree>
             </field>
         </record>
+
         <record id="view_picking_out_form" model="ir.ui.view">
             <field name="name">stock.picking.out.form</field>
             <field name="model">stock.picking</field>
@@ -899,12 +900,12 @@
                         <group colspan="2" col="2">
                             <field name="date"/>
                             <field name="min_date" readonly="1"/>
-                            <field name="stock_journal_id" groups="base.group_extended" widget="selection"/>
+                            <field name="stock_journal_id" widget="selection"/>
                         </group>
                     </group>
                     <notebook colspan="4">
                         <page string="Products">
-                            <field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" context="{'address_out_id': address_id, 'picking_type': type}" >
+                            <field colspan="4" name="move_lines" nolabel="1" widget="one2many_list" context="{'address_out_id': address_id, 'picking_type': type, 'stock_journal_id': stock_journal_id}" >
                                 <tree colors="grey:scrapped==True" string="Stock Moves">
                                     <field name="product_id"/>
                                     <field name="product_qty" on_change="onchange_quantity(product_id, product_qty, product_uom, product_uos)"/>

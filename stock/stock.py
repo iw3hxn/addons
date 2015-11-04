@@ -1532,6 +1532,7 @@ class stock_move(osv.osv):
         cr.execute('select id from stock_tracking where create_uid=%s order by id desc limit 1', (uid,))
         res = cr.fetchone()
         return (res and res[0]) or False
+
     _name = "stock.move"
     _description = "Stock Move"
     _order = 'date_expected desc, id'
@@ -1556,7 +1557,6 @@ class stock_move(osv.osv):
             'domain': '[]',
             'context': context
         }
-
 
     def name_get(self, cr, uid, ids, context=None):
         res = []
@@ -1735,7 +1735,7 @@ class stock_move(osv.osv):
         'state': 'draft',
         'priority': '1',
         'product_qty': 1.0,
-        'scrapped' :  False,
+        'scrapped':  False,
         'date': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
         'company_id': lambda self,cr,uid,c: self.pool.get('res.company')._company_default_get(cr, uid, 'stock.move', context=c),
         'date_expected': lambda *a: time.strftime('%Y-%m-%d %H:%M:%S'),
