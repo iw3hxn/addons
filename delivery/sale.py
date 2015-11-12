@@ -20,20 +20,37 @@
 ##############################################################################
 from osv import fields,osv
 
+import time
+from openerp.osv import fields, osv
+from openerp.tools.translate import _
 
-# Overloaded sale_order to manage carriers :
-class sale_order(osv.osv):
+
+class sale_order_line(osv.Model):
+    _inherit = 'sale.order.line'
+
+    _columns = {
+        'is_delivery': fields.boolean("Is a Delivery"),
+    }
+
+    _defaults = {
+        'is_delivery': False
+    }
+
+
+class sale_order(osv.Model):
     _inherit = 'sale.order'
     _columns = {
         'carrier_id':fields.many2one("delivery.carrier", "Delivery Method", help="Complete this field if you plan to invoice the shipping based on picking."),
         'id': fields.integer('ID', readonly=True,invisible=True),
     }
 
-    def onchange_partner_id(self, cr, uid, ids, part):
-        result = super(sale_order, self).onchange_partner_id(cr, uid, ids, part)
+    def onchange_partner_id(self, cr, uid, ids, part, context=None):
+        result = super(sale_order, self).onchange_partner_id(cr, uid, ids, part, context=context)
         if part:
-            dtype = self.pool.get('res.partner').browse(cr, uid, part).property_delivery_carrier.id
-            result['value']['carrier_id'] = dtype
+            dtype = self.pool.get('res.partner').browse(cr, uid, part, context=context).property_delivery_carrier.id
+            # TDE NOTE: not sure the aded 'if dtype' is valid
+            if dtype:
+                result['value']['carrier_id'] = dtype
         return result
 
     def _prepare_order_picking(self, cr, uid, order, context=None):
@@ -41,8 +58,6 @@ class sale_order(osv.osv):
         result.update(carrier_id=order.carrier_id.id)
         return result
 
-
-sale_order()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

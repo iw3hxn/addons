@@ -42,22 +42,22 @@ class delivery_carrier(osv.osv):
         return res
 
     def get_price(self, cr, uid, ids, field_name, arg=None, context=None):
-        res={}
+        res = {}
         if context is None:
             context = {}
-        sale_obj=self.pool.get('sale.order')
-        grid_obj=self.pool.get('delivery.grid')
+        sale_obj = self.pool.get('sale.order')
+        grid_obj = self.pool.get('delivery.grid')
         for carrier in self.browse(cr, uid, ids, context=context):
-            order_id=context.get('order_id',False)
-            price=False
+            order_id = context.get('order_id', False)
+            price = False
             if order_id:
-              order = sale_obj.browse(cr, uid, order_id, context=context)
-              carrier_grid=self.grid_get(cr,uid,[carrier.id],order.partner_shipping_id.id,context)
-              if carrier_grid:
-                  price=grid_obj.get_price(cr, uid, carrier_grid, order, time.strftime('%Y-%m-%d'), context)
-              else:
-                  price = 0.0
-            res[carrier.id]=price
+                order = sale_obj.browse(cr, uid, order_id, context=context)
+                carrier_grid = self.grid_get(cr, uid, [carrier.id], order.partner_shipping_id.id, context)
+                if carrier_grid:
+                    price = grid_obj.get_price(cr, uid, carrier_grid, order, time.strftime('%Y-%m-%d'), context)
+                else:
+                    price = 0.0
+            res[carrier.id] = price
         return res
 
     _columns = {
@@ -165,7 +165,6 @@ class delivery_carrier(osv.osv):
         self.create_grid_lines(cr, uid, [res_id], vals, context=context)
         return res_id
 
-delivery_carrier()
 
 class delivery_grid(osv.osv):
     _name = "delivery.grid"
@@ -198,22 +197,27 @@ class delivery_grid(osv.osv):
             weight += (line.product_id.weight or 0.0) * line.product_uom_qty
             volume += (line.product_id.volume or 0.0) * line.product_uom_qty
 
-
-        return self.get_price_from_picking(cr, uid, id, total,weight, volume, context=context)
+        return self.get_price_from_picking(cr, uid, id, total, weight, volume, context=context)
 
     def get_price_from_picking(self, cr, uid, id, total, weight, volume, context=None):
+        if not context:
+            context = {}
         grid = self.browse(cr, uid, id, context=context)
         price = 0.0
         ok = False
 
         for line in grid.line_ids:
-            price_dict = {'price': total, 'volume':volume, 'weight': weight, 'wv':volume*weight}
-            test = eval(line.type+line.operator+str(line.max_value), price_dict)
+            price_dict = {'price': total, 'volume': volume, 'weight': weight, 'wv': volume * weight}
+            test = eval(line.type + line.operator + str(line.max_value), price_dict)
             if test:
-                if line.price_type=='variable':
-                    price = line.list_price * price_dict[line.variable_factor]
+                if context.get('price', False) == 'cost_price':
+                    base_price = line.standard_price
                 else:
-                    price = line.list_price
+                    base_price = line.list_price
+                if line.price_type == 'variable':
+                    price = base_price * price_dict[line.variable_factor]
+                else:
+                    price = base_price
                 ok = True
                 break
         if not ok:
