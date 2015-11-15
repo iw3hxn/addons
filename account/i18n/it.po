@@ -11457,3 +11457,9 @@ msgstr "Storico"
 #, python-format
 msgid " has been change to "
 msgstr " è cambiato in "
+
+#. module: account
+#: code:addons/account/account_invoice.py:428
+#, python-format
+msgid " has internal_number change to "
+msgstr " ha impostato il numero della fattura in  "

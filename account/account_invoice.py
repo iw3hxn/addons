@@ -428,7 +428,11 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             if context is None:
                 context = self.pool['res.users'].context_get(cr, uid)
             if vals.get('state', False):
-                text = name + _(' has been change to ') + self.browse(cr, uid, ids, context=context).state
+                text = name + _(' has been change to ') + vals.get('state', False)
+                self.log(cr, uid, ids, text)
+                self.message_append(cr, uid, [ids], text, body_text=text, context=context)
+            if vals.get('internal_number', False):
+                text = name + _(' has internal_number change to ') + vals.get('internal_number', False)
                 self.log(cr, uid, ids, text)
                 self.message_append(cr, uid, [ids], text, body_text=text, context=context)
         return res
@@ -1071,7 +1075,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             move_id = obj_inv.move_id and obj_inv.move_id.id or False
             reference = obj_inv.reference or ''
 
-            self.write(cr, uid, ids, {'internal_number':number})
+            # self.write(cr, uid, ids, {'internal_number': number})
 
             if invtype in ('in_invoice', 'in_refund'):
                 if not reference:
@@ -1121,20 +1125,17 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
     def action_cancel(self, cr, uid, ids, *args):
         context = {} # TODO: Use context from arguments
         account_move_obj = self.pool.get('account.move')
-        invoices = self.read(cr, uid, ids, ['move_id', 'payment_ids'])
         move_ids = [] # ones that we will need to remove
-        for i in invoices:
-            if i['move_id']:
-                move_ids.append(i['move_id'][0])
-            if i['payment_ids']:
+        for invoice in self.browse(cr, uid, ids):
+            if invoice.move_id:
+                move_ids.append(invoice.move_id.id)
+            if invoice.payment_ids:
                 account_move_line_obj = self.pool.get('account.move.line')
-                pay_ids = account_move_line_obj.browse(cr, uid, i['payment_ids'])
-                for move_line in pay_ids:
+                for move_line in account_move_line_obj.browse(cr, uid, invoice.payment_ids):
                     if move_line.reconcile_partial_id and move_line.reconcile_partial_id.line_partial_ids:
                         raise osv.except_osv(_('Error !'), _('You can not cancel an invoice which is partially paid! You need to unreconcile related payment entries first!'))
-
-        # First, set the invoices as cancelled and detach the move ids
-        self.write(cr, uid, ids, {'state':'cancel', 'move_id':False})
+            # First, set the invoices as cancelled and detach the move ids
+            self.write(cr, uid, invoice.id, {'state': 'cancel', 'move_id': False, 'internal_number': invoice.number})
         if move_ids:
             # second, invalidate the move(s)
             account_move_obj.button_cancel(cr, uid, move_ids, context=context)
