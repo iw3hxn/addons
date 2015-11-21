@@ -3534,7 +3534,7 @@ msgstr "Cruscotto Contabilità"
 #: field:account.bank.statement,balance_start:0
 #: field:account.treasury.report,starting_balance:0
 msgid "Starting Balance"
-msgstr "Bilancio di apertura"
+msgstr "Saldo Apertura"
 
 #. module: account
 #: code:addons/account/account_invoice.py:1345
@@ -8780,7 +8780,7 @@ msgstr "Pagamento"
 #: field:account.bank.statement,balance_end_real:0
 #: field:account.treasury.report,ending_balance:0
 msgid "Ending Balance"
-msgstr "Bilancio finale"
+msgstr "Saldo Chiusura"
 
 #. module: account
 #: help:product.category,property_account_income_categ:0
