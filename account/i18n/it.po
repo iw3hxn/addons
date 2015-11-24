@@ -1797,7 +1797,7 @@ msgstr "Conto Imposta Note di Credito"
 #: view:account.bank.statement:0
 #: field:account.bank.statement,line_ids:0
 msgid "Statement lines"
-msgstr "Voci del movimento"
+msgstr "Righe Estratto Conto"
 
 #. module: account
 #: model:ir.actions.act_window,help:account.action_bank_statement_tree
@@ -9660,7 +9660,7 @@ msgstr "Documento"
 #: model:ir.actions.act_window,name:account.action_bank_statement_tree
 #: model:ir.ui.menu,name:account.menu_bank_statement_tree
 msgid "Bank Statements"
-msgstr "Estratti Conto Bancari"
+msgstr "Estratti Conto Banca"
 
 #. module: account
 #: field:account.account,balance:0

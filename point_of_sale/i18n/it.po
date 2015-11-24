@@ -1455,7 +1455,7 @@ msgstr "Riga Ordine Punto Vendita"
 #. module: point_of_sale
 #: field:report.cash.register,balance_end_real:0
 msgid "Closing Balance"
-msgstr "Bilancio di chiusura"
+msgstr "Saldo di chiusura"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_sale_all
