@@ -539,6 +539,8 @@ class stock_picking(osv.osv):
     _name = "stock.picking"
     _description = "Picking List"
 
+    _inherit = ['mail.thread']
+
     def _set_maximum_date(self, cr, uid, ids, name, value, arg, context=None):
         """ Calculates planned date if it is greater than 'value'.
         @param name: Name of field
@@ -607,13 +609,14 @@ class stock_picking(osv.osv):
         return res
 
     def create(self, cr, user, vals, context=None):
-        if ('name' not in vals) or (vals.get('name')=='/'):
+        if ('name' not in vals) or (vals.get('name') == '/'):
             seq_obj_name =  'stock.picking.' + vals['type']
             vals['name'] = self.pool.get('ir.sequence').get(cr, user, seq_obj_name)
         new_id = super(stock_picking, self).create(cr, user, vals, context)
         return new_id
 
     _columns = {
+        'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Reference', size=64, select=True),
         'origin': fields.char('Origin', size=64, help="Reference of the document that produced this picking.", select=True),
         'backorder_id': fields.many2one('stock.picking', 'Back Order of', help="If this picking was split this field links to the picking that contains the other part that has been processed already.", select=True),
@@ -723,6 +726,8 @@ class stock_picking(osv.osv):
             for r in picking.move_lines:
                 if r.state == 'draft':
                     todo.append(r.id)
+            message = _("The Picking '%s' has been confirmed") % (picking.name,)
+            self.log(cr, uid, picking.id, message)
 
         self.log_picking(cr, uid, ids, context=context)
 
@@ -752,9 +757,11 @@ class stock_picking(osv.osv):
         """
         wf_service = netsvc.LocalService("workflow")
         for pick in self.browse(cr, uid, ids):
-            move_ids = [x.id for x in pick.move_lines if x.state in ['confirmed','waiting']]
+            move_ids = [x.id for x in pick.move_lines if x.state in ['confirmed', 'waiting']]
             self.pool.get('stock.move').force_assign(cr, uid, move_ids)
             wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
+            message = _("The Picking '%s' has been forced") % (pick.name,)
+            self.log(cr, uid, pick.id, message)
         return True
 
     def draft_force_assign(self, cr, uid, ids, *args):
@@ -781,6 +788,7 @@ class stock_picking(osv.osv):
             wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
         return self.action_process(
             cr, uid, ids, context=context)
+
     def cancel_assign(self, cr, uid, ids, *args):
         """ Cancels picking and moves.
         @return: True
@@ -790,6 +798,8 @@ class stock_picking(osv.osv):
             move_ids = [x.id for x in pick.move_lines]
             self.pool.get('stock.move').cancel_assign(cr, uid, move_ids)
             wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
+            message = _("The Picking '%s' has been cancelled") % (pick.name,)
+            self.log(cr, uid, pick.id, message)
         return True
 
     def action_assign_wkf(self, cr, uid, ids, context=None):
@@ -853,9 +863,15 @@ class stock_picking(osv.osv):
         for picking in pickings:
             if picking.sale_id:
                 order_ids.append(picking.sale_id.id)
+            message = _("The Picking '%s' has been Transfert") % picking.name
+            self.log(cr, uid, picking.id, message)
+            date_done = picking.date_done or time.strftime('%Y-%m-%d %H:%M:%S')
+            picking.write({'state': 'done',
+                           'date_done': date_done})
+            for move in picking.move_lines:
+                move.write({'date': date_done})
         if order_ids:
            self.pool['sale.order'].write(cr, uid, order_ids, {'shipped': '1'}, context=context)
-        self.write(cr, uid, ids, {'state': 'done', 'date_done': time.strftime('%Y-%m-%d %H:%M:%S')})
         return True
 
     def action_move(self, cr, uid, ids, context=None):
@@ -869,7 +885,7 @@ class stock_picking(osv.osv):
                     self.pool.get('stock.move').action_confirm(cr, uid, [move.id],
                         context=context)
                     todo.append(move.id)
-                elif move.state in ('assigned','confirmed'):
+                elif move.state in ('assigned', 'confirmed'):
                     todo.append(move.id)
             if len(todo):
                 self.pool.get('stock.move').action_done(cr, uid, todo,
@@ -1137,10 +1153,15 @@ class stock_picking(osv.osv):
 
             invoice_obj.button_compute(cr, uid, [invoice_id], context=context,
                     set_total=(inv_type in ('in_invoice', 'in_refund')))
+
             self.write(cr, uid, [picking.id], {
                 'invoice_state': 'invoiced',
-                }, context=context)
+            }, context=context)
+
             self._invoice_hook(cr, uid, picking, invoice_id)
+            message = _("The Picking '%s' has been Invoiced") % (picking.name,)
+            self.log(cr, uid, picking.id, message)
+
         self.write(cr, uid, res.keys(), {
             'invoice_state': 'invoiced',
             }, context=context)
@@ -2315,7 +2336,7 @@ class stock_move(osv.osv):
                             self.action_done(cr, uid, [move.move_dest_id.id], context=context)
 
             self._create_product_valuation_moves(cr, uid, move, context=context)
-            if move.state not in ('confirmed','done','assigned'):
+            if move.state not in ('confirmed', 'done', 'assigned'):
                 todo.append(move.id)
 
         if todo:
@@ -2665,7 +2686,7 @@ class stock_move(osv.osv):
             if prodlot_ids.get(move.id):
                 self.write(cr, uid, [move.id],{'prodlot_id': prodlot_ids.get(move.id)})
             self.action_done(cr, uid, [move.id], context=context)
-            if  move.picking_id.id :
+            if move.picking_id.id:
                 # TOCHECK : Done picking if all moves are done
                 cr.execute("""
                     SELECT move.id FROM stock_picking pick
@@ -2728,7 +2749,7 @@ class stock_inventory(osv.osv):
             # ask 'stock.move' action done are going to change to 'date' of the move,
             # we overwrite the date as moves must appear at the inventory date.
             move_obj.write(cr, uid, inventory_move_ids, {'date': inv.date}, context=context)
-            self.write(cr, uid, [inv.id], {'state':'done', 'date_done': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
+            self.write(cr, uid, [inv.id], {'state': 'done', 'date_done': time.strftime('%Y-%m-%d %H:%M:%S')}, context=context)
         return True
 
     def action_confirm(self, cr, uid, ids, context=None):
