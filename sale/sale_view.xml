@@ -244,7 +244,8 @@
                             <group colspan="2" col="2" groups="base.group_extended">
                                 <separator string="Conditions" colspan="2"/>
                                 <field name="payment_term" widget="selection"/>
-                                <field name="fiscal_position" widget="selection"/>
+                                <field name="fiscal_position" options="{'no_create': True}"
+                                        on_change="onchange_fiscal_position(fiscal_position, order_line, context)"/>
                                 <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                             </group>
                             <group colspan="2" col="2" groups="base.group_extended">
