@@ -3576,6 +3576,7 @@ class wizard_multi_charts_accounts(osv.osv_memory):
                 'company_id': company_id,
                 'centralisation': journal_type == 'situation',
                 'view_id': _get_view_id(journal_type),
+                'group_invoice_lines': True,
                 'analytic_journal_id': _get_analytic_journal(journal_type),
                 'default_credit_account_id': _get_default_account(journal_type, 'credit'),
                 'default_debit_account_id': _get_default_account(journal_type, 'debit'),
