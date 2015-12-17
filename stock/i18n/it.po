@@ -695,7 +695,7 @@ msgid ""
 "worker/team that should perform the operation. Examples of stock journals "
 "may be: quality control, pick lists, packing, etc."
 msgstr ""
-"Il giornale di magazzino vi consente di assegnare ciascuna operazione"
+"La causale di movimento consente di assegnare ciascuna operazione"
 "di stoccaggio ad uno specifico giornale a seconda del tipo di"
 "operazione da svolgere o a seconda del lavoratore o del team che"
 "dovrebbe occuparsi dell'operazione. Esempi di giornali di magazzino"
@@ -2668,7 +2668,7 @@ msgstr "Previsoni scorta"
 #: field:stock.journal,name:0
 #: field:stock.picking,stock_journal_id:0
 msgid "Stock Journal"
-msgstr "Giornale di magazzino"
+msgstr "Causale Movimentazione"
 
 #. module: stock
 #: selection:report.stock.inventory,location_type:0
