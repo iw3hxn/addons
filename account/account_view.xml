@@ -551,7 +551,7 @@
                     <field name="journal_id"/>
                     <field name="balance_start"/>
                     <field name="balance_end_real"/>
-                    <field name="balance_end" invisible="1"/>
+                    <field name="balance_end"/>
                     <field name="state"/>
                     <button type="object" string="Cancel" name="button_cancel" states="confirm" icon="gtk-cancel"/>
                     <button type="object" string="Confirm" name="button_confirm_bank" states="draft" icon="terp-camera_test"/>
