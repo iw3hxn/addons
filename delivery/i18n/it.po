@@ -554,7 +554,7 @@ msgstr "Prezzo"
 #: code:addons/delivery/wizard/delivery_sale_order.py:70
 #, python-format
 msgid "No grid matching for this carrier !"
-msgstr "Non ci sono risultati nella ricerca per questo trasportatore !"
+msgstr "Non ci sono risultati nella ricerca per questo vettore !"
 
 #. module: delivery
 #: model:ir.ui.menu,name:delivery.menu_delivery
@@ -576,7 +576,7 @@ msgstr "="
 #: code:addons/delivery/stock.py:90
 #, python-format
 msgid "The carrier %s (id: %d) has no delivery grid!"
-msgstr "Il trasportatore %s (id: %d) non ha una griglia di consegne !"
+msgstr "Il vettore %s (id: %d) non ha una griglia di consegne !"
 
 #. module: delivery
 #: view:delivery.carrier:0
@@ -600,7 +600,7 @@ msgstr ""
 #: report:sale.shipping:0
 #: field:stock.picking,carrier_id:0
 msgid "Carrier"
-msgstr "Trasportatore"
+msgstr "Vettore"
 
 #. module: delivery
 #: view:delivery.sale.order:0
