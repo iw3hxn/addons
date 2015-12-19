@@ -109,7 +109,7 @@ class project_work(osv.osv):
                 amount = vals_line['unit_amount']
                 prod_id = vals_line['product_id']
                 unit = False
-                timeline_id = obj_timesheet.create(cr, uid, vals=vals_line, context=context)
+                timeline_id = obj_timesheet.create(cr, uid, vals_line, context)
 
                 # Compute based on pricetype
                 amount_unit = obj_timesheet.on_change_unit_amount(cr, uid, timeline_id,
@@ -123,9 +123,9 @@ class project_work(osv.osv):
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
             context = {}
-        timesheet_obj = self.pool.get('hr.analytic.timesheet')
-        project_obj = self.pool.get('project.project')
-        uom_obj = self.pool.get('product.uom')
+        timesheet_obj = self.pool['hr.analytic.timesheet']
+        project_obj = self.pool['project.project']
+        uom_obj = self.pool['product.uom']
         result = {}
         
         if isinstance(ids, (long, int)):
