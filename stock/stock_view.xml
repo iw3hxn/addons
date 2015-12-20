@@ -338,9 +338,6 @@
                         <button name="action_traceability" string="Downstream Traceability" type="object" context="{'type': 'move_history_ids', 'field': 'prodlot_id'}" icon="gtk-go-down" colspan="2"/>
                     </group>
                     <notebook colspan="4">
-                        <page string="Revisions">
-                            <field colspan="2" name="revisions" nolabel="1"/>
-                        </page>
                         <page string="Stock Moves">
                             <field colspan="2" name="move_ids" nolabel="1" widget="one2many_list">
                                 <tree  string="Stock Moves">
@@ -358,6 +355,9 @@
                                     <field name="state"/>
                                 </tree>
                              </field>
+                        </page>
+                        <page string="Revisions">
+                            <field colspan="2" name="revisions" nolabel="1"/>
                         </page>
                     </notebook>
                 </form>
