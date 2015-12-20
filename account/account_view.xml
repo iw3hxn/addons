@@ -591,17 +591,22 @@
                 <form string="Bank Statement">
                     <group col="7" colspan="4">
                         <field name="name" select="1"/>
-                        <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
                         <field name="journal_id" domain="[('type', '=', 'bank')]" on_change="onchange_journal_id(journal_id)" select="1" widget="selection"/>
                         <newline/>
+                        <field name="date" select="1" on_change="onchange_date(date, company_id)"/>
                         <field name="period_id"/>
+                        <field name="currency" invisible="1"/>
+                        <newline/>
+                        <group string="  " colspan="4" >
                         <field name="balance_start"/>
                         <field name="balance_end_real"/>
-                        <field name="currency" invisible="1"/>
-                        <field name='company_id' widget="selection" groups="base.group_multi_company" />
+                        <field name="balance_end"/>
+                        </group>
+                        <newline/>
+                        <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                     </group>
                     <notebook colspan="4">
-                        <page string="Transaction" name="statement_line_ids">
+                        <page string="Transaction" name="statement_line_ids" >
                             <field colspan="4" name="line_ids" nolabel="1" context="{'date':date}">
                                 <tree editable="top" string="Statement lines">
                                     <field name="sequence" readonly="1" invisible="1"/>
@@ -612,7 +617,7 @@
                                     <field name="type" on_change="onchange_type(partner_id, type)"/>
                                     <field domain="[('journal_id','=',parent.journal_id), ('company_id', '=', parent.company_id)]" name="account_id"/>
                                     <field name="analytic_account_id" groups="analytic.group_analytic_accounting" domain="[('company_id', '=', parent.company_id), ('type', '&lt;&gt;', 'view')]"/>
-                                    <field name="amount"/>
+                                    <field name="amount" sum="Sum"/>
                                 </tree>
                                 <form string="Statement lines">
                                     <field name="date"/>
@@ -629,16 +634,32 @@
                                 </form>
                             </field>
                         </page>
-                        <page string="Journal Entries" name="move_live_ids">
-                            <field colspan="4" name="move_line_ids" nolabel="1"/>
+                        <page string="Journal Entries" name="move_live_ids" attrs="{'invisible':[('state','=','draft')]}" >
+                            <field colspan="4" name="move_line_ids" nolabel="1">
+                                <tree string="Journal Items">
+                                   <field name="move_id" readonly="1"/>
+                                   <field name="ref"/>
+                                   <field name="date"/>
+                                   <field name="statement_id"/>
+                                   <field name="partner_id"/>
+                                   <field name="account_id"/>
+                                   <field name="name"/>
+                                   <field name="debit" sum="Debit"/>
+                                   <field name="credit" sum="Credit"/>
+                                   <field name="state"/>
+                                   <field name="reconcile_id"/>
+                                   <field name="reconcile_partial_id"/>
+                                   <field name="amount_currency"/>
+                                   <field name="currency_id"/>
+                               </tree>
+                            </field>
                         </page>
                     </notebook>
                     <group col="8" colspan="4">
                         <field name="state" widget="statusbar" statusbar_visible="draft,confirm"/>
-                        <field name="balance_end"/>
                         <button name="button_cancel" states="confirm" string="Cancel" type="object" icon="gtk-cancel"/>
                         <button name="button_dummy" states="draft" string="Compute" type="object" icon="terp-stock_format-scientific"/>
-                        <button name="button_confirm_bank" states="draft" string="Confirm" type="object"  icon="terp-camera_test"/>
+                        <button name="button_confirm_bank" states="draft" string="Confirm" type="object" icon="terp-camera_test"/>
                     </group>
                 </form>
             </field>

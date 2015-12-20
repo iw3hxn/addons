@@ -466,12 +466,12 @@ class account_bank_statement_line(osv.osv):
         'date': fields.date('Date', required=True),
         'amount': fields.float('Amount', digits_compute=dp.get_precision('Account')),
         'type': fields.selection([
-            ('supplier','Supplier'),
-            ('customer','Customer'),
-            ('general','General')
+            ('supplier', 'Supplier'),
+            ('customer', 'Customer'),
+            ('general', 'General')
             ], 'Type', required=True),
         'partner_id': fields.many2one('res.partner', 'Partner'),
-        'account_id': fields.many2one('account.account','Account',
+        'account_id': fields.many2one('account.account', 'Account',
             required=True),
         'statement_id': fields.many2one('account.bank.statement', 'Statement',
             select=True, required=True, ondelete='cascade'),
@@ -490,6 +490,8 @@ class account_bank_statement_line(osv.osv):
         'date': lambda self, cr, uid, context={}: context.get('date', fields.date.context_today(self, cr, uid, context=context)),
         'type': 'general',
     }
+
+    _order = "date"
 
 account_bank_statement_line()
 
