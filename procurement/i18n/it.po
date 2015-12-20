@@ -643,7 +643,7 @@ msgstr "Nome approvvigionamento."
 #. module: procurement
 #: constraint:stock.move:0
 msgid "You must assign a production lot for this product"
-msgstr "Eì necessario assegnare un lotto di produzione per questo prodotto"
+msgstr "Eì necessario assegnare un lotto/seriale per questo prodotto"
 
 #. module: procurement
 #: view:procurement.order:0

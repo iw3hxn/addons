@@ -131,7 +131,7 @@ msgstr "Formaggio francese Camenbert"
 #: help:product.product,removal_time:0
 msgid "The number of days before a production lot should be removed."
 msgstr ""
-"Il numero di giorni prima che un lotto di produzione debba essere rimosso"
+"Il numero di giorni prima che un lotto debba essere rimosso"
 
 #. module: product_expiry
 #: field:stock.production.lot,alert_date:0
@@ -144,7 +144,7 @@ msgid ""
 "The number of days before a production lot starts deteriorating without "
 "becoming dangerous."
 msgstr ""
-"Il numero di giorni prima che un lotto di produzione inizi a deteriorarsi "
+"Il numero di giorni prima che un lotto inizi a deteriorarsi "
 "senza diventare pericoloso."
 
 #. module: product_expiry
@@ -158,7 +158,7 @@ msgid ""
 "The number of days before a production lot may become dangerous and should "
 "not be consumed."
 msgstr ""
-"Il numero di giorni prima che un lotto di produzione possa diventare "
+"Il numero di giorni prima che un lotto possa diventare "
 "pericoloso e oltre i quali non debba essere consumato."
 
 #. module: product_expiry

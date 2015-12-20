@@ -2211,7 +2211,7 @@ msgstr "Data Programmata"
 #. module: mrp
 #: constraint:stock.move:0
 msgid "You must assign a production lot for this product"
-msgstr "È necessario assegnare un lotto di produzione per questo prodotto"
+msgstr "È necessario assegnare un lotto/seriale per questo prodotto"
 
 #. module: mrp
 #: field:stock.move,production_id:0

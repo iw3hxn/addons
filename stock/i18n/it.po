@@ -399,7 +399,7 @@ msgstr "Movimenti di magazzini processati"
 #: field:stock.production.lot.revision,lot_id:0
 #: field:stock.report.prodlots,prodlot_id:0
 msgid "Production lot"
-msgstr "Lotto di Produzione"
+msgstr "Lotto / Seriale"
 
 #. module: stock
 #: help:stock.incoterms,code:0
@@ -481,7 +481,7 @@ msgstr "Unità di Misura"
 #: view:stock.production.lot:0
 #: field:stock.production.lot,stock_available:0
 msgid "Available"
-msgstr "Disponibile"
+msgstr "Disponibilità"
 
 #. module: stock
 #: view:stock.picking:0
@@ -579,7 +579,7 @@ msgid ""
 "Current quantity of products with this Production Lot Number available in "
 "company warehouses"
 msgstr ""
-"Attuale quantità dei prodotti con questo numero lotto di produzione "
+"Attuale quantità dei prodotti con questo numero lotto/seriale"
 "disponibile nei magazzini dell'azienda"
 
 #. module: stock
@@ -760,7 +760,7 @@ msgstr "Agosto"
 #: model:ir.ui.menu,name:stock.menu_action_tracking_form
 #: view:stock.tracking:0
 msgid "Packs"
-msgstr "Imballaggi"
+msgstr "Imballi"
 
 #. module: stock
 #: constraint:stock.move:0
@@ -791,7 +791,7 @@ msgstr "Punto di Approvvigionamento"
 #: field:stock.move.split,line_exist_ids:0
 #: field:stock.move.split,line_ids:0
 msgid "Production Lots"
-msgstr "Lotti di Produzione"
+msgstr "Lotti/Seriali"
 
 #. module: stock
 #: report:stock.picking.list:0
@@ -885,7 +885,7 @@ msgstr "Indirizzo Punto di Stoccaggio"
 #. module: stock
 #: help:stock.move,prodlot_id:0
 msgid "Production lot is used to put a serial number on the production"
-msgstr "Il lotto di produzione viene utilizzato per inserire un nuomero di serie nella produzione"
+msgstr "Il lotto/seriale viene utilizzato per inserire un numero di lotto o seriale"
 
 #. module: stock
 #: field:stock.warehouse,lot_input_id:0
@@ -1322,7 +1322,7 @@ msgstr ""
 #. module: stock
 #: view:stock.tracking:0
 msgid "Pack Identification"
-msgstr "Identificazione pacco"
+msgstr "Identificazione Imballaggio"
 
 #. module: stock
 #: report:stock.picking.list:0
@@ -1745,7 +1745,7 @@ msgstr "Mese pianificato"
 #. module: stock
 #: field:product.product,track_production:0
 msgid "Track Manufacturing Lots"
-msgstr "Tracciamento lotti di produzione"
+msgstr "Tracciamento lotti/seriale"
 
 #. module: stock
 #: view:stock.picking:0
@@ -1951,7 +1951,7 @@ msgstr "Ritorna picking"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Split in production lots"
-msgstr "Dividi in Lotti di Produzione"
+msgstr "Dividi in Lotti/Seriali"
 
 #. module: stock
 #: model:ir.model,name:stock.model_stock_location
@@ -4052,7 +4052,7 @@ msgstr ""
 #: view:stock.production.lot:0
 #: field:stock.production.lot,name:0
 msgid "Production Lot"
-msgstr "Lotto di Produzione"
+msgstr "Lotto / Seriale"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_traceability

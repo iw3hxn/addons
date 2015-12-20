@@ -5521,7 +5521,13 @@ msgstr "Nome (Conto/Partner)"
 #. module: account
 #: view:account.bank.statement:0
 msgid "Transaction"
-msgstr "Transazione"
+msgstr "Movimenti"
+
+#. module: account
+#: view:account.bank.statement:0
+#: field:account.bank.statement,line_ids:0
+msgid "Statement lines"
+msgstr "Righe Estratto Conto"
 
 #. module: account
 #: help:account.tax,base_code_id:0

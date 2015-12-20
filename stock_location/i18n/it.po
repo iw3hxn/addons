@@ -67,7 +67,7 @@ msgstr ""
 #. module: stock_location
 #: constraint:stock.move:0
 msgid "You must assign a production lot for this product"
-msgstr "È necessario assegnare un lotto di produzione per questo prodotto"
+msgstr "È necessario assegnare un lotto/seriale per questo prodotto"
 
 #. module: stock_location
 #: help:product.pulled.flow,location_src_id:0
