@@ -52,8 +52,8 @@ class sale_order_line(osv.osv):
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin',
-              store = True),
-        'purchase_price': fields.float('Cost Price', digits=(16,2))
+              store=True),
+        'purchase_price': fields.float('Cost Price', digits=(16, 2))
     }
 
 sale_order_line()
@@ -64,9 +64,14 @@ class sale_order(osv.osv):
     def _product_margin(self, cr, uid, ids, field_name, arg, context=None):
         result = {}
         for sale in self.browse(cr, uid, ids, context=context):
-            result[sale.id] = 0.0
+            result[sale.id] = {
+                'margin': 0.0,
+                'margin_rel': 0.0,
+            }
             for line in sale.order_line:
-                result[sale.id] += line.margin or 0.0
+                result[sale.id]['margin'] += line.margin or 0.0
+            if sale.amount_untaxed:
+                result[sale.id]['margin_rel'] = (result[sale.id]['margin'] / sale.amount_untaxed) * 100
         return result
 
     def _get_order(self, cr, uid, ids, context=None):
@@ -74,12 +79,14 @@ class sale_order(osv.osv):
         return parent_get_order(self, cr, uid, ids, context=context)
 
     _columns = {
-        'margin': fields.function(_product_margin, string='Margin', help="It gives profitability by calculating the difference between the Unit Price and Cost Price.", store={
+        'margin': fields.function(_product_margin, string='Margin', multi='all', help="It gives profitability by calculating the difference between the Unit Price and Cost Price.", store={
                 'sale.order.line': (_get_order, [], 20),
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 20),
-                }),
+        }),
+        'margin_rel': fields.function(_product_margin, string='Margin %', multi='all', storestore={
+                'sale.order.line': (_get_order, [], 20),
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 20),
+        }),
     }
-
-sale_order()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

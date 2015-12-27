@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data noupdate="0">
+
+        <record id="sale.view_margin" model="res.groups">
+            <field name="name">View Margin Absolute</field>
+            <field name="category_id" ref="sale.module_category_sale"/>
+        </record>
+
+        <record id="sale.view_margin_rel" model="res.groups">
+            <field name="name">View Margin Relative</field>
+            <field name="category_id" ref="sale.module_category_sale"/>
+        </record>
+
+    </data>
+</openerp>

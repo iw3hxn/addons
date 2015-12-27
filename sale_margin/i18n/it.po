@@ -48,6 +48,22 @@ msgid "Margin"
 msgstr "Margine"
 
 #. module: sale_margin
+#: field:sale.order,margin_rel:0
+#: field:sale.order.line,margin_rel:0
+msgid "Margin %"
+msgstr "Marg. %"
+
+#. module: sale_margin
 #: model:ir.model,name:sale_margin.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"
+
+#. module: sale
+#: model:res.groups,name:sale.view_margin
+msgid "View Margin"
+msgstr "Vedi il Margine Assoluto"
+
+#. module: sale
+#: model:res.groups,name:sale.view_margin_rel
+msgid "View Margin Relative"
+msgstr "Vedi il Margine Percentuale"

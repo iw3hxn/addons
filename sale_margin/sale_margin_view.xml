@@ -9,7 +9,8 @@
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
             <field name="amount_total" position="after">
-                <field name="margin"/>
+                <field name="margin" groups="sale.view_margin"/>
+                <field name="margin_rel" groups="sale.view_margin_rel"/>
             </field>
         </field>
     </record>
@@ -22,7 +23,7 @@
         <field name="priority">1100</field>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line' or @name='abstract_line_ids']/form//field[@name='price_unit']" position="after">
-                <field name="purchase_price"/>
+                <field name="purchase_price" groups="sale.view_margin"/>
             </xpath>
         </field>
     </record>
@@ -35,7 +36,7 @@
         <field name="priority">1100</field>
         <field name="arch" type="xml">
            <xpath expr="//field[@name='order_line' or @name='abstract_line_ids']/tree//field[@name='price_unit']" position="after">
-                <field name="purchase_price"/>
+                <field name="purchase_price" groups="sale.view_margin"/>
             </xpath>
         </field>
     </record>
@@ -47,7 +48,8 @@
         <field name="inherit_id" ref="sale.view_order_tree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="margin"/>
+                <field name="margin" groups="sale.view_margin"/>
+                <field name="margin_rel" groups="sale.view_margin_rel"/>
             </field>
         </field>
     </record>
@@ -59,7 +61,7 @@
         <field name="inherit_id" ref="sale.view_order_line_tree" />
         <field name="arch" type="xml">
             <field name="price_subtotal" position="after">
-                <field name="margin"/>
+                <field name="margin" groups="sale.view_margin"/>
             </field>
         </field>
     </record>    

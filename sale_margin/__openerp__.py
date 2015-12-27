@@ -20,7 +20,7 @@
 
 {
     "name": "Margins in Sales Orders",
-    "version":"1.0",
+    "version":"1.0.a",
     "category" : "Sales Management",
     "description": """
 This module adds the 'Margin' on sales order.
@@ -33,7 +33,7 @@ This gives the profitability by calculating the difference between the Unit Pric
     "depends":["sale"],
     "demo_xml":[],
     'test': ['test/sale_margin.yml'],
-    "update_xml":["security/ir.model.access.csv","sale_margin_view.xml"],
+    "update_xml":["security/security.xml","security/ir.model.access.csv","sale_margin_view.xml"],
     "auto_install": False,
     "installable": True,
     "certificate" : "001165700015525701661",
