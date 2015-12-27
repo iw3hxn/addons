@@ -161,7 +161,7 @@ msgstr "Movimento Magazzino"
 #. module: delivery
 #: field:stock.picking,carrier_tracking_ref:0
 msgid "Carrier Tracking Ref"
-msgstr "Rif. Monitoraggio Vettore"
+msgstr "Numero di tracking"
 
 #. module: delivery
 #: field:stock.picking,weight_net:0

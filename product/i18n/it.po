@@ -725,7 +725,7 @@ msgstr "Fornitore"
 #. module: product
 #: field:product.product,qty_available:0
 msgid "Quantity On Hand"
-msgstr "Quantità in possesso"
+msgstr "Quantità a magazzino"
 
 #. module: product
 #: model:product.template,name:product.product_product_26_product_template
