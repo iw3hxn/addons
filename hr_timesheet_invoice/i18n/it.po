@@ -356,7 +356,7 @@ msgstr "Errore!"
 #. module: hr_timesheet_invoice
 #: model:hr_timesheet_invoice.factor,name:hr_timesheet_invoice.timesheet_invoice_factor3
 msgid "Gratis"
-msgstr "Gratuito"
+msgstr "No"
 
 #. module: hr_timesheet_invoice
 #: view:account.analytic.line:0

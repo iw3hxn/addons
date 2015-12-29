@@ -3147,7 +3147,7 @@ msgstr "Anno Chiusura Attesa"
 #. module: crm
 #: view:crm.lead:0
 msgid "Partner Name"
-msgstr "Nome Partner"
+msgstr "Ragione Sociale"
 
 #. module: crm
 #: model:crm.case.categ,name:crm.categ_phone2

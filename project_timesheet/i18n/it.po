@@ -428,7 +428,7 @@ msgstr ""
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Invoice Task Work"
-msgstr ""
+msgstr "Rifatturazione al cliente"
 
 #. module: project_timesheet
 #: code:addons/project_timesheet/project_timesheet.py:70

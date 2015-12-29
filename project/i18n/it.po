@@ -1800,12 +1800,12 @@ msgstr "Codifica le tue ore di lavoro."
 #. module: project
 #: field:project.task.work,name:0
 msgid "Work summary"
-msgstr "Cronologia Lavoro"
+msgstr "Descrizione Lavoro"
 
 #. module: project
 #: view:project.task.history.cumulative:0
 msgid "Month-2"
-msgstr ""
+msgstr "Mese-2"
 
 #. module: project
 #: help:report.project.task.user,closing_days:0
@@ -1815,7 +1815,7 @@ msgstr "Numero di giorni per chiudere l'attività"
 #. module: project
 #: view:project.task.history.cumulative:0 view:report.project.task.user:0
 msgid "Month-1"
-msgstr ""
+msgstr "Mese-1"
 
 #. module: project
 #: selection:report.project.task.user,month:0
