@@ -1323,7 +1323,7 @@ msgstr ""
 #. module: project
 #: view:project.task:0
 msgid "Delegations History"
-msgstr ""
+msgstr "Delegations History"
 
 #. module: project
 #: model:ir.model,name:project.model_res_users

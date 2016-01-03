@@ -239,7 +239,7 @@ msgstr "Partner"
 #. module: sale
 #: selection:sale.order,order_policy:0
 msgid "Invoice based on deliveries"
-msgstr "Fatturazione basata sulle consegne"
+msgstr "Dalle Consegne di Magazzino "
 
 #. module: sale
 #: view:sale.order:0
@@ -1549,7 +1549,7 @@ msgstr "Raggruppa Fatture"
 #. module: sale
 #: field:sale.order,order_policy:0
 msgid "Invoice Policy"
-msgstr "Politica di Fatturazione"
+msgstr "Crea Fattura"
 
 #. module: sale
 #: model:ir.actions.act_window,name:sale.action_config_picking_policy
@@ -2275,7 +2275,7 @@ msgstr "Ritardo"
 #. module: sale
 #: selection:sale.order,order_policy:0
 msgid "Deliver & invoice on demand"
-msgstr "Consegna e Fattura Manuale"
+msgstr "Manualmente da Ordine"
 
 #. module: sale
 #: model:process.node,note:sale.process_node_saleprocurement0

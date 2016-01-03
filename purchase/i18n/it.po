@@ -1145,7 +1145,7 @@ msgstr "Fatture manuali"
 #: model:ir.ui.menu,name:purchase.menu_procurement_management_invoice
 #: view:purchase.order:0
 msgid "Invoice Control"
-msgstr "Politica di Fatturazione"
+msgstr "Crea Fattura"
 
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_purchase_uom_categ_form_action
