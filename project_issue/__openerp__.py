@@ -22,7 +22,7 @@
 
 {
     'name': 'Issues Tracker',
-    'version': '1.0',
+    'version': '1.0.a',
     'category': 'Project Management',
     "sequence": 22,
     'complexity': "easy",

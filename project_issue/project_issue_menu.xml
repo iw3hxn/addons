@@ -17,7 +17,7 @@
     </record>
 
     <record model="ir.actions.act_window.view" id="action_crm_tag_kanban_view0">
-        <field name="sequence" eval="0"/>
+        <field name="sequence" eval="10"/>
         <field name="view_mode">kanban</field>
         <field name="view_id" ref="project_issue_kanban_view"/>
         <field name="act_window_id" ref="project_issue_categ_act0"/>
