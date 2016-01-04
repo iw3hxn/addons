@@ -22,7 +22,7 @@
 
 {
     'name': 'Todo Lists',
-    'version': '1.0',
+    'version': '1.0a',
     'category': 'Project Management',
     "sequence": 20,
     'complexity': "easy",
