@@ -22,14 +22,28 @@
 
 {
     "name": "Project Management",
-    "version": "1.1.1",
+    "version": "1.1.1a",
     "author": "OpenERP SA",
     "website": "http://www.openerp.com",
     "category": "Project Management",
     "sequence": 8,
     'complexity': "easy",
-    "images": ["images/gantt.png", "images/project_dashboard.jpeg","images/project_task_tree.jpeg","images/project_task.jpeg","images/project.jpeg","images/task_analysis.jpeg"],
-    "depends": ["base_setup", "product", "analytic", "board",  "mail", "resource"],
+    "images": [
+        "images/gantt.png",
+        "images/project_dashboard.jpeg",
+        "images/project_task_tree.jpeg",
+        "images/project_task.jpeg",
+        "images/project.jpeg",
+        "images/task_analysis.jpeg"
+    ],
+    "depends": [
+        "base_setup",
+        "product",
+        "analytic",
+        "board",
+        "mail",
+        "resource"
+    ],
     "description": """
 Project management module tracks multi-level projects, tasks, work done on tasks, eso.
 ======================================================================================
@@ -62,7 +76,7 @@ Dashboard for project members that includes:
     'demo_xml': [
         'project_demo.xml',
     ],
-    'test':[
+    'test': [
         'test/project_demo.yml',
         'test/project_process.yml',
         'test/task_process.yml',
