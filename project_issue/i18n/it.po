@@ -21,7 +21,7 @@ msgstr ""
 #. module: project_issue
 #: view:project.issue.report:0
 msgid "Previous Month"
-msgstr ""
+msgstr "Mese Prec."
 
 #. module: project_issue
 #: field:project.issue.report,delay_open:0
@@ -758,7 +758,7 @@ msgstr "Chiuso"
 #. module: project_issue
 #: view:project.issue:0 selection:project.issue.report,state:0
 msgid "Open"
-msgstr "Apri"
+msgstr "Prendi in Carica"
 
 #. module: project_issue
 #: model:ir.actions.act_window,name:project_issue.act_project_project_2_project_issue_all
@@ -870,7 +870,7 @@ msgstr "Febbraio"
 #: code:addons/project_issue/project_issue.py:70
 #, python-format
 msgid "Issue '%s' has been opened."
-msgstr "La problematica \"%s\" è stata aperta."
+msgstr "La problematica \"%s\" è stata presa in carico."
 
 #. module: project_issue
 #: view:project.issue:0
@@ -983,4 +983,4 @@ msgstr "Durata"
 #. module: project_issue
 #: view:board.board:0
 msgid "My Open Issues by Creation Date"
-msgstr "I miei ticket per data di creazione"
+msgstr "I miei ticket in carico per data di creazione"

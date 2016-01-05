@@ -1061,7 +1061,7 @@ msgstr ""
 #. module: project
 #: view:project.project:0
 msgid "Contact Address"
-msgstr ""
+msgstr "Indirizzo contatto"
 
 #. module: project
 #: help:project.task,kanban_state:0
