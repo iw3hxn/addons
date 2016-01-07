@@ -904,12 +904,12 @@ msgstr "Almeno una linea non ha il prodotto!"
 #. module: hr_timesheet_invoice
 #: help:hr.timesheet.invoice.create,date:0
 msgid "The real date of each work will be displayed on the invoice"
-msgstr "La data reale di ciascun lavoro verrà mostrata sulla fattura"
+msgstr "La data reale di ciascun lavoro verrà mostrata sulla fattura come nota"
 
 #. module: hr_timesheet_invoice
 #: field:account.analytic.account,pricelist_id:0
 msgid "Customer Pricelist"
-msgstr ""
+msgstr "Listino Cliente"
 
 #. module: hr_timesheet_invoice
 #: view:report_timesheet.invoice:0

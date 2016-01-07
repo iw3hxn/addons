@@ -871,7 +871,7 @@ class task(osv.osv):
                     if reopen:
                         self.do_reopen(cr, uid, [parent_id.id], context=context)
             vals.update({'state': 'done'})
-            vals.update({'remaining_hours': 0.0})
+            # carlo: if i close a task not need to cancel remaining hours vals.update({'remaining_hours': 0.0})
             if not task.date_end:
                 vals.update({'date_end': time.strftime('%Y-%m-%d %H:%M:%S')})
             self.write(cr, uid, [task.id], vals, context=context)
