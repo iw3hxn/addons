@@ -1020,12 +1020,12 @@ class task(osv.osv):
     def set_remaining_hours(self, cr, uid, task_id, hours, context):
         current_task = self.browse(cr, uid, task_id, context)
 
-        cr.execute("SELECT COALESCE(SUM(hours), 0) FROM project_task_work WHERE task_id={}".format(task_id))
-        work_hours = cr.fetchone()[0]
+        # cr.execute("SELECT COALESCE(SUM(hours), 0) FROM project_task_work WHERE task_id={}".format(task_id))
+        # work_hours = cr.fetchone()[0]
 
         return self.write(cr, uid, task_id, {
-            # 'remaining_hours': current_task.remaining_hours - hours
-            'remaining_hours': current_task.planned_hours - work_hours - hours
+            'remaining_hours': current_task.remaining_hours - hours
+            # 'remaining_hours': current_task.planned_hours - work_hours - hours
         }, context)
 
     def set_kanban_state_blocked(self, cr, uid, ids, context=None):
@@ -1045,7 +1045,7 @@ class task(osv.osv):
         for task in self.browse(cr, uid, ids):
             if task.project_id.type_ids:
                 typeid = task.type_id.id
-                types_seq={}
+                types_seq = {}
                 for type in task.project_id.type_ids :
                     types_seq[type.id] = type.sequence
                 if next:
