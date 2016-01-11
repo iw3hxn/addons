@@ -2486,3 +2486,8 @@ msgstr "Storico"
 #, python-format
 msgid " has been change to "
 msgstr " è cambiato in "
+
+#. modules: sale
+#: view:sale.order:0
+msgid "Send New Email"
+msgstr "Spedisci Nuova Email"

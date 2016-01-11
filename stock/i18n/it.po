@@ -2319,7 +2319,22 @@ msgstr "Imposta a \"Bozza\""
 #: model:ir.actions.act_window,name:stock.action_stock_journal_form
 #: model:ir.ui.menu,name:stock.menu_action_stock_journal_form
 msgid "Stock Journals"
-msgstr "Giornali di magazzino"
+msgstr "Causale Movimentazione"
+
+#. modules: stock
+#: view:stock.picking:0
+msgid "Communication & History"
+msgstr "Comunicazione e Storico"
+
+#. modules: stock
+#: view:stock.picking:0
+msgid "History Information"
+msgstr "Storico"
+
+#. modules: stock
+#: view:stock.picking:0
+msgid "Send New Email"
+msgstr "Spedisci Nuova Email"
 
 #. module: stock
 #: selection:report.stock.move,type:0

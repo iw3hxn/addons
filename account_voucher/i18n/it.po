@@ -787,7 +787,7 @@ msgstr "Pubblica"
 #. module: account_voucher
 #: view:account.voucher:0
 msgid "Invoices and outstanding transactions"
-msgstr "Fatture e transazioni in sospeso"
+msgstr "Fatture ed operazioni Aperte"
 
 #. module: account_voucher
 #: field:res.company,expense_currency_exchange_account_id:0
@@ -919,7 +919,7 @@ msgstr "Paga"
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "year"
-msgstr ""
+msgstr "anno"
 
 #. module: account_voucher
 #: view:account.voucher:0
@@ -1055,7 +1055,7 @@ msgstr "Fatture e transazioni fornitori in sospeso"
 #. module: account_voucher
 #: view:sale.receipt.report:0
 msgid "Month-1"
-msgstr ""
+msgstr "Mese-1"
 
 #. module: account_voucher
 #: selection:sale.receipt.report,month:0
