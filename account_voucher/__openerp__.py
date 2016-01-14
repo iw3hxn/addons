@@ -21,7 +21,7 @@
 
 {
     "name" : "eInvoicing & Payments",
-    "version" : "1.0.a",
+    "version" : "1.0.b",
     "author" : 'OpenERP SA',
     'complexity': "normal",
     "description": """
