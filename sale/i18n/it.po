@@ -2491,3 +2491,8 @@ msgstr " è cambiato in "
 #: view:sale.order:0
 msgid "Send New Email"
 msgstr "Spedisci Nuova Email"
+
+#. module: sale
+#: view:sale.advance.payment.inv:0
+msgid "Create and View Invoice"
+msgstr "Crea e vai direttamente alla fattura"
