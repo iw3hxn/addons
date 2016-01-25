@@ -899,7 +899,7 @@ class account_journal(osv.osv):
     }
     _sql_constraints = [
         ('code_company_uniq', 'unique (code, company_id)', 'The code of the journal must be unique per company !'),
-        ('name_company_uniq', 'unique (name, company_id)', 'The name of the journal must be unique per company !'),
+        ('name_company_uniq', 'unique (name, code, company_id)', 'The name of the journal must be unique per company !'),
     ]
 
     _order = 'code'

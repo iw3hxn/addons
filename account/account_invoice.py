@@ -358,7 +358,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         'tax_calculation_rounding_method': _get_default_rounding_method,
     }
     _sql_constraints = [
-        ('number_uniq', 'unique(number, company_id, journal_id, type)', 'Invoice Number must be unique per Company!'),
+        ('number_uniq', 'unique(number, company_id, journal_id, type, period_id)', 'Invoice Number must be unique per Company!'),
     ]
 
     def fields_view_get(self, cr, uid, view_id=None, view_type=False, context=None, toolbar=False, submenu=False):

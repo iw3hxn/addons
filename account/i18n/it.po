@@ -11469,3 +11469,9 @@ msgstr " è cambiato in "
 #, python-format
 msgid " has internal_number change to "
 msgstr " ha impostato il numero della fattura in  "
+
+#. module: account
+#: code:addons/account/account.py:769
+#, python-format
+msgid "You cannot change the code of account which contains journal items!"
+msgstr "Non è possibile modificare il codice del conto in quanto ci sono delle scritture!"
