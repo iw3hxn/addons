@@ -346,8 +346,8 @@ class sale_order(osv.osv):
             # Deleting the existing instance of workflow for SO
             wf_service.trg_delete(uid, 'sale.order', inv_id, cr)
             wf_service.trg_create(uid, 'sale.order', inv_id, cr)
-        for (id,name) in self.name_get(cr, uid, ids):
-            message = _("The sales order '%s' has been set in draft state.") %(name,)
+        for (id, name) in self.name_get(cr, uid, ids):
+            message = _("The sales order '%s' has been set in draft state.") % (name,)
             self.log(cr, uid, id, message)
         return True
 
@@ -455,9 +455,9 @@ class sale_order(osv.osv):
 
         res = super(sale_order, self).write(cr, uid, ids, vals, context=context)
 
-        for (id, name) in self.name_get(cr, uid, ids):
+        for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
-                text = str(name) + ' has been change to ' + str(self.browse(cr, uid, id, context=context).state)
+                text = str(name) + _(' has been change to ') + str(self.browse(cr, uid, id, context=context).state)
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
         return res
