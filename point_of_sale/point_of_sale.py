@@ -793,7 +793,7 @@ class pos_order_line(osv.osv):
     _columns = {
         'date_from': fields.function(lambda *a, **k: {}, method=True, type='date', string="Date from"),
         'date_to': fields.function(lambda *a, **k: {}, method=True, type='date', string="Date to"),
-        'date_order': fields.related('order_id', 'date_order', store=True, string='Date Order', type='char', size=64),
+        'date_order': fields.related('order_id', 'date_order', store=True, string='Date Order', type='date', size=64),
         'active': fields.boolean('Active'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'name': fields.char('Line No', size=32, required=True),

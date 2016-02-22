@@ -1481,11 +1481,13 @@ msgstr "Data Scontrino"
 
 #. module: point_of_sale
 #: field:pos.order,date_from:0
+#: field:pos.order.line,date_from:0
 msgid "Date from"
 msgstr "Dal"
 
 #. module: point_of_sale
 #: field:pos.order,date_to:0
+#: field:pos.order.line,date_to:0
 msgid "Date to"
 msgstr "Al"
 
