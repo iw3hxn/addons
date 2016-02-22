@@ -193,7 +193,7 @@
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="POS Order lines"  colors="red:pos_discount == True; black:pos_discount == False">
-                    <field name="create_date" invisible="not context.get('pos_line_extended', False)"/>
+                    <field name="date_order" invisible="not context.get('pos_line_extended', False)"/>
                     <field name="shop_id" invisible="not context.get('pos_line_extended', False)"/>
                     <field name="user_id" invisible="not context.get('pos_line_extended', False)"/>
                     <field name="default_code" invisible="not context.get('pos_line_extended', False)" />
@@ -217,21 +217,22 @@
                 <search string="Search Sales Order">
                     <filter icon="" string="Discounted" domain="[('pos_discount', '=', True)]" />
                     <separator orientation="vertical"/>
+                    <field name="date_from" filter_domain="[('date_order','&gt;=',self)]"/>
+                    <field name="date_to" filter_domain="[('date_order','&lt;=',self)]"/>
                     <filter icon="terp-go-month" string="Last Month" name="last_month"
-                        domain="[('create_date', '&lt;', datetime.date.today().strftime('%%Y-%%m-01 00:00:00')), ('create_date', '&gt;=', (datetime.date.today() - relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00'))]"
+                        domain="[('date_order', '&lt;', datetime.date.today().strftime('%%Y-%%m-01 00:00:00')), ('date_order', '&gt;=', (datetime.date.today() - relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00'))]"
                     />
                     <filter icon="terp-go-month" string="Month"
-                            domain="[('create_date', '&lt;', (datetime.date.today() + relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00')), ('create_date', '&gt;=', (datetime.date.today()).strftime('%%Y-%%m-01 00:00:00'))]"/>
-                    <filter icon="terp-go-month" string="Today" domain="[('create_date','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('create_date','&lt;=',datetime.date.today().strftime('%%Y-%%m-%%d 23:59:59'))]"/>
-                    <filter icon="gtk-go-forward" string="Yesterday" domain="[('create_date','&lt;',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('create_date','&gt;=',(datetime.date.today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
+                            domain="[('date_order', '&lt;', (datetime.date.today() + relativedelta(months=1)).strftime('%%Y-%%m-01 00:00:00')), ('date_order', '&gt;=', (datetime.date.today()).strftime('%%Y-%%m-01 00:00:00'))]"/>
+                    <filter icon="terp-go-month" string="Today" domain="[('date_order','&gt;=',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('date_order','&lt;=',datetime.date.today().strftime('%%Y-%%m-%%d 23:59:59'))]"/>
+                    <filter icon="gtk-go-forward" string="Yesterday" domain="[('date_order','&lt;',datetime.date.today().strftime('%%Y-%%m-%%d 00:00:00')),('date_order','&gt;=',(datetime.date.today() - relativedelta(days=1)).strftime('%%Y-%%m-%%d 00:00:00'))]"/>
                     <separator orientation="vertical"/>
-                    <field name="create_date" />
                     <field name="shop_id" widget="selection" />
                     <field name="user_id" widget="selection" />
                     <field name="product_id" />
                     <newline/>
                     <group expand="0" string="Group By..." groups="base.group_extended">
-                        <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'create_date'}"/>
+                        <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>
                         <separator string="" orientation="vertical"/>
                         <filter string="Shop" icon="terp-personal" domain="[]" context="{'group_by':'shop_id'}"/>
                         <filter string="Connected Salesman" icon="terp-personal" domain="[]" context="{'group_by':'user_id'}"/>
