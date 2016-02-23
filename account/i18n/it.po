@@ -845,10 +845,10 @@ msgstr "Tipo"
 #, python-format
 msgid ""
 "Taxes are missing!\n"
-"Click on compute button."
+"Click on compute button.On invoice of partner {partner} of {date}"
 msgstr ""
 "Imposte mancanti!\n"
-"Cliccare  sul pulsante calcola."
+"Cliccare  sul pulsante calcola. Nella fattura del {date} di {partner} "
 
 #. module: account
 #: model:ir.model,name:account.model_account_subscription_line
@@ -3185,10 +3185,10 @@ msgstr "Posizione fiscale"
 #, python-format
 msgid ""
 "Tax base different!\n"
-"Click on compute to update the tax base."
+"Click on compute to update the tax base.On invoice of partner {partner} of {date}'"
 msgstr ""
 "Base imponibile modificata!\n"
-"Cliccare su Calcola Imposte per aggiornare l'imponibile."
+"Cliccare su Calcola Imposte per aggiornare l'imponibile. Nella fattura del {date} di {partner}"
 
 #. module: account
 #: field:account.partner.ledger,page_split:0
@@ -8044,8 +8044,8 @@ msgstr "Conti di Debito"
 #. module: account
 #: code:addons/account/account_invoice.py:741
 #, python-format
-msgid "Global taxes defined, but they are not in invoice lines !"
-msgstr "Imposte globali definite ma non presenti nelle voci fattura! \n Premere il pulsante di ricalcolo imposte"
+msgid "Global taxes defined, but they are not in invoice lines ! On invoice of partner {partner} of {date}"
+msgstr "Imposte globali definite ma non presenti nella fattura del {date} di {partner}! \n Premere il pulsante di ricalcolo imposte"
 
 #. module: account
 #: model:ir.model,name:account.model_account_chart_template
