@@ -22,7 +22,7 @@
 
 {
     'name': 'Invoice on Timesheets',
-    'version': '1.0',
+    'version': '1.0a',
     'category': 'Sales Management',
     'description': """Generate your Invoices from Expenses, Timesheet Entries, ...
 Module to generate invoices based on costs (human resources, expenses, ...).
