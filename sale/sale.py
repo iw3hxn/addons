@@ -453,13 +453,20 @@ class sale_order(osv.osv):
             elif vals['order_policy'] == 'picking':
                 vals.update({'invoice_quantity': 'procurement'})
 
-        res = super(sale_order, self).write(cr, uid, ids, vals, context=context)
-
         for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
                 text = str(name) + _(' has been change to ') + str(self.browse(cr, uid, id, context=context).state)
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
+            if vals.get('shop_id', False):
+                order = self.browse(cr, uid, id, context)
+                if (order.shop_id and order.shop_id.id) != vals.get('shop_id', False):
+
+                    old_shop = self.pool['sale.shop'].browse(cr, uid, vals.get('shop_id', False), context)
+                    text = _('{order} has been change shop from {shop_from} to {shop_to}') .format(order=order.name, shop_from=order.shop_id.name, shop_to=old_shop.name)
+                    self.log(cr, uid, id, text)
+                    self.message_append(cr, uid, [id], text, body_text=text, context=context)
+        res = super(sale_order, self).write(cr, uid, ids, vals, context=context)
         return res
 
     def create(self, cr, uid, vals, context=None):

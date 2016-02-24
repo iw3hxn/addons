@@ -2496,3 +2496,9 @@ msgstr "Spedisci Nuova Email"
 #: view:sale.advance.payment.inv:0
 msgid "Create and View Invoice"
 msgstr "Crea e vai direttamente alla fattura"
+
+#. module: crm
+#: code:addons/sale/sale.py:416
+#, python-format
+msgid "{order} has been change shop from {shop_from} to {shop_to}"
+msgstr "{order} ha cambiato il negozio da {shop_from} a {shop_to}"
