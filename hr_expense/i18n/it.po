@@ -563,7 +563,7 @@ msgstr ""
 #. module: hr_expense
 #: view:hr.expense.expense:0
 msgid "Submit to Manager"
-msgstr ""
+msgstr "Invio al Responsabile per Approvazione"
 
 #. module: hr_expense
 #: model:process.node,note:hr_expense.process_node_confirmedexpenses0
@@ -573,7 +573,7 @@ msgstr "Il dipendente convalida il suo foglio spese"
 #. module: hr_expense
 #: view:hr.expense.expense:0
 msgid "Expenses to Invoice"
-msgstr ""
+msgstr "Spese da Fatturare"
 
 #. module: hr_expense
 #: model:process.node,name:hr_expense.process_node_supplierinvoice0
