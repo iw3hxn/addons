@@ -1075,7 +1075,7 @@ class stock_picking(osv.osv):
         if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
             uos_id = move_line.product_uom.id
 
-        price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'])
+        price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'], context)
         discount = self._get_discount_invoice(cr, uid, move_line)
 
         vals = {
@@ -1091,7 +1091,6 @@ class stock_picking(osv.osv):
             'invoice_line_tax_id': [(6, 0, self._get_taxes_invoice(cr, uid, move_line, invoice_vals['type']))],
             'account_analytic_id': self._get_account_analytic_invoice(cr, uid, picking, move_line),
             'move_line_id': move_line.id,
-            'note': move_line.note,
         }
 
         if move_line.sale_line_id and move_line.sale_line_id.product_id.id != move_line.product_id.id:
