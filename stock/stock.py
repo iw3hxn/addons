@@ -871,7 +871,7 @@ class stock_picking(osv.osv):
             for move in picking.move_lines:
                 move.write({'date': date_done})
         if order_ids:
-           self.pool['sale.order'].write(cr, uid, order_ids, {'shipped': '1'}, context=context)
+            self.pool['sale.order'].write(cr, uid, order_ids, {'shipped': '1'}, context=context)
         return True
 
     def action_move(self, cr, uid, ids, context=None):
