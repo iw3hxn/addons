@@ -250,9 +250,9 @@ class pos_order(osv.osv):
 
     def create_picking(self, cr, uid, ids, context=None):
         """Create a picking for each order and validate it."""
-        picking_obj = self.pool.get('stock.picking')
-        partner_obj = self.pool.get('res.partner')
-        move_obj = self.pool.get('stock.move')
+        picking_obj = self.pool['stock.picking']
+        partner_obj = self.pool['res.partner']
+        move_obj = self.pool['stock.move']
         # hr_employee_obj = self.pool.get('hr.employee') and self.pool['hr.employee'] or False
 
         for order in self.browse(cr, uid, ids, context=context):
@@ -269,17 +269,16 @@ class pos_order(osv.osv):
             }, context=context)
             self.write(cr, uid, [order.id], {'picking_id': picking_id}, context=context)
             location_id = order.shop_id.warehouse_id.lot_stock_id.id
-            output_id = order.shop_id.warehouse_id.lot_output_id.id
+            destination_id = order.shop_id.warehouse_id.lot_output_id.id
 
             for line in order.lines:
                 if line.product_id and line.product_id.type == 'service' or line.employee_id:
                     continue
-                if line.qty < 0:
-                    location_id, output_id = output_id, location_id
 
                 price_unit = 0
                 if line.qty != 0.0:
                     price_unit = line.price_subtotal / abs(line.qty)
+
                 move_obj.create(cr, uid, {
                     'name': line.name[:250],
                     'product_uom': line.product_id.uom_id.id,
@@ -290,8 +289,8 @@ class pos_order(osv.osv):
                     'product_qty': abs(line.qty),
                     'tracking_id': False,
                     'state': 'draft',
-                    'location_id': location_id,
-                    'location_dest_id': output_id,
+                    'location_id': location_id if line.qty >= 0 else destination_id,
+                    'location_dest_id': destination_id if line.qty >= 0 else location_id,
                     'company_id': order.shop_id.company_id.id,
                     'price_unit': price_unit
                 }, context=context)
