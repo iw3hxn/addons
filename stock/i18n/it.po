@@ -4372,3 +4372,9 @@ msgstr "Pronto da Elaborare"
 #: help:stock.location,posz:0
 msgid "Optional localization details, for information purpose only"
 msgstr "Dettagli localizzazione opzionali, puramente a scopo informativo"
+
+#. module: stock
+#: code:addons/stock/stock.py:416
+#, python-format
+msgid "{order} has been change invoice state {invoice_from} to {invoice_to}"
+msgstr "{order} ha cambiato il controllo di fatturazione da {invoice_from} a {invoice_to}"

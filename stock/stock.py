@@ -615,6 +615,23 @@ class stock_picking(osv.osv):
         new_id = super(stock_picking, self).create(cr, user, vals, context)
         return new_id
 
+    def write(self, cr, uid, ids, vals, context=None):
+
+        for (id, name) in self.name_get(cr, uid, ids, context):
+            if vals.get('state', False):
+                text = _('{name} has been change to {state}'.format(name=name, state=self.browse(cr, uid, id, context=context).state))
+                self.log(cr, uid, id, text)
+                self.message_append(cr, uid, [id], text, body_text=text, context=context)
+            if vals.get('invoice_state', False):
+                stock = self.browse(cr, uid, id, context)
+                if vals.get('invoice_state', False) and (stock.invoice_state != vals.get('invoice_state', False)):
+                    text = _('{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=stock.invoice_state, invoice_to=vals.get('invoice_state', False))
+                    self.log(cr, uid, id, text)
+                    self.message_append(cr, uid, [id], text, body_text=text, context=context)
+
+        res = super(stock_picking, self).write(cr, uid, ids, vals, context=context)
+        return res
+
     _columns = {
         'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Reference', size=64, select=True),
