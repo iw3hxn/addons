@@ -2020,7 +2020,7 @@ msgstr ""
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Process Later"
-msgstr "Elabora successivamente"
+msgstr "Consegna successivamente"
 
 #. module: stock
 #: help:res.partner,property_stock_supplier:0
@@ -2979,7 +2979,7 @@ msgstr "a"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Process"
-msgstr "Elabora"
+msgstr "Consegna"
 
 #. module: stock
 #: field:stock.production.lot.revision,name:0
@@ -3959,7 +3959,7 @@ msgstr "Data dell'inventario"
 #. module: stock
 #: model:res.groups,name:stock.group_stock_user
 msgid "User"
-msgstr "Utente Open ERP"
+msgstr "Utente"
 
 #. module: stock
 #: code:addons/stock/wizard/stock_invoice_onshipping.py:98
@@ -4364,7 +4364,7 @@ msgstr "Punto di Stoccaggio Fisico"
 #: view:stock.picking:0
 #: selection:stock.picking,state:0
 msgid "Ready to Process"
-msgstr "Pronto da Elaborare"
+msgstr "Pronto da Consegnare"
 
 #. module: stock
 #: help:stock.location,posx:0
