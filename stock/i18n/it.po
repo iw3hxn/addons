@@ -875,7 +875,7 @@ msgstr "Movimento di Destinazione"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Process Now"
-msgstr "Elaborazione immediata"
+msgstr "Elaborazione consegna"
 
 #. module: stock
 #: field:stock.location,address_id:0

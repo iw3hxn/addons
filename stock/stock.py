@@ -768,12 +768,12 @@ class stock_picking(osv.osv):
             self.pool.get('stock.move').action_assign(cr, uid, move_ids)
         return True
 
-    def force_assign(self, cr, uid, ids, *args):
+    def force_assign(self, cr, uid, ids, context=None):
         """ Changes state of picking to available if moves are confirmed or waiting.
         @return: True
         """
         wf_service = netsvc.LocalService("workflow")
-        for pick in self.browse(cr, uid, ids):
+        for pick in self.browse(cr, uid, ids, context):
             move_ids = [x.id for x in pick.move_lines if x.state in ['confirmed', 'waiting']]
             self.pool.get('stock.move').force_assign(cr, uid, move_ids)
             wf_service.trg_write(uid, 'stock.picking', pick.id, cr)
@@ -781,14 +781,14 @@ class stock_picking(osv.osv):
             self.log(cr, uid, pick.id, message)
         return True
 
-    def draft_force_assign(self, cr, uid, ids, *args):
+    def draft_force_assign(self, cr, uid, ids, context=None):
         """ Confirms picking directly from draft state.
         @return: True
         """
         wf_service = netsvc.LocalService("workflow")
-        for pick in self.browse(cr, uid, ids):
+        for pick in self.browse(cr, uid, ids, context):
             if not pick.move_lines:
-                raise osv.except_osv(_('Error !'),_('You can not process picking without stock moves'))
+                raise osv.except_osv(_('Error !'), _('You can not process picking without stock moves'))
             wf_service.trg_validate(uid, 'stock.picking', pick.id,
                 'button_confirm', cr)
         return True
@@ -798,7 +798,7 @@ class stock_picking(osv.osv):
         @return: True
         """
         wf_service = netsvc.LocalService("workflow")
-        self.draft_force_assign(cr, uid, ids)
+        self.draft_force_assign(cr, uid, ids, context)
         for pick in self.browse(cr, uid, ids, context=context):
             move_ids = [x.id for x in pick.move_lines]
             self.pool.get('stock.move').force_assign(cr, uid, move_ids)
