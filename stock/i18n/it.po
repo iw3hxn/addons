@@ -875,7 +875,7 @@ msgstr "Movimento di Destinazione"
 #: view:stock.move:0
 #: view:stock.picking:0
 msgid "Process Now"
-msgstr "Elaborazione consegna"
+msgstr "Consegna immediata"
 
 #. module: stock
 #: field:stock.location,address_id:0
@@ -3826,7 +3826,7 @@ msgstr ""
 #. module: stock
 #: view:stock.picking:0
 msgid "Return Products"
-msgstr "Ritorna Prodotti"
+msgstr "Rientra Prodotti"
 
 #. module: stock
 #: view:stock.inventory:0
@@ -3844,7 +3844,7 @@ msgstr ""
 #: code:addons/stock/wizard/stock_fill_inventory.py:53
 #, python-format
 msgid "Stock Inventory is already Validated."
-msgstr ""
+msgstr "L'inventario è già stato Validato"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_products_moves
