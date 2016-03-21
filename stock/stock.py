@@ -2210,6 +2210,8 @@ class stock_move(osv.osv):
         :param context: context dictionary that can explicitly mention the company to consider via the 'force_company' key
         :raise: osv.except_osv() is any mandatory account or journal is not defined.
         """
+        if not context:
+            context = {}
         product_obj=self.pool.get('product.product')
         accounts = product_obj.get_product_accounts(cr, uid, move.product_id.id, context)
         if move.location_id.valuation_out_account_id:
@@ -2226,21 +2228,21 @@ class stock_move(osv.osv):
         journal_id = accounts['stock_journal']
 
         if acc_dest == acc_valuation:
-            raise osv.except_osv(_('Error!'),  _('Can not create Journal Entry, Output Account defined on this product and Valuation account on category of this product are same.'))
+            raise osv.except_osv(_('Error!'), _('Can not create Journal Entry, Output Account defined on this product and Valuation account on category of this product are same.'))
 
         if acc_src == acc_valuation:
-            raise osv.except_osv(_('Error!'),  _('Can not create Journal Entry, Input Account defined on this product and Valuation account on category of this product are same.'))
+            raise osv.except_osv(_('Error!'), _('Can not create Journal Entry, Input Account defined on this product and Valuation account on category of this product are same.'))
 
         if not acc_src:
-            raise osv.except_osv(_('Error!'),  _('There is no stock input account defined for this product or its category: "%s" (id: %d)') % \
+            raise osv.except_osv(_('Error!'), _('There is no stock input account defined for this product or its category: "%s" (id: %d)') % \
                                     (move.product_id.name, move.product_id.id,))
         if not acc_dest:
-            raise osv.except_osv(_('Error!'),  _('There is no stock output account defined for this product or its category: "%s" (id: %d)') % \
+            raise osv.except_osv(_('Error!'), _('There is no stock output account defined for this product or its category: "%s" (id: %d)') % \
                                     (move.product_id.name, move.product_id.id,))
         if not journal_id:
             raise osv.except_osv(_('Error!'), _('There is no journal defined on the product category: "%s" (id: %d)') % \
                                     (move.product_id.categ_id.name, move.product_id.categ_id.id,))
-        if not acc_valuation:
+        if not acc_valuation and not context.get('exclude_acc_valuation', False):
             raise osv.except_osv(_('Error!'), _('There is no inventory Valuation account defined on the product category: "%s" (id: %d)') % \
                                     (move.product_id.categ_id.name, move.product_id.categ_id.id,))
         return journal_id, acc_src, acc_dest, acc_valuation
@@ -2295,7 +2297,11 @@ class stock_move(osv.osv):
                      or move.location_id.company_id != move.location_dest_id.company_id):
                 journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, src_company_ctx)
                 reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
-                account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_dest, reference_amount, reference_currency_id, context))]
+                # returning goods to supplier
+                if move.location_dest_id.usage == 'supplier':
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_src, reference_amount, reference_currency_id, context))]
+                else:
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_valuation, acc_dest, reference_amount, reference_currency_id, context))]
 
             # Incoming moves (or cross-company input part)
             if move.location_dest_id.company_id \
@@ -2303,16 +2309,25 @@ class stock_move(osv.osv):
                      or move.location_id.company_id != move.location_dest_id.company_id):
                 journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, dest_company_ctx)
                 reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
-                account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_src, acc_valuation, reference_amount, reference_currency_id, context))]
+                # goods return from customer
+                if move.location_id.usage == 'customer':
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_dest, acc_valuation, reference_amount, reference_currency_id, context))]
+                else:
+                    account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_src, acc_valuation, reference_amount, reference_currency_id, context))]
+
+            if (move.location_dest_id.company_id and move.location_id.company_id) and (move.location_id.usage == 'production' and move.location_dest_id.usage == 'production'):
+                src_company_ctx.update({'exclude_acc_valuation': True})
+                journal_id, acc_src, acc_dest, acc_valuation = self._get_accounting_data_for_valuation(cr, uid, move, src_company_ctx)
+                reference_amount, reference_currency_id = self._get_reference_accounting_values_for_valuation(cr, uid, move, src_company_ctx)
+                account_moves += [(journal_id, self._create_account_move_line(cr, uid, move, acc_src, acc_dest, reference_amount, reference_currency_id, context))]
 
             move_obj = self.pool.get('account.move')
             for j_id, move_lines in account_moves:
-                move_obj.create(cr, uid,
-                        {
-                         'journal_id': j_id,
-                         'line_id': move_lines,
-                         'ref': move.picking_id and move.picking_id.name})
-
+                move_obj.create(cr, uid, {
+                    'journal_id': j_id,
+                    'line_id': move_lines,
+                    'ref': move.picking_id and move.picking_id.name
+                }, context=context)
 
     def action_done(self, cr, uid, ids, context=None):
         """ Makes the move done and if all moves are done, it will finish the picking.
