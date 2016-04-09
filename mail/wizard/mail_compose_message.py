@@ -198,7 +198,7 @@ class mail_compose_message(osv.osv_memory):
             references = None
             headers = {}
 
-            body =  mail.body_html if mail.subtype == 'html' else mail.body_text
+            body = mail.body_html if mail.subtype == 'html' else mail.body_text
 
             # Reply Email
             if context.get('mail.compose.message.mode') == 'reply' and mail.message_id:
@@ -216,6 +216,7 @@ class mail_compose_message(osv.osv_memory):
                     active_ids = active_model_pool.search(cr, uid, ast.literal_eval(mail.filter_id.domain), context=ast.literal_eval(mail.filter_id.context))
 
                 for active_id in active_ids:
+                    attachment = {}
                     render_context = self._prepare_render_template_context(cr, uid, active_model, active_id, context)
                     subject = self.render_template(cr, uid, mail.subject, active_model, active_id, render_context)
                     rendered_body = self.render_template(cr, uid, body, active_model, active_id, render_context)
@@ -223,14 +224,13 @@ class mail_compose_message(osv.osv_memory):
                     email_to = self.render_template(cr, uid, mail.email_to, active_model, active_id, render_context)
                     email_cc = self.render_template(cr, uid, mail.email_cc, active_model, active_id, render_context)
                     email_bcc = self.render_template(cr, uid, mail.email_bcc, active_model, active_id, render_context)
-                    reply_to = self.render_template(cr, uid, mail.reply_to, active_model, active_id, render_context)
-
-                    # in mass-mailing mode we only schedule the mail for sending, it will be 
-                    # processed as soon as the mail scheduler runs.
-                    mail_message.schedule_with_attach(cr, uid, email_from, to_email(email_to), subject, rendered_body,
-                        model=mail.model, email_cc=to_email(email_cc), email_bcc=to_email(email_bcc), reply_to=reply_to,
-                        attachments=attachment, references=references, res_id=active_id,
-                        subtype=mail.subtype, headers=headers, context=context)
+                    if mail.template_id:
+                        self.pool['email.template'].send_mail(cr, uid, mail.template_id, active_id, force_send=False, context=None)
+                    else:
+                        mail_message.schedule_with_attach(cr, uid, email_from, to_email(email_to), subject, rendered_body,
+                            model=mail.model, email_cc=to_email(email_cc), email_bcc=to_email(email_bcc), reply_to=reply_to,
+                            attachments=attachment, references=references, res_id=active_id,
+                            subtype=mail.subtype, headers=headers, context=context)
             else:
                 # normal mode - no mass-mailing
                 msg_id = mail_message.schedule_with_attach(cr, uid, mail.email_from, to_email(mail.email_to), mail.subject, body,

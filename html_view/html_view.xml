@@ -15,13 +15,13 @@
                   Name :
                 </td>
                 <td>
-                  <field name="name"/>
+                  <field name="name" nolabel="1"/>
                 </td>
                 <td>
                   Company :
                 </td>
                 <td>
-                  <field name="comp_id"/>
+                  <field name="comp_id" nolabel="1"/>
                 </td>
               </tr>
             </table>

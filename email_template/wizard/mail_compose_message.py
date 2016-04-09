@@ -52,7 +52,7 @@ class mail_compose_message(osv.osv_memory):
         if context is None:
             context = {}
         record_ids = []
-        email_template= self.pool.get('email.template')
+        email_template = self.pool.get('email.template')
         model = False
         if context.get('message_id'):
             mail_message = self.pool.get('mail.message')
@@ -73,7 +73,7 @@ class mail_compose_message(osv.osv_memory):
     }
     
     _defaults = {
-        'template_id' : lambda self, cr, uid, context={} : context.get('mail.compose.template_id', False)          
+        'template_id': lambda self, cr, uid, context={}: context.get('mail.compose.template_id', False)
     }
 
     def on_change_template(self, cr, uid, ids, use_template, template_id, email_from=None, email_to=None, context=None):
@@ -146,8 +146,8 @@ class mail_compose_message(osv.osv_memory):
                             'datas': fcontent,
                             'datas_fname': fname,
                             'description': fname,
-                            'res_model' : self._name,
-                            'res_id' : ids[0] if ids else False
+                            'res_model': self._name,
+                            'res_id': ids[0] if ids else False
                         }
                         att_ids.append(attachment_obj.create(cr, uid, data_attach))
                     values['attachment_ids'] = att_ids
@@ -157,7 +157,6 @@ class mail_compose_message(osv.osv_memory):
             values.update(use_template=use_template, template_id=template_id)
 
         return {'value': values}
-
 
     def template_toggle(self, cr, uid, ids, context=None):
         for record in self.browse(cr, uid, ids, context=context):

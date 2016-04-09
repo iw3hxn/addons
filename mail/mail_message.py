@@ -87,7 +87,7 @@ class mail_message_common(osv.osv_memory):
         'email_to': fields.char('To', size=256, help='Message recipients'),
         'email_cc': fields.char('Cc', size=256, help='Carbon copy message recipients'),
         'email_bcc': fields.char('Bcc', size=256, help='Blind carbon copy message recipients'),
-        'reply_to':fields.char('Reply-To', size=256, help='Preferred response address for the message'),
+        'reply_to': fields.char('Reply-To', size=256, help='Preferred response address for the message'),
         'headers': fields.text('Message headers', readonly=1,
                                help="Full message headers, e.g. SMTP session headers "
                                     "(usually available on inbound messages only)"),

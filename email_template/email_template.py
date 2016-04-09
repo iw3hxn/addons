@@ -285,7 +285,6 @@ class email_template(osv.osv):
                         })
         return {'value':result}
 
-
     def generate_email(self, cr, uid, template_id, res_id, context=None):
         """Generates an email from the template for given (model, res_id) pair.
 
@@ -386,7 +385,7 @@ class email_template(osv.osv):
         mail_message = self.pool.get('mail.message')
         ir_attachment = self.pool.get('ir.attachment')
         values = self.generate_email(cr, uid, template_id, res_id, context=context)
-        assert 'email_from' in values, 'email_from is missing or empty after template rendering, send_mail() cannot proceed'
+        # assert 'email_from' in values, 'email_from is missing or empty after template rendering, send_mail() cannot proceed'
         attachments = values.pop('attachments') or {}
         msg_id = mail_message.create(cr, uid, values, context=context)
         # link attachments
