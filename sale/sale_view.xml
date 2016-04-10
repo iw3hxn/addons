@@ -191,8 +191,8 @@
                                     <field name="product_uom" string="UoM"/>
                                     <field groups="product.group_uos" name="product_uos_qty" string="Qty(UoS)"/>
                                     <field groups="product.group_uos" name="product_uos" string="UoS"/>
-                                    <field name="discount"/>
                                     <field name="price_unit"/>
+                                    <field name="discount"/>
                                     <field name="price_subtotal"/>
                                 </tree>
                             </field>

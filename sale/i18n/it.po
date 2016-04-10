@@ -305,7 +305,7 @@ msgstr "Stato"
 #. module: sale
 #: report:sale.order:0
 msgid "Disc.(%)"
-msgstr "Sconto (%)"
+msgstr "Sc. (%)"
 
 #. module: sale
 #: view:sale.report:0 field:sale.report,price_total:0
@@ -386,7 +386,7 @@ msgstr "Avviso Listino!"
 #. module: sale
 #: field:sale.order.line,discount:0
 msgid "Discount (%)"
-msgstr "Sconto (%)"
+msgstr "Sc. (%)"
 
 #. module: sale
 #: view:board.board:0
@@ -1668,7 +1668,7 @@ msgstr "Vendite"
 #. module: sale
 #: report:sale.order:0 field:sale.order.line,price_unit:0
 msgid "Unit Price"
-msgstr "Prezzo al pubblico"
+msgstr "Prezzo unitario"
 
 #. module: sale
 #: selection:sale.order,state:0 view:sale.order.line:0
