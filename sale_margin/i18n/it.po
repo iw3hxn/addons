@@ -54,6 +54,11 @@ msgid "Margin %"
 msgstr "Marg. %"
 
 #. module: sale_margin
+#: field:sale.order.line,total_purchase_price:0
+msgid "Total Cost Price"
+msgstr "Totale costi"
+
+#. module: sale_margin
 #: model:ir.model,name:sale_margin.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Riga ordine di vendita"

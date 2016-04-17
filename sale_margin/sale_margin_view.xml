@@ -27,16 +27,18 @@
             </xpath>
         </field>
     </record>
-    
+
     <record model="ir.ui.view" id="sale_margin_sale_order_line_form">
         <field name="name">sale.order.line.tree.margin.view.form</field>
         <field name="type">form</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="inherit_id" ref="sale.view_order_form"/>
         <field name="priority">1100</field>
         <field name="arch" type="xml">
-           <xpath expr="//field[@name='order_line' or @name='abstract_line_ids']/tree//field[@name='price_unit']" position="after">
-                <field name="purchase_price" groups="sale.view_margin"/>
+            <xpath expr="//field[@name='order_line' or @name='abstract_line_ids']/tree//field[@name='price_subtotal']"
+                   position="after">
+                <field name="purchase_price" groups="sale.view_margin" invisible="1"/>
+                <field name="total_purchase_price" groups="sale.view_margin"/>
             </xpath>
         </field>
     </record>

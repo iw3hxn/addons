@@ -31,10 +31,10 @@ class sale_order_line(osv.osv):
             lang=lang, update_tax=update_tax, date_order=date_order, packaging=packaging, fiscal_position=fiscal_position, flag=flag, context=context)
         if not pricelist:
             return res
-        frm_cur = self.pool.get('res.users').browse(cr, uid, uid).company_id.currency_id.id
-        to_cur = self.pool.get('product.pricelist').browse(cr, uid, [pricelist])[0].currency_id.id
+        frm_cur = self.pool.get('res.users').browse(cr, uid, uid, context).company_id.currency_id.id
+        to_cur = self.pool.get('product.pricelist').browse(cr, uid, [pricelist], context)[0].currency_id.id
         if product:
-            purchase_price = self.pool.get('product.product').browse(cr, uid, product).standard_price
+            purchase_price = self.pool.get('product.product').browse(cr, uid, product, context).standard_price
             price = self.pool.get('res.currency').compute(cr, uid, frm_cur, to_cur, purchase_price, round=False)
             res['value'].update({'purchase_price': price})
         return res
@@ -42,21 +42,34 @@ class sale_order_line(osv.osv):
     def _product_margin(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = 0
+            res[line.id] = {
+                'margin': 0,
+                'total_purchase_price': 0,
+            }
+            # import pdb; pdb.set_trace()
             if line.product_id:
                 if line.purchase_price:
-                    res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.purchase_price*line.product_uos_qty), 2)
+                    res[line.id] = {
+                        'margin': round((line.price_unit * line.product_uos_qty * (100.0 - line.discount) / 100.0) - (line.purchase_price * line.product_uos_qty), 2),
+                        'total_purchase_price': line.product_uos_qty * line.purchase_price
+                    }
                 else:
-                    res[line.id] = round((line.price_unit*line.product_uos_qty*(100.0-line.discount)/100.0) -(line.product_id.standard_price*line.product_uos_qty), 2)
+                    res[line.id] = {
+                        'margin': round((line.price_unit * line.product_uos_qty * (100.0 - line.discount) / 100.0) - (line.product_id.standard_price * line.product_uos_qty), 2),
+                        'total_purchase_price': line.product_uos_qty * line.product_id.standard_price
+                    }
         return res
 
     _columns = {
-        'margin': fields.function(_product_margin, string='Margin',
-              store=True),
+        'margin': fields.function(_product_margin, string='Margin', method=True, multi='margin', store={
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
+        }),
+        'total_purchase_price': fields.function(_product_margin, string='Total Cost Price', method=True, multi='margin', store={
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
+        }),
         'purchase_price': fields.float('Cost Price', digits=(16, 2))
     }
 
-sale_order_line()
 
 class sale_order(osv.osv):
     _inherit = "sale.order"
@@ -83,7 +96,7 @@ class sale_order(osv.osv):
                 'sale.order.line': (_get_order, [], 20),
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 20),
         }),
-        'margin_rel': fields.function(_product_margin, string='Margin %', multi='all', storestore={
+        'margin_rel': fields.function(_product_margin, string='Margin %', multi='all', store={
                 'sale.order.line': (_get_order, [], 20),
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line'], 20),
         }),
