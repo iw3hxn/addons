@@ -19,6 +19,8 @@
 ##############################################################################
 
 from osv import fields, osv
+import decimal_precision as dp
+
 
 class sale_order_line(osv.osv):
     _inherit = "sale.order.line"
@@ -61,10 +63,10 @@ class sale_order_line(osv.osv):
         return res
 
     _columns = {
-        'margin': fields.function(_product_margin, string='Margin', method=True, multi='margin', store={
+        'margin': fields.function(_product_margin, string='Margin', type='float', multi='sums', digits_compute=dp.get_precision('Account'), store={
             'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
         }),
-        'total_purchase_price': fields.function(_product_margin, string='Total Cost Price', method=True, multi='margin', store={
+        'total_purchase_price': fields.function(_product_margin, type='float', string='Total Cost Price', multi='sums', store={
             'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
         }),
         'purchase_price': fields.float('Cost Price', digits=(16, 2))
