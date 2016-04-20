@@ -44,6 +44,7 @@ class sale_order_line(osv.osv):
     def _product_margin(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
+            print line.id
             res[line.id] = {
                 'margin': 0,
                 'total_purchase_price': 0,
@@ -64,10 +65,10 @@ class sale_order_line(osv.osv):
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', type='float', multi='sums', digits_compute=dp.get_precision('Account'), store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 10),
         }),
-        'total_purchase_price': fields.function(_product_margin, type='float', string='Total Cost Price', multi='sums', store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 20),
+        'total_purchase_price': fields.function(_product_margin, type='float', string='Total Cost Price', multi='sums', digits_compute=dp.get_precision('Account'), store={
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 10),
         }),
         'purchase_price': fields.float('Cost Price', digits=(16, 2))
     }
@@ -96,11 +97,11 @@ class sale_order(osv.osv):
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', multi='all', help="It gives profitability by calculating the difference between the Unit Price and Cost Price.", store={
                 'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 20),
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 20),
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 30),
         }),
         'margin_rel': fields.function(_product_margin, string='Margin %', multi='all', store={
                 'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 20),
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 20),
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 30),
         }),
     }
 
