@@ -73,6 +73,7 @@ class mail_compose_message(osv.osv_memory):
     }
     
     _defaults = {
+        'use_template': True,
         'template_id': lambda self, cr, uid, context={}: context.get('mail.compose.template_id', False)
     }
 
@@ -197,7 +198,7 @@ class mail_compose_message(osv.osv_memory):
             }
             template_id = email_template.create(cr, uid, values, context=context)
             record.write({'template_id': template_id,
-                          'use_template': True})
+                          'use_template': True}, context)
 
         # _reopen same wizard screen with new template preselected
         return _reopen(self, record.id, model, record.res_id)
