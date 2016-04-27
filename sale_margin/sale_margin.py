@@ -65,10 +65,10 @@ class sale_order_line(osv.osv):
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', type='float', multi='sums', digits_compute=dp.get_precision('Account'), store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 10),
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 100),
         }),
         'total_purchase_price': fields.function(_product_margin, type='float', string='Total Cost Price', multi='sums', digits_compute=dp.get_precision('Account'), store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 10),
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 100),
         }),
         'purchase_price': fields.float('Cost Price', digits=(16, 2))
     }
