@@ -455,7 +455,7 @@ class sale_order(osv.osv):
 
         for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
-                text = str(name) + _(' has been change to ') + str(self.browse(cr, uid, id, context=context).state)
+                text = u"{name}".format(name=name) + _(' has been change to ') + str(self.browse(cr, uid, id, context=context).state)
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
             if vals.get('shop_id', False) or vals.get('date_order', False):
