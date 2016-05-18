@@ -153,6 +153,7 @@ class audittrail_log(osv.osv):
     }
     _order = "timestamp desc"
 
+
 class audittrail_log_line(osv.osv):
     """
     Audittrail Log Line.
@@ -194,12 +195,15 @@ class audittrail_objects_proxy(object_proxy):
         """
 
         field_obj = (resource_pool._all_columns.get(field)).column
-        if field_obj._type in ('one2many','many2many'):
-            data = pool.get(field_obj._obj).name_get(cr, uid, value)
-            #return the modifications on x2many fields as a list of names
-            res = map(lambda x:x[1], data)
+        if field_obj._type in ('one2many', 'many2many'):
+            try:
+                data = pool.get(field_obj._obj).name_get(cr, uid, value)
+                # return the modifications on x2many fields as a list of names
+                res = map(lambda x: x[1], data)
+            except:
+                res = []
         elif field_obj._type == 'many2one':
-            #return the modifications on a many2one field as its value returned by name_get()
+            # return the modifications on a many2one field as its value returned by name_get()
             res = value and value[1] or value
         else:
             res = value
@@ -221,7 +225,7 @@ class audittrail_objects_proxy(object_proxy):
         log_line_pool = pool.get('audittrail.log.line')
         for line in lines:
             field_obj = obj_pool._all_columns.get(line['name'])
-            assert field_obj, _("'%s' field does not exist in '%s' model" %(line['name'], model.model))
+            assert field_obj, _("'%s' field does not exist in '%s' model" % (line['name'], model.model))
             field_obj = field_obj.column
             old_value = line.get('old_value', '')
             new_value = line.get('new_value', '')
@@ -233,14 +237,14 @@ class audittrail_objects_proxy(object_proxy):
                 old_value = old_value and old_value[0] or old_value
                 new_value = new_value and new_value[0] or new_value
             vals = {
-                    "log_id": log_id,
-                    "field_id": field_id and field_id[0] or False,
-                    "old_value": old_value,
-                    "new_value": new_value,
-                    "old_value_text": line.get('old_value_text', ''),
-                    "new_value_text": line.get('new_value_text', ''),
-                    "field_description": field_obj.string
-                    }
+                "log_id": log_id,
+                "field_id": field_id and field_id[0] or False,
+                "old_value": old_value,
+                "new_value": new_value,
+                "old_value_text": line.get('old_value_text', ''),
+                "new_value_text": line.get('new_value_text', ''),
+                "field_description": field_obj.string
+            }
             line_id = log_line_pool.create(cr, uid, vals)
         return True
 
@@ -258,7 +262,7 @@ class audittrail_objects_proxy(object_proxy):
         model_pool = pool.get('ir.model')
         model_ids = model_pool.search(cr, 1, [('model', '=', model)])
         model_id = model_ids and model_ids[0] or False
-        assert model_id, _("'%s' Model does not exist..." %(model))
+        assert model_id, _("'%s' Model does not exist..." % (model))
         model = model_pool.browse(cr, 1, model_id)
 
         # fields to log. currently only used by log on read()
@@ -284,7 +288,7 @@ class audittrail_objects_proxy(object_proxy):
             res_ids = args[0]
             old_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
             res = fct_src(cr, uid_orig, model.model, method, *args)
-        else: # method is write, action or workflow action
+        else:  # method is write, action or workflow action
             res_ids = []
             if args:
                 res_ids = args[0]
@@ -341,20 +345,21 @@ class audittrail_objects_proxy(object_proxy):
                 values_text[field] = self.get_value_text(cr, 1, pool, resource_pool, method, field, resource[field])
 
                 field_obj = resource_pool._all_columns.get(field).column
-                if field_obj._type in ('one2many','many2many') and recursive_level:
+                if field_obj._type in ('one2many', 'many2many') and recursive_level:
                     # check if an audittrail rule apply in super admin mode
                     if self.check_rules(cr, 1, field_obj._obj, method):
                         # check if the model associated to a *2m field exists, in super admin mode
                         x2m_model_ids = pool.get('ir.model').search(cr, 1, [('model', '=', field_obj._obj)])
                         x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
-                        assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
+                        assert x2m_model_id, _("'%s' Model does not exist..." % (field_obj._obj))
                         x2m_model = pool.get('ir.model').browse(cr, 1, x2m_model_id)
-                        #recursive call on x2m fields that need to be checked too
+                        # recursive call on x2m fields that need to be checked too
                         data.update(self.get_data(cr, 1, pool, resource[field], x2m_model, method, recursive_level - 1))
-            data[(model.id, resource_id)] = {'text':values_text, 'value': values}
+            data[(model.id, resource_id)] = {'text': values_text, 'value': values}
         return data
 
-    def prepare_audittrail_log_line(self, cr, uid, pool, model, resource_id, method, old_values, new_values, field_list=[], recursive_level=None):
+    def prepare_audittrail_log_line(self, cr, uid, pool, model, resource_id, method, old_values, new_values,
+                                    field_list=[], recursive_level=None):
         """
         This function compares the old data (i.e before the method was executed) and the new data 
         (after the method was executed) and returns a structure with all the needed information to
@@ -392,17 +397,17 @@ class audittrail_objects_proxy(object_proxy):
         }
         # loop on all the fields
         for field_name, field_definition in pool.get(model.model)._all_columns.items():
-            #if the field_list param is given, skip all the fields not in that list
+            # if the field_list param is given, skip all the fields not in that list
             if field_list and field_name not in field_list or field_name in self.__filtered_columns:
                 continue
             field_obj = field_definition.column
-            if field_obj._type in ('one2many','many2many') and recursive_level:
+            if field_obj._type in ('one2many', 'many2many') and recursive_level:
                 # checking if an audittrail rule apply in super admin mode
                 if self.check_rules(cr, 1, field_obj._obj, method):
                     # checking if the model associated to a *2m field exists, in super admin mode
                     x2m_model_ids = pool.get('ir.model').search(cr, 1, [('model', '=', field_obj._obj)])
                     x2m_model_id = x2m_model_ids and x2m_model_ids[0] or False
-                    assert x2m_model_id, _("'%s' Model does not exist..." %(field_obj._obj))
+                    assert x2m_model_id, _("'%s' Model does not exist..." % (field_obj._obj))
                     x2m_model = pool.get('ir.model').browse(cr, 1, x2m_model_id)
                     # the resource_ids that need to be checked are the sum of both old and previous values (because we
                     # need to log also creation or deletion in those lists).
@@ -411,15 +416,19 @@ class audittrail_objects_proxy(object_proxy):
                     # We use list(set(...)) to remove duplicates.
                     res_ids = list(set(x2m_old_values_ids + x2m_new_values_ids))
                     for res_id in res_ids:
-                        lines.update(self.prepare_audittrail_log_line(cr, 1, pool, x2m_model, res_id, method, old_values, new_values, field_list, recursive_level=recursive_level - 1))
+                        lines.update(
+                            self.prepare_audittrail_log_line(cr, 1, pool, x2m_model, res_id, method, old_values,
+                                                             new_values, field_list,
+                                                             recursive_level=recursive_level - 1))
             # if the value value is different than the old value: record the change
-            if key not in old_values or key not in new_values or old_values[key]['value'][field_name] != new_values[key]['value'][field_name]:
+            if key not in old_values or key not in new_values or old_values[key]['value'][field_name] != \
+                    new_values[key]['value'][field_name]:
                 data = {
-                      'name': field_name,
-                      'new_value': key in new_values and new_values[key]['value'].get(field_name),
-                      'old_value': key in old_values and old_values[key]['value'].get(field_name),
-                      'new_value_text': key in new_values and new_values[key]['text'].get(field_name),
-                      'old_value_text': key in old_values and old_values[key]['text'].get(field_name)
+                    'name': field_name,
+                    'new_value': key in new_values and new_values[key]['value'].get(field_name),
+                    'old_value': key in old_values and old_values[key]['value'].get(field_name),
+                    'new_value_text': key in new_values and new_values[key]['text'].get(field_name),
+                    'old_value_text': key in old_values and old_values[key]['text'].get(field_name)
                 }
                 lines[key].append(data)
         return lines
@@ -446,7 +455,8 @@ class audittrail_objects_proxy(object_proxy):
         # loop on all the given ids
         for res_id in res_ids:
             # compare old and new values and get audittrail log lines accordingly
-            lines = self.prepare_audittrail_log_line(cr, uid, pool, model, res_id, method, old_values, new_values, field_list)
+            lines = self.prepare_audittrail_log_line(cr, uid, pool, model, res_id, method, old_values, new_values,
+                                                     field_list)
 
             # if at least one modification has been found
             for model_id, resource_id in lines:
@@ -487,26 +497,32 @@ class audittrail_objects_proxy(object_proxy):
             model_ids = pool.get('ir.model').search(cr, 1, [('model', '=', model)])
             model_id = model_ids and model_ids[0] or False
             if model_id:
-                rule_ids = pool.get('audittrail.rule').search(cr, 1, [('object_id', '=', model_id), ('state', '=', 'subscribed')])
-                for rule in pool.get('audittrail.rule').read(cr, 1, rule_ids, ['user_id','log_read','log_write','log_create','log_unlink','log_action','log_workflow']):
+                rule_ids = pool.get('audittrail.rule').search(cr, 1, [('object_id', '=', model_id),
+                                                                      ('state', '=', 'subscribed')])
+                for rule in pool.get('audittrail.rule').read(cr, 1, rule_ids,
+                                                             ['user_id', 'log_read', 'log_write', 'log_create',
+                                                              'log_unlink', 'log_action', 'log_workflow']):
                     if len(rule['user_id']) == 0 or uid in rule['user_id']:
-                        if rule.get('log_'+method,0):
+                        if rule.get('log_' + method, 0):
                             return True
-                        elif method not in ('default_get','read','fields_view_get','fields_get','search','search_count','name_search','name_get','get','request_get', 'get_sc', 'unlink', 'write', 'create'):
+                        elif method not in (
+                        'default_get', 'read', 'fields_view_get', 'fields_get', 'search', 'search_count', 'name_search',
+                        'name_get', 'get', 'request_get', 'get_sc', 'unlink', 'write', 'create'):
                             if rule['log_action']:
                                 return True
 
     def execute_cr(self, cr, uid, model, method, *args, **kw):
         fct_src = super(audittrail_objects_proxy, self).execute_cr
-        if self.check_rules(cr,uid,model,method):
+        if self.check_rules(cr, uid, model, method):
             return self.log_fct(cr, uid, model, method, fct_src, *args)
         return fct_src(cr, uid, model, method, *args)
 
     def exec_workflow_cr(self, cr, uid, model, method, *args, **argv):
         fct_src = super(audittrail_objects_proxy, self).exec_workflow_cr
-        if self.check_rules(cr,uid,model,'workflow'):
+        if self.check_rules(cr, uid, model, 'workflow'):
             return self.log_fct(cr, uid, model, method, fct_src, *args)
         return fct_src(cr, uid, model, method, *args)
+
 
 audittrail_objects_proxy()
 
