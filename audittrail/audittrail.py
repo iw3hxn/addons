@@ -25,6 +25,10 @@ from tools.translate import _
 import pooler
 import time
 import tools
+import logging
+
+_logger = logging.getLogger(__name__)
+
 
 class audittrail_rule(osv.osv):
     """
@@ -34,15 +38,23 @@ class audittrail_rule(osv.osv):
     _description = "Audittrail Rule"
     _columns = {
         "name": fields.char("Rule Name", size=32, required=True),
-        "object_id": fields.many2one('ir.model', 'Object', required=True, help="Select object for which you want to generate log."),
+        "object_id": fields.many2one('ir.model', 'Object', required=True,
+                                     help="Select object for which you want to generate log."),
         "user_id": fields.many2many('res.users', 'audittail_rules_users',
-                                            'user_id', 'rule_id', 'Users', help="if  User is not added then it will applicable for all users"),
-        "log_read": fields.boolean("Log Reads", help="Select this if you want to keep track of read/open on any record of the object of this rule"),
-        "log_write": fields.boolean("Log Writes", help="Select this if you want to keep track of modification on any record of the object of this rule"),
-        "log_unlink": fields.boolean("Log Deletes", help="Select this if you want to keep track of deletion on any record of the object of this rule"),
-        "log_create": fields.boolean("Log Creates",help="Select this if you want to keep track of creation on any record of the object of this rule"),
-        "log_action": fields.boolean("Log Action",help="Select this if you want to keep track of actions on the object of this rule"),
-        "log_workflow": fields.boolean("Log Workflow",help="Select this if you want to keep track of workflow on any record of the object of this rule"),
+                                    'user_id', 'rule_id', 'Users',
+                                    help="if  User is not added then it will applicable for all users"),
+        "log_read": fields.boolean("Log Reads",
+                                   help="Select this if you want to keep track of read/open on any record of the object of this rule"),
+        "log_write": fields.boolean("Log Writes",
+                                    help="Select this if you want to keep track of modification on any record of the object of this rule"),
+        "log_unlink": fields.boolean("Log Deletes",
+                                     help="Select this if you want to keep track of deletion on any record of the object of this rule"),
+        "log_create": fields.boolean("Log Creates",
+                                     help="Select this if you want to keep track of creation on any record of the object of this rule"),
+        "log_action": fields.boolean("Log Action",
+                                     help="Select this if you want to keep track of actions on the object of this rule"),
+        "log_workflow": fields.boolean("Log Workflow",
+                                       help="Select this if you want to keep track of workflow on any record of the object of this rule"),
         "state": fields.selection((("draft", "Draft"), ("subscribed", "Subscribed")), "State", required=True),
         "action_id": fields.many2one('ir.actions.act_window', "Action ID"),
     }
@@ -53,7 +65,8 @@ class audittrail_rule(osv.osv):
         'log_write': 1,
     }
     _sql_constraints = [
-        ('model_uniq', 'unique (object_id)', """There is already a rule defined on this object\n You cannot define another: please edit the existing one.""")
+        ('model_uniq', 'unique (object_id)',
+         """There is already a rule defined on this object\n You cannot define another: please edit the existing one.""")
     ]
     __functions = {}
 
@@ -67,27 +80,28 @@ class audittrail_rule(osv.osv):
         """
         obj_action = self.pool.get('ir.actions.act_window')
         obj_model = self.pool.get('ir.model.data')
-        #start Loop
+        # start Loop
         for thisrule in self.browse(cr, uid, ids):
             obj = self.pool.get(thisrule.object_id.model)
             if not obj:
                 raise osv.except_osv(
-                        _('WARNING: audittrail is not part of the pool'),
-                        _('Change audittrail depends -- Setting rule as DRAFT'))
+                    _('WARNING: audittrail is not part of the pool'),
+                    _('Change audittrail depends -- Setting rule as DRAFT'))
                 self.write(cr, uid, [thisrule.id], {"state": "draft"})
             val = {
-                 "name": 'View Log',
-                 "res_model": 'audittrail.log',
-                 "src_model": thisrule.object_id.model,
-                 "domain": "[('object_id','=', " + str(thisrule.object_id.id) + "), ('res_id', '=', active_id)]"
+                "name": 'View Log',
+                "res_model": 'audittrail.log',
+                "src_model": thisrule.object_id.model,
+                "domain": "[('object_id','=', " + str(thisrule.object_id.id) + "), ('res_id', '=', active_id)]"
 
             }
             action_id = obj_action.create(cr, 1, val)
             self.write(cr, uid, [thisrule.id], {"state": "subscribed", "action_id": action_id})
             keyword = 'client_action_relate'
             value = 'ir.actions.act_window,' + str(action_id)
-            res = obj_model.ir_set(cr, 1, 'action', keyword, 'View_log_' + thisrule.object_id.model, [thisrule.object_id.model], value, replace=True, isobject=True, xml_id=False)
-            #End Loop
+            res = obj_model.ir_set(cr, 1, 'action', keyword, 'View_log_' + thisrule.object_id.model,
+                                   [thisrule.object_id.model], value, replace=True, isobject=True, xml_id=False)
+            # End Loop
         return True
 
     def unsubscribe(self, cr, uid, ids, *args):
@@ -100,13 +114,14 @@ class audittrail_rule(osv.osv):
         """
         obj_action = self.pool.get('ir.actions.act_window')
         ir_values_obj = self.pool.get('ir.values')
-        value=''
-        #start Loop
+        value = ''
+        # start Loop
         for thisrule in self.browse(cr, uid, ids):
             if thisrule.id in self.__functions:
                 for function in self.__functions[thisrule.id]:
                     setattr(function[0], function[1], function[2])
-            w_id = obj_action.search(cr, uid, [('name', '=', 'View Log'), ('res_model', '=', 'audittrail.log'), ('src_model', '=', thisrule.object_id.model)])
+            w_id = obj_action.search(cr, uid, [('name', '=', 'View Log'), ('res_model', '=', 'audittrail.log'),
+                                               ('src_model', '=', thisrule.object_id.model)])
             if w_id:
                 obj_action.unlink(cr, 1, w_id)
                 value = "ir.actions.act_window" + ',' + str(w_id[0])
@@ -115,8 +130,9 @@ class audittrail_rule(osv.osv):
                 ir_values_obj = pooler.get_pool(cr.dbname).get('ir.values')
                 res = ir_values_obj.unlink(cr, uid, [val_id[0]])
             self.write(cr, uid, [thisrule.id], {"state": "draft"})
-        #End Loop
+        # End Loop
         return True
+
 
 class audittrail_log(osv.osv):
     """
@@ -127,7 +143,7 @@ class audittrail_log(osv.osv):
 
     def _name_get_resname(self, cr, uid, ids, *args):
         data = {}
-        for resname in self.browse(cr, uid, ids,[]):
+        for resname in self.browse(cr, uid, ids, []):
             model_object = resname.object_id
             res_id = resname.res_id
             if model_object and res_id:
@@ -135,11 +151,11 @@ class audittrail_log(osv.osv):
                 res = model_pool.read(cr, uid, res_id, ['name'])
                 data[resname.id] = res['name']
             else:
-                 data[resname.id] = False
+                data[resname.id] = False
         return data
 
     _columns = {
-        "name": fields.char("Resource Name",size=64),
+        "name": fields.char("Resource Name", size=64),
         "object_id": fields.many2one('ir.model', 'Object'),
         "user_id": fields.many2one('res.users', 'User'),
         "method": fields.char("Method", size=64),
@@ -161,15 +177,16 @@ class audittrail_log_line(osv.osv):
     _name = 'audittrail.log.line'
     _description = "Log Line"
     _columns = {
-          'field_id': fields.many2one('ir.model.fields', 'Fields', required=True),
-          'log_id': fields.many2one('audittrail.log', 'Log'),
-          'log': fields.integer("Log ID"),
-          'old_value': fields.text("Old Value"),
-          'new_value': fields.text("New Value"),
-          'old_value_text': fields.text('Old value Text'),
-          'new_value_text': fields.text('New value Text'),
-          'field_description': fields.char('Field Description', size=64),
-        }
+        'field_id': fields.many2one('ir.model.fields', 'Fields', required=True),
+        'log_id': fields.many2one('audittrail.log', 'Log'),
+        'log': fields.integer("Log ID"),
+        'old_value': fields.text("Old Value"),
+        'new_value': fields.text("New Value"),
+        'old_value_text': fields.text('Old value Text'),
+        'new_value_text': fields.text('New value Text'),
+        'field_description': fields.char('Field Description', size=64),
+    }
+
 
 class audittrail_objects_proxy(object_proxy):
     """ Uses Object proxy for auditing changes on object of subscribed Rules"""
@@ -201,6 +218,7 @@ class audittrail_objects_proxy(object_proxy):
                 # return the modifications on x2many fields as a list of names
                 res = map(lambda x: x[1], data)
             except:
+                _logger.error("except on '{model'}".format(model=field_obj._obj))
                 res = []
         elif field_obj._type == 'many2one':
             # return the modifications on a many2one field as its value returned by name_get()
@@ -506,8 +524,9 @@ class audittrail_objects_proxy(object_proxy):
                         if rule.get('log_' + method, 0):
                             return True
                         elif method not in (
-                        'default_get', 'read', 'fields_view_get', 'fields_get', 'search', 'search_count', 'name_search',
-                        'name_get', 'get', 'request_get', 'get_sc', 'unlink', 'write', 'create'):
+                                'default_get', 'read', 'fields_view_get', 'fields_get', 'search', 'search_count',
+                                'name_search',
+                                'name_get', 'get', 'request_get', 'get_sc', 'unlink', 'write', 'create'):
                             if rule['log_action']:
                                 return True
 
@@ -523,8 +542,6 @@ class audittrail_objects_proxy(object_proxy):
             return self.log_fct(cr, uid, model, method, fct_src, *args)
         return fct_src(cr, uid, model, method, *args)
 
-
-audittrail_objects_proxy()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
