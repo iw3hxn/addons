@@ -25,9 +25,6 @@ from tools.translate import _
 import pooler
 import time
 import tools
-import logging
-
-_logger = logging.getLogger(__name__)
 
 
 class audittrail_rule(osv.osv):
@@ -213,13 +210,11 @@ class audittrail_objects_proxy(object_proxy):
 
         field_obj = (resource_pool._all_columns.get(field)).column
         if field_obj._type in ('one2many', 'many2many'):
-            try:
-                data = pool.get(field_obj._obj).name_get(cr, uid, value)
-                # return the modifications on x2many fields as a list of names
-                res = map(lambda x: x[1], data)
-            except:
-                _logger.error("except on '{model'}".format(model=field_obj._obj))
-                res = []
+
+            data = pool.get(field_obj._obj).name_get(cr, uid, value)
+            # return the modifications on x2many fields as a list of names
+            res = map(lambda x: x[1], data)
+
         elif field_obj._type == 'many2one':
             # return the modifications on a many2one field as its value returned by name_get()
             res = value and value[1] or value
@@ -542,6 +537,7 @@ class audittrail_objects_proxy(object_proxy):
             return self.log_fct(cr, uid, model, method, fct_src, *args)
         return fct_src(cr, uid, model, method, *args)
 
+audittrail_objects_proxy()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 
