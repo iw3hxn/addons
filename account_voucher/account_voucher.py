@@ -1048,7 +1048,8 @@ class account_voucher(osv.osv):
         if amount_residual > 0:
             account_id = line.voucher_id.company_id.expense_currency_exchange_account_id
             if not account_id:
-                raise osv.except_osv(_('Warning'),_("Unable to create accounting entry for currency rate difference. You have to configure the field 'Income Currency Rate' on the company! "))
+                msg = u"Error on voucher {ttype} for partner {name} of amount {amount} in date {date}".format(ttype=line.voucher_id.type, name=line.voucher_id.partner_id.name, amount=line.voucher_id.amount, date=line.voucher_id.date)
+                raise osv.except_osv(_('Warning'), _(msg + "\r" + "Unable to create accounting entry for currency rate difference. You have to configure the field 'Income Currency Rate' on the company! "))
         else:
             account_id = line.voucher_id.company_id.income_currency_exchange_account_id
             if not account_id:
