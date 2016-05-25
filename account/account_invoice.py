@@ -1693,7 +1693,7 @@ class account_invoice_line(osv.osv):
                 company_id=account.company_id.id)
             if product_change_result and 'value' in product_change_result and 'invoice_line_tax_id' in product_change_result['value']:
                 unique_tax_ids = product_change_result['value']['invoice_line_tax_id']
-        return {'value':{'invoice_line_tax_id': unique_tax_ids}}
+        return {'value': {'invoice_line_tax_id': unique_tax_ids}}
 
 account_invoice_line()
 

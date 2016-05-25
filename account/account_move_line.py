@@ -107,6 +107,37 @@ class account_move_line(osv.osv):
         query += company_clause
         return query
 
+    def action_view_account_move(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+
+        mod_obj = self.pool['ir.model.data']
+        act_obj = self.pool['ir.actions.act_window']
+
+        result = mod_obj.get_object_reference(cr, uid, 'sale', 'action_order_form')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+
+        # compute the number of delivery orders to display
+        account_move = []
+
+        for account_move_line in self.browse(cr, uid, ids, context=context):
+            account_move += [account_move_line.sale_order.id]
+
+        # choose the view_mode accordingly
+        if len(account_move) > 1:
+            result['domain'] = "[('id','in',[" + ','.join(map(str, account_move)) + "])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'account', 'view_move_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = account_move and account_move[0] or False
+        result['context'] = {'nodelete': '1', 'nocreate': '1'}
+
+        return result
+
     def _amount_residual(self, cr, uid, ids, field_names, args, context=None):
         """
            This function returns the residual amount on a receivable or payable account.move.line.

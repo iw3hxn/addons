@@ -1071,6 +1071,7 @@
                     <field name="date"/>
                     <field name="period_id"/>
                     <field name="move_id"/>
+                    <button string="View" name="action_view_account_move" icon="terp-gtk-find" type="object"/>
                     <field name="ref"/>
                     <field name="invoice"/>
                     <field name="name"/>
@@ -1311,7 +1312,7 @@
             <field name="view_mode">tree,form</field>
             <field name="view_id" ref="view_move_line_tree"/>
             <field name="search_view_id" ref="view_account_move_line_filter"/>
-            <field name="context">{'search_default_account_id': [active_id]}</field>
+            <field name="context">{'search_default_account_id': [active_id], 'nodelete': '1', 'nocreate': '1', 'noduplicate': '1' }</field>
         </record>
 
         <record id="ir_account_move_line_select" model="ir.values">
@@ -1572,7 +1573,7 @@
         </record>
 
         <act_window
-            context="{'search_default_next_partner':1,'view_mode':True}"
+            context="{'search_default_next_partner':1,'view_mode':True,'nodelete': '1', 'nocreate': '1', 'noduplicate': '1'}"
             domain="[('account_id.reconcile','=',True)]"
             id="action_account_manual_reconcile" name="Journal Items"
             res_model="account.move.line"
@@ -2010,6 +2011,7 @@
                 <tree colors="red:state == 'draft';black:state == 'valid'" string="Journal Items">
                     <field name="date"/>
                     <field name="move_id"/>
+                    <button string="View" name="action_view_account_move" icon="terp-gtk-find" type="object"/>
                     <field name="statement_id" string="St."/>
                     <field name="name"/>
                     <field name="partner_id"/>
