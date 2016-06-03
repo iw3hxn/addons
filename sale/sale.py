@@ -758,11 +758,26 @@ class sale_order(osv.osv):
         proc_obj = self.pool.get('procurement.order')
         for sale in self.browse(cr, uid, ids, context=context):
             for pick in sale.picking_ids:
-                if pick.state not in ('draft', 'cancel'):
+                if pick.state == 'done':
+                    product_delivery = []
+                    product_order = []
+
+                    for stock_move in pick.move_lines:
+                        product_delivery.append(stock_move.product_id.id)
+                    for sale_order_line in sale.order_line:
+                        if sale_order_line.product_id:
+                            product_order.append(sale_order_line.product_id.id)
+
+                    result = [val for val in product_delivery if val in product_order]
+                    if result:
+                        raise osv.except_osv(
+                            _('Could not cancel sales order !'),
+                            _('You must first cancel all picking attached to this sales order.'))
+                elif pick.state not in ('draft', 'cancel'):
                     raise osv.except_osv(
                         _('Could not cancel sales order !'),
                         _('You must first cancel all picking attached to this sales order.'))
-                if pick.state == 'cancel':
+                elif pick.state == 'cancel':
                     for mov in pick.move_lines:
                         proc_ids = proc_obj.search(cr, uid, [('move_id', '=', mov.id)])
                         if proc_ids:
