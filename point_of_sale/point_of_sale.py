@@ -70,6 +70,13 @@ class sale_shop(osv.osv):
         ('pos_user_id_uniq', 'unique(pos_user_id)', 'iPos User must be unique!'),
     ]
 
+    def copy(self, cr, uid, id, default=None, context=None):
+        default = default or {}
+        default.update({
+            'pos_user_id': False,
+        })
+        return super(sale_shop, self).copy(cr, uid, id, default, context)
+
 
 class pos_order(osv.osv):
     _name = "pos.order"
