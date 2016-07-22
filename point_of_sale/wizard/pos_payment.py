@@ -95,7 +95,11 @@ class pos_make_payment(osv.osv_memory):
             result = []
             while hr_employee:
                 employee = hr_employee.pop()
-                result.append(hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=context, dt=order.date_order))
+                try:
+                    res = hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=context, dt=order.date_order)
+                except Exception as e:
+                    res = str(e)
+                result.append(res)
 
             order_obj.write(cr, uid, active_id, {'active': False, 'note': result}, context=context)
             wf_service = netsvc.LocalService("workflow")
