@@ -22,14 +22,15 @@
 
 from openerp.osv import fields, osv
 
+
 class product_pricelist(osv.osv):
     _inherit = 'product.pricelist'
 
-    _columns ={
+    _columns = {
         'visible_discount': fields.boolean('Visible Discount'),
     }
     _defaults = {
-         'visible_discount': True,
+        'visible_discount': True,
     }
 
 
@@ -81,15 +82,15 @@ class sale_order_line(osv.osv):
         pricelist_obj = self.pool.get('product.pricelist')
         product_obj = self.pool.get('product.product')
         if product and pricelist:
-            if result.get('price_unit',False):
-                price=result['price_unit']
+            if result.get('price_unit', False):
+                price = result['price_unit']
             else:
                 return res
             uom = result.get('product_uom', uom)
             product = product_obj.browse(cr, uid, product, context)
             pricelist_context = dict(context, uom=uom, date=date_order)
             list_price = pricelist_obj.price_rule_get(cr, uid, [pricelist],
-                    product.id, qty or 1.0, partner_id, context=pricelist_context)
+                                                      product.id, qty or 1.0, partner_id, context=pricelist_context)
 
             so_pricelist = pricelist_obj.browse(cr, uid, pricelist, context=context)
 
@@ -100,8 +101,8 @@ class sale_order_line(osv.osv):
                     ctx = context.copy()
                     ctx['date'] = date_order
                     new_list_price = self.pool['res.currency'].compute(cr, uid,
-                        currency_id, so_pricelist.currency_id,
-                        new_list_price, context=ctx)
+                                                                       currency_id.id, so_pricelist.currency_id.id,
+                                                                       new_list_price, context=ctx)
                 discount = (new_list_price - price) / new_list_price * 100
                 if discount > 0:
                     result['price_unit'] = new_list_price
