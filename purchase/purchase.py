@@ -276,32 +276,33 @@ class purchase_order(osv.osv):
     def onchange_partner_id(self, cr, uid, ids, partner_id):
         partner = self.pool.get('res.partner')
         if not partner_id:
-            return {'value':{'partner_address_id': False, 'fiscal_position': False}}
+            return {'value': {'partner_address_id': False, 'fiscal_position': False}}
         supplier_address = partner.address_get(cr, uid, [partner_id], ['default'])
         supplier = partner.browse(cr, uid, partner_id)
         pricelist = supplier.property_product_pricelist_purchase.id
         fiscal_position = supplier.property_account_position and supplier.property_account_position.id or False
-        return {'value':{'partner_address_id': supplier_address['default'], 'pricelist_id': pricelist, 'fiscal_position': fiscal_position}}
+        return {'value': {'partner_address_id': supplier_address['default'], 'pricelist_id': pricelist,
+                          'fiscal_position': fiscal_position}}
 
     def wkf_approve_order(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state': 'approved', 'date_approve': fields.date.context_today(self,cr,uid,context=context)})
+        self.write(cr, uid, ids,
+                   {'state': 'approved', 'date_approve': fields.date.context_today(self, cr, uid, context=context)})
         return True
 
-    #TODO: implement messages system
+    # TODO: implement messages system
     def wkf_confirm_order(self, cr, uid, ids, context=None):
         todo = []
         for po in self.browse(cr, uid, ids, context=context):
             if not po.order_line:
-                raise osv.except_osv(_('Error !'),_('You cannot confirm a purchase order without any lines.'))
+                raise osv.except_osv(_('Error !'), _('You cannot confirm a purchase order without any lines.'))
             for line in po.order_line:
-                if line.state=='draft':
+                if line.state == 'draft':
                     todo.append(line.id)
             message = _("Purchase order '%s' is confirmed.") % (po.name,)
             self.log(cr, uid, po.id, message)
-#        current_name = self.name_get(cr, uid, ids)[0][1]
+        #        current_name = self.name_get(cr, uid, ids)[0][1]
         self.pool.get('purchase.order.line').action_confirm(cr, uid, todo, context)
-        for id in ids:
-            self.write(cr, uid, [id], {'state' : 'confirmed', 'validator' : uid})
+        self.write(cr, uid, ids, {'state': 'confirmed', 'validator': uid})
         return True
 
     def _choose_account_from_po_line(self, cr, uid, po_line, context=None):
@@ -504,12 +505,17 @@ class purchase_order(osv.osv):
             'company_id': order.company_id.id,
             'move_lines' : [],
         }
-         
+
     def _prepare_order_line_move(self, cr, uid, order, order_line, picking_id, context=None):
 
         price_unit = 0
         if order_line.product_qty != 0.0:
-            price_unit = order_line.price_subtotal / order_line.product_qty
+            price_unit = self.pool['res.currency'].compute(cr, uid, order.pricelist_id.currency_id.id,
+                                                           order.company_id.currency_id.id,
+                                                           order_line.price_subtotal, round=True,
+                                                           currency_rate_type_from=False,
+                                                           currency_rate_type_to=False,
+                                                           context=context) / order_line.product_qty
 
         return {
             'name': order.name + ': ' + (order_line.name or ''),
@@ -568,7 +574,7 @@ class purchase_order(osv.osv):
         wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
         return [picking_id]
 
-    def action_picking_create(self,cr, uid, ids, context=None):
+    def action_picking_create(self, cr, uid, ids, context=None):
         picking_ids = []
         for order in self.browse(cr, uid, ids):
             picking_ids.extend(self._create_pickings(cr, uid, order, order.order_line, None, context=context))
