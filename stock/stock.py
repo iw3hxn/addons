@@ -619,7 +619,7 @@ class stock_picking(osv.osv):
 
         for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
-                text = _('{name} has been change to {state}'.format(name=name, state=self.browse(cr, uid, id, context=context).state))
+                text = _('{name} has been change to {state}'.format(name=name, state=str(dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])))
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
             if vals.get('invoice_state', False):
