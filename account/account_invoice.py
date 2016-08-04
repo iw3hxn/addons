@@ -428,7 +428,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             if context is None:
                 context = self.pool['res.users'].context_get(cr, uid)
             if vals.get('state', False):
-                text = name + _(' has been change to ') + str(dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])
+                text = name + _(' has been change to ') + dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)]
                 self.log(cr, uid, ids, text)
                 self.message_append(cr, uid, [ids], text, body_text=text, context=context)
             if vals.get('internal_number', False):
