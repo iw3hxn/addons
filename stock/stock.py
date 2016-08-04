@@ -619,13 +619,15 @@ class stock_picking(osv.osv):
 
         for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
-                text = _('{name} has been change to {state}'.format(name=name, state=str(dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])))
+                text = _(u'{name} has been change to {state}').format(name=name, state=str(dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)]))
                 self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
             if vals.get('invoice_state', False):
                 stock = self.browse(cr, uid, id, context)
                 if vals.get('invoice_state', False) and (stock.invoice_state != vals.get('invoice_state', False)):
-                    text = _('{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=stock.invoice_state, invoice_to=vals.get('invoice_state', False))
+                    invoice_to = str(dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[vals.get('invoice_state', False)])
+                    invoice_from = str(dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[stock.invoice_state])
+                    text = _(u'{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=invoice_from, invoice_to=invoice_to)
                     self.log(cr, uid, id, text)
                     self.message_append(cr, uid, [id], text, body_text=text, context=context)
 

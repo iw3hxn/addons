@@ -4378,3 +4378,9 @@ msgstr "Dettagli localizzazione opzionali, puramente a scopo informativo"
 #, python-format
 msgid "{order} has been change invoice state {invoice_from} to {invoice_to}"
 msgstr "{order} ha cambiato il controllo di fatturazione da {invoice_from} a {invoice_to}"
+
+#. module: stock
+#: code:addons/stock/stock.py:622
+#, python-format
+msgid "{name} has been change to {state}"
+msgstr "{name} è cambiato in {state}"
