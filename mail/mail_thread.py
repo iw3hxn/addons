@@ -24,16 +24,17 @@ import tools
 import base64
 import email
 from email.utils import parsedate
+from datetime import datetime
 
 import logging
 import xmlrpclib
-from osv import osv, fields
+from openerp.osv import orm, fields
 from tools.translate import _
 from mail_message import decode, to_email
 
 _logger = logging.getLogger('mail')
 
-class mail_thread(osv.osv):
+class mail_thread(orm.Model):
     '''Mixin model, meant to be inherited by any model that needs to
        act as a discussion topic on which messages can be attached.
        Public methods are prefixed with ``message_`` in order to avoid
@@ -206,7 +207,7 @@ class mail_thread(osv.osv):
 
         ir_attachment = self.pool.get('ir.attachment')
         mail_message = self.pool.get('mail.message')
-
+        fields.date.context_today(self, cr, uid, context=context)
         for thread in threads:
             to_attach = []
             for attachment in attachments:
@@ -226,17 +227,18 @@ class mail_thread(osv.osv):
             partner_id = hasattr(thread, 'partner_id') and (thread.partner_id and thread.partner_id.id or False) or False
             if not partner_id and thread._name == 'res.partner':
                 partner_id = thread.id
+
             data = {
                 'subject': subject,
                 'user_id': uid,
-                'model' : thread._name,
+                'model': thread._name,
                 'partner_id': partner_id,
                 'res_id': thread.id,
-                'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+                'date': fields.datetime.now(),
                 'message_id': message_id,
                 'body_text': body_text or (hasattr(thread, 'description') and thread.description or False),
                 'attachment_ids': [(6, 0, to_attach)],
-                'state' : 'received',
+                'state': 'received',
             }
 
             if email_from:
