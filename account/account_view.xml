@@ -181,8 +181,10 @@
                             </group>
                             <separator string="Default Taxes" colspan="4"/>
                             <field colspan="4" name="tax_ids" nolabel="1" domain="[('parent_id','=',False)]" />
-                            <separator string="Consolidated Children" colspan="4"/>
-                            <field name="child_consol_ids" colspan="4" nolabel="1" attrs="{'readonly':[('type','!=','consolidation')]}"/>
+                            <group col="2" colspan="2" attrs="{'invisible':[('type','!=','consolidation')]}">
+                                <separator string="Consolidated Children" colspan="4" />
+                                <field name="child_consol_ids" colspan="4" nolabel="1" attrs="{'invisible':[('type','!=','consolidation')]}"/>
+                            </group>
                         </page>
                         <page string="Notes">
                             <field colspan="4" name="note" nolabel="1"/>
