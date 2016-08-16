@@ -33,7 +33,7 @@ class sale_order_dates(osv.osv):
         for order in self.browse(cr, uid, ids, context=context):
             dates_list = []
             for pick in order.picking_ids:
-                dates_list.append(pick.date)
+                dates_list.append(pick.date_done)
             if dates_list:
                 res[order.id] = min(dates_list)
             else:
@@ -54,11 +54,10 @@ class sale_order_dates(osv.osv):
         return res
 
     _columns = {
-        'commitment_date': fields.function(_get_commitment_date, store=True, type='date', string='Commitment Date', help="Committed date for delivery."),
+        'commitment_date': fields.function(_get_commitment_date, store=False, type='date', string='Commitment Date', help="Committed date for delivery."),
         'requested_date': fields.date('Requested Date', help="Date requested by the customer for the sale."),
-        'effective_date': fields.function(_get_effective_date, type='date', store=True, string='Effective Date',help="Date on which picking is created."),
+        'effective_date': fields.function(_get_effective_date, type='date', store=False, string='Effective Date',help="Date on which picking is created."),
     }
 
-sale_order_dates()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

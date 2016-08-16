@@ -22,7 +22,7 @@
 
 {
     'name': 'Dates on Sales Order',
-    'version': '1.0.a',
+    'version': '1.0.b',
     'category': 'Sales Management',
     'complexity': "easy",
     'description': """
