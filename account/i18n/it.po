@@ -2809,7 +2809,7 @@ msgstr "Contabilità Analitica"
 #. module: account
 #: report:account.aged_trial_balance:0
 msgid "Not due"
-msgstr "Non dovuto"
+msgstr "A Scadere"
 
 #. module: account
 #: view:account.account:0
