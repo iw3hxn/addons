@@ -746,11 +746,11 @@ class account_account(osv.osv):
             old_type = account.type
             account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])])
             if line_obj.search(cr, uid, [('account_id', 'in', account_ids)]):
-                #Check for 'Closed' type
+                # Check for 'Closed' type
                 if old_type == 'closed' and new_type != 'closed':
                     raise osv.except_osv(_('Warning !'), _(
                         "You cannot change the type of account from 'Closed' to any other type which contains journal items!"))
-                #Check for change From group1 to group2 and vice versa
+                # Check for change From group1 to group2 and vice versa
                 if (old_type in group1 and new_type in group2) or (old_type in group2 and new_type in group1):
                     raise osv.except_osv(_('Warning !'), _(
                         "You cannot change the type of account from '%s' to '%s' type as it contains journal items!") % (
@@ -761,6 +761,7 @@ class account_account(osv.osv):
     # the code of an account if journal entries have been already posted on this account. This cannot be simply 
     # 'configurable' since it can lead to a lack of confidence in OpenERP and this is what we want to change.
     def _check_allow_code_change(self, cr, uid, ids, context=None):
+        return True
         line_obj = self.pool.get('account.move.line')
         for account in self.browse(cr, uid, ids, context=context):
             account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])], context=context)
