@@ -52,21 +52,28 @@ class stock_picking(osv.osv):
         return result.keys()
     
     _columns = {
-        'carrier_id':fields.many2one("delivery.carrier","Carrier"),
+        'carrier_id': fields.many2one("delivery.carrier", "Carrier"),
         'volume': fields.float('Volume'),
-        'weight': fields.function(_cal_weight, type='float', string='Weight', digits_compute= dp.get_precision('Stock Weight'), multi='_cal_weight',
-                  store={
-                 'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['move_lines'], 20),
-                 'stock.move': (_get_picking_line, ['product_id','product_qty','product_uom','product_uos_qty'], 20),
-                 }),
-        'weight_net': fields.function(_cal_weight, type='float', string='Net Weight', digits_compute= dp.get_precision('Stock Weight'), multi='_cal_weight',
-                  store={
-                 'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['move_lines'], 20),
-                 'stock.move': (_get_picking_line, ['product_id','product_qty','product_uom','product_uos_qty'], 20),
-                 }),
+        # 'weight': fields.function(_cal_weight, type='float', string='Weight',
+        #                           digits_compute=dp.get_precision('Stock Weight'), multi='_cal_weight',
+        #                           store={
+        #                               'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['move_lines'], 20),
+        #                               'stock.move': (_get_picking_line,
+        #                                              ['product_id', 'product_qty', 'product_uom', 'product_uos_qty'],
+        #                                              20),
+        #                           }),
+        # 'weight_net': fields.function(_cal_weight, type='float', string='Net Weight',
+        #                               digits_compute=dp.get_precision('Stock Weight'), multi='_cal_weight',
+        #                               store={
+        #                                   'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['move_lines'], 20),
+        #                                   'stock.move': (_get_picking_line, ['product_id', 'product_qty', 'product_uom',
+        #                                                                      'product_uos_qty'], 20),
+        #                               }),
+        'weight': fields.float('Gross weight', digits_compute=dp.get_precision('Stock Weight'), help="The gross weight in Kg."),
+        'weight_net': fields.float('Net weight', digits_compute=dp.get_precision('Stock Weight'), help="The net weight in Kg."),
         'carrier_tracking_ref': fields.char('Carrier Tracking Ref', size=32),
         'number_of_packages': fields.integer('Number of Packages'),
-        }
+    }
 
     def _prepare_shipping_invoice_line(self, cr, uid, picking, invoice, context=None):
         """Prepare the invoice line to add to the shipping costs to the shipping's
