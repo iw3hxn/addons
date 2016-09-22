@@ -178,6 +178,7 @@ class openerp_dav_handler(dav_interface):
         self.parent = parent
         self.baseuri = parent.baseuri
         self.verbose = verbose
+        self.nods = {}
 
     def get_propnames(self, uri):
         props = self.PROPS
@@ -481,8 +482,11 @@ class openerp_dav_handler(dav_interface):
     def uri2object(self, cr, uid, pool, uri):
         if not uid:
             return None
-        context = self.reduce_useragent()
-        return pool.get('document.directory').get_object(cr, uid, uri, context=context)
+        path = '/'.join(uri)
+        if not uri or not path in self.nods:
+            context = self.reduce_useragent()
+            self.nods[path] = pool.get('document.directory').get_object(cr, uid, uri, context=context)
+        return self.nods[path]
 
     def get_data(self,uri, rrange=None):
         self.parent.log_message('GET: %s' % uri)
