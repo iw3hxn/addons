@@ -1326,6 +1326,11 @@ msgid "Delegations History"
 msgstr "Delegations History"
 
 #. module: project
+#: view:project.task:0
+msgid "Delegation"
+msgstr "Deleghe"
+
+#. module: project
 #: model:ir.model,name:project.model_res_users
 msgid "res.users"
 msgstr "res.users"
@@ -2018,3 +2023,13 @@ msgstr "Mail Footer"
 #: view:project.task:0 view:project.task.history.cumulative:0
 msgid "In Progress Tasks"
 msgstr "Attività in Lavorazione"
+
+#. module: project
+#: view:project.task:0
+msgid "Task summary..."
+msgstr "Riepilogo Attività"
+
+#. module: project
+#: view:project.task:0
+msgid "Add a Description..."
+msgstr "Aggiungi una Descrizione"

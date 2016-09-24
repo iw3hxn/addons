@@ -28,12 +28,7 @@ from tools.translate import _
 from osv import fields, osv
 from openerp.addons.resource.faces import task as Task
 
-
-# I think we can remove this in v6.1 since VMT's improvements in the framework ?
-#class project_project(osv.osv):
-#    _name = 'project.project'
-#project_project()
-
+_TASK_STATE = [('draft', 'New'),('open', 'In Progress'),('pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')]
 
 class project_task_type(osv.osv):
     _name = 'project.task.type'
@@ -45,17 +40,38 @@ class project_task_type(osv.osv):
         'sequence': fields.integer('Sequence'),
         'project_default': fields.boolean('Common to All Projects', help="If you check this field, this stage will be proposed by default on each new project. It will not assign this stage to existing projects."),
         'project_ids': fields.many2many('project.project', 'project_task_type_rel', 'type_id', 'project_id', 'Projects'),
+        'state': fields.selection(_TASK_STATE, 'Related Status', required=True,
+                        help="The status of your document is automatically changed regarding the selected stage. " \
+                            "For example, if a stage is related to the status 'Close', when your document reaches this stage, it is automatically closed."),
+        'fold': fields.boolean('Folded by Default',
+                        help="This stage is not visible, for example in status bar or kanban view, when there are no records in that stage to display."),
     }
+    def _get_default_project_id(self, cr, uid, ctx={}):
+        proj = ctx.get('default_project_id', False)
+        if type(proj) is int:
+            return [proj]
+        return proj
     _defaults = {
-        'sequence': 1
+        'sequence': 1,
+        'state': 'open',
+        'fold': False,
+        'project_ids': _get_default_project_id
     }
     _order = 'sequence'
 
+def short_name(name):
+        """Keep first word(s) of name to make it small enough
+           but distinctive"""
+        if not name: return name
+        # keep 7 chars + end of the last word
+        keep_words = name[:7].strip().split()
+        return ' '.join(name.split()[:len(keep_words)])
 
 class project(osv.osv):
     _name = "project.project"
     _description = "Project"
     _inherits = {'account.analytic.account': "analytic_account_id"}
+    _inherit = ['mail.thread']
 
     def search(self, cr, user, args, offset=0, limit=None, order=None, context=None, count=False):
         if user == 1:
@@ -194,13 +210,25 @@ class project(osv.osv):
         #         'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
         #     }),
         'planned_hours': fields.function(_progress_rate, multi="progress", string='Planned Time', help="Sum of planned hours of all tasks related to this project and its child projects.",
-            store=False),
+            store = {
+                'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
+                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+            }),
         'effective_hours': fields.function(_progress_rate, multi="progress", string='Time Spent', help="Sum of spent hours of all tasks related to this project and its child projects.",
-            store=False),
+            store = {
+                'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
+                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+            }),
         'total_hours': fields.function(_progress_rate, multi="progress", string='Total Time', help="Sum of total hours of all tasks related to this project and its child projects.",
-            store=False),
+            store = {
+                'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
+                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+            }),
         'progress_rate': fields.function(_progress_rate, multi="progress", string='Progress', type='float', group_operator="avg", help="Percent of tasks closed according to the total of tasks todo.",
-            store=False),
+            store = {
+                'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
+                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+            }),
         'resource_calendar_id': fields.many2one('resource.calendar', 'Working Time',
                                                 help="Timetable working hours to adjust the gantt diagram report",
                                                 states={'close': [('readonly', True)]}),
@@ -221,7 +249,7 @@ class project(osv.osv):
         ids = self.pool.get('project.task.type').search(cr, uid, [('project_default', '=', 1)], context=context)
         return ids
 
-    _order = "sequence"
+    _order = "sequence, id"
     _defaults = {
         'active': True,
         'priority': 1,
@@ -263,12 +291,10 @@ class project(osv.osv):
         return True
 
     def set_pending(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state':'pending'}, context=context)
-        return True
+        return self.write(cr, uid, ids, {'state':'pending'}, context=context)
 
     def set_open(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state':'open'}, context=context)
-        return True
+        return self.write(cr, uid, ids, {'state':'open'}, context=context)
 
     def reset_project(self, cr, uid, ids, context=None):
         res = self.setActive(cr, uid, ids, value=True, context=context)
@@ -484,6 +510,7 @@ class task(osv.osv):
     _description = "Task"
     _log_create = True
     _date_name = "date_start"
+    _inherit = ['mail.thread']
 
     def _resolve_project_id_from_context(self, cr, uid, context=None):
         """Return ID of project based on the value of 'project_id'
@@ -533,7 +560,7 @@ class task(osv.osv):
         result = res_users.name_get(cr, access_rights_uid, ids, context=context)
         # restore order of the search
         result.sort(lambda x,y: cmp(ids.index(x[0]), ids.index(y[0])))
-        return result
+        return result, {}
 
     _group_by_full = {
         'type_id': _read_group_type_id,
@@ -643,9 +670,14 @@ class task(osv.osv):
         'priority': fields.selection([('4', 'Very Low'), ('3', 'Low'), ('2', 'Medium'), ('1', 'Important'), ('0', 'Very important')], 'Priority', select=True),
         'sequence': fields.integer('Sequence', select=True, help="Gives the sequence order when displaying a list of tasks."),
         'type_id': fields.many2one('project.task.type', 'Stage'),
-        'state': fields.selection([('draft', 'New'), ('open', 'In Progress'), ('pending', 'Pending'), ('done', 'Done'), ('cancelled', 'Cancelled')], 'State', readonly=True, required=True,
-                                  help='If the task is created the state is \'Draft\'.\n If the task is started, the state becomes \'In Progress\'.\n If review is needed the task is in \'Pending\' state.\
-                                  \n If the task is over, the states is set to \'Done\'.'),
+        'state': fields.related('stage_id', 'state', type="selection", store=True,
+                selection=_TASK_STATE, string="Status", readonly=True, select=True,
+                help='The status is set to \'Draft\', when a case is created.\
+                      If the case is in progress the status is set to \'Open\'.\
+                      When the case is over, the status is set to \'Done\'.\
+                      If the case needs to be reviewed then the status is \
+                      set to \'Pending\'.'),
+        'categ_ids': fields.many2many('project.category', string='Tags'),
         'kanban_state': fields.selection([('normal', 'Normal'), ('blocked', 'Blocked'), ('done', 'Ready To Pull')], 'Kanban State',
                                          help="A task's kanban state indicates special situations affecting it:\n"
                                               " * Normal is the default situation\n"
@@ -653,6 +685,7 @@ class task(osv.osv):
                                               " * Ready To Pull indicates the task is ready to be pulled to the next stage",
                                          readonly=True, required=False),
         'create_date': fields.datetime('Create Date', readonly=True,select=True),
+        'write_date': fields.datetime('Last Modification Date', readonly=True, select=True), #not displayed in the view but it might be useful with base_action_rule module (and it needs to be defined first for that)
         'date_start': fields.datetime('Starting Date', select=True),
         'date_end': fields.datetime('Ending Date', select=True),
         'date_deadline': fields.date('Deadline', select=True),
@@ -800,6 +833,38 @@ class task(osv.osv):
             if 'Hours' in res['fields'][f]['string']:
                 res['fields'][f]['string'] = res['fields'][f]['string'].replace('Hours', tm)
         return res
+
+    # ----------------------------------------
+    # Case management
+    # ----------------------------------------
+
+    def stage_find(self, cr, uid, cases, section_id, domain=[], order='sequence', context=None):
+        """ Override of the base.stage method
+            Parameter of the stage search taken from the lead:
+            - section_id: if set, stages must belong to this section or
+              be a default stage; if not set, stages must be default
+              stages
+        """
+        if isinstance(cases, (int, long)):
+            cases = self.browse(cr, uid, cases, context=context)
+        # collect all section_ids
+        section_ids = []
+        if section_id:
+            section_ids.append(section_id)
+        for task in cases:
+            if task.project_id:
+                section_ids.append(task.project_id.id)
+        search_domain = []
+        if section_ids:
+            search_domain = [('|')] * (len(section_ids)-1)
+            for section_id in section_ids:
+                search_domain.append(('project_ids', '=', section_id))
+        search_domain += list(domain)
+        # perform search, return the first found
+        stage_ids = self.pool.get('project.task.type').search(cr, uid, search_domain, order=order, context=context)
+        if stage_ids:
+            return stage_ids[0]
+        return False
 
     def _check_child_task(self, cr, uid, ids, context=None):
         if not context:
@@ -1290,3 +1355,12 @@ class project_task_history_cumulative(osv.osv):
             ) as history
         )
         """)
+
+class project_category(osv.osv):
+    """ Category of project's task (or issue) """
+    _name = "project.category"
+    _description = "Category of project's task, issue, ..."
+    _columns = {
+        'name': fields.char('Name', size=64, required=True, translate=True),
+    }
+# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
