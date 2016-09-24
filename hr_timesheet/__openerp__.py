@@ -22,7 +22,7 @@
 
 {
     'name': 'Timesheets',
-    'version': '1.0',
+    'version': '1.0a',
     "category": "Human Resources",
     'complexity': "easy",
     'description': """
