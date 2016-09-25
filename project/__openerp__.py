@@ -22,7 +22,7 @@
 
 {
     "name": "Project Management",
-    "version": "1.1.1c",
+    "version": "1.1.1d",
     "author": "OpenERP SA",
     "website": "http://www.openerp.com",
     "category": "Project Management",

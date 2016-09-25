@@ -468,7 +468,7 @@ msgstr "Pianificazione"
 #: view:project.task:0 field:project.task,date_deadline:0
 #: field:report.project.task.user,date_deadline:0
 msgid "Deadline"
-msgstr "Scadenza"
+msgstr "Da completare entro"
 
 #. module: project
 #: view:project.task.delegate:0 view:project.task.reevaluate:0
@@ -2032,4 +2032,34 @@ msgstr "Riepilogo Attività"
 #. module: project
 #: view:project.task:0
 msgid "Add a Description..."
-msgstr "Aggiungi una Descrizione"
+msgstr "Aggiungi una Descrizione..."
+
+#. module: project
+#: model:res.groups,name:project.group_tasks_work_on_tasks
+msgid "Task's Work on Tasks"
+msgstr "Esecuzioni Attività"
+
+#. module: project
+#: model:res.groups,name:project.group_delegate_task
+msgid "Task Delegation"
+msgstr "Delega Attività"
+
+#. module: project
+#: model:res.groups,name:project.group_tasks_work_on_tasks
+msgid "Task's Work on Tasks"
+msgstr "Esecuzioni Attività"
+
+#. module: project
+#: model:res.groups,name:project.group_time_work_estimation_tasks
+msgid "Time Estimation on Tasks"
+msgstr "Stima Tempistiche su Attività"
+
+#. module: project
+#: view:project.task:0
+msgid "Gantt View"
+msgstr "Vista Gantt"
+
+#. module: project
+#: view:project.task:0
+msgid "Description"
+msgstr "Descrizione"
