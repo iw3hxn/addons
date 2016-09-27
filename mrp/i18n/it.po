@@ -1615,7 +1615,7 @@ msgstr "Produrre"
 #: model:process.transition,name:mrp.process_transition_servicemto0
 #: model:process.transition,name:mrp.process_transition_stockproduct0
 msgid "Make to Order"
-msgstr "Produrre su Ordine"
+msgstr "Approvigiona su Ordine"
 
 #. module: mrp
 #: code:addons/mrp/mrp.py:358

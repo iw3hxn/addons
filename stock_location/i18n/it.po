@@ -186,7 +186,7 @@ msgstr "Produrre su ordine"
 #. module: stock_location
 #: selection:product.pulled.flow,procure_method:0
 msgid "Make to Stock"
-msgstr "Produrre per Magazzino"
+msgstr "Approvigiona per Magazzino"
 
 #. module: stock_location
 #: field:product.pulled.flow,partner_address_id:0

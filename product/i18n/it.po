@@ -1437,7 +1437,7 @@ msgstr ""
 #. module: product
 #: selection:product.template,procure_method:0
 msgid "Make to Stock"
-msgstr "Produrre per Magazzino"
+msgstr "Approvigiona per Magazzino"
 
 #. module: product
 #: field:product.pricelist.item,price_version_id:0
@@ -1781,7 +1781,7 @@ msgstr "Produrre"
 #. module: product
 #: selection:product.template,procure_method:0
 msgid "Make to Order"
-msgstr "Produrre su Ordine"
+msgstr "Approvigiona su Ordine"
 
 #. module: product
 #: code:addons/product/report/product_pricelist.py:49
