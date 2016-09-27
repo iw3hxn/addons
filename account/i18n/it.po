@@ -11475,3 +11475,33 @@ msgstr " ha impostato il numero della fattura in  "
 #, python-format
 msgid "You cannot change the code of account which contains journal items!"
 msgstr "Non è possibile modificare il codice del conto in quanto ci sono delle scritture!"
+
+#. module: account
+#: field:account.fiscal.position,auto_apply:0
+msgid "Automatic"
+msgstr "Automatico"
+
+#. module: account
+#: help:account.fiscal.position,auto_apply:0
+msgid "Apply automatically this fiscal position if the conditions match."
+msgstr "Applica automaticamente questa posizione fiscale se sono verificate le condizioni"
+
+#. module: account
+#: help:account.fiscal.position,vat_required:0
+msgid "Apply only if partner has a VAT number."
+msgstr "Applica solo se il partner ha un codice IVA associato."
+
+#. module: account
+#: field:account.fiscal.position,customer:0
+msgid "Customer"
+msgstr "Fatture Clienti"
+
+#. module: account
+#: field:account.fiscal.position,supplier:0
+msgid "Supplier"
+msgstr "Fatture Fornitori"
+
+#. module: account
+#: view:account.fiscal.position:0
+msgid "Availability"
+msgstr "Disponibile per:"

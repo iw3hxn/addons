@@ -7,25 +7,41 @@
             <field name="model">account.fiscal.position</field>
             <field name="type">form</field>
             <field name="arch" type="xml">
-                <form string="Fiscal Position">
-                    <group colspan="4" col="6">
-                        <field name="name" select="1"/>
-                        <field name="company_id" widget="selection" groups="base.group_multi_company"/>
-                        <field name="active" groups="base.group_extended"/>
+                <form string="Fiscal Position" col="4">
+                    <group colspan="4">
+                        <group colspan="2">
+                            <field name="name"/>
+                            <field name="active"/>
+                            <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                        </group>
+                        <group colspan="2">
+                            <field name="sequence"/>
+                            <group string="Availability">
+                                <field name="customer"/>
+                                <field name="supplier"/>
+                            </group>
+                            <!--<field name="auto_apply" />-->
+                            <!--<field name="vat_required" attrs="{'readonly': [('auto_apply', '=', False)]}"/>-->
+                            <!--<field name="country_id"/>-->
+                            <!--<field name="country_group_id"/>-->
+                        </group>
                     </group>
                     <separator string="Mapping" colspan="4"/>
-                    <newline/>
-                    <field name="tax_ids" colspan="2" widget="one2many_list" nolabel="1">
+
+                    <field name="tax_ids" widget="one2many_list" nolabel="1" colspan="2">
                         <tree string="Tax Mapping" editable="bottom">
                             <field name="tax_src_id" domain="[('parent_id','=',False)]"/>
-                            <field name="tax_dest_id" domain="[('parent_id','=',False)]"/>
+                            <field name="tax_dest_id"
+                                   domain="[('parent_id','=',False), ('price_include', '=', False)]"/>
                         </tree>
                         <form string="Tax Mapping">
                             <field name="tax_src_id" domain="[('parent_id','=',False)]"/>
-                            <field name="tax_dest_id" domain="[('parent_id','=',False)]"/>
+                            <field name="tax_dest_id"
+                                   domain="[('parent_id','=',False), ('price_include', '=', False)]"/>
                         </form>
                     </field>
-                    <field name="account_ids" colspan="2" widget="one2many_list" nolabel="1">
+
+                    <field name="account_ids" widget="one2many_list" nolabel="1" colspan="2">
                         <tree string="Account Mapping" editable="bottom">
                             <field name="account_src_id"/>
                             <field name="account_dest_id"/>
@@ -36,16 +52,18 @@
                         </form>
                     </field>
                     <separator string="Notes" colspan="4"/>
-                    <field name="note" colspan="4" nolabel="1"/>
+                    <field name="note"/>
                 </form>
             </field>
         </record>
+
         <record id="view_account_position_tree" model="ir.ui.view">
             <field name="name">account.fiscal.position.tree</field>
             <field name="model">account.fiscal.position</field>
             <field name="type">tree</field>
             <field name="arch" type="xml">
                 <tree string="Fiscal Position">
+                    <field name="sequence"/>
                     <field name="name"/>
                     <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                 </tree>

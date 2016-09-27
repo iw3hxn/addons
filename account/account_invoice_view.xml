@@ -154,7 +154,7 @@
                         <newline/>
                         <field string="Supplier" name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)" context="{'default_customer': 0, 'search_default_supplier': 1, 'default_supplier': 1}" options='{"quick_create": false}' domain="[('supplier', '=', True)]"/>
                         <field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" context="{'default_partner_id': partner_id}" options='{"quick_create": false}'/>
-                        <field name="fiscal_position" groups="base.group_extended" widget="selection"/>
+                        <field name="fiscal_position" groups="base.group_extended" widget="selection" domain="[('supplier', '=', True)]"/>
                         <newline/>
                         <field name="date_invoice"/>
                         <field name="period_id" domain="[('state', '=', 'draft')]" groups="account.group_account_user" widget="selection"/>
@@ -284,7 +284,7 @@
                     <newline/>
                     <field string="Customer" name="partner_id" on_change="onchange_partner_id(type,partner_id,date_invoice,payment_term, partner_bank_id,company_id)" groups="base.group_user" context="{'search_default_customer': 1}" options='{"quick_create": false}' domain="[('customer', '=', True)]"/>
                     <field domain="[('partner_id','=',partner_id)]" name="address_invoice_id" context="{'default_partner_id': partner_id}" options='{"quick_create": false}'/>
-                    <field name="fiscal_position" groups="base.group_extended" widget="selection" options='{"quick_create": false}'/>
+                    <field name="fiscal_position" groups="base.group_extended" widget="selection" options='{"quick_create": false}' domain="[('customer', '=', True)]"/>
                     <newline/>
                     <field name="date_invoice"/>
                     <field name="period_id" domain="[('state', '=', 'draft')]" groups="account.group_account_user" widget="selection"/>

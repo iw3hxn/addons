@@ -27,17 +27,38 @@ class account_fiscal_position(osv.osv):
     _name = 'account.fiscal.position'
     _description = 'Fiscal Position'
     _columns = {
+        'sequence': fields.integer('Sequence'),
         'name': fields.char('Fiscal Position', size=64, required=True),
+        'supplier': fields.boolean('Supplier'),
+        'customer': fields.boolean('Customer'),
         'active': fields.boolean('Active', help="By unchecking the active field, you may hide a fiscal position without deleting it."),
         'company_id': fields.many2one('res.company', 'Company'),
         'account_ids': fields.one2many('account.fiscal.position.account', 'position_id', 'Account Mapping'),
         'tax_ids': fields.one2many('account.fiscal.position.tax', 'position_id', 'Tax Mapping'),
         'note': fields.text('Notes', translate=True),
+        'auto_apply': fields.boolean('Automatic', help="Apply automatically this fiscal position if the conditions match."),
+        'vat_required': fields.boolean('VAT required', help="Apply only if partner has a VAT number."),
+        'country_id': fields.many2one('res.country', 'Country', help="Apply when the shipping or invoicing country matches. Takes precedence over positions matching on a country group."),
+        'country_group_id': fields.many2one('res.country', 'Country Group', help="Apply when the shipping or invoicing country is in this country group, and no position matches the country directly."),
     }
 
     _defaults = {
         'active': True,
+        'supplier': True,
+        'customer': True,
     }
+
+    _order = 'sequence'
+
+    def _check_country(self, cr, uid, ids, context=None):
+        obj = self.browse(cr, uid, ids[0], context=context)
+        if obj.country_id and obj.country_group_id:
+            return False
+        return True
+
+    _constraints = [
+        (_check_country, 'You can not select a country and a group of countries', ['country_id', 'country_group_id']),
+    ]
 
     def map_tax(self, cr, uid, fposition_id, taxes, context=None):
         if not taxes:
@@ -65,7 +86,42 @@ class account_fiscal_position(osv.osv):
                 break
         return account_id
 
-account_fiscal_position()
+    def get_fiscal_position(self, cr, uid, company_id, partner_id, delivery_id=None, context=None):
+        if not partner_id:
+            return False
+        # This can be easily overriden to apply more complex fiscal rules
+        part_obj = self.pool['res.partner']
+        partner = part_obj.browse(cr, uid, partner_id, context=context)
+
+        # if no delivery use invocing
+        if delivery_id:
+            delivery = part_obj.browse(cr, uid, delivery_id, context=context)
+        else:
+            delivery = partner
+
+        # partner manually set fiscal position always win
+        if delivery.property_account_position or partner.property_account_position:
+            return delivery.property_account_position.id or partner.property_account_position.id
+
+        domains = [[('auto_apply', '=', True), ('vat_required', '=', partner.vat_subjected)]]
+        if partner.vat_subjected:
+            # Possibly allow fallback to non-VAT positions, if no VAT-required position matches
+            domains += [[('auto_apply', '=', True), ('vat_required', '=', False)]]
+
+        for domain in domains:
+            if delivery.country_id.id:
+                fiscal_position_ids = self.search(cr, uid, domain + [('country_id', '=', delivery.country_id.id)], context=context, limit=1)
+                if fiscal_position_ids:
+                    return fiscal_position_ids[0]
+
+                fiscal_position_ids = self.search(cr, uid, domain + [('country_group_id.country_ids', '=', delivery.country_id.id)], context=context, limit=1)
+                if fiscal_position_ids:
+                    return fiscal_position_ids[0]
+
+            fiscal_position_ids = self.search(cr, uid, domain + [('country_id', '=', None), ('country_group_id', '=', None)], context=context, limit=1)
+            if fiscal_position_ids:
+                return fiscal_position_ids[0]
+        return False
 
 class account_fiscal_position_tax(osv.osv):
     _name = 'account.fiscal.position.tax'
@@ -77,7 +133,12 @@ class account_fiscal_position_tax(osv.osv):
         'tax_dest_id': fields.many2one('account.tax', 'Replacement Tax')
     }
 
-account_fiscal_position_tax()
+    _sql_constraints = [
+        ('tax_src_dest_uniq',
+         'unique (position_id,tax_src_id,tax_dest_id)',
+         'A tax fiscal position could be defined only once time on same taxes.')
+    ]
+
 
 class account_fiscal_position_account(osv.osv):
     _name = 'account.fiscal.position.account'
@@ -89,7 +150,12 @@ class account_fiscal_position_account(osv.osv):
         'account_dest_id': fields.many2one('account.account', 'Account Destination', domain=[('type','<>','view')], required=True)
     }
 
-account_fiscal_position_account()
+    _sql_constraints = [
+        ('account_src_dest_uniq',
+         'unique (position_id,account_src_id,account_dest_id)',
+         'An account fiscal position could be defined only once time on same accounts.')
+    ]
+
 
 class res_partner(osv.osv):
     _name = 'res.partner'
@@ -97,7 +163,9 @@ class res_partner(osv.osv):
     _description = 'Partner'
 
     def _credit_debit_get(self, cr, uid, ids, field_names, arg, context=None):
-        query = self.pool.get('account.move.line')._query_get(cr, uid, context=context)
+        ctx = context.copy()
+        ctx['all_fiscalyear'] = True
+        query = self.pool.get('account.move.line')._query_get(cr, uid, context=ctx)
         cr.execute("""SELECT l.partner_id, a.type, SUM(l.debit-l.credit)
                       FROM account_move_line l
                       LEFT JOIN account_account a ON (l.account_id=a.id)
