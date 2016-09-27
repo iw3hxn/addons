@@ -34,7 +34,14 @@ from tools import DEFAULT_SERVER_DATE_FORMAT, DEFAULT_SERVER_DATETIME_FORMAT
 #
 # Model definition
 #
+
+
 class purchase_order(osv.osv):
+
+    _name = "purchase.order"
+    _description = "Purchase Order"
+    _order = "name desc"
+    _inherit = ['mail.thread']
 
     def _amount_all(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
@@ -161,6 +168,7 @@ class purchase_order(osv.osv):
         return res
 
     _columns = {
+        'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Order Reference', size=64, required=True, select=True, help="unique number of the purchase order,computed automatically when the purchase order is created"),
         'origin': fields.char('Source Document', size=64,
             help="Reference of the document that generated this purchase order request."
@@ -232,9 +240,6 @@ class purchase_order(osv.osv):
     _sql_constraints = [
         ('name_uniq', 'unique(name, company_id)', 'Order Reference must be unique per Company!'),
     ]
-    _name = "purchase.order"
-    _description = "Purchase Order"
-    _order = "name desc"
 
     def unlink(self, cr, uid, ids, context=None):
         purchase_orders = self.read(cr, uid, ids, ['state'], context=context)

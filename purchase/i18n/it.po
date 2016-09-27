@@ -1455,7 +1455,7 @@ msgstr "Genera fattura da linea ordine di acquisto"
 #. module: purchase
 #: model:ir.ui.menu,name:purchase.menu_action_picking_tree4
 msgid "Incoming Shipments"
-msgstr "Spedizioni in arrivo"
+msgstr "Merci in Ingresso"
 
 #. module: purchase
 #: model:ir.actions.act_window,name:purchase.action_purchase_order_by_user_all
@@ -2010,3 +2010,52 @@ msgstr "Vai all'ingresso merci"
 #: view:purchase.order:0
 msgid "View Invoice"
 msgstr "Vai alla fattura"
+
+#. module: purchase
+#: view:purchase.add.note:0
+#: model:ir.actions.act_window,name:crm.action_purchase_add_note
+msgid "Add Note"
+msgstr "Aggiungi nota"
+
+#. module: purchase
+#: model:ir.model,name:purchase.model_purchase_add_note
+#: view:purchase.order:0
+msgid "Add Internal Note"
+msgstr "Aggiungi nota interna"
+
+#. module: purchase
+#: view:purchase.order:0
+msgid "Send New Email"
+msgstr "Send New Email"
+
+#. module: purchase
+#: view:purchase.order:0
+msgid "History Information"
+msgstr "Storico comunicazioni"
+
+#. module: purchase
+#: view:purchase.order:0
+#: view:purchase.order.line:0
+msgid "History"
+msgstr "Cronologia"
+
+#. module: purchase
+#: view:purchase.add.note:0
+msgid "_Cancel"
+msgstr "_Cancella"
+
+#. module: purchase
+#: view:purchase.add.note:0
+msgid "_Add"
+msgstr "_Aggiungi"
+
+#. modules: purchase
+#: view:purchase.order:0
+msgid "Communication & History"
+msgstr "Comunicazione e Storico"
+
+#. modules: purchase
+#: view:purchase.order:0
+msgid "Notes"
+msgstr "Note"
+
