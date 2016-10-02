@@ -52,6 +52,7 @@ class sale_shop(osv.osv):
     _columns = {
         'pos_user_id': fields.many2one('res.users', 'POS User'),
         'product_customer_id': fields.many2one('product.product', 'Product for Fidelity Card', domain="[('type', '=', 'service')]"),
+        'fiscal_position_id': fields.many2one('account.fiscal.position', 'Fiscal Position', domain="[('customer', '=', True)]"),
         'property_account_receivable': fields.property(
             'account.account',
             type='many2one',
@@ -146,7 +147,7 @@ class pos_order(osv.osv):
             val1 = val2 = 0.0
             cur = order.pricelist_id.currency_id
             for payment in order.statement_ids:
-                res[order.id]['amount_paid'] +=  payment.amount
+                res[order.id]['amount_paid'] += payment.amount
                 res[order.id]['amount_return'] += (payment.amount < 0 and payment.amount or 0)
             for line in order.lines:
                 val1 += line.price_subtotal_incl
@@ -752,10 +753,14 @@ class pos_order_line(osv.osv):
 
     def _amount_line_all(self, cr, uid, ids, field_names, arg, context=None):
         res = dict([(i, {}) for i in ids])
-        account_tax_obj = self.pool.get('account.tax')
-        cur_obj = self.pool.get('res.currency')
+        account_tax_obj = self.pool['account.tax']
+        cur_obj = self.pool['res.currency']
+        fiscal_pos_obj = self.pool['account.fiscal.position']
         for line in self.browse(cr, uid, ids, context=context):
-            taxes_ids = [ tax for tax in line.product_id.taxes_id if tax.company_id.id == line.order_id.company_id.id ]
+            taxes_ids = [tax for tax in line.product_id.taxes_id if tax.company_id.id == line.order_id.company_id.id ]
+            if line.shop_id and line.shop_id.fiscal_position_id:
+                taxes_ids = fiscal_pos_obj.map_tax(cr, uid, line.shop_id.fiscal_position_id, taxes_ids, context=context)
+                taxes_ids = self.pool['account.tax'].browse(cr, uid, taxes_ids, context)
             price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
             taxes = account_tax_obj.compute_all(cr, uid, taxes_ids, price, line.qty, product=line.product_id, partner=line.order_id.partner_id or False)
 
