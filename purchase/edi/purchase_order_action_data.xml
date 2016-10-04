@@ -29,9 +29,9 @@
          so users can freely customize/delete them -->
     <data noupdate="1">
          <!-- bind the mailing server action to purchase.order confirmed activity -->
-        <record id="purchase.act_confirmed" model="workflow.activity">
-            <field name="action_id" ref="ir_actions_server_edi_purchase"/>
-        </record>
+        <!--<record id="purchase.act_confirmed" model="workflow.activity">-->
+            <!--<field name="action_id" ref="ir_actions_server_edi_purchase"/>-->
+        <!--</record>-->
 
         <!--Email template -->
         <record id="email_template_edi_purchase" model="email.template">
