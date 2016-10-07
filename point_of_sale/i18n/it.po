@@ -33,6 +33,13 @@ msgid "Today"
 msgstr "Oggi"
 
 #. module: point_of_sale
+#: code:addons/point_of_sale/point_of_sale.py:1096
+#, python-format
+msgid "Trade Receivables"
+msgstr "Incasso Clienti"
+
+
+#. module: point_of_sale
 #: view:pos.confirm:0
 msgid "Post All Orders"
 msgstr "Post All Orders"
