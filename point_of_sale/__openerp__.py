@@ -22,7 +22,7 @@
 
 {
     'name': 'Point Of Sale',
-    'version': '2.6.12.6',
+    'version': '2.6.12.7',
     'category': 'Point Of Sale',
     "sequence": 6,
     'description': """
