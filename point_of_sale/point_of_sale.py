@@ -967,11 +967,11 @@ class product_product(osv.osv):
                     taxes_ids = self.pool['account.tax'].browse(cr, uid, taxes_ids, context)
                 for tax in taxes_ids:
                     tax_rate =+ tax.amount
-            result[product.id] = tax_rate
+            result[product.id] = tax_rate * 100
         return result
 
     _columns = {
-        'tax_rate': fields.function(_get_tax_rate, string="Get Tax Rate", type="float", store=False),
+        'taxrate': fields.function(_get_tax_rate, string="Get Tax Rate", type="float", store=False),
         'income_pdt': fields.boolean('PoS Cash Input', help="This is a product you can use to put cash into a statement for the point of sale backend."),
         'expense_pdt': fields.boolean('PoS Cash Output', help="This is a product you can use to take cash from a statement for the point of sale backend, exemple: money lost, transfer to bank, etc."),
         'pos_categ_id': fields.many2one('pos.category','PoS Category',
