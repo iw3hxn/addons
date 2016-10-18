@@ -967,7 +967,7 @@ class product_product(osv.osv):
                     taxes_ids = self.pool['account.tax'].browse(cr, uid, taxes_ids, context)
                 for tax in taxes_ids:
                     tax_rate =+ tax.amount
-            result[product.id] = tax_rate * 100
+            result[product.id] = (tax_rate / (1+ tax_rate)) * 100
         return result
 
     _columns = {
