@@ -38,7 +38,7 @@
             <xpath expr="//field[@name='order_line' or @name='abstract_line_ids']/tree//field[@name='price_subtotal']"
                    position="after">
                 <field name="purchase_price" groups="sale.view_margin" invisible="1"/>
-                <field name="total_purchase_price" groups="sale.view_margin"/>
+                <field name="total_purchase_price" groups="sale.view_margin" sum="Total Cost"/>
             </xpath>
         </field>
     </record>
