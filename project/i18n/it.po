@@ -2050,6 +2050,11 @@ msgid "Task's Work on Tasks"
 msgstr "Esecuzioni Attività"
 
 #. module: project
+#: model:res.groups,name:project.group_stage_task
+msgid "Task Stage"
+msgstr "Stadi Attività"
+
+#. module: project
 #: model:res.groups,name:project.group_time_work_estimation_tasks
 msgid "Time Estimation on Tasks"
 msgstr "Stima Tempistiche su Attività"

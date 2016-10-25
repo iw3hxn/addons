@@ -210,24 +210,24 @@ class project(osv.osv):
         #         'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
         #     }),
         'planned_hours': fields.function(_progress_rate, multi="progress", string='Planned Time', help="Sum of planned hours of all tasks related to this project and its child projects.",
-            store = {
+            store={
                 'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
-                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+                'project.task': (_get_projects_from_tasks, ['effective_hours', 'total_hours', 'planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
             }),
         'effective_hours': fields.function(_progress_rate, multi="progress", string='Time Spent', help="Sum of spent hours of all tasks related to this project and its child projects.",
-            store = {
+            store={
                 'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
-                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+                'project.task': (_get_projects_from_tasks, ['effective_hours', 'total_hours', 'planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
             }),
         'total_hours': fields.function(_progress_rate, multi="progress", string='Total Time', help="Sum of total hours of all tasks related to this project and its child projects.",
-            store = {
+            store={
                 'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
-                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+                'project.task': (_get_projects_from_tasks, ['effective_hours', 'total_hours', 'planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
             }),
         'progress_rate': fields.function(_progress_rate, multi="progress", string='Progress', type='float', group_operator="avg", help="Percent of tasks closed according to the total of tasks todo.",
-            store = {
+            store={
                 'project.project': (_get_project_and_parents, ['tasks', 'parent_id', 'child_ids'], 10),
-                'project.task': (_get_projects_from_tasks, ['planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
+                'project.task': (_get_projects_from_tasks, ['effective_hours', 'total_hours', 'planned_hours', 'remaining_hours', 'work_ids', 'state'], 20),
             }),
         'resource_calendar_id': fields.many2one('resource.calendar', 'Working Time',
                                                 help="Timetable working hours to adjust the gantt diagram report",
