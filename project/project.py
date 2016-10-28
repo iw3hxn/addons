@@ -166,7 +166,7 @@ class project(osv.osv):
         # compute progress rates
         for project_id in ids:
             if res[project_id]['total_hours']:
-                res[project_id]['progress_rate'] = round(100.0 * res[project_id]['effective_hours'] / res[project_id]['total_hours'], 2)
+                res[project_id]['progress_rate'] = min(round(100.0 * res[project_id]['effective_hours'] / res[project_id]['total_hours'], 2), 100.0)
             else:
                 res[project_id]['progress_rate'] = 0.0
         return res
