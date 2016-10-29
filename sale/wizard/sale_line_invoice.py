@@ -26,6 +26,7 @@ import netsvc
 class sale_order_line_make_invoice(osv.osv_memory):
     _name = "sale.order.line.make.invoice"
     _description = "Sale OrderLine Make_invoice"
+    
     def make_invoices(self, cr, uid, ids, context=None):
         """
              To make invoices.
@@ -60,7 +61,7 @@ class sale_order_line_make_invoice(osv.osv_memory):
             else:
                 pay_term = False
             inv = {
-                'name': order.name,
+                'name': order.client_order_ref or '',
                 'origin': order.name,
                 'type': 'out_invoice',
                 'reference': "P%dSO%d" % (order.partner_id.id, order.id),
@@ -84,36 +85,50 @@ class sale_order_line_make_invoice(osv.osv_memory):
         wf_service = netsvc.LocalService('workflow')
         for line in sales_order_line_obj.browse(cr, uid, context.get('active_ids', []), context=context):
             if (not line.invoiced) and (line.state not in ('draft', 'cancel')):
-                if not line.order_id.id in invoices:
-                    invoices[line.order_id.id] = []
-                line_id = sales_order_line_obj.invoice_line_create(cr, uid,
-                        [line.id])
+                if line.order_id not in invoices:
+                    invoices[line.order_id] = []
+                line_id = sales_order_line_obj.invoice_line_create(cr, uid, [line.id])
                 for lid in line_id:
-                    invoices[line.order_id.id].append((line, lid))
-                sales_order_line_obj.write(cr, uid, [line.id],
-                        {'invoiced': True})
-        for result in invoices.values():
-            order = result[0][0].order_id
-            il = map(lambda x: x[1], result)
+                    invoices[line.order_id].append(lid)
+        invoice_ids = []
+        for order, il in invoices.items():
             res = make_invoice(order, il)
+            invoice_ids.append(res)
             cr.execute('INSERT INTO sale_order_invoice_rel \
                     (order_id,invoice_id) values (%s,%s)', (order.id, res))
-
             flag = True
-            data_sale = sales_order_obj.browse(cr, uid, line.order_id.id, context=context)
+            data_sale = sales_order_obj.browse(cr, uid, order.id, context=context)
             for line in data_sale.order_line:
                 if not line.invoiced:
                     flag = False
                     break
             if flag:
-                wf_service.trg_validate(uid, 'sale.order', line.order_id.id, 'all_lines', cr)
-                sales_order_obj.write(cr, uid, [line.order_id.id], {'state': 'progress'})
+                wf_service.trg_validate(uid, 'sale.order', order.id, 'manual_invoice', cr)
 
         if not invoices:
-            raise osv.except_osv(_('Warning'), _('Invoice cannot be created for this Sales Order Line due to one of the following reasons:\n1.The state of this sales order line is either "draft" or "cancel"!\n2.The Sales Order Line is Invoiced!'))
-
+            raise osv.except_osv(_('Warning!'), _('Invoice cannot be created for this Sales Order Line due to one of the following reasons:\n1.The state of this sales order line is either "draft" or "cancel"!\n2.The Sales Order Line is Invoiced!'))
+        if context.get('open_invoices', False):
+            return self.open_invoices(cr, uid, ids, invoice_ids, context=context)
         return {'type': 'ir.actions.act_window_close'}
 
-sale_order_line_make_invoice()
+    def open_invoices(self, cr, uid, ids, invoice_ids, context=None):
+        """ open a view on one of the given invoice_ids """
+        mod_obj = self.pool.get('ir.model.data')
+        act_obj = self.pool.get('ir.actions.act_window')
+
+        result = mod_obj.get_object_reference(cr, uid, 'account', 'action_invoice_tree1')
+        id = result and result[1] or False
+        result = act_obj.read(cr, uid, [id], context=context)[0]
+        # compute the number of invoices to display
+
+        if len(invoice_ids) > 1:
+            result['domain'] = "[('id','in',[" + ','.join(map(str, invoice_ids)) + "])]"
+        else:
+            res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
+            result['views'] = [(res and res[1] or False, 'form')]
+            result['res_id'] = invoice_ids and invoice_ids[0] or False
+
+        return result
+
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

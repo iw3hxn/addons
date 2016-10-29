@@ -276,7 +276,7 @@
                             <separator colspan="4" string="Invoices"/>
                             <field colspan="4" name="invoice_ids" nolabel="1" context="{'type':'out_invoice', 'form_view_ref':'account.invoice_form', 'tree_view_ref':'account.invoice_tree' }"/>
                             <separator colspan="4" string="Packings"/>
-                            <field colspan="4" name="picking_ids" nolabel="1" context="{'type':'out', 'form_view_ref':'stock.view_picking_out_form', 'tree_view_ref':'stock.view_picking_out_tree'}"/>
+                            <field colspan="4" name="picking_ids" nolabel="1" context="{'type':'out', 'form_view_ref':'stock.view_picking_out_form', 'tree_view_ref':'stock.view_picking_out_tree', 'default_type': 'out', 'contact_display': 'partner_address', 'search_default_confirmed': 1, 'search_default_available': 1}"/>
                         </page>
                     </notebook>
                 </form>

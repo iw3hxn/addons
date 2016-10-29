@@ -2502,3 +2502,8 @@ msgstr "Crea e vai direttamente alla fattura"
 #, python-format
 msgid "{order} has been change shop from {shop_from} to {shop_to}"
 msgstr "{order} ha cambiato il negozio da {shop_from} a {shop_to}"
+
+#. module: sale
+#: view:sale.order.line.make.invoice:0
+msgid "Create & View Invoice"
+msgstr "Crea e Visualizza Fattura"
