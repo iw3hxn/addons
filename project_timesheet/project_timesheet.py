@@ -74,14 +74,13 @@ class project_work(osv.osv):
         res['product_uom_id'] = emp.product_id.uom_id.id
         return res
 
-    def create(self, cr, uid, vals, *args, **kwargs):
+    def create(self, cr, uid, vals, context):
         obj_timesheet = self.pool.get('hr.analytic.timesheet')
         project_obj = self.pool.get('project.project')
         task_obj = self.pool.get('project.task')
         uom_obj = self.pool.get('product.uom')
         
         vals_line = {}
-        context = kwargs.get('context', {})
         if not context.get('no_analytic_entry',False):
             obj_task = task_obj.browse(cr, uid, vals['task_id'])
             result = self.get_user_related_details(cr, uid, vals.get('user_id', uid))
@@ -118,7 +117,7 @@ class project_work(osv.osv):
                     updv = { 'amount': amount_unit['value']['amount'] }
                     obj_timesheet.write(cr, uid, [timeline_id], updv, context=context)
                 vals['hr_analytic_timesheet_id'] = timeline_id
-        return super(project_work,self).create(cr, uid, vals, *args, **kwargs)
+        return super(project_work,self).create(cr, uid, vals, context)
 
     def write(self, cr, uid, ids, vals, context=None):
         if context is None:
