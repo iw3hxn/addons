@@ -1073,7 +1073,7 @@
                     <field name="date"/>
                     <field name="period_id"/>
                     <field name="move_id"/>
-                    <button string="View" name="action_view_account_move" icon="terp-gtk-find" type="object"/>
+                    <button string="View" name="action_view_account_move" icon="gtk-find" type="object"/>
                     <field name="ref"/>
                     <field name="invoice"/>
                     <field name="name"/>
@@ -2013,7 +2013,7 @@
                 <tree colors="red:state == 'draft';black:state == 'valid'" string="Journal Items">
                     <field name="date"/>
                     <field name="move_id"/>
-                    <button string="View" name="action_view_account_move" icon="terp-gtk-find" type="object"/>
+                    <button string="View" name="action_view_account_move" icon="gtk-find" type="object"/>
                     <field name="statement_id" string="St."/>
                     <field name="name"/>
                     <field name="partner_id"/>
