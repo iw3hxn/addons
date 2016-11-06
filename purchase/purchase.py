@@ -874,7 +874,7 @@ class purchase_order_line(osv.osv):
 
         # - determine product_qty and date_planned based on seller info
         if not date_order:
-            date_order = fields.date.context_today(cr,uid,context=context)
+            date_order = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
 
         qty = qty or 1.0
         supplierinfo = False
