@@ -1494,7 +1494,7 @@ msgstr "Tipo"
 #. module: stock
 #: view:stock.picking:0
 msgid "Available Pickings"
-msgstr ""
+msgstr "Prese Disponibili"
 
 #. module: stock
 #: model:stock.location,name:stock.stock_location_5
@@ -3014,13 +3014,16 @@ msgstr ""
 #: view:report.stock.move:0
 #: selection:report.stock.move,state:0
 #: selection:stock.inventory,state:0
-#: view:stock.move:0
 #: selection:stock.move,state:0
-#: view:stock.picking:0
 #: selection:stock.picking,state:0
 #: report:stock.picking.list:0
 msgid "Done"
 msgstr "Completato"
+
+#. module: stock
+#: view:stock.picking:0
+msgid "Done"
+msgstr "Trasferito"
 
 #. module: stock
 #: selection:report.stock.inventory,state:0
