@@ -274,12 +274,24 @@
                         </page>
                         <page string="History" groups="base.group_extended">
                             <separator colspan="4" string="Invoices"/>
-                            <field colspan="4" name="invoice_ids" nolabel="1" context="{'type':'out_invoice', 'form_view_ref':'account.invoice_form', 'tree_view_ref':'account.invoice_tree' }"/>
+                            <field colspan="4" name="invoice_ids" nolabel="1" context="{'type':'out_invoice', 'form_view_ref':'account.invoice_form', 'tree_view_ref':'account.invoice_tree', 'show_type': True }"/>
                             <separator colspan="4" string="Packings"/>
                             <field colspan="4" name="picking_ids" nolabel="1" context="{'type':'out', 'form_view_ref':'stock.view_picking_out_form', 'tree_view_ref':'stock.view_picking_out_tree', 'default_type': 'out', 'contact_display': 'partner_address', 'search_default_confirmed': 1, 'search_default_available': 1}"/>
                         </page>
                     </notebook>
                 </form>
+            </field>
+        </record>
+
+        <record id="view_account_invoice_tree_type" model="ir.ui.view">
+            <field name="name">Invoice Type visible</field>
+            <field name="model">account.invoice</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="account.invoice_tree"/>
+            <field name="arch" type="xml">
+                <field name="date_invoice" position="before">
+                    <field name="type" invisible="not context.get('show_type')"/>
+                </field>
             </field>
         </record>
 
