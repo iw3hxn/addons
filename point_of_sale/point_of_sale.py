@@ -369,7 +369,7 @@ class pos_order(osv.osv):
                                                       ('user_id', '=', uid),
                                                       ('state', '=', 'open'),
                                                       ('date', '=', order.date_order[0:10])], context=context)
-        import pdb;pdb.set_trace()
+
         if len(statement_id) == 0:
             raise osv.except_osv(_('Error !'), _('You have to open at least one cashbox'))
         if statement_id:
