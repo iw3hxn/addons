@@ -338,7 +338,7 @@ class pos_order(osv.osv):
         """Create a new payment for the order"""
         statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool.get('account.bank.statement.line')
-        #prod_obj = self.pool.get('product.product')
+        # prod_obj = self.pool.get('product.product')
         property_obj = self.pool.get('ir.property')
         curr_c = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
         curr_company = curr_c.id
@@ -364,11 +364,12 @@ class pos_order(osv.osv):
                 msg = _('There is no receivable account defined to make payment for the partner: "%s" (id:%d)') % (order.partner_id.name, order.partner_id.id,)
             raise osv.except_osv(_('Configuration Error !'), msg)
 
-        statement_id = statement_obj.search(cr,uid, [
-                                                     ('journal_id', '=', int(data['journal'])),
-                                                     ('company_id', '=', curr_company),
-                                                     ('user_id', '=', uid),
-                                                     ('state', '=', 'open')], context=context)
+        statement_id = statement_obj.search(cr, uid, [('journal_id', '=', int(data['journal'])),
+                                                      ('company_id', '=', curr_company),
+                                                      ('user_id', '=', uid),
+                                                      ('state', '=', 'open'),
+                                                      ('date', '=', order.date_order[0:10])], context=context)
+        import pdb;pdb.set_trace()
         if len(statement_id) == 0:
             raise osv.except_osv(_('Error !'), _('You have to open at least one cashbox'))
         if statement_id:
@@ -967,7 +968,7 @@ class product_product(osv.osv):
                     taxes_ids = self.pool['account.tax'].browse(cr, uid, taxes_ids, context)
                 for tax in taxes_ids:
                     tax_rate =+ tax.amount
-            result[product.id] = tax_rate * 100
+            result[product.id] = (tax_rate / (1 + tax_rate)) * 100
         return result
 
     _columns = {
