@@ -1254,6 +1254,12 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                     'account_id', 'currency_id', 'payment_term', 'journal_id',
                     'user_id', 'fiscal_position'):
                 invoice[field] = invoice[field] and invoice[field][0]
+
+            index = 0
+            for line in invoice['invoice_line']:
+                if line[2].get('move_line_id', False):
+                    invoice['invoice_line'][index][2]['move_line_id'] = invoice['invoice_line'][index][2]['move_line_id'][0]
+                index += 1
             # create the new invoice
             new_ids.append(self.create(cr, uid, invoice))
 

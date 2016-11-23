@@ -36,7 +36,7 @@ class account_invoice_refund(osv.osv_memory):
        'period': fields.many2one('account.period', 'Force period'),
        'journal_id': fields.many2one('account.journal', 'Refund Journal', help='You can select here the journal to use for the refund invoice that will be created. If you leave that field empty, it will use the same journal as the current invoice.'),
        'description': fields.char('Description', size=128, required=True),
-       'filter_refund': fields.selection([('refund', 'Create a draft Refund'), ('cancel', 'Cancel: refund invoice and reconcile'),('modify', 'Modify: refund invoice, reconcile and create a new draft invoice')], "Refund Method", required=True, help='Refund invoice base on this type. You can not Modify and Cancel if the invoice is already reconciled'),
+       'filter_refund': fields.selection([('modify', 'Modify: refund invoice, reconcile and create a new draft invoice'), ('refund', 'Create a draft Refund'), ('cancel', 'Cancel: refund invoice and reconcile')], "Refund Method", required=True, help='Refund invoice base on this type. You can not Modify and Cancel if the invoice is already reconciled'),
     }
 
     def _get_journal(self, cr, uid, context=None):
@@ -163,7 +163,7 @@ class account_invoice_refund(osv.osv_memory):
                     wf_service.trg_validate(uid, 'account.invoice', \
                                         refund.id, 'invoice_open', cr)
                     refund = inv_obj.browse(cr, uid, refund_id[0], context=context)
-                    for tmpline in  refund.move_id.line_id:
+                    for tmpline in refund.move_id.line_id:
                         if tmpline.account_id.id == inv.account_id.id:
                             to_reconcile_ids[tmpline.account_id.id].append(tmpline.id)
                     for account in to_reconcile_ids:
@@ -219,7 +219,7 @@ class account_invoice_refund(osv.osv_memory):
             return result
 
     def invoice_refund(self, cr, uid, ids, context=None):
-        data_refund = self.read(cr, uid, ids, ['filter_refund'],context=context)[0]['filter_refund']
+        data_refund = self.read(cr, uid, ids, ['filter_refund'], context=context)[0]['filter_refund']
         return self.compute_refund(cr, uid, ids, data_refund, context=context)
 
 
