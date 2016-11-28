@@ -342,7 +342,8 @@
     # ------------------------------------------------------
 
         <menuitem action="act_project_phase_list"
-            id="menu_project_phase_list" parent="project.menu_project_management" sequence="2"/>
+            id="menu_project_phase_list" parent="project.menu_project_management" sequence="2"
+            groups="project.group_project_manager"/>
 
         <menuitem action="act_project_phase"
             icon="STOCK_INDENT"
