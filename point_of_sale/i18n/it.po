@@ -176,7 +176,7 @@ msgstr "Sconto (%)"
 #. module: point_of_sale
 #: model:ir.ui.menu,name:point_of_sale.menu_point_open_config
 msgid "Cash Register Management"
-msgstr "Gestione Registri di Cassa"
+msgstr "Gestione Registratore di Cassa"
 
 #. module: point_of_sale
 #: view:account.bank.statement:0
