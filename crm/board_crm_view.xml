@@ -112,6 +112,7 @@
                 </form>
             </field>
         </record>
+<!--
         <record model="ir.actions.act_window" id="open_board_crm">
             <field name="name">Sales</field>
             <field name="res_model">board.board</field>
@@ -122,5 +123,6 @@
         </record>
         <menuitem id="base.menu_base_partner"
             action="open_board_crm"/>
+-->
     </data>
 </openerp>

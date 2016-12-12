@@ -298,7 +298,7 @@
                                         <a t-if="record.priority.raw_value != 1" icon="star-off" type="object" name="set_high_priority" style="opacity:0.6; filter:alpha(opacity=60);"/>
                                     </td>
                                     <td align="left" valign="middle" class="oe_kanban_title" tooltip="lead_details">
-                                        <field name="partner_id"/>
+                                        <field name="partner_name"/>
                                         <t t-if="record.planned_revenue.raw_value">
                                             - <t t-esc="record.planned_revenue.value"/>
                                             <field name="company_currency"/>

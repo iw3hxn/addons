@@ -91,7 +91,7 @@ msgstr "Tempo di chiusura"
 #. module: crm
 #: view:crm.lead:0
 msgid "Previous Stage"
-msgstr "Stadio precedente"
+msgstr "Fase precedente"
 
 #. module: crm
 #: code:addons/crm/wizard/crm_add_note.py:28
@@ -422,7 +422,7 @@ msgid ""
 "stage to be a success"
 msgstr ""
 "Questa percentuale rappresenta la probabilità predefinita/media che un caso, "
-"in questo stadio, si chiuda con un successo"
+"in questo fase, si chiuda con un successo"
 
 #. module: crm
 #: field:base.action.rule,trg_categ_id:0 view:crm.lead:0
@@ -692,14 +692,11 @@ msgid ""
 "using the caldav interface.\n"
 "        "
 msgstr ""
-"Il calendario di appuntamenti è condiviso dal team di venditori e
-"pienamente integrato con altre applicazioni come ad esempio le vacanze
-"degli impiegati oppure le opportunità di business. Potete anche
-"sincronizzare incontri con il vostro cellulare utilizzando
+"Il calendario di appuntamenti è condiviso dal team di venditori e"
+"pienamente integrato con altre applicazioni come ad esempio le vacanze"
+"degli impiegati oppure le opportunità di business. Potete anche"
+"sincronizzare incontri con il vostro cellulare utilizzando"
 "l'interfaccia caldav."
-
-
-
 
 #. module: crm
 #: field:crm.lead2opportunity.partner.mass,user_ids:0
@@ -972,7 +969,7 @@ msgstr "Cellulare"
 #. module: crm
 #: view:crm.lead:0
 msgid "Next Stage"
-msgstr "Stadio Successivo"
+msgstr "Fase Successivo"
 
 #. module: crm
 #: view:crm.meeting:0
@@ -1093,7 +1090,7 @@ msgstr "Successivo"
 #. module: crm
 #: view:crm.lead:0
 msgid "Stage:"
-msgstr "Stadio:"
+msgstr "Fase:"
 
 #. module: crm
 #: model:crm.case.stage,name:crm.stage_lead5 view:crm.lead:0
@@ -2298,7 +2295,7 @@ msgstr "Attivo"
 #: code:addons/crm/crm_lead.py:856
 #, python-format
 msgid "The stage of opportunity '%s' has been changed to '%s'."
-msgstr "Lo stadio dell'opportunità \"%s\" è cambiato in \"%s\"."
+msgstr "Lo Fase dell'opportunità \"%s\" è cambiato in \"%s\"."
 
 #. module: crm
 #: selection:crm.segmentation.line,operator:0
@@ -2737,7 +2734,7 @@ msgstr "Aggiungi nota interna"
 #: code:addons/crm/crm_lead.py:853
 #, python-format
 msgid "The stage of lead '%s' has been changed to '%s'."
-msgstr "Lo stadio del lead \"%s\" è cambiato in \"%s\""
+msgstr "Lo Fase del lead \"%s\" è cambiato in \"%s\""
 
 #. module: crm
 #: selection:crm.meeting,byday:0
@@ -2781,7 +2778,7 @@ msgstr "Corpo note"
 #. module: crm
 #: view:board.board:0
 msgid "My Planned Revenues by Stage"
-msgstr "Le mie entrate previste per stadio"
+msgstr "Le mie entrate previste per Fase"
 
 #. module: crm
 #: model:ir.actions.act_window,help:crm.crm_case_category_act_oppor11
