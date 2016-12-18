@@ -1074,8 +1074,9 @@
                     <field name="period_id"/>
                     <field name="move_id"/>
                     <button string="View" name="action_view_account_move" icon="gtk-find" type="object"/>
-                    <field name="ref"/>
+                    <field name="ref" invisible="1"/>
                     <field name="invoice"/>
+                    <button string="View" name="action_view_invoice" icon="gtk-find" type="object" />
                     <field name="name"/>
                     <field name="partner_id" on_change="onchange_partner_id(move_id, partner_id, account_id, debit, credit, date, journal_id)"/>
                     <field name="account_id" domain="[('journal_id','=',journal_id), ('company_id', '=', company_id)]"/>
@@ -1086,8 +1087,10 @@
                     <field name="analytic_account_id" groups="analytic.group_analytic_accounting" domain="[('parent_id','!=',False)]"/>
                     <field name="amount_currency" groups="base.group_extended" attrs="{'readonly':[('state','=','valid')]}"/>
                     <field name="currency_id" groups="base.group_extended" attrs="{'readonly':[('state','=','valid')]}"/>
-                    <field name="reconcile_partial_id" groups="base.group_extended"/>
-                    <field name="reconcile_id"/>
+                    <!--<field name="reconcile_partial_id" groups="base.group_extended"/>-->
+                    <!--<field name="reconcile_id"/>-->
+                    <field name="reconcile_function_id"/>
+                    <button string="View" name="action_view_reconcile" icon="gtk-find" type="object">
                     <field name="state"/>
                     <field name="company_id" invisible="True"/>
                 </tree>

@@ -147,10 +147,12 @@
           <para style="terp_default_Centre_8">[[ data['form']['period_length'] ]]</para>
         </td>
         <td>
-          <para style="terp_default_Centre_8">[[ get_partners(data) ]]</para>
+          <para style="terp_default_Centre_8">Receivable Accounts[[ data['form']['result_selection'] == 'customer' or removeParentNode('para') ]]</para>
+          <para style="terp_default_Centre_8">Payable Accounts[[ data['form']['result_selection'] == 'supplier' or removeParentNode('para') ]]</para>
+          <para style="terp_default_Centre_8">Receivable and Payable Accounts[[ data['form']['result_selection'] == 'customer_supplier' or removeParentNode('para') ]]</para>
         </td>
         <td>
-          <para style="terp_default_Centre_8">[[ get_direction_selection(data) ]]</para>
+          <para style="terp_default_Centre_8">[[ data['form']['direction_selection'] ]]</para>
         </td>
         <td>
           <para style="terp_default_Centre_8">[[ get_target_move(data) ]]</para>
@@ -170,19 +172,29 @@
           <para style="terp_tblheader_Details_Right">Not due[[ data['form']['direction_selection'] == 'past' and ' ' or removeParentNode('para') ]]</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ data['form']['4']['name'] ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['4']['name']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['4']['start']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['4']['stop'] ]]</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ data['form']['3']['name'] ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['3']['name']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['3']['start']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['3']['stop'] ]]</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ data['form']['2']['name'] ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['2']['name']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['2']['start']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['2']['stop'] ]]</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ data['form']['1']['name'] ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['1']['name']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['1']['start']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['1']['stop'] ]]</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">[[ data['form']['0']['name'] ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['0']['name']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['0']['start']  ]]</para>
+          <para style="terp_tblheader_Details_Right">[[ data['form']['0']['stop'] ]]</para>
         </td>
         <td>
           <para style="terp_tblheader_Details_Right">Total</para>

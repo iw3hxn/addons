@@ -176,7 +176,7 @@ class res_partner_bank(osv.osv):
     }
     _constraints = [
         (check_iban, _construct_constraint_msg, ["iban"]),
-        (_check_bank, '\nPlease define BIC/Swift code on bank for bank type IBAN Account to make valid payments', ['bic'])
+#        (_check_bank, '\nPlease define BIC/Swift code on bank for bank type IBAN Account to make valid payments', ['bic'])
     ]
 
 res_partner_bank()

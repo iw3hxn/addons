@@ -53,6 +53,7 @@ def ean_checksum(eancode):
 
 def check_ean(eancode):
     """returns True if eancode is a valid ean13 string, or null"""
+    return True
     if not eancode:
         return True
     if len(eancode) <> 13:

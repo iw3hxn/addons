@@ -21,7 +21,7 @@
 
 import hr_expense
 import report
-import wizard
+#import wizard
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
 

@@ -5887,7 +5887,7 @@ msgstr "Importo fissato"
 #. module: account
 #: view:account.subscription:0
 msgid "Valid Up to"
-msgstr "Vaalido fino a"
+msgstr "Valido fino a"
 
 #. module: account
 #: view:account.journal:0
@@ -8802,6 +8802,12 @@ msgstr ""
 #: view:account.move.line.reconcile:0
 msgid "Partial Reconcile"
 msgstr "Riconciliazione parziale"
+
+#. module: account
+#: field:account.move.line,reconcile_function_id:0
+#: view:account.move.line.reconcile_function_id:0
+msgid "Reconcile"
+msgstr "Riconciliazione"
 
 #. module: account
 #: model:ir.model,name:account.model_account_analytic_inverted_balance

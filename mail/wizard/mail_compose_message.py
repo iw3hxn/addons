@@ -198,14 +198,19 @@ class mail_compose_message(osv.osv_memory):
             references = None
             headers = {}
 
-            body = mail.body_html if mail.subtype == 'html' else mail.body_text
+            if mail.body_html:
+                body = mail.body_html
+                subtype = 'html'
+            else:
+                body = mail.body_text
+                subtype = 'plain'
 
             # Reply Email
             if context.get('mail.compose.message.mode') == 'reply' and mail.message_id:
                 references = (mail.references or '') + " " + mail.message_id
                 headers['In-Reply-To'] = mail.message_id
 
-            if context.get('mail.compose.message.mode') == 'mass_mail':
+            if context.get('mail.compose.message.mode', False) == 'mass_mail':
                 # Mass mailing: must render the template patterns
                 if context.get('active_ids') and context.get('active_model'):
                     active_ids = context['active_ids']
@@ -228,7 +233,7 @@ class mail_compose_message(osv.osv_memory):
                         self.pool['email.template'].send_mail(cr, uid, mail.template_id, active_id, force_send=False, context=None)
                     else:
                         mail_message.schedule_with_attach(cr, uid, email_from, to_email(email_to), subject, rendered_body,
-                            model=mail.model, email_cc=to_email(email_cc), email_bcc=to_email(email_bcc), reply_to=reply_to,
+                            model=mail.model, email_cc=to_email(email_cc), email_bcc=to_email(email_bcc), reply_to=mail.reply_to,
                             attachments=attachment, references=references, res_id=active_id,
                             subtype=mail.subtype, headers=headers, context=context)
             else:
@@ -236,9 +241,9 @@ class mail_compose_message(osv.osv_memory):
                 msg_id = mail_message.schedule_with_attach(cr, uid, mail.email_from, to_email(mail.email_to), mail.subject, body,
                     model=mail.model, email_cc=to_email(mail.email_cc), email_bcc=to_email(mail.email_bcc), reply_to=mail.reply_to,
                     attachments=attachment, references=references, res_id=int(mail.res_id),
-                    subtype=mail.subtype, headers=headers, context=context)
+                    subtype=subtype, headers=headers, context=context)
                 # in normal mode, we send the email immediately, as the user expects us to (delay should be sufficiently small)
-                mail_message.send(cr, uid, [msg_id], context=context)
+                # mail_message.send(cr, uid, [msg_id], context=context)
 
         return {'type': 'ir.actions.act_window_close'}
 

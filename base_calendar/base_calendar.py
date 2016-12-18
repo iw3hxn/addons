@@ -342,57 +342,57 @@ class calendar_attendee(osv.osv):
 
     _columns = {
         'cutype': fields.selection([('individual', 'Individual'), \
-                    ('group', 'Group'), ('resource', 'Resource'), \
-                    ('room', 'Room'), ('unknown', 'Unknown') ], \
-                    'Invite Type', help="Specify the type of Invitation"),
+                                    ('group', 'Group'), ('resource', 'Resource'), \
+                                    ('room', 'Room'), ('unknown', 'Unknown')], \
+                                   'Invite Type', help="Specify the type of Invitation"),
         'member': fields.char('Member', size=124,
-                    help="Indicate the groups that the attendee belongs to"),
+                              help="Indicate the groups that the attendee belongs to"),
         'role': fields.selection([('req-participant', 'Participation required'), \
-                    ('chair', 'Chair Person'), \
-                    ('opt-participant', 'Optional Participation'), \
-                    ('non-participant', 'For information Purpose')], 'Role', \
-                    help='Participation role for the calendar user'),
+                                  ('chair', 'Chair Person'), \
+                                  ('opt-participant', 'Optional Participation'), \
+                                  ('non-participant', 'For information Purpose')], 'Role', \
+                                 help='Participation role for the calendar user'),
         'state': fields.selection([('tentative', 'Tentative'),
-                        ('needs-action', 'Needs Action'),
-                        ('accepted', 'Accepted'),
-                        ('declined', 'Declined'),
-                        ('delegated', 'Delegated')], 'State', readonly=True, \
-                        help="Status of the attendee's participation"),
-        'rsvp':  fields.boolean('Required Reply?',
-                    help="Indicats whether the favor of a reply is requested"),
+                                   ('needs-action', 'Needs Action'),
+                                   ('accepted', 'Accepted'),
+                                   ('declined', 'Declined'),
+                                   ('delegated', 'Delegated')], 'State', readonly=True, \
+                                  help="Status of the attendee's participation"),
+        'rsvp': fields.boolean('Required Reply?',
+                               help="Indicats whether the favor of a reply is requested"),
         'delegated_to': fields.function(_compute_data, \
-                string='Delegated To', type="char", size=124, store=True, \
-                multi='delegated_to', help="The users that the original \
+                                        string='Delegated To', type="char", size=124, store=True, \
+                                        multi='delegated_to', help="The users that the original \
 request was delegated to"),
-        'delegated_from': fields.function(_compute_data, string=\
+        'delegated_from': fields.function(_compute_data, string= \
             'Delegated From', type="char", store=True, size=124, multi='delegated_from'),
         'parent_ids': fields.many2many('calendar.attendee', 'calendar_attendee_parent_rel', \
-                                    'attendee_id', 'parent_id', 'Delegrated From'),
+                                       'attendee_id', 'parent_id', 'Delegrated From'),
         'child_ids': fields.many2many('calendar.attendee', 'calendar_attendee_child_rel', \
                                       'attendee_id', 'child_id', 'Delegrated To'),
         'sent_by': fields.function(_compute_data, string='Sent By', \
-                        type="char", multi='sent_by', store=True, size=124, \
-                        help="Specify the user that is acting on behalf of the calendar user"),
+                                   type="char", multi='sent_by', store=True, size=124, \
+                                   help="Specify the user that is acting on behalf of the calendar user"),
         'sent_by_uid': fields.function(_compute_data, string='Sent By User', \
-                            type="many2one", relation="res.users", multi='sent_by_uid'),
+                                       type="many2one", relation="res.users", multi='sent_by_uid'),
         'cn': fields.function(_compute_data, string='Common name', \
-                            type="char", size=124, multi='cn', store=True),
+                              type="char", size=124, multi='cn', store=True),
         'dir': fields.char('URI Reference', size=124, help="Reference to the URI\
 that points to the directory information corresponding to the attendee."),
         'language': fields.function(_compute_data, string='Language', \
-                    type="selection", selection=_lang_get, multi='language', \
-                    store=True, help="To specify the language for text values in a\
+                                    type="selection", selection=_lang_get, multi='language', \
+                                    store=True, help="To specify the language for text values in a\
 property or property parameter."),
         'user_id': fields.many2one('res.users', 'User'),
         'partner_address_id': fields.many2one('res.partner.address', 'Contact'),
         'partner_id': fields.related('partner_address_id', 'partner_id', type='many2one', \
-                        relation='res.partner', string='Partner', help="Partner related to contact"),
+                                     relation='res.partner', string='Partner', help="Partner related to contact"),
         'email': fields.char('Email', size=124, help="Email of Invited Person"),
         'event_date': fields.function(_compute_data, string='Event Date', \
-                            type="datetime", multi='event_date'),
+                                      type="datetime", multi='event_date'),
         'event_end_date': fields.function(_compute_data, \
-                            string='Event End Date', type="datetime", \
-                            multi='event_end_date'),
+                                          string='Event End Date', type="datetime", \
+                                          multi='event_end_date'),
         'ref': fields.reference('Event Ref', selection=_links_get, size=128),
         'availability': fields.selection([('free', 'Free'), ('busy', 'Busy')], 'Free/Busy', readonly="True"),
     }

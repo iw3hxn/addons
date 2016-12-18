@@ -113,7 +113,7 @@ class account_move_line(osv.osv):
         of given sales order ids. It can either be a in a list or in a form
         view, if there is only one delivery order to show.
         '''
-
+        account_move_line = self.browse(cr, uid, ids[0], context)
         mod_obj = self.pool['ir.model.data']
         act_obj = self.pool['ir.actions.act_window']
 
@@ -138,6 +138,83 @@ class account_move_line(osv.osv):
             'nodestroy': False,
             'target': 'current',
             'res_id': account_move_line.move_id.id,
+        }
+
+    def action_view_invoice(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        account_move_line = self.browse(cr, uid, ids[0], context)
+        mod_obj = self.pool['ir.model.data']
+        act_obj = self.pool['ir.actions.act_window']
+
+
+
+        # compute the number of delivery orders to display
+        account_move = []
+        res_model = 'account.invoice'
+        # choose the view_mode accordingly
+        if account_move_line.invoice:
+            if account_move_line.invoice.type in ['out_invoice', 'out_refund']:
+                view = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
+            else:
+                view = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_supplier_form')
+        else:
+            return False
+
+        view_id = view and view[1] or False
+
+        ctx = "{'nodelete': '1', 'nocreate': '1'}"
+        name = _('Invoice')
+        return {
+            'name': name,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': [view_id],
+            'res_model': res_model,
+            'context': ctx,
+            'type': 'ir.actions.act_window',
+            'nodestroy': False,
+            'target': 'current',
+            'res_id': account_move_line.invoice.id,
+        }
+
+    def action_view_reconcile(self, cr, uid, ids, context=None):
+        '''
+        This function returns an action that display existing delivery orders
+        of given sales order ids. It can either be a in a list or in a form
+        view, if there is only one delivery order to show.
+        '''
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        account_move_line = self.browse(cr, uid, ids[0], context)
+        mod_obj = self.pool['ir.model.data']
+        act_obj = self.pool['ir.actions.act_window']
+
+        res_model = 'account.move.reconcile'
+        # choose the view_mode accordingly
+        if account_move_line.reconcile_function_id:
+            view = mod_obj.get_object_reference(cr, uid, 'account', 'view_move_reconcile_form')
+        else:
+            return False
+
+        view_id = view and view[1] or False
+
+        ctx = "{'nodelete': '1', 'nocreate': '1'}"
+        name = _('Invoice')
+        return {
+            'name': name,
+            'view_type': 'form',
+            'view_mode': 'form',
+            'view_id': [view_id],
+            'res_model': res_model,
+            'context': ctx,
+            'type': 'ir.actions.act_window',
+            'nodestroy': False,
+            'target': 'current',
+            'res_id': account_move_line.invoice.id,
         }
 
     def _amount_residual(self, cr, uid, ids, field_names, args, context=None):
@@ -500,6 +577,17 @@ class account_move_line(osv.osv):
                 result.append(line.id)
         return result
 
+    def _get_reconcile(self, cr, uid, ids, prop, unknown_none, context=None):
+        if not len(ids):
+            return {}
+
+        res = {}
+        for move_line in self.browse(cr, uid, ids, context=context):
+            reconcile_id = move_line.reconcile_partial_id and move_line.reconcile_partial_id.id or move_line.reconcile_id and move_line.reconcile_id.id or False
+            res[move_line.id] = reconcile_id
+
+        return res
+
     _columns = {
         'name': fields.char('Name', size=64, required=True),
         'quantity': fields.float('Quantity', digits=(16,2), help="The optional quantity expressed by this line, eg: number of product sold. The quantity is not a legal requirement but is very useful for some reports."),
@@ -512,6 +600,12 @@ class account_move_line(osv.osv):
         'narration': fields.related('move_id','narration', type='text', relation='account.move', string='Internal Note'),
         'ref': fields.related('move_id', 'ref', string='Reference', type='char', size=64, store=True),
         'statement_id': fields.many2one('account.bank.statement', 'Statement', help="The bank statement used for bank reconciliation", select=1),
+        'reconcile_function_id': fields.function(
+            _get_reconcile, method=True,
+            string='Reconcile',
+            type='many2one',
+            relation="account.move.reconcile"
+        ),
         'reconcile_id': fields.many2one('account.move.reconcile', 'Reconcile', readonly=True, ondelete='set null', select=2),
         'reconcile_partial_id': fields.many2one('account.move.reconcile', 'Partial Reconcile', readonly=True, ondelete='set null', select=2),
         'amount_currency': fields.float('Amount Currency', help="The amount expressed in an optional other currency if it is a multi-currency entry.", digits_compute=dp.get_precision('Account')),
@@ -544,7 +638,7 @@ class account_move_line(osv.osv):
                     "this field will contain the basic amount(without tax)."),
         'invoice': fields.function(_invoice, string='Invoice',
             type='many2one', relation='account.invoice', fnct_search=_invoice_search),
-        'account_tax_id':fields.many2one('account.tax', 'Tax'),
+        'account_tax_id': fields.many2one('account.tax', 'Tax'),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account'),
         'company_id': fields.related('account_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True)
     }
@@ -629,7 +723,7 @@ class account_move_line(osv.osv):
         for line in self.browse(cr, uid, ids, context=context):
             if line.journal_id.allow_date:
                 if not time.strptime(line.date[:10], '%Y-%m-%d') >= time.strptime(line.period_id.date_start, '%Y-%m-%d') or not time.strptime(line.date[:10], '%Y-%m-%d') <= time.strptime(line.period_id.date_stop, '%Y-%m-%d'):
-                    return False
+                    raise osv.except_osv(_(u'Error'), _(u"Journal '{journal}' required date check, but invoice {invoice} have move not on period {period}").format(journal=line.journal_id.name, invoice=line.invoice.number, period=line.period_id.name))
         return True
 
     def _check_currency(self, cr, uid, ids, context=None):
@@ -836,11 +930,11 @@ class account_move_line(osv.osv):
         return True
 
     def reconcile(self, cr, uid, ids, type='auto', writeoff_acc_id=False, writeoff_period_id=False, writeoff_journal_id=False, context=None):
-        account_obj = self.pool.get('account.account')
-        move_obj = self.pool.get('account.move')
-        move_rec_obj = self.pool.get('account.move.reconcile')
-        partner_obj = self.pool.get('res.partner')
-        currency_obj = self.pool.get('res.currency')
+        account_obj = self.pool['account.account']
+        move_obj = self.pool['account.move']
+        move_rec_obj = self.pool['account.move.reconcile']
+        partner_obj = self.pool['res.partner']
+        currency_obj = self.pool['res.currency']
         lines = self.browse(cr, uid, ids, context=context)
         unrec_lines = filter(lambda x: not x['reconcile_id'], lines)
         credit = debit = 0.0
@@ -851,11 +945,11 @@ class account_move_line(osv.osv):
             context = {}
         company_list = []
         for line in self.browse(cr, uid, ids, context=context):
-            if company_list and not line.company_id.id in company_list:
+            if company_list and line.company_id.id not in company_list:
                 raise osv.except_osv(_('Warning !'), _('To reconcile the entries company should be the same for all entries'))
             company_list.append(line.company_id.id)
         for line in unrec_lines:
-            if line.state <> 'valid':
+            if line.state != 'valid':
                 raise osv.except_osv(_('Error'),
                         _('Entry "%s" is not valid !') % line.name)
             credit += line['credit']
@@ -873,12 +967,12 @@ class account_move_line(osv.osv):
                    'WHERE id IN %s '\
                    'GROUP BY account_id,reconcile_id',
                    (tuple(ids), ))
-        r = cr.fetchall()
-        #TODO: move this check to a constraint in the account_move_reconcile object
+        res = cr.fetchall()
+        # TODO: move this check to a constraint in the account_move_reconcile object
         if not unrec_lines:
             raise osv.except_osv(_('Error'), _('Entry is already reconciled'))
         account = account_obj.browse(cr, uid, account_id, context=context)
-        if r[0][1] != None:
+        if res[0][1] is not None:
             raise osv.except_osv(_('Error'), _('Some entries are already reconciled !'))
 
         if context.get('fy_closing'):
@@ -909,10 +1003,10 @@ class account_move_line(osv.osv):
             cur_obj = self.pool.get('res.currency')
             cur_id = False
             amount_currency_writeoff = 0.0
-            if context.get('company_currency_id',False) != context.get('currency_id',False):
-                cur_id = context.get('currency_id',False)
+            if context.get('company_currency_id', False) != context.get('currency_id', False):
+                cur_id = context.get('currency_id', False)
                 for line in unrec_lines:
-                    if line.currency_id and line.currency_id.id == context.get('currency_id',False):
+                    if line.currency_id and line.currency_id.id == context.get('currency_id', False):
                         amount_currency_writeoff += line.amount_currency
                     else:
                         tmp_amount = cur_obj.compute(cr, uid, line.account_id.company_id.currency_id.id, context.get('currency_id',False), abs(line.debit-line.credit), context={'date': line.date})
@@ -1242,6 +1336,20 @@ class account_move_line(osv.osv):
                     if todo_date:
                         move_obj.write(cr, uid, [line.move_id.id], {'date': todo_date}, context=context)
         return result
+
+    # def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
+    #     new_args = []
+    #
+    #     for arg in args:
+    #         if arg and len(arg) == 3 and arg[1] == 'ilike':
+    #             values = arg[2].split(',')
+    #             if values > 1:
+    #                 new_args += ['|' for x in range(len(values) - 1)] + [(arg[0], arg[1], value.strip()) for value in values]
+    #         else:
+    #             new_args.append(arg)
+    #
+    #     return super(account_move_line, self).search(cr, uid, new_args, offset=offset, limit=limit, order=order,
+    #                                              context=context, count=count)
 
     def _update_journal_check(self, cr, uid, journal_id, period_id, context=None):
         journal_obj = self.pool.get('account.journal')

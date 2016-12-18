@@ -1384,7 +1384,6 @@ msgstr "Prezzo unitario"
 #. module: purchase
 #: view:purchase.order:0 selection:purchase.order,state:0
 #: selection:purchase.order.line,state:0 selection:purchase.report,state:0
-#: view:stock.picking:0
 msgid "Done"
 msgstr "Completato"
 
