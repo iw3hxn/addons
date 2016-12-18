@@ -1090,7 +1090,7 @@
                     <!--<field name="reconcile_partial_id" groups="base.group_extended"/>-->
                     <!--<field name="reconcile_id"/>-->
                     <field name="reconcile_function_id"/>
-                    <button string="View" name="action_view_reconcile" icon="gtk-find" type="object">
+                    <button string="View" name="action_view_reconcile" icon="gtk-find" type="object"/>
                     <field name="state"/>
                     <field name="company_id" invisible="True"/>
                 </tree>
