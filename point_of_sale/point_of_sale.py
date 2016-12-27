@@ -505,6 +505,7 @@ class pos_order(osv.osv):
     def _create_account_move_line(self, cr, uid, ids, session=None, move_id=None, context=None):
         # Tricky, via the workflow, we only have one id in the ids variable
         """Create a account move line of order grouped by products or not."""
+
         account_move_obj = self.pool['account.move']
         account_period_obj = self.pool['account.period']
         account_tax_obj = self.pool['account.tax']
@@ -513,13 +514,12 @@ class pos_order(osv.osv):
 
         fiscal_pos_obj = self.pool['account.fiscal.position']
 
-        #session_ids = set(order.session_id for order in self.browse(cr, uid, ids, context=context))
+        # session_ids = set(order.session_id for order in self.browse(cr, uid, ids, context=context))
 
         if session and not all(session.id == order.session_id.id for order in self.browse(cr, uid, ids, context=context)):
             raise osv.except_osv(_('Error!'), _('Selected orders do not have the same session!'))
 
         grouped_data = {}
-        have_to_group_by = session and session.config_id.group_by or False
 
         def compute_tax(amount, tax, line):
             if amount > 0:
@@ -538,7 +538,6 @@ class pos_order(osv.osv):
                 continue
             if order.sale_journal.group_invoice_lines:
                 have_to_group_by = True
-
             current_company = order.sale_journal.company_id
 
             group_tax = {}
@@ -552,16 +551,20 @@ class pos_order(osv.osv):
             # order_account = fiscal_pos_obj.map_account(cr, uid, order.shop_id.fiscal_position_id, order_account)
             if move_id is None:
                 # Create an entry for the sale
+                date = order.date_order[:10]
+                period = account_period_obj.find(cr, uid, dt=date, context=dict(context or {}, company_id=current_company.id, account_period_prefer_normal=True))[0]
                 move_id = account_move_obj.create(cr, uid, {
                     'ref': order.name,
                     'journal_id': order.sale_journal.id,
+                    'date': date,
+                    'period_id': period,
                 }, context=context)
 
             def insert_data(data_type, values):
                 # if have_to_group_by:
 
                 sale_journal_id = order.sale_journal.id
-                period = account_period_obj.find(cr, uid, context=dict(context or {}, company_id=current_company.id, account_period_prefer_normal=True))[0]
+                period = account_period_obj.find(cr, uid, dt=order.date_order[:10], context=dict(context or {}, company_id=current_company.id, account_period_prefer_normal=True))[0]
 
                 # 'quantity': line.qty,
                 # 'product_id': line.product_id.id,
@@ -575,7 +578,7 @@ class pos_order(osv.osv):
                 })
 
                 if data_type == 'product':
-                    key = ('product', values['partner_id'], values['product_id'], values['debit'] > 0)
+                    key = ('product', values['partner_id'], values['account_id'], values['debit'] > 0)
                 elif data_type == 'tax':
                     key = ('tax', values['partner_id'], values['tax_code_id'], values['debit'] > 0)
                 elif data_type == 'counter_part':
@@ -596,6 +599,7 @@ class pos_order(osv.osv):
                     else:
                         current_value = grouped_data[key][0]
                         current_value.update({
+                            'name': data_type,
                             'quantity': current_value.get('quantity', 0.0) + values.get('quantity', 0.0),
                             'credit': current_value.get('credit', 0.0) + values.get('credit', 0.0),
                             'debit': current_value.get('debit', 0.0) + values.get('debit', 0.0),
@@ -641,6 +645,8 @@ class pos_order(osv.osv):
                         'account for this product: "%s" (id:%d).') \
                         % (line.product_id.name, line.product_id.id, ))
 
+                income_account = fiscal_pos_obj.map_account(cr, uid, line.shop_id.fiscal_position_id, income_account, context=context)
+
                 # Empty the tax list as long as there is no tax code:
                 tax_code_id = False
                 tax_amount = 0
@@ -673,21 +679,21 @@ class pos_order(osv.osv):
 
                     insert_data('tax', {
                         'name': _('Tax'),
-                        'product_id':line.product_id.id,
+                        'product_id': line.product_id.id,
                         'quantity': line.qty,
                         'account_id': income_account,
                         'credit': 0.0,
                         'debit': 0.0,
                         'tax_code_id': tax_code_id,
                         'tax_amount': tax_amount,
-                        'partner_id': order.partner_id and self.pool.get("res.partner")._find_accounting_partner(order.partner_id).id or False
+                        'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
                     })
 
             # Create a move for each tax group
             (tax_code_pos, base_code_pos, account_pos, tax_id) = (0, 1, 2, 3)
 
             for key, tax_amount in group_tax.items():
-                tax = self.pool.get('account.tax').browse(cr, uid, key[tax_id], context=context)
+                tax = self.pool['account.tax'].browse(cr, uid, key[tax_id], context=context)
                 insert_data('tax', {
                     'name': _('Tax') + ' ' + tax.name,
                     'quantity': line.qty,
@@ -703,11 +709,11 @@ class pos_order(osv.osv):
 
             # counterpart
             insert_data('counter_part', {
-                'name': _("Trade Receivables"), # order.name,
+                'name': _("Trade Receivables"),  # order.name,
                 'account_id': order_account,
                 'credit': ((order.amount_total < 0) and -order.amount_total) or 0.0,
                 'debit': ((order.amount_total > 0) and order.amount_total) or 0.0,
-                'partner_id': order.partner_id and self.pool.get("res.partner")._find_accounting_partner(order.partner_id).id or False
+                'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
             })
 
             order.write({'state': 'done', 'account_move': move_id})
@@ -857,7 +863,6 @@ class pos_order_line(osv.osv):
 
     def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
         new_args = []
-        #import pdb; pdb.set_trace()
         for arg in args:
             if arg[0] == 'shop_id':
                 new_args.append(('order_id.shop_id', '=', arg[2] ))
