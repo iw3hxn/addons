@@ -1362,7 +1362,6 @@ class account_move_line(osv.osv):
 
         for (state,) in result:
             if state == 'done':
-                import pdb;pdb.set_trace()
                 raise osv.except_osv(_('Error !'), _(u'The period {period} is close, so is not possible to add/modify for journal {journal}').format(period=period.name, journal=journal.name))
                 # raise osv.except_osv(_('Error !'), _('You can not add/modify entries in a closed journal.'))
         if not result:
