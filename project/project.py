@@ -803,36 +803,36 @@ class task(osv.osv):
     #
     # Override view according to the company definition
     #
-    def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
-        users_obj = self.pool.get('res.users')
-
-        # read uom as admin to avoid access rights issues, e.g. for portal/share users,
-        # this should be safe (no context passed to avoid side-effects)
-        obj_tm = users_obj.browse(cr, 1, uid, context=context).company_id.project_time_mode_id
-        tm = obj_tm and obj_tm.name or 'Hours'
-
-        res = super(task, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu=submenu)
-
-        if tm in ['Hours', 'Hour']:
-            return res
-
-        eview = etree.fromstring(res['arch'])
-
-        def _check_rec(eview):
-            if eview.attrib.get('widget', '') == 'float_time':
-                eview.set('widget', 'float')
-            for child in eview:
-                _check_rec(child)
-            return True
-
-        _check_rec(eview)
-
-        res['arch'] = etree.tostring(eview)
-
-        for f in res['fields']:
-            if 'Hours' in res['fields'][f]['string']:
-                res['fields'][f]['string'] = res['fields'][f]['string'].replace('Hours', tm)
-        return res
+    # def fields_view_get(self, cr, uid, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+    #     users_obj = self.pool.get('res.users')
+    #
+    #     # read uom as admin to avoid access rights issues, e.g. for portal/share users,
+    #     # this should be safe (no context passed to avoid side-effects)
+    #     obj_tm = users_obj.browse(cr, 1, uid, context=context).company_id.project_time_mode_id
+    #     tm = obj_tm and obj_tm.name or 'Hours'
+    #
+    #     res = super(task, self).fields_view_get(cr, uid, view_id, view_type, context, toolbar, submenu=submenu)
+    #
+    #     if tm in ['Hours', 'Hour']:
+    #         return res
+    #
+    #     eview = etree.fromstring(res['arch'])
+    #
+    #     def _check_rec(eview):
+    #         if eview.attrib.get('widget', '') == 'float_time':
+    #             eview.set('widget', 'float')
+    #         for child in eview:
+    #             _check_rec(child)
+    #         return True
+    #
+    #     _check_rec(eview)
+    #
+    #     res['arch'] = etree.tostring(eview)
+    #
+    #     for f in res['fields']:
+    #         if 'Hours' in res['fields'][f]['string']:
+    #             res['fields'][f]['string'] = res['fields'][f]['string'].replace('Hours', tm)
+    #     return res
 
     # ----------------------------------------
     # Case management
