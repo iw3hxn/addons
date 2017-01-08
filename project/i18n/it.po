@@ -1833,9 +1833,14 @@ msgid "Hours Spent"
 msgstr "Ore Spese"
 
 #. module: project
-#: view:project.project:0 view:project.task:0
+#: view:project.project:0
 msgid "Miscelleanous"
-msgstr "Miscellanea"
+msgstr "Varie"
+
+#. module: project
+#: view:project.task:0
+msgid "Task Stage"
+msgstr "Stadio attività"
 
 #. module: project
 #: model:process.transition,name:project.process_transition_opendonetask0

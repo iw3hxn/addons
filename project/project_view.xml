@@ -225,7 +225,7 @@
                 <form string="Task edition">
                     <group colspan="6" col="6">
                         <field name="name" placeholder="Task summary..." nolabel="1"  colspan="4"/>
-                        <field name="project_id" select="1"  on_change="onchange_project(project_id)"/>
+                        <field name="project_id" select="1" on_change="onchange_project(project_id)"/>
                         <field name="total_hours" widget="float_time"/>
                         <field name="date_deadline" attrs="{'readonly':[('state','in',['done', 'cancelled'])]}"/>
                         <field name="user_id" select="1" attrs="{'readonly':[('state','in',['done', 'cancelled'])]}"/>
@@ -297,8 +297,7 @@
                         <page groups="base.group_extended" string="Extra Info"
                               attrs="{'readonly':[('state','=','done')]}">
                             <group colspan="4">
-                                <group colspan="2" col="2">
-                                    <separator string="Planning" colspan="2"/>
+                                <group colspan="2" col="2" string="Planning">
                                     <field name="priority"/>
                                     <field name="sequence"/>
                                     <field name="partner_id"/>
@@ -309,9 +308,8 @@
                                     <field name="date_end"/>
                                 </group>
                             </group>
-                            <separator string="Miscelleanous" colspan="4"/>
-                            <group col="4" colspan="2" groups="project.group_stage_task">
-                                <field name="type_id" widget="selection" readonly="1"/>
+                            <group col="4" colspan="2" string="Task Stage" groups="project.group_stage_task">
+                                <field name="type_id" nolabel="1" readonly="1"/>
                                 <button name="prev_type" string="Previous" type="object" icon="gtk-go-back"
                                         help="Change to Previous Stage"/>
                                 <button name="next_type" string="Next" type="object" icon="gtk-go-forward"
