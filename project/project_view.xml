@@ -302,7 +302,6 @@
                                     <field name="priority"/>
                                     <field name="sequence"/>
                                     <field name="partner_id"/>
-                                    <field name="state" invisible="1"/>
                                     <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                                 </group>
                                 <group string="Gantt View" colspan="2" col="2">
@@ -311,8 +310,6 @@
                                 </group>
                             </group>
                             <separator string="Miscelleanous" colspan="4"/>
-                            <field name="partner_id"/>
-                            <field name="company_id" select="1" groups="base.group_multi_company" widget="selection"/>
                             <group col="4" colspan="2" groups="project.group_stage_task">
                                 <field name="type_id" widget="selection" readonly="1"/>
                                 <button name="prev_type" string="Previous" type="object" icon="gtk-go-back"
