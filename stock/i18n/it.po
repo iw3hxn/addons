@@ -652,7 +652,7 @@ msgstr ""
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_inventory_control
 msgid "Inventory Control"
-msgstr "Controllo inventario"
+msgstr "Inventario Magazzino"
 
 #. module: stock
 #: view:stock.location:0
@@ -2957,7 +2957,7 @@ msgstr "L'inventario verrà calcolato a questa data"
 #. module: stock
 #: field:stock.inventory,name:0
 msgid "Inventory Reference"
-msgstr "Riferimento inventario"
+msgstr "Nome Inventario"
 
 #. module: stock
 #: code:addons/stock/stock.py:1343
