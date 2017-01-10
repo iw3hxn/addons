@@ -144,9 +144,9 @@ class account_installer(osv.osv_memory):
                     }
                     fiscal_id = fy_obj.create(cr, uid, vals, context=context)
                     if res['period'] == 'month':
-                        fy_obj.create_period(cr, uid, [fiscal_id])
+                        fy_obj.create_period(cr, uid, [fiscal_id], context)
                     elif res['period'] == '3months':
-                        fy_obj.create_period3(cr, uid, [fiscal_id])
+                        fy_obj.create_period3(cr, uid, [fiscal_id], context)
 
     def modules_to_install(self, cr, uid, ids, context=None):
         modules = super(account_installer, self).modules_to_install(

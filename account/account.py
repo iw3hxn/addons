@@ -1096,8 +1096,19 @@ class account_fiscalyear(osv.osv):
                 if de.strftime('%Y-%m-%d') > fy.date_stop:
                     de = datetime.strptime(fy.date_stop, '%Y-%m-%d')
 
+                name = ds.strftime('%m/%Y')
+                if interval != 1:
+                    if ds.strftime('%m') == '01':
+                        name = 'I' + ds.strftime('/%Y')
+                    if ds.strftime('%m') == '04':
+                        name = 'II' + ds.strftime('/%Y')
+                    if ds.strftime('%m') == '07':
+                        name = 'III' + ds.strftime('/%Y')
+                    if ds.strftime('%m') == '10':
+                        name = 'IV' + ds.strftime('/%Y')
+
                 period_obj.create(cr, uid, {
-                    'name': ds.strftime('%m/%Y'),
+                    'name': name,
                     'code': ds.strftime('%m/%Y'),
                     'date_start': ds.strftime('%Y-%m-%d'),
                     'date_stop': de.strftime('%Y-%m-%d'),
