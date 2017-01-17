@@ -1019,7 +1019,9 @@
                                     <button string="Reply" attrs="{'invisible': [('email_from', '=', False)]}" name="109" context="{'mail.compose.message.mode':'reply', 'message_id':active_id}" icon="terp-mail-replied" type="action"/>
                                 </tree>
                             </field>
-                            <button string="Send New Email" name="109" icon="terp-mail-message-new" type="action"/>
+                            <button string="Send New Email"
+                                    name="%(mail.action_email_compose_message_wizard)d"
+                                    icon="terp-mail-message-new" type="action"/>
                         </page>
                     </notebook>
                 </form>
