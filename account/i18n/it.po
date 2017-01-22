@@ -11504,3 +11504,8 @@ msgstr "Fatture Fornitori"
 #: view:account.fiscal.position:0
 msgid "Availability"
 msgstr "Disponibile per:"
+
+#. module: account
+#: field:account.bank.statement.line,running_balance:0
+msgid "Running Balance"
+msgstr "Saldo Progressivo"

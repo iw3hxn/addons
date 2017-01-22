@@ -458,6 +458,19 @@ class account_bank_statement_line(osv.osv):
             res['value']['account_id'] = account_id
         return res
 
+    def _get_running_balance(self, cr, uid, ids, name, args, context):
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = 0
+            statement = line.statement_id
+            running_balance = statement.balance_start
+            for st_line in statement.line_ids:
+                running_balance += st_line.amount
+                if st_line.id == line.id:
+                    res[line.id] = running_balance
+                    break
+        return res
+
     _order = "statement_id desc, sequence"
     _name = "account.bank.statement.line"
     _description = "Bank Statement Line"
@@ -481,6 +494,7 @@ class account_bank_statement_line(osv.osv):
             'Moves'),
         'ref': fields.char('Reference', size=32),
         'note': fields.text('Notes'),
+        'running_balance': fields.function(_get_running_balance, method=True, string="Running Balance"),
         'sequence': fields.integer('Sequence', select=True, help="Gives the sequence order when displaying a list of bank statement lines."),
         'company_id': fields.related('statement_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True),
     }

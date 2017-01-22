@@ -620,6 +620,7 @@
                                     <field domain="[('journal_id','=',parent.journal_id), ('company_id', '=', parent.company_id)]" name="account_id"/>
                                     <field name="analytic_account_id" groups="analytic.group_analytic_accounting" domain="[('company_id', '=', parent.company_id), ('type', '&lt;&gt;', 'view')]"/>
                                     <field name="amount" sum="Sum"/>
+                                    <field name="running_balance"/>
                                 </tree>
                                 <form string="Statement lines">
                                     <field name="date"/>
