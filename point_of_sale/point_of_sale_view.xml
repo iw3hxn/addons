@@ -229,7 +229,8 @@
                     <separator orientation="vertical"/>
                     <field name="shop_id" widget="selection" />
                     <field name="user_id" widget="selection" />
-                    <field name="product_id" />
+                    <field name="default_code" />
+                    <field name="categ_id" />
                     <newline/>
                     <group expand="0" string="Group By..." groups="base.group_extended">
                         <filter string="Order Date" icon="terp-go-month" domain="[]" context="{'group_by':'date_order'}"/>

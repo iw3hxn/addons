@@ -251,8 +251,9 @@ class pos_order(osv.osv):
         for order in self.browse(cr, uid, ids, context=context):
             if order.lines and not order.amount_total:
                 return True
-            if (not order.lines) or (not order.statement_ids) or \
-                (abs(order.amount_total - order.amount_paid) > 0.00001):
+            if context.get('force_paid', False):
+                return True
+            if (not order.lines) or (not order.statement_ids) or (abs(order.amount_total - order.amount_paid) > 0.00001):
                 return False
         return True
 
@@ -538,6 +539,9 @@ class pos_order(osv.osv):
                 continue
             if order.sale_journal.group_invoice_lines:
                 have_to_group_by = True
+            else:
+                have_to_group_by = False
+
             current_company = order.sale_journal.company_id
 
             group_tax = {}

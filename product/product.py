@@ -56,7 +56,7 @@ def check_ean(eancode):
 
     if not eancode:
         return True
-    if len(eancode) <> 13:
+    if len(eancode) != 13:
         return False
     try:
         int(eancode)
@@ -159,6 +159,7 @@ class product_uom(osv.osv):
             context = {}
         if from_unit.category_id.id != to_unit.category_id.id:
             if context.get('raise-exception', True):
+                return qty
                 raise osv.except_osv(_('Error !'), _('Conversion from Product UoM %s to Default UoM %s is not possible as they both belong to different Category!.') % (from_unit.name,to_unit.name,))
             else:
                 return qty
