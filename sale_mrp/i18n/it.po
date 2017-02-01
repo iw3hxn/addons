@@ -20,7 +20,7 @@ msgstr ""
 #. module: sale_mrp
 #: help:mrp.production,sale_ref:0
 msgid "Indicate the Customer Reference from sales order."
-msgstr "Indica il riferimento cliente dall'ordine di vendita"
+msgstr "Indica il Numero Ordine Cliente dall'ordine di vendita"
 
 #. module: sale_mrp
 #: field:mrp.production,sale_ref:0
