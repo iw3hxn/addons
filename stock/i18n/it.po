@@ -3951,10 +3951,10 @@ msgstr ""
 #. module: stock
 #: field:stock.fill.inventory,set_stock_zero:0
 msgid "Set to zero"
-msgstr "Imposta a zero"
+msgstr "Porta Prodotti a 0"
 
 #. module: stock
-#: field:stock.fill.inventory,set_stock_zero:0
+#: field:stock.fill.inventory,date:0
 msgid "Date of inventory"
 msgstr "Data dell'inventario"
 
