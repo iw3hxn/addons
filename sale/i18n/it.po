@@ -2507,3 +2507,8 @@ msgstr "{order} ha cambiato il negozio da {shop_from} a {shop_to}"
 #: view:sale.order.line.make.invoice:0
 msgid "Create & View Invoice"
 msgstr "Crea e Visualizza Fattura"
+
+#. module: sale
+#: view:sale.order:0
+msgid "Order Total"
+msgstr "Totale documento"

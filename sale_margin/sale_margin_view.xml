@@ -8,10 +8,12 @@
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <field name="amount_total" position="after">
-                <field name="margin" groups="sale.view_margin"/>
-                <field name="margin_rel" groups="sale.view_margin_rel"/>
-            </field>
+            <group name="order_total" position="before">
+                <group col="2" colspan="2">
+                    <field name="margin" groups="sale.view_margin"/>
+                    <field name="margin_rel" groups="sale.view_margin_rel"/>
+                </group>
+            </group>
         </field>
     </record>
     
