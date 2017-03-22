@@ -214,24 +214,26 @@
                                 </tree>
                                 <!-- default form view -->
                             </field>
-                            <group col="7" colspan="4">
-                                <field name="amount_untaxed" sum="Untaxed amount"/>
-                                <field name="amount_tax"/>
-                                <field name="amount_total" sum="Total amount"/>
-                                <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute"/>
-                                <field name="invoice_exists" invisible="1" />
-                            </group>
-                            <group col="11" colspan="4">
-                                <field name="state" widget="statusbar" statusbar_visible="draft,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue","wait":"blue"}' readonly="1"/>
-                                <button name="purchase_cancel" states="draft,confirmed,wait_auth" string="Cancel" icon="gtk-cancel"/>
-                                <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object" icon="gtk-convert"/>
-                                <button name="action_cancel" states="approved,except_picking,except_invoice,wait" string="Cancel Purchase Order" type="object" icon="gtk-cancel"/>
-                                <button name="picking_ok" states="except_picking" string="Manually Corrected" icon="gtk-convert"/>
-                                <button name="invoice_ok" states="except_invoice" string="Manually Corrected" icon="gtk-convert"/>
-                                <button name="purchase_confirm" states="draft" string="Convert to Purchase Order" icon="gtk-go-forward"/>
-                                <button name="purchase_appbuyer" states="wait_auth" string="Approve Purchase" icon="gtk-ok"/>
-                                <button name="purchase_approve" states="confirmed" string="Approved" icon="gtk-go-forward"/>
-                                <button name="%(report_purchase_order)d" string="Print" states="approved" type="action" icon="gtk-print"/>
+                            <group col="8" colspan="8">
+                                <group col="4" colspan="4">
+                                    <field name="state" widget="statusbar" statusbar_visible="draft,approved,done" statusbar_colors='{"except_picking":"red","except_invoice":"red","confirmed":"blue","wait":"blue"}' readonly="1"/>
+                                    <button name="purchase_cancel" states="draft,confirmed,wait_auth" string="Cancel" icon="gtk-cancel"/>
+                                    <button name="action_cancel_draft" states="cancel" string="Set to Draft" type="object" icon="gtk-convert"/>
+                                    <button name="action_cancel" states="approved,except_picking,except_invoice,wait" string="Cancel Purchase Order" type="object" icon="gtk-cancel"/>
+                                    <button name="picking_ok" states="except_picking" string="Manually Corrected" icon="gtk-convert"/>
+                                    <button name="invoice_ok" states="except_invoice" string="Manually Corrected" icon="gtk-convert"/>
+                                    <button name="purchase_confirm" states="draft" string="Convert to Purchase Order" icon="gtk-go-forward"/>
+                                    <button name="purchase_appbuyer" states="wait_auth" string="Approve Purchase" icon="gtk-ok"/>
+                                    <button name="purchase_approve" states="confirmed" string="Approved" icon="gtk-go-forward"/>
+                                    <button name="%(report_purchase_order)d" string="Print" states="approved" type="action" icon="gtk-print"/>
+                                </group>
+                                <group col="2" colspan="2" name="order_total" string="Order Total">
+                                    <field name="amount_untaxed" sum="Untaxed amount"/>
+                                    <field name="amount_tax"/>
+                                    <field name="amount_total" sum="Total amount"/>
+                                    <button name="button_dummy" states="draft" string="Compute" type="object" icon="gtk-execute"/>
+                                    <field name="invoice_exists" invisible="1" />
+                                </group>
                             </group>
                             <group col="4" colspan="4" string="Connection Flow">
                                 <field name="picking_ids" invisible="1" />
@@ -256,6 +258,8 @@
                             <separator string="Purchase Control" colspan="4"/>
                             <field name="validator"/>
                             <field name="date_approve"/>
+                        </page>
+                        <page string="History" attrs="{'invisible':[('state', 'in', ('draft'))]}">
                             <separator string="Invoices" colspan="4"/>
                             <newline/>
                             <field name="invoice_ids" groups="base.group_extended" nolabel="1" colspan="4" context="{'type':'in_invoice', 'journal_type':'purchase'}" readonly="1"/>

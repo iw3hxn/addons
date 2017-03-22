@@ -22,7 +22,7 @@
 
 {
     'name': 'Purchase Management',
-    'version': '1.1f',
+    'version': '1.1g',
     'category': 'Purchase Management',
     "sequence": 19,
     'complexity': "easy",

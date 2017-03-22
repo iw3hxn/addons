@@ -2058,3 +2058,12 @@ msgstr "Comunicazione e Storico"
 msgid "Notes"
 msgstr "Note"
 
+#. module: purchase
+#: view:purchase.order:0
+msgid "Order Total"
+msgstr "Totale documento"
+
+#. module: sale
+#: view:sale.order:0
+msgid "History"
+msgstr "Storico"
