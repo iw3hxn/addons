@@ -414,7 +414,7 @@ msgstr "Da un ordine di vendita"
 #. module: sale
 #: field:sale.shop,name:0
 msgid "Shop Name"
-msgstr "Nome Negozio"
+msgstr "Nome Business Unit"
 
 #. module: sale
 #: help:sale.order,order_policy:0
@@ -1960,7 +1960,7 @@ msgstr "Righe d'ordine di vendita legate ai miei Ordini di Vendita"
 #: model:ir.ui.menu,name:sale.menu_action_shop_form field:sale.order,shop_id:0
 #: view:sale.report:0 field:sale.report,shop_id:0
 msgid "Shop"
-msgstr "Negozio"
+msgstr "Business Unit"
 
 #. module: sale
 #: field:sale.report,date_confirm:0
@@ -2227,7 +2227,7 @@ msgstr "Ordini di Vendita"
 #. module: sale
 #: model:ir.model,name:sale.model_sale_shop view:sale.shop:0
 msgid "Sales Shop"
-msgstr "Negozio"
+msgstr "Business Unit"
 
 #. module: sale
 #: selection:sale.report,month:0
@@ -2347,9 +2347,9 @@ msgid ""
 "warehouse from which the products will be delivered for each particular "
 "sales."
 msgstr ""
-"Se avete più di un negozio per vendere i prodotti dell'azienda, è possibile "
+"Se avete più di una Business Unit per vendere i prodotti dell'azienda, è possibile "
 "creare e gestirli da qui. Ogni volta che registrate un nuovo preventivo o un "
-"ordine di vendita, esso deve essere collegato al negozio. Il negozio "
+"ordine di vendita, esso deve essere collegato alla Business Unit. Il Business Unit "
 "definisce inoltre il deposito da cui i prodotti verranno consegnati per ogni "
 "particolare vendita."
 
@@ -2501,7 +2501,7 @@ msgstr "Crea e vai direttamente alla fattura"
 #: code:addons/sale/sale.py:416
 #, python-format
 msgid "{order} has been change shop from {shop_from} to {shop_to}"
-msgstr "{order} ha cambiato il negozio da {shop_from} a {shop_to}"
+msgstr "{order} ha cambiato il Business Unit da {shop_from} a {shop_to}"
 
 #. module: sale
 #: view:sale.order.line.make.invoice:0

@@ -80,7 +80,7 @@ msgstr "Converti in preventivo"
 #. module: sale_crm
 #: field:crm.make.sale,shop_id:0
 msgid "Shop"
-msgstr "Negozio"
+msgstr "Business Unit"
 
 #. module: sale_crm
 #: field:crm.make.sale,partner_id:0
