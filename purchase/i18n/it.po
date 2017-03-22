@@ -2063,7 +2063,12 @@ msgstr "Note"
 msgid "Order Total"
 msgstr "Totale documento"
 
-#. module: sale
+#. module: purchase
 #: view:sale.order:0
 msgid "History"
 msgstr "Storico"
+
+#. module: purchase
+#: field:purchase.order,shop_id:0
+msgid "Shop"
+msgstr "Business Unit"
