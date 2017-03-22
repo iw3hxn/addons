@@ -225,8 +225,10 @@ class purchase_order(osv.osv):
         'company_id': fields.many2one('res.company','Company',required=True,select=1),
         'invoice_exists': fields.function(_invoice_exists, string='Invoiced',
             type='boolean', help="It indicates that sales order has at least one invoice."),
+        'user_id': fields.many2one('res.users', 'User', states={'draft': [('readonly', False)]}, select=True),
     }
     _defaults = {
+        'user_id': lambda obj, cr, uid, context: uid,
         'date_order': fields.date.context_today,
         'state': 'draft',
         'name': lambda obj, cr, uid, context: obj.pool.get('ir.sequence').get(cr, uid, 'purchase.order'),
