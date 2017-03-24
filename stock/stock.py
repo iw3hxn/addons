@@ -1028,6 +1028,9 @@ class stock_picking(osv.osv):
             account_id = partner.property_account_receivable.id
         else:
             account_id = partner.property_account_payable.id
+        if partner.property_account_position:
+            account_id = self.pool['account.fiscal.position'].map_account(cr, uid, partner.property_account_position, account_id)
+
         address_contact_id, address_invoice_id = \
                 self.pool.get('res.partner').address_get(cr, uid, [partner.id],
                         ['contact', 'invoice']).values()

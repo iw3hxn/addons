@@ -480,6 +480,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
 
     def onchange_partner_id(self, cr, uid, ids, type, partner_id,\
             date_invoice=False, payment_term=False, partner_bank_id=False, company_id=False):
+        context = self.pool['res.users'].context_get(cr, uid)
         invoice_addr_id = False
         contact_addr_id = False
         partner_payment_term = False
@@ -494,26 +495,26 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             res = self.pool.get('res.partner').address_get(cr, uid, [partner_id], ['contact', 'invoice'])
             contact_addr_id = res['contact']
             invoice_addr_id = res['invoice']
-            p = self.pool.get('res.partner').browse(cr, uid, partner_id)
+            p = self.pool.get('res.partner').browse(cr, uid, partner_id, context)
             if company_id:
                 if p.property_account_receivable.company_id.id != company_id and p.property_account_payable.company_id.id != company_id:
                     property_obj = self.pool.get('ir.property')
-                    rec_pro_id = property_obj.search(cr,uid,[('name','=','property_account_receivable'),('res_id','=','res.partner,'+str(partner_id)+''),('company_id','=',company_id)])
-                    pay_pro_id = property_obj.search(cr,uid,[('name','=','property_account_payable'),('res_id','=','res.partner,'+str(partner_id)+''),('company_id','=',company_id)])
+                    rec_pro_id = property_obj.search(cr, uid, [('name', '=', 'property_account_receivable'), ('res_id', '=', 'res.partner,' + str(partner_id) + ''), ('company_id',' =', company_id)], context=context)
+                    pay_pro_id = property_obj.search(cr, uid, [('name', '=', 'property_account_payable'), ('res_id', '=', 'res.partner,' + str(partner_id) + ''), ('company_id', '=', company_id)], context=context)
                     if not rec_pro_id:
-                        rec_pro_id = property_obj.search(cr,uid,[('name','=','property_account_receivable'),('company_id','=',company_id)])
+                        rec_pro_id = property_obj.search(cr, uid, [('name', '=', 'property_account_receivable'), ('company_id', '=', company_id)], context=context)
                     if not pay_pro_id:
-                        pay_pro_id = property_obj.search(cr,uid,[('name','=','property_account_payable'),('company_id','=',company_id)])
-                    rec_line_data = property_obj.read(cr,uid,rec_pro_id,['name','value_reference','res_id'])
-                    pay_line_data = property_obj.read(cr,uid,pay_pro_id,['name','value_reference','res_id'])
-                    rec_res_id = rec_line_data and rec_line_data[0].get('value_reference',False) and int(rec_line_data[0]['value_reference'].split(',')[1]) or False
-                    pay_res_id = pay_line_data and pay_line_data[0].get('value_reference',False) and int(pay_line_data[0]['value_reference'].split(',')[1]) or False
+                        pay_pro_id = property_obj.search(cr, uid, [('name','=','property_account_payable'), ('company_id','=', company_id)], context=context)
+                    rec_line_data = property_obj.read(cr, uid, rec_pro_id, ['name', 'value_reference', 'res_id'], context=context)
+                    pay_line_data = property_obj.read(cr, uid, pay_pro_id, ['name', 'value_reference', 'res_id'], context=context)
+                    rec_res_id = rec_line_data and rec_line_data[0].get('value_reference', False) and int(rec_line_data[0]['value_reference'].split(',')[1]) or False
+                    pay_res_id = pay_line_data and pay_line_data[0].get('value_reference', False) and int(pay_line_data[0]['value_reference'].split(',')[1]) or False
                     if not rec_res_id and not pay_res_id:
                         raise osv.except_osv(_('Configuration Error !'),
                             _('Can not find a chart of accounts for this company, you should create one.'))
                     account_obj = self.pool.get('account.account')
-                    rec_obj_acc = account_obj.browse(cr, uid, [rec_res_id])
-                    pay_obj_acc = account_obj.browse(cr, uid, [pay_res_id])
+                    rec_obj_acc = account_obj.browse(cr, uid, [rec_res_id], context=context)
+                    pay_obj_acc = account_obj.browse(cr, uid, [pay_res_id], context=context)
                     p.property_account_receivable = rec_obj_acc[0]
                     p.property_account_payable = pay_obj_acc[0]
 
@@ -522,6 +523,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             else:
                 acc_id = p.property_account_payable.id
             fiscal_position = p.property_account_position and p.property_account_position.id or False
+            if fiscal_position:
+                acc_id = self.pool['account.fiscal.position'].map_account(cr, uid, p.property_account_position, acc_id)
             partner_payment_term = p.property_payment_term and p.property_payment_term.id or False
             if p.bank_ids:
                 bank_id = p.bank_ids[0].id
