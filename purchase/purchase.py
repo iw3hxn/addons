@@ -394,7 +394,7 @@ class purchase_order(osv.osv):
         mod_obj = self.pool.get('ir.model.data')
         act_obj = self.pool.get('ir.actions.act_window')
 
-        result = mod_obj.get_object_reference(cr, uid, 'account', 'action_invoice_tree1')
+        result = mod_obj.get_object_reference(cr, uid, 'account', 'action_invoice_tree2')
         id = result and result[1] or False
         result = act_obj.read(cr, uid, [id], context=context)[0]
         # compute the number of invoices to display
@@ -402,10 +402,10 @@ class purchase_order(osv.osv):
         for po in self.browse(cr, uid, ids, context=context):
             inv_ids += [invoice.id for invoice in po.invoice_ids]
         # choose the view_mode accordingly
-        if len(inv_ids)>1:
+        if len(inv_ids) > 1:
             result['domain'] = "[('id','in',["+','.join(map(str, inv_ids))+"])]"
         else:
-            res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
+            res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_supplier_form')
             result['views'] = [(res and res[1] or False, 'form')]
             result['res_id'] = inv_ids and inv_ids[0] or False
 
@@ -468,7 +468,7 @@ class purchase_order(osv.osv):
             res = inv_id
         return res
 
-    def has_stockable_product(self,cr, uid, ids, *args):
+    def has_stockable_product(self, cr, uid, ids, *args):
         for order in self.browse(cr, uid, ids):
             for order_line in order.order_line:
                 if order_line.product_id and order_line.product_id.product_tmpl_id.type in ('product', 'consu'):
