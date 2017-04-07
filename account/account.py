@@ -1546,7 +1546,7 @@ class account_move(osv.osv):
                         raise osv.except_osv(_('Error'), _('No sequence defined on the journal !'))
 
                 if new_name:
-                    self.write(cr, uid, [move.id], {'name': new_name})
+                    self.write(cr, uid, [move.id], {'name': new_name}, context)
 
         cr.execute('UPDATE account_move ' \
                    'SET state=%s ' \
@@ -1808,6 +1808,7 @@ class account_move(osv.osv):
             line_draft_ids = []
             company_id = None
             for line in move.line_id:
+                # import pdb; pdb.set_trace()
                 amount += line.debit - line.credit
                 line_ids.append(line.id)
                 if line.state == 'draft':
