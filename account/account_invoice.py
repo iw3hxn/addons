@@ -1020,7 +1020,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                 'line_id': line,
                 'journal_id': journal_id,
                 'date': date,
-                'narration':inv.comment
+                'narration': inv.comment
             }
             period_id = inv.period_id and inv.period_id.id or False
             ctx.update(company_id=inv.company_id.id,
@@ -1039,8 +1039,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             self.write(cr, uid, [inv.id], {'move_id': move_id,'period_id':period_id, 'move_name':new_move_name}, context=ctx)
             # Pass invoice in context in method post: used if you want to get the same
             # account move reference when creating the same invoice after a cancelled one:
-            ctx.update({'invoice':inv})
-            move_obj.post(cr, uid, [move_id], context=ctx)
+            # ctx.update({'invoice':inv})
+            # move_obj.post(cr, uid, [move_id], context=ctx)
         self._log_event(cr, uid, ids)
         return True
 
@@ -1066,8 +1066,16 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         }
 
     def action_number(self, cr, uid, ids, context=None):
-        if context is None:
-            context = {}
+        context = context or self.pool['res.users'].context_get(cr, uid)
+
+        move_obj = self.pool['account.move']
+        for inv in self.browse(cr, uid, ids, context=context):
+            ctx = context.copy()
+            ctx.update({'lang': inv.partner_id.lang})
+            ctx.update(company_id=inv.company_id.id, account_period_prefer_normal=True)
+            ctx.update({'invoice': inv})
+            move_obj.post(cr, uid, [inv.move_id.id], context=ctx)
+
         #TODO: not correct fix but required a frech values before reading it.
         self.write(cr, uid, ids, {})
 
