@@ -214,7 +214,7 @@ class account_move_line(osv.osv):
             'type': 'ir.actions.act_window',
             'nodestroy': False,
             'target': 'current',
-            'res_id': account_move_line.invoice.id,
+            'res_id': account_move_line.reconcile_function_id.id,
         }
 
     def _amount_residual(self, cr, uid, ids, field_names, args, context=None):
@@ -1151,7 +1151,7 @@ class account_move_line(osv.osv):
         for journal in journals:
             all_journal.append(journal.id)
             for field in journal.view_id.columns_id:
-                if not field.field in fields:
+                if field.field not in fields:
                     fields[field.field] = [journal.id]
                     fld.append((field.field, field.sequence))
                     flds.append(field.field)
@@ -1195,6 +1195,7 @@ class account_move_line(osv.osv):
 
             elif field == 'move_id':
                 f.set('required', 'False')
+                f.set('readonly', 'True')
 
             elif field == 'account_tax_id':
                 f.set('domain', "[('parent_id', '=' ,False)]")
