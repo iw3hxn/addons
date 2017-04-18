@@ -248,6 +248,8 @@ class pos_order(osv.osv):
         """A Point of Sale is paid when the sum
         @return: True
         """
+        if not context:
+            context = {}
         for order in self.browse(cr, uid, ids, context=context):
             if order.lines and not order.amount_total:
                 return True
@@ -368,8 +370,7 @@ class pos_order(osv.osv):
         statement_id = statement_obj.search(cr, uid, [('journal_id', '=', int(data['journal'])),
                                                       ('company_id', '=', curr_company),
                                                       ('user_id', '=', uid),
-                                                      ('state', '=', 'open'),
-                                                      ('date', '=', order.date_order[0:10])], context=context)
+                                                      ('state', '=', 'open')], context=context)
 
         if len(statement_id) == 0:
             raise osv.except_osv(_('Error !'), _('You have to open at least one cashbox'))
@@ -407,7 +408,7 @@ class pos_order(osv.osv):
 
         new_order = ','.join(map(str,clone_list))
         abs = {
-            #'domain': "[('id', 'in', ["+new_order+"])]",
+            # 'domain': "[('id', 'in', ["+new_order+"])]",
             'name': _('Return Products'),
             'view_type': 'form',
             'view_mode': 'form',
@@ -506,6 +507,7 @@ class pos_order(osv.osv):
     def _create_account_move_line(self, cr, uid, ids, session=None, move_id=None, context=None):
         # Tricky, via the workflow, we only have one id in the ids variable
         """Create a account move line of order grouped by products or not."""
+        context = context or self.pool['res.users'].context_get(cr, uid)
 
         account_move_obj = self.pool['account.move']
         account_period_obj = self.pool['account.period']
@@ -620,6 +622,7 @@ class pos_order(osv.osv):
             # Create an move for each order line
 
             cur = order.pricelist_id.currency_id
+            counter_part = 0
             for line in order.lines:
                 tax_amount = 0
                 taxes = [tax for tax in line.product_id.taxes_id if tax.company_id.id == line.order_id.company_id.id]
@@ -628,12 +631,12 @@ class pos_order(osv.osv):
                     taxes = fiscal_pos_obj.map_tax(cr, uid, line.shop_id.fiscal_position_id, taxes, context=context)
                     taxes = self.pool['account.tax'].browse(cr, uid, taxes, context)
 
-                computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_unit * (100.0-line.discount) / 100.0, line.qty)['taxes']
-
+                context.update({'tax_calculation_rounding_method': 'round_globally'})
+                # computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, (line.price_unit * (100.0-line.discount)) / 100.0, line.qty, context=context)['taxes']
+                computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl / line.qty, line.qty, context=context)['taxes']
                 for tax in computed_taxes:
-                    tax_amount += cur_obj.round(cr, uid, cur, tax['amount'])
+                    # tax_amount += cur_obj.round(cr, uid, cur, tax['amount'])
                     group_key = (tax['tax_code_id'], tax['base_code_id'], tax['account_collected_id'], tax['id'])
-
                     group_tax.setdefault(group_key, 0)
                     group_tax[group_key] += cur_obj.round(cr, uid, cur, tax['amount'])
 
@@ -672,8 +675,9 @@ class pos_order(osv.osv):
                     'debit': ((amount < 0) and -amount) or 0.0,
                     'tax_code_id': tax_code_id,
                     'tax_amount': tax_amount,
-                    'partner_id': order.partner_id and self.pool.get("res.partner")._find_accounting_partner(order.partner_id).id or False
+                    'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
                 })
+                counter_part += amount
 
                 # For each remaining tax with a code, whe create a move line
                 for tax in computed_taxes:
@@ -710,13 +714,16 @@ class pos_order(osv.osv):
                     'partner_id': order.partner_id and self.pool['res.partner']._find_accounting_partner(
                         order.partner_id).id or False
                 })
+                counter_part += tax_amount
 
             # counterpart
             insert_data('counter_part', {
                 'name': _("Trade Receivables"),  # order.name,
                 'account_id': order_account,
-                'credit': ((order.amount_total < 0) and -order.amount_total) or 0.0,
-                'debit': ((order.amount_total > 0) and order.amount_total) or 0.0,
+                # 'credit': ((order.amount_total < 0) and -order.amount_total) or 0.0,
+                # 'debit': ((order.amount_total > 0) and order.amount_total) or 0.0,
+                'credit': ((counter_part < 0) and -counter_part) or 0.0,
+                'debit': ((counter_part > 0) and counter_part) or 0.0,
                 'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
             })
 
