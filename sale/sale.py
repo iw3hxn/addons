@@ -927,7 +927,7 @@ class sale_order(osv.osv):
             'company_id': order.company_id.id,
         }
 
-    def ship_recreate(self, cr, uid, order, line, move_id, proc_id):
+    def ship_recreate(self, cr, uid, order, line, move_id, proc_id, context=None):
         # FIXME: deals with potentially cancelled shipments, seems broken (specially if shipment has production lot)
         """
         Define ship_recreate for process after shipping exception
@@ -936,17 +936,18 @@ class sale_order(osv.osv):
         param move_id: the ID of stock move
         param proc_id: the ID of procurement
         """
-        move_obj = self.pool.get('stock.move')
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        move_obj = self.pool['stock.move']
         if order.state == 'shipping_except':
             for pick in order.picking_ids:
                 for move in pick.move_lines:
                     if move.state == 'cancel':
-                        mov_ids = move_obj.search(cr, uid, [('state', '=', 'cancel'),('sale_line_id', '=', line.id),('picking_id', '=', pick.id)])
+                        mov_ids = move_obj.search(cr, uid, [('state', '=', 'cancel'), ('sale_line_id', '=', line.id), ('picking_id', '=', pick.id)], context=context)
                         if mov_ids:
-                            for mov in move_obj.browse(cr, uid, mov_ids):
+                            for mov in move_obj.browse(cr, uid, mov_ids, context):
                                 # FIXME: the following seems broken: what if move_id doesn't exist? What if there are several mov_ids? Shouldn't that be a sum?
-                                move_obj.write(cr, uid, [move_id], {'product_qty': mov.product_qty, 'product_uos_qty': mov.product_uos_qty})
-                                self.pool.get('procurement.order').write(cr, uid, [proc_id], {'product_qty': mov.product_qty, 'product_uos_qty': mov.product_uos_qty})
+                                move_obj.write(cr, uid, [move_id], {'product_qty': mov.product_qty, 'product_uos_qty': mov.product_uos_qty}, context)
+                                self.pool['procurement.order'].write(cr, uid, [proc_id], {'product_qty': mov.product_qty, 'product_uos_qty': mov.product_uos_qty}, context)
         return True
 
     def _get_date_planned(self, cr, uid, order, line, start_date, context=None):
@@ -973,30 +974,29 @@ class sale_order(osv.osv):
                                will be added. A new picking will be created if ommitted.
         :return: True
         """
-        move_obj = self.pool.get('stock.move')
-        picking_obj = self.pool.get('stock.picking')
-        procurement_obj = self.pool.get('procurement.order')
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        move_obj = self.pool['stock.move']
+        picking_obj = self.pool['stock.picking']
+        procurement_obj = self.pool['procurement.order']
         proc_ids = []
 
         for line in order_lines:
             if line.state == 'done':
                 continue
 
-            date_planned = self._get_date_planned(cr, uid, order, line, order.date_confirm, context=context)
-
             if line.product_id:
                 if line.product_id.product_tmpl_id.type in ('product', 'consu'):
                     if not picking_id:
                         picking_id = picking_obj.create(cr, uid, self._prepare_order_picking(cr, uid, order, context=context))
+                    date_planned = self._get_date_planned(cr, uid, order, line, order.date_confirm, context=context)
                     move_id = move_obj.create(cr, uid, self._prepare_order_line_move(cr, uid, order, line, picking_id, date_planned, context=context))
-                else:
-                    # a service has no stock move
-                    move_id = False
-
-                proc_id = procurement_obj.create(cr, uid, self._prepare_order_line_procurement(cr, uid, order, line, move_id, date_planned, context=context))
-                proc_ids.append(proc_id)
-                line.write({'procurement_id': proc_id})
-                self.ship_recreate(cr, uid, order, line, move_id, proc_id)
+                    proc_id = procurement_obj.create(cr, uid, self._prepare_order_line_procurement(cr, uid, order, line, move_id, date_planned, context=context))
+                    proc_ids.append(proc_id)
+                    line.write({'procurement_id': proc_id})
+                    self.ship_recreate(cr, uid, order, line, move_id, proc_id)
+                # else:
+                #     # a service has no stock move
+                #     move_id = False
 
         wf_service = netsvc.LocalService("workflow")
         if picking_id:
@@ -1004,13 +1004,14 @@ class sale_order(osv.osv):
 
         for proc_id in proc_ids:
             wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
+            wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr) # also create production order
 
         val = {}
         if order.state == 'shipping_except':
             val['state'] = 'progress'
             val['shipped'] = False
 
-            if (order.order_policy == 'manual'):
+            if order.order_policy == 'manual':
                 for line in order.order_line:
                     if (not line.invoiced) and (line.state not in ('cancel', 'draft')):
                         val['state'] = 'manual'
