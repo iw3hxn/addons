@@ -1016,7 +1016,7 @@
                                 <tree string="History">
                                     <field name="display_text" string="History Information"/>
                                     <field name="email_from" invisible="1"/>
-                                    <button string="Reply" attrs="{'invisible': [('email_from', '=', False)]}" name="109" context="{'mail.compose.message.mode':'reply', 'message_id':active_id}" icon="terp-mail-replied" type="action"/>
+                                    <button string="Reply" attrs="{'invisible': [('email_from', '=', False)]}" name="%(mail.action_email_compose_message_wizard)d" context="{'mail.compose.message.mode':'reply', 'message_id':active_id}" icon="terp-mail-replied" type="action"/>
                                 </tree>
                             </field>
                             <button string="Send New Email"
