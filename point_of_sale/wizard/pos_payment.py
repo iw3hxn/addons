@@ -82,7 +82,7 @@ class pos_make_payment(osv.osv_memory):
                         order.write({'partner_id': partner_id[0]})
                         line.write({'active': False})
 
-            if float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
+            if float_round(list_price, precision_digits=2) != 0.0 and float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
                 discount = (list_price - pos_price) / list_price * 100
                 line_data = {
                     'price_unit': list_price,
