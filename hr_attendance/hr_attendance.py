@@ -113,8 +113,38 @@ class hr_employee(osv.osv):
             result[res[1]] = res[0] == 'sign_in' and 'present' or 'absent'
         return result
 
+    def _last_sign(self, cr, uid, ids, name, args, context=None):
+        result = {}
+        if not ids:
+            return result
+        for id in ids:
+            result[id] = False
+            cr.execute("""select max(name) as name
+                        from hr_attendance
+                        where action in ('sign_in', 'sign_out') and employee_id = %s""", (id,))
+            for res in cr.fetchall():
+                result[id] = res[0]
+        return result
+
+    def _search_state(self, cr, uid, obj, name, domain, context):
+
+        res = []
+        ids = []
+        if domain:
+            field = domain[0][0]
+            if field == 'state':
+                search_key = domain[0][2]
+                employee_ids = self.search(cr, uid, [], context=context)
+                for employee in self.browse(cr, uid, employee_ids, context=context):
+                    if employee[field] == search_key:
+                        ids.append(employee.id)
+                if ids:
+                    res = [('id', 'in', ids)]
+        return res
+
     _columns = {
-       'state': fields.function(_state, type='selection', selection=[('absent', 'Absent'), ('present', 'Present')], string='Attendance'),
+       'state': fields.function(_state, type='selection', selection=[('absent', 'Absent'), ('present', 'Present')], string='Attendance', fnct_search=_search_state),
+       'last_sign': fields.function(_last_sign, type='datetime', string='Last Sign'),
     }
 
     def _action_check(self, cr, uid, emp_id, dt=False, context=None):

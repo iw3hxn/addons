@@ -576,3 +576,13 @@ msgstr "Anno"
 #: view:hr.sign.in.out.ask:0
 msgid "hr.sign.in.out.ask"
 msgstr "hr.sign.in.out.ask"
+
+#. module: hr_attendance
+#: field:hr.employee,last_sign:0
+msgid "Last Sign"
+msgstr "Ultima Timbrata"
+
+#. module: hr_attendance
+#: view:hr.employee:0
+msgid "Present"
+msgstr "Presente"
