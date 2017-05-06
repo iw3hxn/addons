@@ -151,30 +151,30 @@ class purchase_requisition(osv.osv):
         if context is None:
             context = {}
         assert partner_id, 'Supplier should be specified'
-        purchase_order = self.pool.get('purchase.order')
-        purchase_order_line = self.pool.get('purchase.order.line')
-        res_partner = self.pool.get('res.partner')
-        fiscal_position = self.pool.get('account.fiscal.position')
+        purchase_order = self.pool['purchase.order']
+        purchase_order_line = self.pool['purchase.order.line']
+        res_partner = self.pool['res.partner']
+        fiscal_position = self.pool['account.fiscal.position']
         supplier = res_partner.browse(cr, uid, partner_id, context=context)
         delivery_address_id = res_partner.address_get(cr, uid, [supplier.id], ['delivery'])['delivery']
         supplier_pricelist = supplier.property_product_pricelist_purchase or False
         res = {}
         for requisition in self.browse(cr, uid, ids, context=context):
-            if supplier.id in filter(lambda x: x, [rfq.state <> 'cancel' and rfq.partner_id.id or None for rfq in requisition.purchase_ids]):
+            if supplier.id in filter(lambda x: x, [rfq.state != 'cancel' and rfq.partner_id.id or None for rfq in requisition.purchase_ids]):
                  raise osv.except_osv(_('Warning'), _('You have already one %s purchase order for this partner, you must cancel this purchase order to create a new quotation.') % rfq.state)
             location_id = requisition.warehouse_id.lot_input_id.id
             purchase_id = purchase_order.create(cr, uid, {
-                        'origin': requisition.name,
-                        'partner_id': supplier.id,
-                        'partner_address_id': delivery_address_id,
-                        'pricelist_id': supplier_pricelist.id,
-                        'location_id': location_id,
-                        'company_id': requisition.company_id.id,
-                        'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
-                        'requisition_id':requisition.id,
-                        'notes':requisition.description,
-                        'warehouse_id':requisition.warehouse_id.id ,
-            })
+                'origin': requisition.name,
+                'partner_id': supplier.id,
+                'partner_address_id': delivery_address_id,
+                'pricelist_id': supplier_pricelist.id,
+                'location_id': location_id,
+                'company_id': requisition.company_id.id,
+                'fiscal_position': supplier.property_account_position and supplier.property_account_position.id or False,
+                'requisition_id': requisition.id,
+                'notes': requisition.description,
+                'warehouse_id': requisition.warehouse_id.id,
+            }, context=context)
             res[requisition.id] = purchase_id
             for line in requisition.line_ids:
                 product = line.product_id
