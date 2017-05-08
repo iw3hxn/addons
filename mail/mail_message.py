@@ -39,11 +39,10 @@ from openerp import SUPERUSER_ID
 
 _logger = logging.getLogger('mail')
 
-def format_date_tz(date, tz=None):
-    if not date:
-        return 'n/a'
-    format = tools.DEFAULT_SERVER_DATETIME_FORMAT
-    return tools.server_to_local_timestamp(date, format, format, tz)
+
+def format_date_tz(date, tz_user):
+    dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
+    return date and tools.server_to_local_timestamp(date, dt_format, dt_format, tz_user) or 'n/a'
 
 def truncate_text(text):
     lines = text and text.split('\n') or []
@@ -154,20 +153,19 @@ class mail_message(osv.osv):
         return action_data
 
     def _get_display_text(self, cr, uid, ids, name, arg, context=None):
-        if context is None:
-            context = {}
-        tz = context.get('tz')
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        tz_user = context.get('tz', 'UTC')
         result = {}
 
         # Read message as UID 1 to allow viewing author even if from different company
-        for message in self.browse(cr, SUPERUSER_ID, ids):
+        for message in self.browse(cr, SUPERUSER_ID, ids, context):
             msg_txt = ''
             if message.email_from:
-                msg_txt += _('%s wrote on %s: \n Subject: %s \n\t') % (message.email_from or '/', format_date_tz(message.date, tz), message.subject)
+                msg_txt += _('%s wrote on %s: \n Subject: %s \n\t') % (message.email_from or '/', format_date_tz(message.date, tz_user), message.subject)
                 if message.body_text:
                     msg_txt += truncate_text(message.body_text)
             else:
-                msg_txt = (message.user_id.name or '/') + _(' on ') + format_date_tz(message.date, tz) + ':\n\t'
+                msg_txt = (message.user_id.name or '/') + _(' on ') + format_date_tz(message.date, tz_user) + ':\n\t'
                 msg_txt += (message.subject or '')
             result[message.id] = msg_txt
         return result
