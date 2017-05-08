@@ -684,18 +684,18 @@ class sale_order(osv.osv):
                 invoice_ref = ''
                 for o, l in val:
                     invoice_ref += o.name + '|'
-                    self.write(cr, uid, [o.id], {'state': 'progress'})
+                    self.write(cr, uid, [o.id], {'state': 'progress'}, context)
                     if o.order_policy == 'picking':
-                        picking_obj.write(cr, uid, map(lambda x: x.id, o.picking_ids), {'invoice_state': 'invoiced'})
+                        picking_obj.write(cr, uid, map(lambda x: x.id, o.picking_ids), {'invoice_state': 'invoiced'}, context)
                     cr.execute('insert into sale_order_invoice_rel (order_id,invoice_id) values (%s,%s)', (o.id, res))
-                invoice.write(cr, uid, [res], {'origin': invoice_ref, 'name': invoice_ref})
+                invoice.write(cr, uid, [res], {'origin': invoice_ref, 'name': invoice_ref}, context)
             else:
                 for order, il in val:
                     res = self._make_invoice(cr, uid, order, il, context=context)
                     invoice_ids.append(res)
-                    self.write(cr, uid, [order.id], {'state': 'progress'})
+                    self.write(cr, uid, [order.id], {'state': 'progress'}, context)
                     if order.order_policy == 'picking':
-                        picking_obj.write(cr, uid, map(lambda x: x.id, order.picking_ids), {'invoice_state': 'invoiced'})
+                        picking_obj.write(cr, uid, map(lambda x: x.id, order.picking_ids), {'invoice_state': 'invoiced'}, context)
                     cr.execute('insert into sale_order_invoice_rel (order_id,invoice_id) values (%s,%s)', (order.id, res))
         return res
 
@@ -752,8 +752,7 @@ class sale_order(osv.osv):
 
     def action_cancel(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
-        if context is None:
-            context = {}
+        context = context or self.pool['res.users'].context_get(cr, uid)
         sale_order_line_obj = self.pool.get('sale.order.line')
         proc_obj = self.pool.get('procurement.order')
         for sale in self.browse(cr, uid, ids, context=context):
@@ -779,7 +778,7 @@ class sale_order(osv.osv):
                         _('You must first cancel all picking attached to this sales order.'))
                 elif pick.state == 'cancel':
                     for mov in pick.move_lines:
-                        proc_ids = proc_obj.search(cr, uid, [('move_id', '=', mov.id)])
+                        proc_ids = proc_obj.search(cr, uid, [('move_id', '=', mov.id)], context=context)
                         if proc_ids:
                             for proc in proc_ids:
                                 wf_service.trg_validate(uid, 'procurement.order', proc, 'button_check', cr)
@@ -791,25 +790,26 @@ class sale_order(osv.osv):
                     raise osv.except_osv(
                         _('Could not cancel this sales order !'),
                         _('You must first cancel all invoices attached to this sales order.'))
-            for r in self.read(cr, uid, ids, ['invoice_ids']):
-                for inv in r['invoice_ids']:
-                    wf_service.trg_validate(uid, 'account.invoice', inv, 'invoice_cancel', cr)
-            sale_order_line_obj.write(cr, uid, [l.id for l in  sale.order_line],
-                    {'state': 'cancel'})
+            for r in self.browse(cr, uid, ids, context):
+                for inv in r.invoice_ids:
+                    wf_service.trg_validate(uid, 'account.invoice', inv.id, 'invoice_cancel', cr)
+            sale_order_line_obj.write(cr, uid, [l.id for l in sale.order_line],
+                    {'state': 'cancel'}, context)
             message = _("The sales order '%s' has been cancelled.") % (sale.name,)
             self.log(cr, uid, sale.id, message)
-        self.write(cr, uid, ids, {'state': 'cancel'})
+        self.write(cr, uid, ids, {'state': 'cancel'}, context)
         return True
 
     def action_wait(self, cr, uid, ids, context=None):
-        for o in self.browse(cr, uid, ids):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        for o in self.browse(cr, uid, ids, context):
             if not o.order_line:
                 raise osv.except_osv(_('Error !'),_('You cannot confirm a sale order which has no line.'))
-            if (o.order_policy == 'manual'):
+            if o.order_policy == 'manual':
                 self.write(cr, uid, [o.id], {'state': 'manual', 'date_confirm': fields.date.context_today(self, cr, uid, context=context)})
             else:
                 self.write(cr, uid, [o.id], {'state': 'progress', 'date_confirm': fields.date.context_today(self, cr, uid, context=context)})
-            self.pool.get('sale.order.line').button_confirm(cr, uid, [x.id for x in o.order_line])
+            self.pool.get('sale.order.line').button_confirm(cr, uid, [x.id for x in o.order_line], context)
             message = _("The quotation '%s' has been converted to a sales order.") % (o.name,)
             self.log(cr, uid, o.id, message)
         return True
@@ -835,13 +835,13 @@ class sale_order(osv.osv):
         write_cancel_ids = []
         for order in self.browse(cr, uid, ids, context={}):
             for line in order.order_line:
-                if (not line.procurement_id) or (line.procurement_id.state=='done'):
+                if (not line.procurement_id) or (line.procurement_id.state == 'done'):
                     if line.state != 'done':
                         write_done_ids.append(line.id)
                 else:
                     finished = False
                 if line.procurement_id:
-                    if (line.procurement_id.state == 'cancel'):
+                    if line.procurement_id.state == 'cancel':
                         canceled = True
                         if line.state != 'exception':
                             write_cancel_ids.append(line.id)
@@ -975,6 +975,7 @@ class sale_order(osv.osv):
         :return: True
         """
         context = context or self.pool['res.users'].context_get(cr, uid)
+        stop_procurement = context.get('stop_procurement', False)
         move_obj = self.pool['stock.move']
         picking_obj = self.pool['stock.picking']
         procurement_obj = self.pool['procurement.order']
@@ -985,26 +986,27 @@ class sale_order(osv.osv):
                 continue
 
             if line.product_id:
-                if line.product_id.product_tmpl_id.type in ('product', 'consu'):
+                if line.product_id.product_tmpl_id.type in ['product', 'consu']:
                     if not picking_id:
                         picking_id = picking_obj.create(cr, uid, self._prepare_order_picking(cr, uid, order, context=context))
                     date_planned = self._get_date_planned(cr, uid, order, line, order.date_confirm, context=context)
                     move_id = move_obj.create(cr, uid, self._prepare_order_line_move(cr, uid, order, line, picking_id, date_planned, context=context))
-                    proc_id = procurement_obj.create(cr, uid, self._prepare_order_line_procurement(cr, uid, order, line, move_id, date_planned, context=context))
-                    proc_ids.append(proc_id)
-                    line.write({'procurement_id': proc_id})
-                    self.ship_recreate(cr, uid, order, line, move_id, proc_id)
+                    if not stop_procurement:
+                        proc_id = procurement_obj.create(cr, uid, self._prepare_order_line_procurement(cr, uid, order, line, move_id, date_planned, context=context))
+                        proc_ids.append(proc_id)
+                        line.write({'procurement_id': proc_id})
+                        self.ship_recreate(cr, uid, order, line, move_id, proc_id)
                 # else:
                 #     # a service has no stock move
                 #     move_id = False
+        if not stop_procurement:
+            wf_service = netsvc.LocalService("workflow")
+            if picking_id:
+                wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
 
-        wf_service = netsvc.LocalService("workflow")
-        if picking_id:
-            wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
-
-        for proc_id in proc_ids:
-            wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
-            wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr) # also create production order
+            for proc_id in proc_ids:
+                wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
+                wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr) # also create production order
 
         val = {}
         if order.state == 'shipping_except':
@@ -1020,6 +1022,7 @@ class sale_order(osv.osv):
         return True
 
     def action_ship_create(self, cr, uid, ids, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         for order in self.browse(cr, uid, ids, context=context):
             self._create_pickings_and_procurements(cr, uid, order, order.order_line, None, context=context)
         return True
@@ -1266,7 +1269,7 @@ class sale_order_line(osv.osv):
         return self.write(cr, uid, ids, {'state': 'cancel'})
 
     def button_confirm(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state': 'confirmed'})
+        return self.write(cr, uid, ids, {'state': 'confirmed'}, context)
 
     def button_done(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
