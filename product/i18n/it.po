@@ -1500,7 +1500,7 @@ msgstr "Categoria dell'U.M."
 #. module: product
 #: field:product.template,loc_rack:0
 msgid "Rack"
-msgstr "Scaffate"
+msgstr "Scaffale"
 
 #. module: product
 #: field:product.template,uom_po_id:0
