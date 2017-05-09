@@ -131,14 +131,14 @@
     <initialize>
       <paraStyle name="all" alignment="justify"/>
     </initialize>
-    <paraStyle name="P8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P9" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P10a" fontName="Helvetica-Bold" fontSize="7.5" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P10b" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P11a" fontName="Helvetica-Bold" fontSize="8.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="7.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P8" fontName="Helvetica" fontSize="6.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P9" fontName="Helvetica" fontSize="6.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10" fontName="Helvetica-Bold" fontSize="6.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10a" fontName="Helvetica-Bold" fontSize="6.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P10b" fontName="Helvetica-Bold" fontSize="7.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P11" fontName="Helvetica-Bold" fontSize="7.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P11a" fontName="Helvetica-Bold" fontSize="7.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="P12" fontName="Helvetica-Bold" fontSize="6.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="Standard" fontName="Times-Roman"/>
     <paraStyle name="Text body" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
     <paraStyle name="List" fontName="Times-Roman" spaceBefore="0.0" spaceAfter="6.0"/>
@@ -148,11 +148,11 @@
     <paraStyle name="Index" fontName="Times-Roman"/>
     <paraStyle name="Heading" fontName="Helvetica" fontSize="7.0" leading="10" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="terp_header" fontName="Helvetica-Bold" fontSize="15.0" leading="19" alignment="LEFT" spaceBefore="12.0" spaceAfter="6.0"/>
-    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
-    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="7.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
-    <paraStyle name="terp_default_Centre_8" fontName="Helvetica" fontSize="7.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="5.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="5.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="6.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="6.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_Centre_8" fontName="Helvetica" fontSize="6.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="Footer" fontName="Times-Roman"/>
     <paraStyle name="Horizontal Line" fontName="Times-Roman" fontSize="6.0" leading="8" spaceBefore="0.0" spaceAfter="14.0"/>
@@ -212,7 +212,7 @@
     <para style="Standard"><font color="white">[[ set_last_move_id(False) ]]</font></para>
     <section>
         [[  display_currency(data) == False or removeParentNode('section') ]]
-        <blockTable rowHeights="0.55cm" colWidths="55.0,45.0,50.0,60.0,110.0,15.0,70.0,70.0,70.0" style="Table1">
+        <blockTable rowHeights="0.55cm" colWidths="55.0,45.0,50.0,60.0,110.0,85.0,70.0,70.0" style="Table1">
           <tr>
             <td><para style="P10a">Move</para></td>
             <td><para style="P10a">Date</para></td>
@@ -220,7 +220,6 @@
             <td><para style="P10a">Partner</para></td>
             <td><para style="P10a">Label</para></td>
             <td><para style="P10a">VAT</para></td>
-            <td><para style="P11"></para></td>
             <td><para style="P10b">Debit</para></td>
             <td><para style="P10b">Credit</para></td>
           </tr>
@@ -232,15 +231,14 @@
               <td><para style="P8">[[ not check_last_move_id(line.move_id.id) and removeParentNode('blockTable') ]]</para></td>
             </tr>
           </blockTable>
-          <blockTable rowHeights="0.55cm" colWidths="55.0,45.0,50.0,60.0,110.0,15.0,70.0,70.0,70.0" style="Table_no_lines">
+          <blockTable rowHeights="0.55cm" colWidths="55.0,45.0,50.0,60.0,110.0,85.0,70.0,70.0" style="Table_no_lines">
           <tr>
             <td><para style="terp_default_8">[[ line.move_id.name &lt;&gt; '/' and line.move_id.name or ('*'+str(line.move_id.id)) ]]</para></td>
             <td><para style="terp_default_8">[[ formatLang(line.date,date=True) ]]</para></td> 
             <td><para style="terp_default_8">[[ line.account_id.code ]]</para></td>
             <td><para style="terp_default_8">[[ line.partner_id and strip_name(line.partner_id.name,15) ]]</para></td>
             <td><para style="terp_default_8">[[ strip_name(line.name,25) ]]</para></td>
-            <td><para style="P8">[[ line.tax_code_id and (line.tax_code_id.code + ':') ]]</para></td>
-            <td><para style="terp_default_8">[[ line.tax_amount and formatLang(line.tax_amount, currency_obj=company.currency_id) ]]</para></td>
+            <td><para style="terp_default_8">[[ line.tax_code_id and (line.tax_code_id.code) ]]</para></td>
             <td><para style="P8">[[ formatLang(line.debit, currency_obj=company.currency_id) ]]</para></td>
             <td><para style="P8">[[ formatLang(line.credit, currency_obj=company.currency_id) ]]</para></td>
           </tr>
@@ -327,7 +325,7 @@
     <section>
         <para alignment="LEFT">
         </para>
-        <blockTable colWidths="15.0,80.0,20.0,182.0" style="Table1" repeatRows="1">
+        <blockTable colWidths="75.0,80.0,20.0,112.0" style="Table1" repeatRows="1">
           <tr>
             <td><para style="P12"></para></td>
             <td><para style="P12">VAT Declaration</para></td>
@@ -335,7 +333,7 @@
             <td><para style="P12"></para></td>
           </tr>
           <tr>
-            <td><para style="terp_default_8">[[ repeatIn(tax_codes(o.period_id.id,o.journal_id.id), 't') ]][[ t.code + ': ' ]]</para></td>
+            <td><para style="terp_default_8">[[ repeatIn(tax_codes(o.period_id.id,o.journal_id.id), 't') ]][[ t.code ]]</para></td>
             <td><para style="P8">[[ formatLang(sum_vat( o.period_id.id, o.journal_id.id, t.id)) ]]</para></td>
             <td><para style="P11"><font color="white"> </font></para></td>
             <td><para style="terp_default_8">[[ t.name ]]</para></td>
