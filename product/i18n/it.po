@@ -1500,7 +1500,7 @@ msgstr "Categoria dell'U.M."
 #. module: product
 #: field:product.template,loc_rack:0
 msgid "Rack"
-msgstr "Rack"
+msgstr "Scaffate"
 
 #. module: product
 #: field:product.template,uom_po_id:0
@@ -2176,7 +2176,7 @@ msgstr "Descrizioni"
 #. module: product
 #: field:product.template,loc_row:0
 msgid "Row"
-msgstr "Riga"
+msgstr "Ripiano"
 
 #. module: product
 #: model:product.template,name:product.product_product_rearpanelarm0_product_template
@@ -2365,7 +2365,7 @@ msgstr "Volume"
 #. module: product
 #: field:product.template,loc_case:0
 msgid "Case"
-msgstr "Case"
+msgstr "Posizione"
 
 #. module: product
 #: view:product.product:0
