@@ -1142,7 +1142,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                 move_ids.append(invoice.move_id.id)
             if invoice.payment_ids:
                 account_move_line_obj = self.pool.get('account.move.line')
-                for move_line in account_move_line_obj.browse(cr, uid, invoice.payment_ids):
+                payment_ids = [payment.id for payment in invoice.payment_ids]
+                for move_line in account_move_line_obj.browse(cr, uid, payment_ids, context):
                     if move_line.reconcile_partial_id and move_line.reconcile_partial_id.line_partial_ids:
                         raise osv.except_osv(_('Error !'), _('You can not cancel an invoice which is partially paid! You need to unreconcile related payment entries first!'))
             # First, set the invoices as cancelled and detach the move ids

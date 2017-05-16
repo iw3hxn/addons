@@ -20,9 +20,9 @@
 #
 ##############################################################################
 {
-    "name" : "eInvoicing",
-    "version" : "2.4.6.10",
-    "author" : "OpenERP SA",
+    "name": "eInvoicing",
+    "version": "2.4.6.10a",
+    "author": "OpenERP SA",
     "category": 'Accounting & Finance',
     'complexity': "easy",
     "description": """
@@ -52,9 +52,9 @@ grouping is maintained through journal) for a particular financial year and for 
 module named account_voucher.
     """,
     'website': 'http://www.openerp.com',
-    'images' : ['images/accounts.jpeg','images/bank_statement.jpeg','images/cash_register.jpeg','images/chart_of_accounts.jpeg','images/customer_invoice.jpeg','images/journal_entries.jpeg'],
+    'images': ['images/accounts.jpeg','images/bank_statement.jpeg','images/cash_register.jpeg','images/chart_of_accounts.jpeg','images/customer_invoice.jpeg','images/journal_entries.jpeg'],
     'init_xml': [],
-    "depends" : ["base_setup", "product", "analytic", "process", "board", "edi"],
+    "depends": ["base_setup", "product", "analytic", "process", "board", "edi"],
     'update_xml': [
         'security/account_security.xml',
         'security/ir.model.access.csv',
