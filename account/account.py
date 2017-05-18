@@ -947,15 +947,18 @@ class account_journal(osv.osv):
         """
         # in account.journal code is actually the prefix of the sequence
         # whereas ir.sequence code is a key to lookup global sequences.
-        prefix = vals['code'].upper()
-
         seq = {
             'name': vals['name'],
             'implementation': 'no_gap',
-            'prefix': prefix + "/%(year)s/",
+            'prefix': "/%(year)s/",
             'padding': 4,
             'number_increment': 1
         }
+
+        if 'code' in vals:
+            prefix = vals['code'].upper()
+            seq['prefix'] = prefix + "/%(year)s/"
+
         if 'company_id' in vals:
             seq['company_id'] = vals['company_id']
         return self.pool.get('ir.sequence').create(cr, uid, seq)
