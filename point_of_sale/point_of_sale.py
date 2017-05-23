@@ -255,7 +255,7 @@ class pos_order(osv.osv):
                 return True
             if context.get('force_paid', False):
                 return True
-            if (not order.lines) or (not order.statement_ids) or (abs(order.amount_total - order.amount_paid) > 0.00001):
+            if (not order.lines) or (not order.statement_ids) or (abs(order.amount_total - order.amount_paid) > 1):
                 return False
         return True
 
@@ -332,7 +332,7 @@ class pos_order(osv.osv):
         for order in self.browse(cr, uid, ids, context=context):
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'stock.picking', order.picking_id.id, 'button_cancel', cr)
-            if stock_picking_obj.browse(cr, uid, order.picking_id.id, context=context).state <> 'cancel':
+            if stock_picking_obj.browse(cr, uid, order.picking_id.id, context=context).state != 'cancel':
                 raise osv.except_osv(_('Error!'), _('Unable to cancel the picking.'))
         self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
         return True
