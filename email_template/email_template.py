@@ -335,7 +335,8 @@ class email_template(osv.osv):
 
         if template.user_signature:
             signature = self.pool.get('res.users').browse(cr, uid, uid, context).signature
-            values['body_text'] += '\n\n' + signature
+            if signature:
+                values['body_text'] += '\n\n' + signature
 
         values.update(mail_server_id = template.mail_server_id.id or False,
                       auto_delete = template.auto_delete,
