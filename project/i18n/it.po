@@ -2073,3 +2073,8 @@ msgstr "Vista Gantt"
 #: view:project.task:0
 msgid "Description"
 msgstr "Descrizione"
+
+#. module: project
+#: view:project.task:0
+msgid "Communication & History"
+msgstr "Comunicazioni e Storico"
