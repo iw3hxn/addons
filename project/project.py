@@ -664,6 +664,7 @@ class task(osv.osv):
         return result.keys()
 
     _columns = {
+        'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'active': fields.function(_is_template, store=True, string='Not a Template Task', type='boolean', help="This field is computed automatically and have the same behavior than the boolean 'active' field: if the task is linked to a template or unactivated project, it will be hidden unless specifically asked."),
         'name': fields.char('Task Summary', size=128, required=True, select=True),
         'description': fields.text('Description'),
