@@ -580,7 +580,7 @@ msgstr "hr.sign.in.out.ask"
 #. module: hr_attendance
 #: field:hr.employee,last_sign:0
 msgid "Last Sign"
-msgstr "Ultima Timbrata"
+msgstr "Ultima Timbratura"
 
 #. module: hr_attendance
 #: view:hr.employee:0
