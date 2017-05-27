@@ -31,7 +31,7 @@ class hr_employee(osv.osv):
         res = {}
         obj_contract = self.pool.get('hr.contract')
         for emp in self.browse(cr, uid, ids, context=context):
-            contract_ids = obj_contract.search(cr, uid, [('employee_id','=',emp.id),], order='date_start', context=context)
+            contract_ids = obj_contract.search(cr, uid, [('employee_id', '=', emp.id),], order='date_start', context=context)
             if contract_ids:
                 res[emp.id] = contract_ids[-1:][0]
             else:
@@ -92,8 +92,8 @@ class hr_contract(osv.osv):
 
     def _check_dates(self, cr, uid, ids, context=None):
         for contract in self.read(cr, uid, ids, ['date_start', 'date_end'], context=context):
-             if contract['date_start'] and contract['date_end'] and contract['date_start'] > contract['date_end']:
-                 return False
+            if contract['date_start'] and contract['date_end'] and contract['date_start'] > contract['date_end']:
+                return False
         return True
 
     _constraints = [
