@@ -1927,6 +1927,11 @@ msgid "Length / Distance"
 msgstr "Lunghezza / Distanza"
 
 #. module: product
+#: model:product.uom.categ,name:product.uom_categ_length
+msgid "Surface"
+msgstr "Superficie"
+
+#. module: product
 #: model:product.template,name:product.product_product_0_product_template
 msgid "Onsite Senior Intervention"
 msgstr "Intervento Specializzato Onsite"

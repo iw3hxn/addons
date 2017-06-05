@@ -24,6 +24,10 @@
             <field name="name">Volume</field>
         </record>
 
+        <record id="product_uom_categ_surface" model="product.uom.categ">
+            <field name="name">Surface</field>
+        </record>
+
         <!--
             Resource: product.uom
         -->
@@ -72,6 +76,11 @@
         <record id="product_uom_meter" model="product.uom">
             <field name="category_id" ref="uom_categ_length"/>
             <field name="name">m</field>
+            <field name="factor" eval="1.0"/>
+        </record>
+        <record id="product_uom_square_metre" model="product.uom">
+            <field name="category_id" ref="product_uom_categ_surface"/>
+            <field name="name">mq</field>
             <field name="factor" eval="1.0"/>
         </record>
         <record id="product_uom_km" model="product.uom">
