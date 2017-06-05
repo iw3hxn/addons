@@ -23,7 +23,6 @@
         <record id="product_uom_categ_vol" model="product.uom.categ">
             <field name="name">Volume</field>
         </record>
-
         <record id="product_uom_categ_surface" model="product.uom.categ">
             <field name="name">Surface</field>
         </record>
