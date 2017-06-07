@@ -230,32 +230,34 @@ class crm_base(object):
         user = self.pool.get('res.users').browse(cr, uid, uid, context=context)
         return user.context_section_id.id or False
 
-    def onchange_partner_address_id(self, cr, uid, ids, add, email=False):
+    def onchange_partner_address_id(self, cr, uid, ids, add, email=False, context=None):
         """This function returns value of partner email based on Partner Address
         :param ids: List of case IDs
         :param add: Id of Partner's address
         :param email: Partner's email ID
         """
-        data = {'value': {'email_from': False, 'phone':False}}
+        data = {'value': {'email_from': False, 'phone': False}}
         if add:
-            address = self.pool.get('res.partner.address').browse(cr, uid, add)
-            data['value'] = {'email_from': address and address.email or False ,
-                             'phone':  address and address.phone or False}
+            address = self.pool['res.partner.address'].browse(cr, uid, add, context)
+            data['value'] = {
+                'email_from': email or address and address.email or False,
+                'phone': address and address.phone or False
+            }
         if 'phone' not in self._columns:
             del data['value']['phone']
         return data
 
-    def onchange_partner_id(self, cr, uid, ids, part, email=False):
+    def onchange_partner_id(self, cr, uid, ids, part, email=False, context=None):
         """This function returns value of partner address based on partner
         :param ids: List of case IDs
         :param part: Partner's id
         :param email: Partner's email ID
         """
-        data={}
-        if  part:
-            addr = self.pool.get('res.partner').address_get(cr, uid, [part], ['contact'])
+        data = {}
+        if part:
+            addr = self.pool['res.partner'].address_get(cr, uid, [part], ['contact'])
             data = {'partner_address_id': addr['contact']}
-            data.update(self.onchange_partner_address_id(cr, uid, ids, addr['contact'])['value'])
+            data.update(self.onchange_partner_address_id(cr, uid, ids, addr['contact'], email, context)['value'])
         return {'value': data}
 
     def case_open(self, cr, uid, ids, *args):
