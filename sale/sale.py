@@ -1451,7 +1451,7 @@ class sale_order_line(osv.osv):
         if not uom2:
             uom2 = product_obj.uom_id
         compare_qty = float_compare(product_obj.virtual_available * uom2.factor, qty * product_obj.uom_id.factor, precision_rounding=product_obj.uom_id.rounding)
-        if context.get('no_error_on_available', False) and (product_obj.type == 'product') and int(compare_qty) == -1 \
+        if context.get('error_on_available', True) and (product_obj.type == 'product') and int(compare_qty) == -1 \
                 and (product_obj.procure_method == 'make_to_stock'):
             warn_msg = _(
                 'You plan to sell %.2f %s but you only have %.2f %s available !\nThe real stock is %.2f %s. (without reservations)') % \
