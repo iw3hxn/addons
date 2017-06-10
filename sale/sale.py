@@ -1363,8 +1363,8 @@ class sale_order_line(osv.osv):
         """
         if context is None:
             context = {}
-        lang = lang or context.get('lang',False)
-        if not  partner_id:
+        lang = lang or context.get('lang', False)
+        if not partner_id:
             raise osv.except_osv(_('No Customer Defined !'), _('You have to select a customer in the sales form !\nPlease set one customer before choosing a product.'))
         warning = {}
         product_uom_obj = self.pool.get('product.uom')
@@ -1404,7 +1404,7 @@ class sale_order_line(osv.osv):
         if product_obj.description_sale:
             result['notes'] = product_obj.description_sale
         fpos = fiscal_position and self.pool.get('account.fiscal.position').browse(cr, uid, fiscal_position, context=context) or False
-        if update_tax: #The quantity only have changed
+        if update_tax:  # The quantity only have changed
             result['delay'] = (product_obj.sale_delay or 0.0)
             a = product_obj.product_tmpl_id.property_account_income.id
             if not a:
@@ -1429,9 +1429,9 @@ class sale_order_line(osv.osv):
                 uos_category_id = False
             result['th_weight'] = qty * product_obj.weight
             domain = {'product_uom':
-                        [('category_id', '=', product_obj.uom_id.category_id.id)],
-                        'product_uos':
-                        [('category_id', '=', uos_category_id)]}
+                          [('category_id', '=', product_obj.uom_id.category_id.id)],
+                      'product_uos':
+                          [('category_id', '=', uos_category_id)]}
 
         elif uos and not uom: # only happens if uom is False
             result['product_uom'] = product_obj.uom_id and product_obj.uom_id.id
@@ -1451,12 +1451,13 @@ class sale_order_line(osv.osv):
         if not uom2:
             uom2 = product_obj.uom_id
         compare_qty = float_compare(product_obj.virtual_available * uom2.factor, qty * product_obj.uom_id.factor, precision_rounding=product_obj.uom_id.rounding)
-        if (product_obj.type=='product') and int(compare_qty) == -1 \
-          and (product_obj.procure_method=='make_to_stock'):
-            warn_msg = _('You plan to sell %.2f %s but you only have %.2f %s available !\nThe real stock is %.2f %s. (without reservations)') % \
-                    (qty, uom2 and uom2.name or product_obj.uom_id.name,
-                     max(0,product_obj.virtual_available), product_obj.uom_id.name,
-                     max(0,product_obj.qty_available), product_obj.uom_id.name)
+        if context.get('no_error_on_available', False) and (product_obj.type == 'product') and int(compare_qty) == -1 \
+                and (product_obj.procure_method == 'make_to_stock'):
+            warn_msg = _(
+                'You plan to sell %.2f %s but you only have %.2f %s available !\nThe real stock is %.2f %s. (without reservations)') % \
+                       (qty, uom2 and uom2.name or product_obj.uom_id.name,
+                        max(0, product_obj.virtual_available), product_obj.uom_id.name,
+                        max(0, product_obj.qty_available), product_obj.uom_id.name)
             warning_msgs += _("Not enough stock ! : ") + warn_msg + "\n\n"
         # get unit price
 
