@@ -55,13 +55,15 @@ class report_account_common(report_sxw.rml_parse, common_report_header):
         currency_obj = self.pool.get('res.currency')
         ids2 = self.pool.get('account.financial.report')._get_children_by_order(self.cr, self.uid, [data['form']['account_report_id'][0]], context=data['form']['used_context'])
         new_context = dict(data['form']['used_context'], lang=self.context.get('lang', 'en_US'))
+        target_move = data['form'].get('target_move', 'all')
+        new_context.update(state=target_move)
         for report in self.pool.get('account.financial.report').browse(self.cr, self.uid, ids2, context=new_context):
             vals = {
                 'name': report.name,
                 'balance': report.balance * report.sign or 0.0,
                 'type': 'report',
                 'level': bool(report.style_overwrite) and report.style_overwrite or report.level,
-                'account_type': report.type =='sum' and 'view' or False, #used to underline the financial report balances
+                'account_type': report.type == 'sum' and 'view' or False,  # used to underline the financial report balances
             }
             if data['form']['debit_credit']:
                 vals['debit'] = report.debit
