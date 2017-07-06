@@ -988,7 +988,6 @@ class task(osv.osv):
                 }, context=context)
             message = _("The task '%s' is cancelled.") % (task.name,)
             self.log(cr, uid, task.id, message)
-            self.message_append(cr, uid, [id], message, body_text=message, context=context)
             self.write(cr, uid, [task.id], {'state': 'cancelled', 'remaining_hours': 0.0}, context=context)
         return True
 
@@ -1006,7 +1005,7 @@ class task(osv.osv):
             self.write(cr, uid, [t.id], data, context=context)
             message = _("The task '%s' is opened.") % (t.name,)
             self.log(cr, uid, t.id, message)
-            self.message_append(cr, uid, [id], message, body_text=message, context=context)
+            self.message_append(cr, uid, [task.id], message, body_text=message, context=context)
         return True
 
     def do_draft(self, cr, uid, ids, context=None):
