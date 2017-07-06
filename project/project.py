@@ -281,6 +281,7 @@ class project(osv.osv):
         for (id, name) in self.name_get(cr, uid, ids):
             message = _("The project '%s' has been closed.") % name
             self.log(cr, uid, id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
         return True
 
     def set_cancel(self, cr, uid, ids, context=None):
@@ -301,6 +302,7 @@ class project(osv.osv):
         for (id, name) in self.name_get(cr, uid, ids):
             message = _("The project '%s' has been opened.") % name
             self.log(cr, uid, id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
         return res
     
     def map_tasks(self, cr, uid, old_project_id, new_project_id, context=None):
@@ -331,7 +333,7 @@ class project(osv.osv):
             default['name'] = proj.name + _(' (copy)')
 
         res = super(project, self).copy(cr, uid, id, default, context)
-        self.map_tasks(cr, uid, id, res, context)
+        # self.map_tasks(cr, uid, id, res, context)
         return res
 
     def duplicate_template(self, cr, uid, ids, context=None):
@@ -943,6 +945,7 @@ class task(osv.osv):
             self.write(cr, uid, [task.id], vals, context=context)
             message = _("The task '%s' is done") % (task.name,)
             self.log(cr, uid, task.id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
         return True
 
     def do_reopen(self, cr, uid, ids, context=None):
@@ -985,6 +988,7 @@ class task(osv.osv):
                 }, context=context)
             message = _("The task '%s' is cancelled.") % (task.name,)
             self.log(cr, uid, task.id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
             self.write(cr, uid, [task.id], {'state': 'cancelled', 'remaining_hours': 0.0}, context=context)
         return True
 
@@ -1002,6 +1006,7 @@ class task(osv.osv):
             self.write(cr, uid, [t.id], data, context=context)
             message = _("The task '%s' is opened.") % (t.name,)
             self.log(cr, uid, t.id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
         return True
 
     def do_draft(self, cr, uid, ids, context=None):
@@ -1051,6 +1056,7 @@ class task(osv.osv):
             
             message = _("The task '%s' has been delegated to %s.") % (delegate_data['name'], delegate_data['user_id'][1])
             self.log(cr, uid, task.id, message)
+            self.message_append(cr, uid, [task.id], message, body_text=message, context=context)
             delegated_tasks[task.id] = delegated_task_id
         return delegated_tasks
 
@@ -1062,6 +1068,7 @@ class task(osv.osv):
         for (id, name) in self.name_get(cr, uid, ids):
             message = _("The task '%s' is pending.") % name
             self.log(cr, uid, id, message)
+            self.message_append(cr, uid, [id], message, body_text=message, context=context)
         return True
 
     def set_remaining_time(self, cr, uid, ids, remaining_time=1.0, context=None):
@@ -1112,7 +1119,7 @@ class task(osv.osv):
             if task.project_id.type_ids:
                 typeid = task.type_id.id
                 types_seq = {}
-                for type in task.project_id.type_ids :
+                for type in task.project_id.type_ids:
                     types_seq[type.id] = type.sequence
                 if next:
                     types = sorted(types_seq.items(), lambda x, y: cmp(x[1], y[1]))
