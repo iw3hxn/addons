@@ -945,7 +945,7 @@ class task(osv.osv):
             self.write(cr, uid, [task.id], vals, context=context)
             message = _("The task '%s' is done") % (task.name,)
             self.log(cr, uid, task.id, message)
-            self.message_append(cr, uid, [id], message, body_text=message, context=context)
+            self.message_append(cr, uid, [task.id], message, body_text=message, context=context)
         return True
 
     def do_reopen(self, cr, uid, ids, context=None):
