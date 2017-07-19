@@ -19,7 +19,7 @@
 ##############################################################################
 {
     "name" : "Purchase Requisitions",
-    "version" : "0.1",
+    "version" : "0.1.a",
     "author" : "OpenERP SA",
     "category" : "Purchase Management",
     'complexity': "normal",

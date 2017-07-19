@@ -7994,7 +7994,7 @@ msgstr "Anno fiscale da chiudere"
 #: view:account.invoice.cancel:0
 #: model:ir.actions.act_window,name:account.action_account_invoice_cancel
 msgid "Cancel Selected Invoices"
-msgstr "Cancella lefatture scelte"
+msgstr "Cancella le fatture selezionate"
 
 #. module: account
 #: help:account.account.type,report_type:0

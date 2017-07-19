@@ -18,14 +18,10 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-import pooler
-import sql_db
-
 import os
 import time
 import errno
-
-import netsvc
+import re
 import urlparse
 import urllib
 
@@ -39,16 +35,13 @@ except ImportError:
     from DAV.errors import DAV_Error, DAV_Forbidden, DAV_NotFound
     from DAV.iface import dav_interface
     from DAV.davcmd import copyone, copytree, moveone, movetree, delone, deltree
-    
+
+import openerp
+from openerp import pooler, sql_db, netsvc
+from openerp.tools import misc
+
 from cache import memoize
-from tools import misc
-
 from webdav import mk_lock_response
-
-try:
-    from tools.dict_tools import dict_merge2
-except ImportError:
-    from document.dict_tools import dict_merge2
 
 CACHE_SIZE=20000
 
@@ -59,6 +52,22 @@ urlparse.uses_netloc.append('webdavs')
 day_names = { 0: 'Mon', 1: 'Tue' , 2: 'Wed', 3: 'Thu', 4: 'Fri', 5: 'Sat', 6: 'Sun' }
 month_names = { 1: 'Jan', 2: 'Feb', 3: 'Mar', 4: 'Apr', 5: 'May', 6: 'Jun',
         7: 'Jul', 8: 'Aug', 9: 'Sep', 10: 'Oct', 11: 'Nov', 12: 'Dec' }
+
+def dict_merge2(*dicts):
+    """ Return a dict with all values of dicts.
+        If some key appears twice and contains iterable objects, the values
+        are merged (instead of overwritten).
+    """
+    res = {}
+    for d in dicts:
+        for k in d.keys():
+            if k in res and isinstance(res[k], (list, tuple)):
+                res[k] = res[k] + d[k]
+            elif k in res and isinstance(res[k], dict):
+                res[k].update(d[k])
+            else:
+                res[k] = d[k]
+    return res
 
 class DAV_NotFound2(DAV_NotFound):
     """404 exception, that accepts our list uris
@@ -84,13 +93,13 @@ def _str2time(cre):
 
 class BoundStream2(object):
     """Wraps around a seekable buffer, reads a determined range of data
-    
+
         Note that the supplied stream object MUST support a size() which
         should return its data length (in bytes).
-    
+
         A variation of the class in websrv_lib.py
     """
-    
+
     def __init__(self, stream, offset=None, length=None, chunk_size=None):
         self._stream = stream
         self._offset = offset or 0
@@ -116,7 +125,7 @@ class BoundStream2(object):
             rsize = size
         if self._chunk_size and self._chunk_size < rsize:
             rsize = self._chunk_size
-        
+
         data = self._stream.read(rsize)
         self._rem_length -= len(data)
 
@@ -361,7 +370,8 @@ class openerp_dav_handler(dav_interface):
         return self.parent.get_baseuri(self) + '/'.join(ajoin)
 
     @memoize(4)
-    def db_list(self):
+    def _all_db_list(self):
+        """return all databases who have module document_webdav installed"""
         s = netsvc.ExportService.getService('db')
         result = s.exp_list()
         self.db_name_list=[]
@@ -370,7 +380,7 @@ class openerp_dav_handler(dav_interface):
             try:
                 db = sql_db.db_connect(db_name)
                 cr = db.cursor()
-                cr.execute("SELECT id FROM ir_module_module WHERE name = 'document' AND state='installed' ")
+                cr.execute("SELECT id FROM ir_module_module WHERE name = 'document_webdav' AND state='installed' ")
                 res=cr.fetchone()
                 if res and len(res):
                     self.db_name_list.append(db_name)
@@ -381,6 +391,15 @@ class openerp_dav_handler(dav_interface):
                     cr.close()
         return self.db_name_list
 
+    def db_list(self, uri):
+        # import pudb;pudb.set_trace()
+        u = urlparse.urlsplit(uri)
+        h = u.hostname
+        d = h.split('.')[0]
+        r = openerp.tools.config['dbfilter'].replace('%h', h).replace('%d',d)
+        dbs = [i for i in self._all_db_list() if re.match(r, i)]
+        return dbs
+
     def get_childs(self,uri, filters=None):
         """ return the child objects as self.baseuris for the given URI """
         self.parent.log_message('get children: %s' % uri)
@@ -388,7 +407,7 @@ class openerp_dav_handler(dav_interface):
 
         if not dbname:
             if cr: cr.close()
-            res = map(lambda x: self.urijoin(x), self.db_list())
+            res = map(lambda x: self.urijoin(x), self.db_list(uri))
             return res
         result = []
         node = self.uri2object(cr, uid, pool, uri2[:])
@@ -406,7 +425,7 @@ class openerp_dav_handler(dav_interface):
                 domain = None
                 if filters:
                     domain = node.get_domain(cr, filters)
-                    
+
                     if hasattr(filters, 'getElementsByTagNameNS'):
                         hrefs = filters.getElementsByTagNameNS('DAV:', 'href')
                         if hrefs:
@@ -514,7 +533,7 @@ class openerp_dav_handler(dav_interface):
                     else:
                         length = res.size() - start
                     res = BoundStream2(res, offset=start, length=length)
-                
+
             except TypeError,e:
                 # for the collections that return this error, the DAV standard
                 # says we'd better just return 200 OK with empty data
@@ -570,10 +589,10 @@ class openerp_dav_handler(dav_interface):
 
     @memoize(CACHE_SIZE)
     def _get_dav_getcontentlength(self, uri):
-        """ return the content length of an object """        
+        """ return the content length of an object """
         self.parent.log_message('get length: %s' % uri)
         result = 0
-        cr, uid, pool, dbname, uri2 = self.get_cr(uri)        
+        cr, uid, pool, dbname, uri2 = self.get_cr(uri)
         if not dbname:
             if cr: cr.close()
             return str(result)
@@ -608,7 +627,7 @@ class openerp_dav_handler(dav_interface):
         cr, uid, pool, dbname, uri2 = self.get_cr(uri)
         if not dbname:
             return time.time()
-        try:            
+        try:
             node = self.uri2object(cr, uid, pool, uri2)
             if not node:
                 raise DAV_NotFound2(uri2)
@@ -629,11 +648,11 @@ class openerp_dav_handler(dav_interface):
 
     @memoize(CACHE_SIZE)
     def get_creationdate(self, uri):
-        """ return the last modified date of the object """        
+        """ return the last modified date of the object """
         cr, uid, pool, dbname, uri2 = self.get_cr(uri)
         if not dbname:
             raise DAV_Error, 409
-        try:            
+        try:
             node = self.uri2object(cr, uid, pool, uri2)
             if not node:
                 raise DAV_NotFound2(uri2)
@@ -649,7 +668,7 @@ class openerp_dav_handler(dav_interface):
         if not dbname:
             if cr: cr.close()
             return 'httpd/unix-directory'
-        try:            
+        try:
             node = self.uri2object(cr, uid, pool, uri2)
             if not node:
                 raise DAV_NotFound2(uri2)
@@ -657,8 +676,8 @@ class openerp_dav_handler(dav_interface):
             return result
             #raise DAV_NotFound, 'Could not find %s' % path
         finally:
-            if cr: cr.close()    
-    
+            if cr: cr.close()
+
     def mkcol(self,uri):
         """ create a new collection
             see par. 9.3 of rfc4918
@@ -696,9 +715,9 @@ class openerp_dav_handler(dav_interface):
             node = self.uri2object(cr, uid, pool, uri2[:])
         except Exception:
             node = False
-        
+
         objname = misc.ustr(uri2[-1])
-        
+
         ret = None
         if not node:
             dir_node = self.uri2object(cr, uid, pool, uri2[:-1])
@@ -719,7 +738,7 @@ class openerp_dav_handler(dav_interface):
                 fileloc = fileloc.encode('utf-8')
             # the uri we get is a mangled one, where the davpath has been removed
             davpath = self.parent.get_davpath()
-            
+
             surl = '%s://%s' % (uparts[0], uparts[1])
             uloc = urllib.quote(fileloc)
             hurl = False
@@ -733,19 +752,19 @@ class openerp_dav_handler(dav_interface):
             ret = (str(hurl), etag)
         else:
             self._try_function(node.set_data, (cr, data), "save %s" % objname, cr=cr)
-            
+
         cr.commit()
         cr.close()
         return ret
 
     def rmcol(self,uri):
         """ delete a collection """
-        cr, uid, pool, dbname, uri2 = self.get_cr(uri)        
+        cr, uid, pool, dbname, uri2 = self.get_cr(uri)
         if not dbname:
             if cr: cr.close()
             raise DAV_Error, 409
 
-        node = self.uri2object(cr, uid, pool, uri2)             
+        node = self.uri2object(cr, uid, pool, uri2)
         self._try_function(node.rmcol, (cr,), "rmcol %s" % uri, cr=cr)
 
         cr.commit()
@@ -754,7 +773,7 @@ class openerp_dav_handler(dav_interface):
 
     def rm(self,uri):
         cr, uid, pool,dbname, uri2 = self.get_cr(uri)
-        if not dbname:        
+        if not dbname:
             if cr: cr.close()
             raise DAV_Error, 409
         node = self.uri2object(cr, uid, pool, uri2)
@@ -928,8 +947,8 @@ class openerp_dav_handler(dav_interface):
         return result
 
     def unlock(self, uri, token):
-        """ Unlock a resource from that token 
-        
+        """ Unlock a resource from that token
+
         @return True if unlocked, False if no lock existed, Exceptions
         """
         cr, uid, pool, dbname, uri2 = self.get_cr(uri)
@@ -965,9 +984,9 @@ class openerp_dav_handler(dav_interface):
             node = self.uri2object(cr, uid, pool, uri2[:])
         except Exception:
             node = False
-        
+
         objname = misc.ustr(uri2[-1])
-        
+
         if not node:
             dir_node = self.uri2object(cr, uid, pool, uri2[:-1])
             if not dir_node:
@@ -1001,7 +1020,7 @@ class openerp_dav_handler(dav_interface):
             raise DAV_Error(423, "Resource already locked")
         
         assert isinstance(lres, list), 'lres: %s' % repr(lres)
-        
+
         try:
             data = mk_lock_response(self, uri, lres)
             cr.commit()

@@ -108,7 +108,6 @@ class product_product(osv.osv):
 
                     move_ids.append(move_id)
 
-
                     if diff > 0:
                         if not stock_input_acc:
                             stock_input_acc = product.product_tmpl_id.\
@@ -181,7 +180,6 @@ class product_product(osv.osv):
         """
         if context is None:
             context = {}
-        
         location_obj = self.pool.get('stock.location')
         warehouse_obj = self.pool.get('stock.warehouse')
         shop_obj = self.pool.get('sale.shop')
@@ -190,26 +188,26 @@ class product_product(osv.osv):
         states = context.get('states',[])
         what = context.get('what',())
         if not ids:
-            ids = self.search(cr, uid, [])
+            ids = self.search(cr, uid, [], context=context)
         res = {}.fromkeys(ids, 0.0)
         if not ids:
             return res
 
         if context.get('shop', False):
-            warehouse_id = shop_obj.read(cr, uid, int(context['shop']), ['warehouse_id'])['warehouse_id'][0]
+            warehouse_id = shop_obj.read(cr, uid, int(context['shop']), ['warehouse_id'], context=context)['warehouse_id'][0]
             if warehouse_id:
                 context['warehouse'] = warehouse_id
 
         if context.get('warehouse', False):
-            lot_id = warehouse_obj.read(cr, uid, int(context['warehouse']), ['lot_stock_id'])['lot_stock_id'][0]
+            lot_id = warehouse_obj.read(cr, uid, int(context['warehouse']), ['lot_stock_id'], context=context)['lot_stock_id'][0]
             if lot_id:
                 context['location'] = lot_id
 
         if context.get('location', False):
-            if type(context['location']) == type(1):
+            if isinstance(context['location'], int):
                 location_ids = [context['location']]
-            elif type(context['location']) in (type(''), type(u'')):
-                location_ids = location_obj.search(cr, uid, [('name','ilike',context['location'])], context=context)
+            elif isinstance(context['location'], str):
+                location_ids = location_obj.search(cr, uid, [('name', 'ilike', context['location'])], context=context)
             else:
                 location_ids = context['location']
         else:
@@ -219,8 +217,8 @@ class product_product(osv.osv):
                 location_ids.append(w.lot_stock_id.id)
 
         # build the list of ids of children of the location given by id
-        if context.get('compute_child',True):
-            child_location_ids = location_obj.search(cr, uid, [('location_id', 'child_of', location_ids)])
+        if context.get('compute_child', True):
+            child_location_ids = location_obj.search(cr, uid, [('location_id', 'child_of', location_ids)], context=context)
             location_ids = child_location_ids or location_ids
         
         # Extract UoM id from product ids 
@@ -236,11 +234,11 @@ class product_product(osv.osv):
         results = []
         results2 = []
 
-        from_date = context.get('from_date',False)
-        to_date = context.get('to_date',False)
+        from_date = context.get('from_date', False)
+        to_date = context.get('to_date', False)
         date_str = False
         date_values = False
-        where = [tuple(location_ids),tuple(location_ids),tuple(ids),tuple(states)]
+        where = [tuple(location_ids), tuple(location_ids), tuple(ids), tuple(states)]
         if from_date and to_date:
             date_str = "date>=%s and date<=%s"
             where.append(tuple([from_date]))
@@ -273,7 +271,7 @@ class product_product(osv.osv):
                 'and product_id IN %s '\
                 'and state IN %s ' + (date_str and 'and '+date_str+' ' or '') +' '\
                 + prodlot_clause + 
-                'group by product_id,product_uom',tuple(where))
+                'group by product_id,product_uom', tuple(where))
             results = cr.fetchall()
         if 'out' in what:
             # all moves from a location in the set to a location out of the set
@@ -285,7 +283,7 @@ class product_product(osv.osv):
                 'and product_id  IN %s '\
                 'and state in %s ' + (date_str and 'and '+date_str+' ' or '') + ' '\
                 + prodlot_clause + 
-                'group by product_id,product_uom',tuple(where))
+                'group by product_id,product_uom', tuple(where))
             results2 = cr.fetchall()
             
         # Get the missing UoM resources
@@ -299,7 +297,7 @@ class product_product(osv.osv):
             for o in uoms:
                 uoms_o[o.id] = o
                 
-        #TOCHECK: before change uom of product, stock move line are in old uom.
+        # TOCHECK: before change uom of product, stock move line are in old uom.
         context.update({'raise-exception': False})
         # Count the incoming quantities
         for amount, prod_id, prod_uom in results:
@@ -327,13 +325,13 @@ class product_product(osv.osv):
         for f in field_names:
             c = context.copy()
             if f == 'qty_available':
-                c.update({ 'states': ('done',), 'what': ('in', 'out') })
+                c.update({'states': ('done',), 'what': ('in', 'out')})
             if f == 'virtual_available':
-                c.update({ 'states': ('confirmed','waiting','assigned','done'), 'what': ('in', 'out') })
+                c.update({'states': ('confirmed', 'waiting', 'assigned', 'done'), 'what': ('in', 'out')})
             if f == 'incoming_qty':
-                c.update({ 'states': ('confirmed','waiting','assigned'), 'what': ('in',) })
+                c.update({'states': ('confirmed', 'waiting', 'assigned'), 'what': ('in',)})
             if f == 'outgoing_qty':
-                c.update({ 'states': ('confirmed','waiting','assigned'), 'what': ('out',) })
+                c.update({'states': ('confirmed', 'waiting', 'assigned'), 'what': ('out',)})
             stock = self.get_product_available(cr, uid, ids, context=c)
             for id in ids:
                 res[id][f] = stock.get(id, 0.0)
