@@ -257,7 +257,7 @@ class crm_base(object):
         if part:
             addr = self.pool['res.partner'].address_get(cr, uid, [part], ['contact'])
             data = {'partner_address_id': addr['contact']}
-            data.update(self.onchange_partner_address_id(cr, uid, ids, addr['contact'], email, context)['value'])
+            data.update(self.onchange_partner_address_id(cr, uid, ids, addr['contact'], email)['value'])
         return {'value': data}
 
     def case_open(self, cr, uid, ids, *args):
