@@ -188,8 +188,7 @@ class mail_compose_message(osv.osv_memory):
            :param dict context: several context values will modify the behavior
                                 of the wizard, cfr. the class description.
         '''
-        if context is None:
-            context = {}
+        context = context or self.pool['res.users'].context_get(cr, uid)
         mail_message = self.pool.get('mail.message')
         for mail in self.browse(cr, uid, ids, context=context):
             attachment = {}
