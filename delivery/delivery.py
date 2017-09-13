@@ -223,7 +223,7 @@ class delivery_grid(osv.osv):
             weight += (line.product_id.weight or 0.0) * q
             volume += (line.product_id.volume or 0.0) * q
             quantity += q
-        total = (order.amount_total or 0.0) - total_delivery
+        total = (order.amount_untaxed or 0.0) - total_delivery
 
         ctx = context.copy()
         ctx['date'] = order.date_order
@@ -235,9 +235,9 @@ class delivery_grid(osv.osv):
         grid = self.browse(cr, uid, id, context=context)
         price = 0.0
         ok = False
-        price_dict = {'price': total, 'volume':volume, 'weight': weight, 'wv':volume*weight, 'quantity': quantity}
+        price_dict = {'price': total, 'volume': volume, 'weight': weight, 'wv': volume * weight, 'quantity': quantity}
         for line in grid.line_ids:
-            test = eval(line.type+line.operator+str(line.max_value), price_dict)
+            test = eval(line.type + line.operator + str(line.max_value), price_dict)
             if test:
                 if line.price_type == 'variable':
                     price = line.list_price * price_dict[line.variable_factor]

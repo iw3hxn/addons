@@ -123,6 +123,7 @@
                 <form string="Grid Lines">
                     <group colspan="5" col="5">
                         <field colspan="4" name="name" select="1"/>
+                        <field name="sequence" />
                         <newline/>
                         <field name="type" string="Condition"/>
                         <field name="operator" nolabel="1"/>
