@@ -74,7 +74,7 @@ class make_delivery(osv.osv_memory):
                 if not grid_id:
                     raise osv.except_osv(_('No grid available !'), _('No grid matching for this carrier !'))
 
-                if not order.state in ('draft'):
+                if order.state not in ('draft'):
                     raise osv.except_osv(_('Order not in draft state !'), _('The order state have to be draft to add delivery lines.'))
                 self._delivery_unset(cr, uid, [order.id], context=context)
                 grid = grid_obj.browse(cr, uid, grid_id, context=context)
@@ -85,6 +85,9 @@ class make_delivery(osv.osv_memory):
                 price_unit = grid_obj.get_price(cr, uid, grid.id, order, time.strftime('%Y-%m-%d'), context)
                 context.update({'price': 'cost_price'})
                 purchase_price = grid_obj.get_price(cr, uid, grid.id, order, time.strftime('%Y-%m-%d'), context)
+                sequence = 10
+                if order.order_line:
+                    sequence = order.order_line[-1].sequence + 1
                 line_obj.create(cr, uid, {
                     'order_id': order.id,
                     'name': grid.carrier_id.name,
@@ -95,7 +98,8 @@ class make_delivery(osv.osv_memory):
                     'purchase_price': purchase_price,
                     'tax_id': [(6, 0, taxes_ids)],
                     'type': 'make_to_stock',
-                    'is_delivery': True
+                    'is_delivery': True,
+                    'sequence': sequence,
                 }, context)
     
         return {'type': 'ir.actions.act_window_close'}

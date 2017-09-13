@@ -656,3 +656,19 @@ msgstr ""
 #: field:delivery.grid.line,price_type:0
 msgid "Price Type"
 msgstr "Tipo Prezzo"
+
+#. module: delivery
+#: field:delivery.carrier,free_if_more_than:0
+msgid "Free If Order Total Amount Is More Than"
+msgstr "Gratuito se l'import dell'ordine è superiore a.."
+
+#. module: delivery
+#: help:delivery.carrier,normal_price:0
+msgid "Keep empty if the pricing depends on the advanced pricing per destination"
+msgstr "Lasciare vuoto se il prezzo dipende dalla Destinazione"
+
+#. module: delivery
+#: field:delivery.carrier,use_detailed_pricelist:0
+msgid "Advanced Pricing per Destination"
+msgstr "Prezzo dipendente dalla Destinazione"
+

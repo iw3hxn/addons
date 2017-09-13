@@ -19,9 +19,15 @@
 #
 ##############################################################################
 
+import logging
 import time
-from osv import fields,osv
-from tools.translate import _
+from openerp.osv import fields,osv
+from openerp.tools.translate import _
+import decimal_precision as dp
+from openerp.tools.safe_eval import safe_eval as eval
+
+_logger = logging.getLogger(__name__)
+
 
 class delivery_carrier(osv.osv):
     _name = "delivery.carrier"
@@ -30,9 +36,8 @@ class delivery_carrier(osv.osv):
     def name_get(self, cr, uid, ids, context=None):
         if not len(ids):
             return []
-        if context is None:
-            context = {}
-        order_id = context.get('order_id',False)
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        order_id = context.get('order_id', False)
         if not order_id:
             res = super(delivery_carrier, self).name_get(cr, uid, ids, context=context)
         else:
@@ -43,32 +48,43 @@ class delivery_carrier(osv.osv):
 
     def get_price(self, cr, uid, ids, field_name, arg=None, context=None):
         res = {}
-        if context is None:
-            context = {}
-        sale_obj = self.pool.get('sale.order')
-        grid_obj = self.pool.get('delivery.grid')
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        sale_obj = self.pool['sale.order']
+        grid_obj = self.pool['delivery.grid']
         for carrier in self.browse(cr, uid, ids, context=context):
             order_id = context.get('order_id', False)
             price = False
+            available = False
             if order_id:
                 order = sale_obj.browse(cr, uid, order_id, context=context)
                 carrier_grid = self.grid_get(cr, uid, [carrier.id], order.partner_shipping_id.id, context)
                 if carrier_grid:
-                    price = grid_obj.get_price(cr, uid, carrier_grid, order, time.strftime('%Y-%m-%d'), context)
+                    try:
+                        price = grid_obj.get_price(cr, uid, carrier_grid, order, time.strftime('%Y-%m-%d'), context)
+                        available = True
+                    except osv.except_osv, e:
+                        # no suitable delivery method found, probably configuration error
+                        _logger.error("Carrier %s: %s\n%s" % (carrier.name, e.name, e.value))
+                        price = 0.0
                 else:
                     price = 0.0
-            res[carrier.id] = price
+            res[carrier.id] = {
+                'price': price,
+                'available': available
+            }
         return res
 
     _columns = {
-        'name': fields.char('Delivery Method', size=64, required=True),
+        'name': fields.char('Delivery Method', required=True),
         'partner_id': fields.many2one('res.partner', 'Transport Company', required=True, help="The partner that is doing the delivery service."),
-        'product_id': fields.many2one('product.product', 'Delivery Product'),
+        'product_id': fields.many2one('product.product', 'Delivery Product', required=True),
         'grids_id': fields.one2many('delivery.grid', 'carrier_id', 'Delivery Grids'),
-        'price' : fields.function(get_price, string='Price'),
+        'available' : fields.function(get_price, string='Available',type='boolean', multi='price',
+            help="Is the carrier method possible with the current order."),
+        'price' : fields.function(get_price, string='Price', multi='price'),
         'active': fields.boolean('Active', help="If the active field is set to False, it will allow you to hide the delivery carrier without removing it."),
         'normal_price': fields.float('Normal Price', help="Keep empty if the pricing depends on the advanced pricing per destination"),
-        'free_if_more_than': fields.boolean('Free If More Than', help="If the order is more expensive than a certain amount, the customer can benefit from a free shipping"),
+        'free_if_more_than': fields.boolean('Free If Order Total Amount Is More Than', help="If the order is more expensive than a certain amount, the customer can benefit from a free shipping"),
         'amount': fields.float('Amount', help="Amount of the order to benefit from a free shipping, expressed in the company currency"),
         'use_detailed_pricelist': fields.boolean('Advanced Pricing per Destination', help="Check this box if you want to manage delivery prices that depends on the destination, the weight, the total of the order, etc."),
         'pricelist_ids': fields.one2many('delivery.grid', 'carrier_id', 'Advanced Pricing'),
@@ -80,40 +96,40 @@ class delivery_carrier(osv.osv):
     }
 
     def grid_get(self, cr, uid, ids, contact_id, context=None):
-        contact = self.pool.get('res.partner.address').browse(cr, uid, contact_id, context=context)
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        contact = self.pool['res.partner.address'].browse(cr, uid, contact_id, context=context)
         for carrier in self.browse(cr, uid, ids, context=context):
             for grid in carrier.grids_id:
                 get_id = lambda x: x.id
                 country_ids = map(get_id, grid.country_ids)
                 state_ids = map(get_id, grid.state_ids)
-                if country_ids and not contact.country_id.id in country_ids:
+                if country_ids and contact.country_id.id not in country_ids:
                     continue
-                if state_ids and not contact.state_id.id in state_ids:
+                if state_ids and contact.state_id.id not in state_ids:
                     continue
-                if grid.zip_from and (contact.zip or '')< grid.zip_from:
+                if grid.zip_from and (contact.zip or '') < grid.zip_from:
                     continue
-                if grid.zip_to and (contact.zip or '')> grid.zip_to:
+                if grid.zip_to and (contact.zip or '') > grid.zip_to:
                     continue
                 return grid.id
         return False
 
     def create_grid_lines(self, cr, uid, ids, vals, context=None):
-        if context is None:
-            context = {}
-        grid_line_pool = self.pool.get('delivery.grid.line')
-        grid_pool = self.pool.get('delivery.grid')
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        grid_line_pool = self.pool['delivery.grid.line']
+        grid_pool = self.pool['delivery.grid']
         for record in self.browse(cr, uid, ids, context=context):
             # if using advanced pricing per destination: do not change
             if record.use_detailed_pricelist:
                 continue
-			
+
             # not using advanced pricing per destination: override grid
             grid_id = grid_pool.search(cr, uid, [('carrier_id', '=', record.id)], context=context)
-
-            if grid_id and not (record.normal_price or record.free_if_more_than):
+            if grid_id and not (record.normal_price is not False or record.free_if_more_than):
                 grid_pool.unlink(cr, uid, grid_id, context=context)
+                grid_id = None
 
-            if not (record.normal_price or record.free_if_more_than):
+            if not (record.normal_price is not False or record.free_if_more_than):
                 continue
 
             if not grid_id:
@@ -124,11 +140,11 @@ class delivery_carrier(osv.osv):
                 }
                 grid_id = [grid_pool.create(cr, uid, grid_data, context=context)]
 
-            lines = grid_line_pool.search(cr, uid, [('grid_id','in',grid_id)], context=context)
+            lines = grid_line_pool.search(cr, uid, [('grid_id', 'in', grid_id)], context=context)
             if lines:
                 grid_line_pool.unlink(cr, uid, lines, context=context)
 
-            #create the grid lines
+            # create the grid lines
             if record.free_if_more_than:
                 line_data = {
                     'grid_id': grid_id and grid_id[0],
@@ -140,7 +156,7 @@ class delivery_carrier(osv.osv):
                     'list_price': 0.0,
                 }
                 grid_line_pool.create(cr, uid, line_data, context=context)
-            if record.normal_price:
+            if record.normal_price is not False:
                 line_data = {
                     'grid_id': grid_id and grid_id[0],
                     'name': _('Default price'),
@@ -154,13 +170,15 @@ class delivery_carrier(osv.osv):
         return True
 
     def write(self, cr, uid, ids, vals, context=None):
-        if isinstance(ids, (int,long)):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        if isinstance(ids, (int, long)):
             ids = [ids]
         res = super(delivery_carrier, self).write(cr, uid, ids, vals, context=context)
         self.create_grid_lines(cr, uid, ids, vals, context=context)
         return res
 
     def create(self, cr, uid, vals, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         res_id = super(delivery_carrier, self).create(cr, uid, vals, context=context)
         self.create_grid_lines(cr, uid, [res_id], vals, context=context)
         return res_id
@@ -187,37 +205,44 @@ class delivery_grid(osv.osv):
     _order = 'sequence'
 
     def get_price(self, cr, uid, id, order, dt, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         total = 0
         weight = 0
         volume = 0
+        quantity = 0
+        total_delivery = 0.0
+        product_uom_obj = self.pool['product.uom']
         for line in order.order_line:
-            if not line.product_id:
+            if line.state == 'cancel':
                 continue
-            total += line.price_subtotal or 0.0
-            weight += (line.product_id.weight or 0.0) * line.product_uom_qty
-            volume += (line.product_id.volume or 0.0) * line.product_uom_qty
+            if line.is_delivery:
+                total_delivery += line.price_subtotal + self.pool['sale.order']._amount_line_tax(cr, uid, line, context=context)
+            if not line.product_id or line.is_delivery:
+                continue
+            q = product_uom_obj._compute_qty(cr, uid, line.product_uom.id, line.product_uom_qty, line.product_id.uom_id.id)
+            weight += (line.product_id.weight or 0.0) * q
+            volume += (line.product_id.volume or 0.0) * q
+            quantity += q
+        total = (order.amount_total or 0.0) - total_delivery
 
-        return self.get_price_from_picking(cr, uid, id, total, weight, volume, context=context)
+        ctx = context.copy()
+        ctx['date'] = order.date_order
+        total = self.pool['res.currency'].compute(cr, uid, order.pricelist_id.currency_id.id, order.company_id.currency_id.id, total, context=ctx)
+        return self.get_price_from_picking(cr, uid, id, total, weight, volume, quantity, context=context)
 
-    def get_price_from_picking(self, cr, uid, id, total, weight, volume, context=None):
-        if not context:
-            context = {}
+    def get_price_from_picking(self, cr, uid, id, total, weight, volume, quantity, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         grid = self.browse(cr, uid, id, context=context)
         price = 0.0
         ok = False
-
+        price_dict = {'price': total, 'volume':volume, 'weight': weight, 'wv':volume*weight, 'quantity': quantity}
         for line in grid.line_ids:
-            price_dict = {'price': total, 'volume': volume, 'weight': weight, 'wv': volume * weight}
-            test = eval(line.type + line.operator + str(line.max_value), price_dict)
+            test = eval(line.type+line.operator+str(line.max_value), price_dict)
             if test:
-                if context.get('price', False) == 'cost_price':
-                    base_price = line.standard_price
-                else:
-                    base_price = line.list_price
                 if line.price_type == 'variable':
-                    price = base_price * price_dict[line.variable_factor]
+                    price = line.list_price * price_dict[line.variable_factor]
                 else:
-                    price = base_price
+                    price = line.list_price
                 ok = True
                 break
         if not ok:
@@ -226,51 +251,35 @@ class delivery_grid(osv.osv):
         return price
 
 
-delivery_grid()
-
 class delivery_grid_line(osv.osv):
     _name = "delivery.grid.line"
     _description = "Delivery Grid Line"
     _columns = {
-        'name': fields.char('Name', size=64, required=True),
-        'grid_id': fields.many2one('delivery.grid', 'Grid',required=True, ondelete='cascade'),
-        'type': fields.selection([('weight','Weight'),('volume','Volume'),\
-                                  ('wv','Weight * Volume'), ('price','Price')],\
-                                  'Variable', required=True),
-        'operator': fields.selection([('==','='),('<=','<='),('>=','>=')], 'Operator', required=True),
+        'name': fields.char('Name', required=True),
+        'sequence': fields.integer('Sequence', required=True,
+                                   help="Gives the sequence order when calculating delivery grid."),
+        'grid_id': fields.many2one('delivery.grid', 'Grid', required=True, ondelete='cascade'),
+        'type': fields.selection([('weight', 'Weight'), ('volume', 'Volume'), \
+                                  ('wv', 'Weight * Volume'), ('price', 'Price'), ('quantity', 'Quantity')], \
+                                 'Variable', required=True),
+        'operator': fields.selection([('==', '='), ('<=', '<='), ('>=', '>=')], 'Operator', required=True),
         'max_value': fields.float('Maximum Value', required=True),
-        'price_type': fields.selection([('fixed','Fixed'),('variable','Variable')], 'Price Type', required=True),
-        'variable_factor': fields.selection([('weight','Weight'),('volume','Volume'),('wv','Weight * Volume'), ('price','Price')], 'Variable Factor', required=True),
-        'list_price': fields.float('Sale Price', required=True),
-        'standard_price': fields.float('Cost Price', required=True),
+        'price_type': fields.selection([('fixed', 'Fixed'), ('variable', 'Variable')], 'Price Type', required=True),
+        'variable_factor': fields.selection(
+            [('weight', 'Weight'), ('volume', 'Volume'), ('wv', 'Weight * Volume'), ('price', 'Price'),
+             ('quantity', 'Quantity')], 'Variable Factor', required=True),
+        'list_price': fields.float('Sale Price', digits_compute=dp.get_precision('Product Price'), required=True),
+        'standard_price': fields.float('Cost Price', digits_compute=dp.get_precision('Product Price'), required=True),
     }
+
     _defaults = {
+        'sequence': lambda *args: 10,
         'type': lambda *args: 'weight',
         'operator': lambda *args: '<=',
         'price_type': lambda *args: 'fixed',
         'variable_factor': lambda *args: 'weight',
     }
-    _order = 'list_price'
-
-delivery_grid_line()
-
-class define_delivery_steps(osv.osv_memory):
-    _name = 'delivery.define.delivery.steps.wizard'
-
-    _columns = {
-        'picking_policy' : fields.selection([('direct', 'Deliver each product when available'), ('one', 'Deliver all products at once')], 'Picking Policy'),
-    }
-    _defaults = {
-        'picking_policy': lambda s,c,u,ctx: s.pool.get('sale.order').default_get(c,u,['picking_policy'],context=ctx)['picking_policy']
-    }
-
-    def apply_cb(self, cr, uid, ids, context=None):
-        ir_values_obj = self.pool.get('ir.values')
-        wizard = self.browse(cr, uid, ids, context=context)[0]
-        ir_values_obj.set(cr, uid, 'default', False, 'picking_policy', ['sale.order'], wizard.picking_policy)
-        return {'type' : 'ir.actions.act_window_close'}
-
-define_delivery_steps()
+    _order = 'sequence, list_price'
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

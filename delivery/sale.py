@@ -44,10 +44,10 @@ class sale_order(osv.Model):
         'id': fields.integer('ID', readonly=True,invisible=True),
     }
 
-    def onchange_partner_id(self, cr, uid, ids, part):
+    def onchange_partner_id(self, cr, uid, ids, part, context=None):
         result = super(sale_order, self).onchange_partner_id(cr, uid, ids, part)
         if part:
-            dtype = self.pool.get('res.partner').browse(cr, uid, part).property_delivery_carrier.id
+            dtype = self.pool['res.partner'].browse(cr, uid, part, context=context).property_delivery_carrier.id
             # TDE NOTE: not sure the aded 'if dtype' is valid
             if dtype:
                 result['value']['carrier_id'] = dtype
@@ -58,6 +58,8 @@ class sale_order(osv.Model):
         result.update(carrier_id=order.carrier_id.id)
         return result
 
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
+    def _delivery_unset(self, cr, uid, ids, context=None):
+        sale_obj = self.pool['sale.order.line']
+        line_ids = sale_obj.search(cr, uid, [('order_id', 'in', ids), ('is_delivery', '=', True)], context=context)
+        sale_obj.unlink(cr, uid, line_ids, context=context)
 
