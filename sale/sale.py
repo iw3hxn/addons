@@ -323,10 +323,11 @@ class sale_order(osv.osv):
 
         return osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
 
-    def onchange_shop_id(self, cr, uid, ids, shop_id):
+    def onchange_shop_id(self, cr, uid, ids, shop_id, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         v = {}
         if shop_id:
-            shop = self.pool.get('sale.shop').browse(cr, uid, shop_id)
+            shop = self.pool.get('sale.shop').browse(cr, uid, shop_id, context)
             v['project_id'] = shop.project_id.id
             v['company_id'] = shop.company_id.id
             # overriden by the customer priceslist if existing
