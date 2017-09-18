@@ -471,7 +471,6 @@ class account_bank_statement_line(osv.osv):
                     break
         return res
 
-    _order = "statement_id desc, sequence"
     _name = "account.bank.statement.line"
     _description = "Bank Statement Line"
     _columns = {
@@ -505,7 +504,7 @@ class account_bank_statement_line(osv.osv):
         'type': 'general',
     }
 
-    _order = "date"
+    _order = "statement_id desc, date, id"
 
 account_bank_statement_line()
 
