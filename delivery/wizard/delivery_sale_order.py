@@ -76,7 +76,7 @@ class make_delivery(osv.osv_memory):
 
                 if order.state not in ('draft'):
                     raise osv.except_osv(_('Order not in draft state !'), _('The order state have to be draft to add delivery lines.'))
-                self._delivery_unset(cr, uid, [order.id], context=context)
+
                 grid = grid_obj.browse(cr, uid, grid_id, context=context)
         
                 taxes = grid.carrier_id.product_id.taxes_id
@@ -85,6 +85,7 @@ class make_delivery(osv.osv_memory):
                 price_unit = grid_obj.get_price(cr, uid, grid.id, order, time.strftime('%Y-%m-%d'), context)
                 context.update({'price': 'cost_price'})
                 purchase_price = grid_obj.get_price(cr, uid, grid.id, order, time.strftime('%Y-%m-%d'), context)
+                self._delivery_unset(cr, uid, [order.id], context=context)
                 sequence = 10
                 if order.order_line:
                     sequence = order.order_line[-1].sequence + 1
