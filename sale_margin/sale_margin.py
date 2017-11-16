@@ -44,31 +44,29 @@ class sale_order_line(osv.osv):
     def _product_margin(self, cr, uid, ids, field_name, arg, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            # print line.id
             res[line.id] = {
                 'margin': 0,
                 'total_purchase_price': 0,
             }
-            # import pdb; pdb.set_trace()
             if line.product_id:
-                if line.purchase_price:
+                if line.product_id:
+                    if line.purchase_price:
+                        total_purchase_price = line.product_uos_qty * line.purchase_price
+                    else:
+                        total_purchase_price = line.product_uos_qty * line.product_id.standard_price
+
                     res[line.id] = {
-                        'margin': round((line.price_unit * line.product_uos_qty * (100.0 - line.discount) / 100.0) - (line.purchase_price * line.product_uos_qty), 2),
-                        'total_purchase_price': line.product_uos_qty * line.purchase_price,
-                    }
-                else:
-                    res[line.id] = {
-                        'margin': round((line.price_unit * line.product_uos_qty * (100.0 - line.discount) / 100.0) - (line.product_id.standard_price * line.product_uos_qty), 2),
-                        'total_purchase_price': line.product_uos_qty * line.product_id.standard_price,
+                        'margin': round(line.price_subtotal - total_purchase_price, 2),
+                        'total_purchase_price': total_purchase_price,
                     }
         return res
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', multi='sums', type='float', digits_compute=dp.get_precision('Account'), store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 1),
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 100),
         }),
         'total_purchase_price': fields.function(_product_margin, multi='sums', type='float', string='Total Cost Price', digits_compute=dp.get_precision('Account'), store={
-            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 1),
+            'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['price_unit', 'product_uos_qty', 'discount', 'purchase_price', 'product_id'], 100),
         }),
         'purchase_price': fields.float('Cost Price', digits=(16, 2))
     }
@@ -96,12 +94,12 @@ class sale_order(osv.osv):
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', type='float', multi='sums', digits_compute=dp.get_precision('Account'), help="It gives profitability by calculating the difference between the Unit Price and Cost Price.", store={
-                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 70),
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 80),
+                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 190),
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 200),
         }),
         'margin_rel': fields.function(_product_margin, string='Margin %', type='float', multi='sums', digits_compute=dp.get_precision('Account'), store={
-                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 70),
-                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 80),
+                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 190),
+                'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 200),
         }),
     }
 
