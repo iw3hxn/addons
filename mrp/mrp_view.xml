@@ -361,7 +361,7 @@
                                 <group groups="base.group_extended">
                                 <notebook colspan="4">
                                     <page string="Components">
-                                        <field colspan="4" name="bom_lines" nolabel="1" widget="one2many_list">
+                                        <field colspan="4" name="child_complete_ids" nolabel="1" widget="one2many_list">
                                             <tree string="Components" editable="bottom">
                                                 <field name="product_id" on_change="onchange_product_id(product_id, name)" select="1"/>
                                                 <field name="product_qty"/>
