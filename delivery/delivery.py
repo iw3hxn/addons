@@ -206,6 +206,7 @@ class delivery_grid(osv.osv):
 
     def get_price(self, cr, uid, id, order, dt, context=None):
         context = context or self.pool['res.users'].context_get(cr, uid)
+        print context
         total = 0
         weight = 0
         volume = 0
@@ -216,7 +217,7 @@ class delivery_grid(osv.osv):
             if line.state == 'cancel':
                 continue
             if line.is_delivery:
-                total_delivery += line.price_subtotal + self.pool['sale.order']._amount_line_tax(cr, uid, line, context=context)
+                total_delivery += line.price_subtotal # + self.pool['sale.order']._amount_line_tax(cr, uid, line, context=context)
             if not line.product_id or line.is_delivery:
                 continue
             q = product_uom_obj._compute_qty(cr, uid, line.product_uom.id, line.product_uom_qty, line.product_id.uom_id.id)
@@ -239,10 +240,14 @@ class delivery_grid(osv.osv):
         for line in grid.line_ids:
             test = eval(line.type + line.operator + str(line.max_value), price_dict)
             if test:
-                if line.price_type == 'variable':
-                    price = line.list_price * price_dict[line.variable_factor]
+                if context.get('price', False) == 'cost_price':
+                    base_price = line.standard_price
                 else:
-                    price = line.list_price
+                    base_price = line.list_price
+                if line.price_type == 'variable':
+                    price = base_price * price_dict[line.variable_factor]
+                else:
+                    price = base_price
                 ok = True
                 break
         if not ok:
