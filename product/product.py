@@ -147,6 +147,8 @@ class product_uom(osv.osv):
     def _compute_qty(self, cr, uid, from_uom_id, qty, to_uom_id=False):
         if not from_uom_id or not qty or not to_uom_id:
             return qty
+        if from_uom_id == to_uom_id:
+            return qty
         uoms = self.browse(cr, uid, [from_uom_id, to_uom_id])
         if uoms[0].id == from_uom_id:
             from_unit, to_unit = uoms[0], uoms[-1]
