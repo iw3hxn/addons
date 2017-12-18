@@ -733,6 +733,7 @@ class product_product(osv.osv):
         default = default.copy()
         #default['name'] = product['name'] + ' (copy)'
         default.update(name=_("%s (copy)") % (product['name']))
+        default.update(seller_ids=[])
 
         if context.get('variant',False):
             fields = ['product_tmpl_id', 'active', 'variants', 'default_code',
