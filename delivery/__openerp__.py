@@ -22,7 +22,7 @@
 
 {
     'name': 'Delivery Costs',
-    'version': '1.0.e',
+    'version': '1.0.f',
     'category': 'Sales Management',
     'complexity': "normal",
     'description': """
