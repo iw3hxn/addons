@@ -214,7 +214,7 @@
                     <field name="name"/>
                     <field name="workcenter_id"/>
                     <field name="cycle_nbr"/>
-                    <field name="hour_nbr"/>
+                    <field name="hour_nbr" widget="float_time"/>
                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
                 </tree>
             </field>
@@ -759,14 +759,14 @@
                                     <field name="workcenter_id" widget="selection"/>
                                     <field name="sequence"/>
                                     <field name="cycle"/>
-                                    <field name="hour"/>
+                                    <field name="hour" widget="float_time"/>
                                 </form>
                                 <tree string="Production Work Centers">
                                     <field name="sequence"/>
                                     <field name="name"/>
                                     <field name="workcenter_id" widget="selection"/>
                                     <field name="cycle"/>
-                                    <field name="hour"/>
+                                    <field name="hour" widget="float_time"/>
                                 </tree>
                             </field>
                         </page>
