@@ -21,7 +21,7 @@
 
 {
     'name': 'Sales Management',
-    'version': '2.0o',
+    'version': '2.0p',
     'category': 'Sales Management',
     "sequence": 14,
     'complexity': "easy",
@@ -72,6 +72,7 @@ Dashboard for Sales Manager that includes:
         'wizard/sale_make_invoice_advance.xml',
         'wizard/sale_line_invoice.xml',
         'wizard/sale_make_invoice.xml',
+        'wizard/sale_add_note_view.xml',
         'security/sale_security.xml',
         'security/ir.model.access.csv',
         'company_view.xml',

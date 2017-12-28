@@ -2512,3 +2512,35 @@ msgstr "Crea e Visualizza Fattura"
 #: view:sale.order:0
 msgid "Order Total"
 msgstr "Totale documento"
+
+#. module: sale
+#: view:sale.order:0
+msgid "Add Internal Note"
+msgstr "Aggiungi Nota Interna"
+
+#. module: sale
+#: view:sale.add.note:0
+#: model:ir.actions.act_window,name:sale.action_sale_add_note
+msgid "Add Note"
+msgstr "Aggiungi nota"
+
+#. module: sale
+#: code:addons/sale/wizard/sale_add_note.py:28
+#, python-format
+msgid "Can not add note!"
+msgstr "Non è possibile aggiungere note!"
+
+#. module: sale
+#: model:ir.model,name:sale.model_sale_add_note
+msgid "Add Internal Note"
+msgstr "Aggiungi nota interna"
+
+#. module: sale
+#: view:sale.add.note:0
+msgid "_Cancel"
+msgstr "_Annulla"
+
+#. module: sale
+#: view:sale.add.note:0
+msgid "_Add"
+msgstr "_Aggiungi"

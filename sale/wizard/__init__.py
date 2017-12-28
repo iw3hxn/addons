@@ -18,7 +18,7 @@
 #    along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 ##############################################################################
-
+import sale_add_note
 import sale_make_invoice
 import sale_line_invoice
 import sale_make_invoice_advance
