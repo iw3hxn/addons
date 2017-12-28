@@ -866,7 +866,7 @@ class mrp_production(osv.osv):
                     } )
         return amount
 
-    def action_in_production(self, cr, uid, ids):
+    def action_in_production(self, cr, uid, ids, context=None):
         """ Changes state to In Production and writes starting date.
         @return: True
         """
