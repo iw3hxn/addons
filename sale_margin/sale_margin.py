@@ -94,11 +94,11 @@ class sale_order(osv.osv):
 
     _columns = {
         'margin': fields.function(_product_margin, string='Margin', type='float', multi='sums', digits_compute=dp.get_precision('Account'), help="It gives profitability by calculating the difference between the Unit Price and Cost Price.", store={
-                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 190),
+                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty', 'purchase_price'], 190),
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 200),
         }),
         'margin_rel': fields.function(_product_margin, string='Margin %', type='float', multi='sums', digits_compute=dp.get_precision('Account'), store={
-                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty'], 190),
+                'sale.order.line': (_get_order, ['product_id', 'price_unit', 'tax_id', 'discount', 'product_uom_qty', 'purchase_price'], 190),
                 'sale.order': (lambda self, cr, uid, ids, c={}: ids, ['order_line', 'state'], 200),
         }),
     }

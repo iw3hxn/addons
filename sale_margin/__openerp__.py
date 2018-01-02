@@ -20,7 +20,7 @@
 
 {
     "name": "Margins in Sales Orders",
-    "version":"1.0.e",
+    "version":"1.0.f",
     "category" : "Sales Management",
     "description": """
 This module adds the 'Margin' on sales order.
