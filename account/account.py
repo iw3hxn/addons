@@ -21,16 +21,17 @@
 
 import time
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 from operator import itemgetter
 
+import decimal_precision as dp
 import netsvc
 import pooler
 import tools
-from osv import fields, osv
-import decimal_precision as dp
-from tools.translate import _
+from dateutil.relativedelta import relativedelta
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools.float_utils import float_round
+from osv import fields, osv
+from tools.translate import _
 
 
 def check_cycle(self, cr, uid, ids, context=None):
@@ -1246,7 +1247,35 @@ class account_period(osv.osv):
         if not result:
             result = self.search(cr, uid, args, context=context)
         if not result:
-            raise osv.except_osv(_('Error !'), _('No period defined for this date: %s !\nPlease create one.') % dt)
+            # try to open new fiscal years;
+            fiscal_years_obj = self.pool['account.fiscalyear']
+            years = datetime.strptime(dt, DEFAULT_SERVER_DATE_FORMAT).year
+            starting_day_of_last_year = datetime.now().date().replace(month=1, day=1, year=datetime.now().year-1).strftime(DEFAULT_SERVER_DATE_FORMAT)
+            ending_day_of_last_year = datetime.now().date().replace(month=12, day=31, year=datetime.now().year-1).strftime(DEFAULT_SERVER_DATE_FORMAT)
+            precedent_fiscal_years_ids = fiscal_years_obj.search(cr, uid, [('date_start', '>=', starting_day_of_last_year), ('date_stop', '<=', ending_day_of_last_year)], context=context)
+            if not precedent_fiscal_years_ids:
+                raise osv.except_osv(_('Error !'), _('No period defined for this date: %s !\nPlease create one.') % dt)
+            # here i have to create fiscal years and also period
+            # count period:
+            period_ids = self.search(cr, uid, [('fiscalyear_id', '=', precedent_fiscal_years_ids[0])], context=context)
+            period = len(period_ids)
+
+            starting_day_of_current_year = datetime.now().date().replace(month=1, day=1).strftime(DEFAULT_SERVER_DATE_FORMAT)
+            ending_day_of_current_year = datetime.now().date().replace(month=12, day=31).strftime(DEFAULT_SERVER_DATE_FORMAT)
+
+            fiscal_years_vals = {
+                'name': years,
+                'code': years,
+                'date_start': starting_day_of_current_year,
+                'date_stop': ending_day_of_current_year,
+            }
+            fiscal_years_id = fiscal_years_obj.create(cr, 1, fiscal_years_vals, context)
+            if period != 5:
+                fiscal_years_obj.create_period(cr, uid, [fiscal_years_id], context, interval=1)
+            else:
+                fiscal_years_obj.create_period(cr, uid, [fiscal_years_id], context, interval=3)
+
+            result = self.search(cr, uid, args, context=context)
         return result
 
     def action_draft(self, cr, uid, ids, *args):
