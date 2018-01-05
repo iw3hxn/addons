@@ -128,7 +128,7 @@ class account_invoice(osv.osv):
                     result[invoice.id] = new_value
 
             #prevent the residual amount on the invoice to be less than 0
-            result[invoice.id] = max(result[invoice.id], 0.0)
+            result[invoice.id] = result[invoice.id]
         return result
 
     # Give Journal Items related to the payment reconciled to this invoice
@@ -1785,11 +1785,14 @@ class account_invoice_tax(osv.osv):
         'base_amount': 0.0,
         'tax_amount': 0.0,
     }
+
     def compute(self, cr, uid, invoice_id, context=None):
         tax_grouped = {}
         tax_obj = self.pool.get('account.tax')
         cur_obj = self.pool.get('res.currency')
-        inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id, context=context)
+        if isinstance(invoice_id, (int, long)):
+            invoice_id = [invoice_id]
+        inv = self.pool.get('account.invoice').browse(cr, uid, invoice_id[0], context=context)
         cur = inv.currency_id
         company_currency = inv.company_id.currency_id.id
 
