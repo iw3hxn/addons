@@ -61,7 +61,9 @@
 <!--
         <field name="domain_force">['|',('user_id','=',user.id),('user_id','=',False)]</field>
 -->
-        <field name="domain_force">['|', '|', '|', ('user_id','=',False), ('user_id','=',user.id), ('shop_id.member_ids','in', [user.id]), ('shop_id.member_ids','=', False) ]</field>
+        <field name="domain_force">
+            ['|', ('user_id', '=', False), ('user_id', '=', user.id), '|', ('shop_id.member_ids', 'in', [user.id]), ('shop_id.member_ids', '=', False) ]
+        </field>
         <field name="groups" eval="[(4, ref('base.group_sale_salesman'))]"/>
     </record>
 
