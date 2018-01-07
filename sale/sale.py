@@ -549,7 +549,13 @@ class sale_order(osv.osv):
         for preinv in order.invoice_ids:
             if preinv.state not in ('cancel',) and preinv.id not in from_line_invoice_ids:
                 for preline in preinv.invoice_line:
-                    inv_line_id = obj_invoice_line.copy(cr, uid, preline.id, {'invoice_id': False, 'price_unit': -preline.price_unit})
+                    date_invoice = datetime.strptime(preinv.date_invoice, DEFAULT_SERVER_DATE_FORMAT)
+                    invoice_copy_vals = {
+                        'invoice_id': False,
+                        'price_unit': -preline.price_unit,
+                        'note': _(u'Invoice {inv} of {data}').format(inv=preinv.number, data=date_invoice.strftime("%d/%m/%Y"))
+                    }
+                    inv_line_id = obj_invoice_line.copy(cr, uid, preline.id, invoice_copy_vals, context)
                     lines.append(inv_line_id)
         inv = self._prepare_invoice(cr, uid, order, lines, context=context)
         inv_id = inv_obj.create(cr, uid, inv, context=context)
@@ -564,8 +570,8 @@ class sale_order(osv.osv):
         wf_service = netsvc.LocalService("workflow")
         inv_ids = set()
         inv_ids1 = set()
-        for id in ids:
-            for record in self.pool.get('sale.order').browse(cr, uid, id).invoice_ids:
+        for order in self.pool.get('sale.order').browse(cr, uid, ids, context):
+            for record in order.invoice_ids:
                 inv_ids.add(record.id)
         # inv_ids would have old invoices if any
         for id in ids:

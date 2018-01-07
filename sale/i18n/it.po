@@ -23,6 +23,12 @@ msgid "Advance of %s %%"
 msgstr "Anticipo su %s %%"
 
 #. module: sale
+#: code:addons/sale/sale.py:555
+#, python-format
+msgid "Invoice {inv} of {data}"
+msgstr "Fattura {inv} del {data}"
+
+#. module: sale
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:98
 #, python-format
 msgid "The value of Advance Amount must be positive."
