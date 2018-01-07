@@ -1001,13 +1001,13 @@ class sale_order(osv.osv):
                 #     # a service has no stock move
                 #     move_id = False
 
-            wf_service = netsvc.LocalService("workflow")
-            if picking_id:
-                wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
-            if not stop_procurement:
-                for proc_id in proc_ids:
-                    wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
-                    wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr) # also create production order
+        wf_service = netsvc.LocalService("workflow")
+        if picking_id:
+            wf_service.trg_validate(uid, 'stock.picking', picking_id, 'button_confirm', cr)
+        if not stop_procurement:
+            for proc_id in proc_ids:
+                wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_confirm', cr)
+                wf_service.trg_validate(uid, 'procurement.order', proc_id, 'button_check', cr) # also create production order
 
         val = {}
         if order.state == 'shipping_except':
