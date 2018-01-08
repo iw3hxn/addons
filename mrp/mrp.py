@@ -1015,7 +1015,7 @@ class mrp_production(osv.osv):
             'move_dest_id': parent_move_id,
             'state': 'waiting',
             'company_id': production.company_id.id,
-        })
+        }, context)
         production.write({'move_lines': [(4, move_id)]}, context=context)
         return move_id
 
@@ -1036,19 +1036,21 @@ class mrp_production(osv.osv):
             if production.bom_id.routing_id and production.bom_id.routing_id.location_id:
                 source_location_id = production.bom_id.routing_id.location_id.id
 
+            consume_move_ids = []
             for line in production.product_lines:
                 consume_move_id = self._make_production_consume_line(cr, uid, line, produce_move_id, source_location_id=source_location_id, context=context)
-                shipment_move_id = self._make_production_internal_shipment_line(cr, uid, line, shipment_id, consume_move_id,\
-                                 destination_location_id=source_location_id, context=context)
-                self._make_production_line_procurement(cr, uid, line, shipment_move_id, context=context)
-                    
+                consume_move_ids.append(consume_move_id)
+                # shipment_move_id = self._make_production_internal_shipment_line(cr, uid, line, shipment_id, consume_move_id, destination_location_id=source_location_id, context=context)
+                # self._make_production_line_procurement(cr, uid, line, shipment_move_id, context=context)
+
+            self.pool['stock.move'].write(cr, uid, consume_move_ids, {'picking_id': shipment_id}, context)
             wf_service.trg_validate(uid, 'stock.picking', shipment_id, 'button_confirm', cr)
-            production.write({'state':'confirmed'}, context=context)
-            message = _("Manufacturing order '%s' is scheduled for the %s.") % (
-                production.name,
-                datetime.strptime(production.date_planned,'%Y-%m-%d %H:%M:%S').strftime('%m/%d/%Y'),
-            )
-            self.log(cr, uid, production.id, message)
+            production.write({'state': 'confirmed'}, context=context)
+            # message = _("Manufacturing order '%s' is scheduled for the %s.") % (
+            #     production.name,
+            #     datetime.strptime(production.date_planned,'%Y-%m-%d %H:%M:%S').strftime('%m/%d/%Y'),
+            # )
+            # self.log(cr, uid, production.id, message)
         return shipment_id
 
     def force_production(self, cr, uid, ids, *args):
