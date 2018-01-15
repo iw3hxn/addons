@@ -633,7 +633,11 @@ class pos_order(osv.osv):
 
                 context.update({'tax_calculation_rounding_method': 'round_globally'})
                 # computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, (line.price_unit * (100.0-line.discount)) / 100.0, line.qty, context=context)['taxes']
-                computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl / line.qty, line.qty, context=context)['taxes']
+                if line.qty:
+                    computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl / line.qty, line.qty, context=context)['taxes']
+                else:
+                    computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl, line.qty, context=context)['taxes']
+
                 for tax in computed_taxes:
                     # tax_amount += cur_obj.round(cr, uid, cur, tax['amount'])
                     group_key = (tax['tax_code_id'], tax['base_code_id'], tax['account_collected_id'], tax['id'])
