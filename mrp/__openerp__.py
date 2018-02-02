@@ -21,14 +21,22 @@
 
 
 {
-    "name" : "MRP",
-    "version" : "1.1.b",
-    "author" : "OpenERP SA",
-    "website" : "http://www.openerp.com",
-    "category" : "Manufacturing",
+    "name": "MRP",
+    "version": "1.1.c",
+    "author": "OpenERP SA",
+    "website": "http://www.openerp.com",
+    "category": "Manufacturing",
     "sequence": 18,
-    "images" : ["images/bill_of_materials.jpeg", "images/manufacturing_order.jpeg", "images/planning_manufacturing_order.jpeg", "images/production_analysis.jpeg", "images/production_dashboard.jpeg","images/routings.jpeg","images/work_centers.jpeg"],
-    "depends" : ["procurement", "stock", "resource", "purchase", "product","process"],
+    "images": [
+        "images/bill_of_materials.jpeg",
+        "images/manufacturing_order.jpeg",
+        "images/planning_manufacturing_order.jpeg",
+        "images/production_analysis.jpeg",
+        "images/production_dashboard.jpeg",
+        "images/routings.jpeg",
+        "images/work_centers.jpeg"
+    ],
+    "depends": ["procurement", "stock", "resource", "purchase", "product","process"],
     "description": """
 This is the base module to manage the manufacturing process in OpenERP.
 =======================================================================
