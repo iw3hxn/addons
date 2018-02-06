@@ -135,6 +135,25 @@ class mrp_bom(osv.osv):
     _name = 'mrp.bom'
     _description = 'Bill of Material'
 
+
+    def _get_ext_routing(self, cr, uid, ids, name, arg, context=None):
+        result = {}
+        if context is None:
+            context = {}
+        for bom in self.browse(cr, uid, ids, context=context):
+            result[bom.id] = False
+            if bom.routing_id:
+                result[bom.id] = bom.routing_id.id
+            else:
+                boms_search = self.search(cr, uid, [('product_id', '=', bom.product_id.id), ('bom_id', '=', False)],
+                                          context=context)
+                if boms_search:
+                    bom_with_routing = self.browse(cr, uid, boms_search[0], context)
+                    result[bom.id] = bom_with_routing.routing_id.id
+
+        return result
+
+
     def _child_compute(self, cr, uid, ids, name, arg, context=None):
         """ Gets child bom.
         @param self: The object pointer
@@ -215,6 +234,7 @@ class mrp_bom(osv.osv):
         'bom_lines': fields.one2many('mrp.bom', 'bom_id', 'BoM Lines'),
         'bom_id': fields.many2one('mrp.bom', 'Parent BoM', ondelete='cascade', select=True),
         'routing_id': fields.many2one('mrp.routing', 'Routing', help="The list of operations (list of work centers) to produce the finished product. The routing is mainly used to compute work center costs during operations and to plan future loads on work centers based on production planning."),
+        'ext_routing_id': fields.function(_get_ext_routing, relation='mrp.routing', string="Routing", type='many2one'),
         'property_ids': fields.many2many('mrp.property', 'mrp_bom_property_rel', 'bom_id','property_id', 'Properties'),
         'revision_ids': fields.one2many('mrp.bom.revision', 'bom_id', 'BoM Revisions'),
         'child_complete_ids': fields.function(_child_compute, relation='mrp.bom', string="BoM Hierarchy", type='many2many'),

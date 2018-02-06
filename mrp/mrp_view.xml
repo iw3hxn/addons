@@ -455,7 +455,7 @@
                     <field name="product_uom"/>
                     <field name="type"/>
                     <field name="method" groups="base.group_extended"/>
-                    <field name="routing_id" groups="base.group_extended"/>
+                    <field name="ext_routing_id" groups="base.group_extended"/>
                     <field name="date_start" groups="base.group_extended"/>
                     <field name="date_stop" groups="base.group_extended"/>
                 </tree>
