@@ -2072,3 +2072,9 @@ msgstr "Storico"
 #: field:purchase.order,shop_id:0
 msgid "Shop"
 msgstr "Business Unit"
+
+#. module: purchase
+#: code:addons/purchase/purchase.py:250
+#, python-format
+msgid " has been change to "
+msgstr " è cambiato in "

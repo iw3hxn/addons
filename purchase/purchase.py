@@ -243,6 +243,19 @@ class purchase_order(osv.osv):
         ('name_uniq', 'unique(name, company_id)', 'Order Reference must be unique per Company!'),
     ]
 
+    def write(self, cr, uid, ids, vals, context=None):
+
+        for (id, name) in self.name_get(cr, uid, ids, context):
+            if vals.get('state', False):
+                text = u"{name}".format(name=name) + _(' has been change to ') + \
+                       dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[
+                           vals.get('state', False)]
+                self.log(cr, uid, id, text)
+                self.message_append(cr, uid, [id], text, body_text=text, context=context)
+
+        res = super(purchase_order, self).write(cr, uid, ids, vals, context=context)
+        return res
+
     def unlink(self, cr, uid, ids, context=None):
         purchase_orders = self.read(cr, uid, ids, ['state'], context=context)
         unlink_ids = []
@@ -676,7 +689,7 @@ class purchase_order(osv.osv):
                         order_infos['origin'] = (order_infos['origin'] or '') + ' ' + porder.origin
 
             for order_line in porder.order_line:
-                line_key = make_key(order_line, ('name', 'date_planned', 'taxes_id', 'price_unit', 'notes', 'product_id', 'move_dest_id', 'account_analytic_id'))
+                line_key = make_key(order_line, ('name', 'date_planned', 'taxes_id', 'price_unit', 'product_id', 'move_dest_id', 'account_analytic_id'))
                 o_line = order_infos['order_line'].setdefault(line_key, {})
                 if o_line:
                     # merge the line with an existing line
