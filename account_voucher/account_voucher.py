@@ -1053,13 +1053,14 @@ class account_voucher(osv.osv):
         else:
             account_id = line.voucher_id.company_id.income_currency_exchange_account_id
             if not account_id:
-                raise osv.except_osv(_('Warning'),_("Unable to create accounting entry for currency rate difference. You have to configure the field 'Expense Currency Rate' on the company! "))
+                msg = u"Error on voucher {ttype} for partner {name} of amount {amount} in date {date}".format(ttype=line.voucher_id.type, name=line.voucher_id.partner_id.name, amount=line.voucher_id.amount,  date=line.voucher_id.date)
+                raise osv.except_osv(_('Warning'), _(msg + "\r" + "Unable to create accounting entry for currency rate difference. You have to configure the field 'Expense Currency Rate' on the company! "))
         # Even if the amount_currency is never filled, we need to pass the foreign currency because
         # the receivable/payable account may have a secondary currency, which render this field mandatory
         if line.account_id.currency_id:
             account_currency_id = line.account_id.currency_id.id
         else:
-            account_currency_id = company_currency <> current_currency and current_currency or False
+            account_currency_id = company_currency != current_currency and current_currency or False
         move_line = {
             'journal_id': line.voucher_id.journal_id.id,
             'period_id': line.voucher_id.period_id.id,
@@ -1136,7 +1137,7 @@ class account_voucher(osv.osv):
         voucher = self.pool.get('account.voucher').browse(cr, uid, voucher_id, context=ctx)
         voucher_currency = voucher.journal_id.currency or voucher.company_id.currency_id
         ctx.update({
-            'voucher_special_currency_rate': voucher_currency.rate * voucher.payment_rate ,
+            'voucher_special_currency_rate': voucher_currency.rate * voucher.payment_rate,
             'voucher_special_currency': voucher.payment_rate_currency_id and voucher.payment_rate_currency_id.id or False,})
         prec = self.pool.get('decimal.precision').precision_get(cr, uid, 'Account')
         for line in voucher.line_ids:
@@ -1163,7 +1164,7 @@ class account_voucher(osv.osv):
                 'account_id': line.account_id.id,
                 'move_id': move_id,
                 'partner_id': voucher.partner_id.id,
-                'currency_id': line.move_line_id and (company_currency <> line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
+                'currency_id': line.move_line_id and (company_currency != line.move_line_id.currency_id.id and line.move_line_id.currency_id.id) or False,
                 'analytic_account_id': line.account_analytic_id and line.account_analytic_id.id or False,
                 'quantity': 1,
                 'credit': 0.0,
@@ -1177,7 +1178,7 @@ class account_voucher(osv.osv):
                 else:
                     line.type = 'dr'
 
-            if (line.type=='dr'):
+            if line.type == 'dr':
                 tot_line += amount
                 move_line['debit'] = amount
             else:
