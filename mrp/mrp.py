@@ -388,7 +388,7 @@ class mrp_bom(osv.osv):
                     mult = (d + (m and 1.0 or 0.0))
                     cycle = mult * wc_use.cycle_nbr
                     result2.append({
-                        'name': tools.ustr(wc_use.name) + ' - '  + tools.ustr(bom.product_id.name),
+                        'name': tools.ustr(wc_use.name),
                         'workcenter_id': wc.id,
                         'sequence': level+(wc_use.sequence or 0),
                         'cycle': cycle,
