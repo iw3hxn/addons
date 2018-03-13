@@ -55,7 +55,9 @@ def get_recurrent_dates(rrulestring, exdate, startdate=None, exrule=None):
         
     if not exdate:
         exdate = []
-        
+    elif not isinstance(exdate, (list, tuple)):
+        exdate = [exdate]
+
     rset1 = rrule.rrulestr(str(rrulestring), dtstart=startdate, forceset=True)
     for date in exdate:
         datetime_obj = todate(date)
