@@ -3,7 +3,7 @@
 
 {
     "name": "Mrp Produce Extended",
-    "version": "4.0.0.1",
+    "version": "4.0.0.0",
     "author": "Antonio Mignolli - Didotech SRL",
     "category": "Manufacturing",
     "description": """
@@ -17,8 +17,6 @@ and choose if manufacture or buy products from suppliers.
     'website': 'www.didotech.com',
     "depends": [
         "mrp"
-    ],
-    'data': [
     ],
     'installable': True,
     'auto_install': False,

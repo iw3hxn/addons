@@ -1,16 +1,16 @@
 # -*- coding: utf-8 -*-
 # © 2017 Antonio Mignolli - Didotech srl (www.didotech.com)
 
-from datetime import datetime
-from osv import osv, fields, orm
-import decimal_precision as dp
-from tools import float_compare
-from tools import DEFAULT_SERVER_DATETIME_FORMAT
-from tools.translate import _
-import netsvc
-import time
-import tools
+import logging
 from operator import attrgetter
+
+import netsvc
+import tools
+from osv import osv
+from tools import float_compare
+from tools.translate import _
+
+_logger = logging.getLogger(__name__)
 
 
 #----------------------------------------------------------
@@ -33,6 +33,49 @@ class mrp_production(osv.osv):
     """
     _inherit = 'mrp.production'
     _description = 'Manufacturing Order Extension'
+
+    def add_prod_qty(self, cr, uid, production_id, product_qty, produced_qty, context=None):
+        # From change_prod_qty
+        prod_obj = self.pool.get('mrp.production')
+        bom_obj = self.pool.get('mrp.bom')
+        move_lines_obj = self.pool.get('stock.move')
+
+        requested_qty = product_qty + produced_qty
+
+        # Adapted from change_production.py
+        prod = prod_obj.browse(cr, uid, production_id, context=context)
+        prod_obj.write(cr, uid, prod.id, {'product_qty': requested_qty})
+        prod_obj.action_compute(cr, uid, [prod.id])
+        move_lines = prod.move_lines
+        move_lines.extend(prod.picking_id.move_lines)
+
+        move_lines_obj = self.pool.get('stock.move')
+        for move in move_lines:
+            bom_point = prod.bom_id
+            bom_id = prod.bom_id.id
+            if not bom_point:
+                bom_id = bom_obj._bom_find(cr, uid, prod.product_id.id, prod.product_uom.id)
+                if not bom_id:
+                    raise osv.except_osv(_('Error'), _("Couldn't find bill of material for product"))
+                prod_obj.write(cr, uid, [prod.id], {'bom_id': bom_id})
+                bom_point = bom_obj.browse(cr, uid, [bom_id])[0]
+
+            if not bom_id:
+                raise osv.except_osv(_('Error'), _("Couldn't find bill of material for product"))
+
+            factor = prod.product_qty * prod.product_uom.factor / bom_point.product_uom.factor
+            res = bom_obj._bom_explode(cr, uid, bom_point, factor / bom_point.product_qty, [])
+            for r in res[0]:
+                if r['product_id'] == move.product_id.id:
+                    move_lines_obj.write(cr, uid, [move.id], {'product_qty':  r['product_qty']})
+
+        # It was self._update_product_to_produce(cr, uid, prod, wiz_qty.product_qty, context=context)
+        for m in prod.move_created_ids:
+            m.write({'product_qty': product_qty})
+            # move_lines_obj.write(cr, uid, [m.id], {'product_qty': requested_qty})
+
+        production = self.browse(cr, uid, production_id, context=context)
+        return production
 
     def action_produce(self, cr, uid, production_id, production_qty, production_mode, context=None):
         """ To produce final product based on production mode (consume/consume&produce).
@@ -77,14 +120,17 @@ class mrp_production(osv.osv):
                     # there will be nothing to consume for this raw material
                     continue
 
-                raw_product = [move for move in production.move_lines if move.product_id.id==scheduled.product_id.id]
+                raw_product = [move for move in production.move_lines if move.product_id.id == scheduled.product_id.id]
                 if raw_product:
                     # qtys we have to consume
                     qty = total_consume - consumed_data.get(scheduled.product_id.id, 0.0)
-                    # if float_compare(qty, qty_avail, precision_rounding=scheduled.product_id.uom_id.rounding) == 1:
-                    #     # if qtys we have to consume is more than qtys available to consume
-                    #     prod_name = scheduled.product_id.name_get()[0][1]
-                    #     raise osv.except_osv(_('Warning!'), _('You are going to consume total %s quantities of "%s".\nBut you can only consume up to total %s quantities.') % (qty, prod_name, qty_avail))
+                    if float_compare(qty, qty_avail, precision_rounding=scheduled.product_id.uom_id.rounding) == 1:
+                        # if qtys we have to consume is more than qtys available to consume
+                        # => must consume the difference, move from warehouse
+                        _logger.info(
+                            'action_produce: Manufacturing Order {prod.name}, Consuming {requested}, more than initial {prod.product_qty}'
+                            .format(prod=production, requested=production_qty))
+
                     if qty <= 0.0:
                         # we already have more qtys consumed than we need
                         continue
@@ -119,6 +165,10 @@ class mrp_production(osv.osv):
             #stock_mov_obj.write(cr, uid, final_product_todo, vals)
             #stock_mov_obj.action_confirm(cr, uid, final_product_todo, context)
             produced_products = {}
+            produced_products_qty = 0
+            if production.move_created_ids2:
+                produced_products_qty = production.move_created_ids2[0].product_qty
+
             for produced_product in production.move_created_ids2:
                 if produced_product.scrapped:
                     continue
@@ -131,11 +181,15 @@ class mrp_production(osv.osv):
                 subproduct_factor = self._get_subproduct_factor(cr, uid, production.id, produce_product.id, context=context)
                 rest_qty = (subproduct_factor * production.product_qty) - produced_qty
 
-                # if rest_qty < production_qty:
-                #     prod_name = produce_product.product_id.name_get()[0][1]
-                #     raise osv.except_osv(_('Warning!'), _('You are going to produce total %s quantities of "%s".\nBut you can only produce up to total %s quantities.') % (production_qty, prod_name, rest_qty))
-                # if rest_qty > 0 :
-                stock_mov_obj.action_consume(cr, uid, [produce_product.id], (subproduct_factor * production_qty), context=context)
+                if rest_qty < production_qty:
+                    _logger.info(
+                        'action_produce: Manufacturing Order {prod.name}, Producing {requested}, more than initial {prod.product_qty}'
+                        .format(prod=production, requested=production_qty))
+                    # Add and Reload
+                    production = self.add_prod_qty(cr, uid, production.id, production_qty, produced_products_qty, context)
+
+                if rest_qty > 0:
+                    stock_mov_obj.action_consume(cr, uid, [produce_product.id], (subproduct_factor * production_qty), context=context)
 
         for raw_product in production.move_lines2:
             new_parent_ids = []
@@ -144,7 +198,7 @@ class mrp_production(osv.osv):
                 if final_product.id not in parent_move_ids:
                     new_parent_ids.append(final_product.id)
             for new_parent_id in new_parent_ids:
-                stock_mov_obj.write(cr, uid, [raw_product.id], {'move_history_ids': [(4,new_parent_id)]})
+                stock_mov_obj.write(cr, uid, [raw_product.id], {'move_history_ids': [(4, new_parent_id)]})
 
         wf_service = netsvc.LocalService("workflow")
         wf_service.trg_validate(uid, 'mrp.production', production_id, 'button_produce_done', cr)
