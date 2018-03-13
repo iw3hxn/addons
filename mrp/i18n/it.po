@@ -173,7 +173,7 @@ msgstr ""
 #. module: mrp
 #: view:mrp.production:0
 msgid "Products to Finish"
-msgstr "Prodotti Finiti"
+msgstr "Prodotti da Finire"
 
 #. module: mrp
 #: selection:mrp.bom,method:0
