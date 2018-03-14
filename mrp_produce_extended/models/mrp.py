@@ -13,20 +13,6 @@ from tools.translate import _
 _logger = logging.getLogger(__name__)
 
 
-#----------------------------------------------------------
-# Work Centers
-#----------------------------------------------------------
-# capacity_hour : capacity per hour. default: 1.0.
-#          Eg: If 5 concurrent operations at one time: capacity = 5 (because 5 employees)
-# unit_per_cycle : how many units are produced for one cycle
-
-
-def rounding(f, r):
-    import math
-    if not r:
-        return f
-    return math.ceil(f / r) * r
-
 class mrp_production(osv.osv):
     """
     Production Orders / Manufacturing Orders
@@ -35,10 +21,9 @@ class mrp_production(osv.osv):
     _description = 'Manufacturing Order Extension'
 
     def add_prod_qty(self, cr, uid, production_id, product_qty, produced_qty, context=None):
-        # From change_prod_qty
+        # Taken from change_prod_qty
         prod_obj = self.pool.get('mrp.production')
         bom_obj = self.pool.get('mrp.bom')
-        move_lines_obj = self.pool.get('stock.move')
 
         requested_qty = product_qty + produced_qty
 
@@ -72,12 +57,12 @@ class mrp_production(osv.osv):
         # It was self._update_product_to_produce(cr, uid, prod, wiz_qty.product_qty, context=context)
         for m in prod.move_created_ids:
             m.write({'product_qty': product_qty})
-            # move_lines_obj.write(cr, uid, [m.id], {'product_qty': requested_qty})
 
         production = self.browse(cr, uid, production_id, context=context)
         return production
 
     def action_produce(self, cr, uid, production_id, production_qty, production_mode, context=None):
+        # Taken from original mrp addon
         """ To produce final product based on production mode (consume/consume&produce).
         If Production mode is consume, all stock move lines of raw materials will be done/consumed.
         If Production mode is consume & produce, all stock move lines of raw materials will be done/consumed
@@ -149,7 +134,7 @@ class mrp_production(osv.osv):
                             consumed = qty
                             break
 
-                    index = 0                        
+                    index = 0
                     # consume the smallest quantity while we have not consumed enough
                     while tools.float_compare(consumed, qty, precision_rounding=rounding) == -1 and index < len(raw_product):
                         consume_line = raw_product[index]
