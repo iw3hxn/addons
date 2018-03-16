@@ -108,7 +108,9 @@ class base_action_rule(osv.osv):
         if hasattr(obj, 'state') and hasattr(obj, 'message_append') and action.act_state:
             model_obj.message_append(cr, uid, [obj], _(action.act_state))
 
+        save_context = context.copy()
         model_obj.write(cr, uid, [obj.id], write, context)
+        context.update(save_context)
         super(base_action_rule, self).do_action(cr, uid, action, model_obj, obj, context=context)
         emails = []
 
@@ -118,6 +120,7 @@ class base_action_rule(osv.osv):
         if len(emails) and action.act_mail_body:
             emails = list(set(emails))
             self.email_send(cr, uid, obj, emails, action.act_mail_body)
+        context.update(save_context)
         return True
 
 

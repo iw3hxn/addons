@@ -22,7 +22,7 @@
 
 {
     'name': 'CRM',
-    'version': '1.0.1',
+    'version': '1.0.2',
     'category': 'Customer Relationship Management',
     "sequence": 2,
     'complexity': "easy",
