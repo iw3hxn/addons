@@ -373,6 +373,9 @@ class mrp_bom(osv.osv):
             if addthis and not bom.bom_lines:
                 result.append(
                 {
+                    'id': bom.id,
+                    'default_code': bom.product_id.default_code,
+                    'position': bom.position,
                     'name': bom.product_id.name,
                     'product_id': bom.product_id.id,
                     'product_qty': bom.product_qty * factor,
@@ -407,7 +410,6 @@ class mrp_bom(osv.osv):
         default.update({'name': bom_data['name'] + ' ' + _('Copy'), 'bom_id':False})
         return super(mrp_bom, self).copy_data(cr, uid, id, default, context=context)
 
-mrp_bom()
 
 class mrp_bom_revision(osv.osv):
     _name = 'mrp.bom.revision'
