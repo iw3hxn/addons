@@ -137,9 +137,9 @@ class sale_order(osv.osv):
     def _invoiced_rate(self, cursor, user, ids, name, arg, context=None):
         res = {}
         for sale in self.browse(cursor, user, ids, context=context):
-            if sale.invoiced:
-                res[sale.id] = 100.0
-                continue
+            # if sale.invoiced:
+            #     res[sale.id] = 100.0
+            #     continue
             tot = 0.0
             for invoice in sale.invoice_ids:
                 if invoice.state not in ('draft', 'cancel'):

@@ -950,7 +950,7 @@ msgstr "Creare la fattura finale"
 #. module: sale
 #: field:sale.order,partner_shipping_id:0
 msgid "Shipping Address"
-msgstr "Indirizzo Spedizione"
+msgstr "Destinazione Merce"
 
 #. module: sale
 #: help:sale.order,shipped:0
