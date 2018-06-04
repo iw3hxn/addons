@@ -135,7 +135,7 @@ class stock_picking(osv.osv):
             invoice = invoice_obj.browse(cr, uid, result[picking.id], context=context)
             invoice_line = self._prepare_shipping_invoice_line(cr, uid, picking, invoice, context=context)
             if invoice_line:
-                invoice_line_obj.create(cr, uid, invoice_line)
+                invoice_line_obj.create(cr, uid, invoice_line, context=context)
                 invoice_obj.button_compute(cr, uid, [invoice.id], context=context)
         return result
 
