@@ -41,9 +41,6 @@ def get_journal(self, cr, uid, context=None):
     j_ids = journal_obj.search(cr, uid, [('journal_user','=',1), ('user_id', '=', uid)], context=context)
     obj_ids = statement_obj.search(cr, uid, [('state', '=', 'open'), ('user_id', '=', uid), ('journal_id', 'in', j_ids)], context=context)
     if len(j_ids) != len(obj_ids):
-        #here i have to create statement_obj (open)
-        print len(j_ids)
-        print len(obj_ids)
         pos_open_statement_id = pos_open_statement_obj.create(cr, uid, {}, context=context)
         res = pos_open_statement_obj.open_statement(cr, uid, pos_open_statement_id, context=None)
     
