@@ -32,6 +32,9 @@ from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from openerp.tools.float_utils import float_round
 from osv import fields, osv
 from tools.translate import _
+import logging
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
 
 
 def check_cycle(self, cr, uid, ids, context=None):
@@ -405,7 +408,10 @@ class account_account(osv.osv):
                     sums.setdefault(current.id, {})[fn] = accounts.get(current.id, {}).get(fn, 0.0)
                     for child in current.child_id:
                         if child.company_id.currency_id.id == current.company_id.currency_id.id:
-                            sums[current.id][fn] += sums[child.id][fn]
+                            if child.id in sums:
+                                sums[current.id][fn] += sums[child.id][fn]
+                            else:
+                                _logger.error(u'Error on __compute {child}'.format(child=child.id))
                         else:
                             sums[current.id][fn] += currency_obj.compute(cr, uid, child.company_id.currency_id.id,
                                                                          current.company_id.currency_id.id,
@@ -740,22 +746,19 @@ class account_account(osv.osv):
         return True
 
     def _check_allow_type_change(self, cr, uid, ids, new_type, context=None):
-        group1 = ['payable', 'receivable', 'other']
-        group2 = ['consolidation', 'view']
-        line_obj = self.pool.get('account.move.line')
+        restricted_groups = ['consolidation', 'view']
+        line_obj = self.pool['account.move.line']
         for account in self.browse(cr, uid, ids, context=context):
             old_type = account.type
-            account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])])
-            if line_obj.search(cr, uid, [('account_id', 'in', account_ids)]):
+            account_ids = self.search(cr, uid, [('id', 'child_of', [account.id])], context=context)
+            if line_obj.search(cr, uid, [('account_id', 'in', account_ids)], context=context):
                 # Check for 'Closed' type
                 if old_type == 'closed' and new_type != 'closed':
-                    raise osv.except_osv(_('Warning !'), _(
-                        "You cannot change the type of account from 'Closed' to any other type which contains journal items!"))
-                # Check for change From group1 to group2 and vice versa
-                if (old_type in group1 and new_type in group2) or (old_type in group2 and new_type in group1):
-                    raise osv.except_osv(_('Warning !'), _(
-                        "You cannot change the type of account from '%s' to '%s' type as it contains journal items!") % (
-                                         old_type, new_type,))
+                    raise osv.except_osv(_('Warning!'), _("You cannot change the type of account from 'Closed' to any other type as it contains journal items!"))
+                # Forbid to change an account type for restricted_groups as it contains journal items (or if one of its children does)
+                if new_type in restricted_groups and line_obj.search(cr, uid, [('account_id', '=', account.id)], context=context):
+                    raise osv.except_osv(_('Warning!'), _("You cannot change the type of account to '%s' type as it contains journal items!") % (new_type,))
+
         return True
 
     # For legal reason (forbiden to modify journal entries which belongs to a closed fy or period), Forbid to modify
