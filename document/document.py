@@ -32,6 +32,7 @@ import logging
 
 DMS_ROOT_PATH = tools.config.get('document_path', os.path.join(tools.config['root_path'], 'filestore'))
 
+
 class document_file(osv.osv):
     _inherit = 'ir.attachment'
     _rec_name = 'datas_fname'
@@ -146,6 +147,7 @@ class document_file(osv.osv):
     _sql_constraints = [
         # filename_uniq is not possible in pure SQL
     ]
+
     def _check_duplication(self, cr, uid, vals, ids=[], op='create'):
         """
         Returns True if not same filename is attached already to an object (res_model, res_id) 
@@ -154,8 +156,13 @@ class document_file(osv.osv):
         parent_id = vals.get('parent_id', False)
         res_model = vals.get('res_model', False)
         res_id = vals.get('res_id', 0)
+        datas = vals.get('datas', '')
+        if datas:
+            file_size = len(base64.decodestring(datas))
+        else:
+            file_size = 0
         if op == 'write':
-            for file in self.browse(cr, uid, ids): # FIXME fields_only
+            for file in self.browse(cr, uid, ids):  # FIXME fields_only
                 if not name:
                     name = file.name
                 if not parent_id:
@@ -164,11 +171,24 @@ class document_file(osv.osv):
                     res_model = file.res_model and file.res_model or False
                 if not res_id:
                     res_id = file.res_id and file.res_id or 0
-                res = self.search(cr, uid, [('id', '<>', file.id), ('name', '=', name), ('parent_id', '=', parent_id), ('res_model', '=', res_model), ('res_id', '=', res_id)])
+                res = self.search(cr, uid, [
+                    ('id', '<>', file.id),
+                    ('name', '=', name),
+                    ('parent_id', '=', parent_id),
+                    ('res_model', '=', res_model),
+                    ('res_id', '=', res_id),
+                    ('file_size', '=', file_size)
+                ])
                 if len(res):
                     return False
         if op == 'create':
-            res = self.search(cr, uid, [('name', '=', name), ('parent_id', '=', parent_id), ('res_id', '=', res_id), ('res_model', '=', res_model)])
+            res = self.search(cr, uid, [
+                ('name', '=', name),
+                ('parent_id', '=', parent_id),
+                ('res_id', '=', res_id),
+                ('res_model', '=', res_model),
+                ('file_size', '=', file_size)
+            ])
             if len(res):
                 return False
         return True
@@ -260,7 +280,7 @@ class document_file(osv.osv):
                 elif res == False:
                     pass
             ids = ids2
-        if 'file_size' in vals: # only write that field using direct SQL calls
+        if 'file_size' in vals:  # only write that field using direct SQL calls
             del vals['file_size']
         if ids and vals:
             result = super(document_file,self).write(cr, uid, ids, vals, context=context)
@@ -302,7 +322,7 @@ class document_file(osv.osv):
             ]
             attach_ids = self.search(cr, uid, domain, context=context)
             super(document_file, self).write(cr, uid, attach_ids, 
-                                             {'datas' : vals['datas']},
+                                             {'datas': vals['datas']},
                                              context=context)
             result = attach_ids[0]
         else:
@@ -333,7 +353,7 @@ class document_file(osv.osv):
         # files to be unlinked, update the db (safer to do first, can be
         # rolled back) and then unlink the files. The list wouldn't exist
         # after we discard the objects
-        ids = self.search(cr, uid, [('id','in',ids)])
+        ids = self.search(cr, uid, [('id', 'in', ids)])
         for f in self.browse(cr, uid, ids, context=context):
             # TODO: update the node cache
             par = f.parent_id
@@ -344,9 +364,13 @@ class document_file(osv.osv):
                     break
                 par = par.parent_id
             #We get the ids of attachement that correspond to the document
-            attachment_ids = self.search(cr, uid, [('store_fname', '=', f.store_fname), ('parent_id.name', '=', f.parent_id.name)], context=context)
+            attachment_ids = self.search(cr, uid, [
+                ('store_fname', '=', f.store_fname), ('parent_id.name', '=', f.parent_id.name)
+            ], context=context)
+
             #If we have more than 1 attachment for a same file, we will not unlink it.
             canUnlink = len(attachment_ids)
+
             #If canUnlink is bigger than 1 it means that the document has more than 1 attachement.
             #We therefore cannot unlink that document.
             if canUnlink == 1:
@@ -357,12 +381,12 @@ class document_file(osv.osv):
                         unres.append(r)
                 else:
                     logging.getLogger('document').warning("Unlinking attachment #%s %s that has no storage",
-                                                    f.id, f.name)
+                                                          f.id, f.name)
         res = super(document_file, self).unlink(cr, uid, ids, context)
         stor.do_unlink(cr, uid, unres)
         return res
 
-document_file()
+# document_file()
 
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
