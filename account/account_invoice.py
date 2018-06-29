@@ -292,7 +292,7 @@ class account_invoice(osv.osv):
         'check_total': fields.float('Verification Total', digits_compute=dp.get_precision('Account'), states={'open':[('readonly',True)],'close':[('readonly',True)]}),
         'reconciled': fields.function(_reconciled, string='Paid/Reconciled', type='boolean',
             store={
-                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 50), # Check if we can remove ?
+                # 'account.invoice': (lambda self, cr, uid, ids, c={}: ids, None, 50), # Check if we can remove ?
                 'account.move.line': (_get_invoice_from_line, None, 50),
                 'account.move.reconcile': (_get_invoice_from_reconcile, None, 50),
             }, help="It indicates that the invoice has been paid and the journal entry of the invoice has been reconciled with one or several journal entries of payment."),
@@ -748,8 +748,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
 
     def button_compute(self, cr, uid, ids, context=None, set_total=False):
         self.button_reset_taxes(cr, uid, ids, context)
-        for inv in self.browse(cr, uid, ids, context=context):
-            if set_total:
+        if set_total:
+            for inv in self.browse(cr, uid, ids, context=context):
                 self.pool.get('account.invoice').write(cr, uid, [inv.id], {'check_total': inv.amount_total})
         return True
 
