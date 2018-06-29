@@ -741,9 +741,9 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             if partner.lang:
                 ctx.update({'lang': partner.lang})
             for taxe in ait_obj.compute(cr, uid, id, context=ctx).values():
-                ait_obj.create(cr, uid, taxe)
+                ait_obj.create(cr, uid, taxe, context)
         # Update the stored value (fields.function), so we write to trigger recompute
-        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line':[]}, context=ctx)
+        self.pool.get('account.invoice').write(cr, uid, ids, {'invoice_line': []}, context=ctx)
         return True
 
     def button_compute(self, cr, uid, ids, context=None, set_total=False):
