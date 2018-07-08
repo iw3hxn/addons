@@ -468,13 +468,18 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
-        invoices = self.read(cr, uid, ids, ['state','internal_number'], context=context)
-        unlink_ids = []
-        for t in invoices:
-            if t['state'] in ('draft', 'cancel') and t['internal_number']== False:
-                unlink_ids.append(t['id'])
-            else:
-                raise osv.except_osv(_('Invalid action !'), _('You can not delete an invoice which is open or paid. We suggest you to refund it instead.'))
+        # invoices = self.read(cr, uid, ids, ['state','internal_number'], context=context)
+        # unlink_ids = []
+        unlink_ids = self.search(cr, uid, [('id', 'in', ids), ('state', 'in', ['draft', 'cancel']), ('internal_number', '=', False)], context=context)
+        # for t in invoices:
+        #     if t['state'] in ('draft', 'cancel') and t['internal_number']== False:
+        #         unlink_ids.append(t['id'])
+        #     else:
+        #         raise osv.except_osv(_('Invalid action !'), _(
+        #             'You can not delete an invoice which is open or paid. We suggest you to refund it instead.'))
+        if len(unlink_ids) != len(ids):
+            raise osv.except_osv(_('Invalid action !'), _(
+                'You can not delete an invoice which is open or paid. We suggest you to refund it instead.'))
         osv.osv.unlink(self, cr, uid, unlink_ids, context=context)
         return True
 
