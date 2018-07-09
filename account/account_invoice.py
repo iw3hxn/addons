@@ -154,10 +154,11 @@ class account_invoice(osv.osv):
         return res
 
     def _get_invoice_line(self, cr, uid, ids, context=None):
-        result = {}
-        for line in self.pool.get('account.invoice.line').browse(cr, uid, ids, context=context):
-            result[line.invoice_id.id] = True
-        return result.keys()
+        # result = {}
+        # for line in self.pool.get('account.invoice.line').browse(cr, uid, ids, context=context):
+        #     result[line.invoice_id.id] = True
+        # return result.keys()
+        return self.pool['account.invoice'].search(cr, uid, [('invoice_line', 'in', ids)], context=context)
 
     def _get_invoice_tax(self, cr, uid, ids, context=None):
         result = {}
@@ -422,20 +423,20 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         return context
 
     def write(self, cr, uid, ids, vals, context=None):
-
         res = super(account_invoice, self).write(cr, uid, ids, vals, context=context)
-        for (ids, name) in self.name_get(cr, uid, ids):
-            if context is None:
-                context = self.pool['res.users'].context_get(cr, uid)
-            if vals.get('state', False):
-                text = name + _(' has been change to ') + dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)]
-                self.log(cr, uid, ids, text)
-                self.message_append(cr, uid, [ids], text, body_text=text, context=context)
-            if vals.get('internal_number', False):
-                text = name + _(' has internal_number change to ') + vals.get('internal_number', False)
-                self.log(cr, uid, ids, text)
-                self.message_append(cr, uid, [ids], text, body_text=text, context=context)
-        return res
+        if vals.get('state', False) or vals.get('internal_number', False):
+            for (ids, name) in self.name_get(cr, uid, ids):
+                if context is None:
+                    context = self.pool['res.users'].context_get(cr, uid)
+                if vals.get('state', False):
+                    text = name + _(' has been change to ') + dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)]
+                    # self.log(cr, uid, ids, text)
+                    self.message_append(cr, uid, [ids], text, body_text=text, context=context)
+                if vals.get('internal_number', False):
+                    text = name + _(' has internal_number change to ') + vals.get('internal_number', False)
+                    # self.log(cr, uid, ids, text)
+                    self.message_append(cr, uid, [ids], text, body_text=text, context=context)
+            return res
 
     def create(self, cr, uid, vals, context=None):
         if context is None:

@@ -620,7 +620,7 @@ class stock_picking(osv.osv):
         for (id, name) in self.name_get(cr, uid, ids, context):
             if vals.get('state', False):
                 text = _(u'{name} has been change to {state}').format(name=name, state=dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])
-                self.log(cr, uid, id, text)
+                # self.log(cr, uid, id, text)
                 self.message_append(cr, uid, [id], text, body_text=text, context=context)
             if vals.get('invoice_state', False):
                 stock = self.browse(cr, uid, id, context)
@@ -628,7 +628,7 @@ class stock_picking(osv.osv):
                     invoice_to = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[vals.get('invoice_state', False)]
                     invoice_from = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[stock.invoice_state]
                     text = _(u'{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=invoice_from, invoice_to=invoice_to)
-                    self.log(cr, uid, id, text)
+                    # self.log(cr, uid, id, text)
                     self.message_append(cr, uid, [id], text, body_text=text, context=context)
 
         res = super(stock_picking, self).write(cr, uid, ids, vals, context=context)
@@ -1161,6 +1161,8 @@ class stock_picking(osv.osv):
                 invoice_id = invoice_obj.create(cr, uid, invoice_vals, context=context)
                 invoices_group[partner.id] = invoice_id
             res[picking.id] = invoice_id
+
+            invoice_line_vals = []
             for move_line in picking.move_lines:
                 if move_line.state == 'cancel':
                     continue
@@ -1170,12 +1172,19 @@ class stock_picking(osv.osv):
                 vals = self._prepare_invoice_line(cr, uid, group, picking, move_line,
                                 invoice_id, invoice_vals, context=context)
                 if vals:
-                    invoice_line_id = invoice_line_obj.create(cr, uid, vals, context=context)
-                    self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
-
-            # self.write(cr, uid, [picking.id], {
-            #     'invoice_state': 'invoiced',
-            # }, context=context)
+                    if vals.get('invoice_id'):
+                        del vals['invoice_id']
+                    invoice_line_vals.append(vals)
+                    #invoice_line_id = invoice_line_obj.create(cr, uid, vals, context=context)
+                    #self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
+            if invoice_line_vals:
+                total_invoice_vals = {
+                    'invoice_line': [(0, False, invoice_line_val) for invoice_line_val in invoice_line_vals]
+                }
+                invoice_obj.write(cr, uid, [invoice_id], total_invoice_vals, context=context)
+            for invoice_line_id in self.pool['account.invoice.line'].search(
+                    cr, uid, [('invoice_id', '=', invoice_id)], context=context):
+                self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
 
             self._invoice_hook(cr, uid, picking, invoice_id)
             # message = _("The Picking '%s' has been Invoiced") % (picking.name,)
