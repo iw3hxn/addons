@@ -144,7 +144,7 @@ class stock_invoice_onshipping(osv.osv_memory):
         if isinstance(onshipdata_obj[0]['journal_id'], tuple):
             onshipdata_obj[0]['journal_id'] = onshipdata_obj[0]['journal_id'][0]
         res = picking_pool.action_invoice_create(cr, uid, active_ids,
-              journal_id = onshipdata_obj[0]['journal_id'],
+              journal_id =int(onshipdata_obj[0]['journal_id']),
               group = onshipdata_obj[0]['group'],
               type = inv_type,
               context=context)
