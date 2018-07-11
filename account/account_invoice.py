@@ -436,7 +436,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                     text = name + _(' has internal_number change to ') + vals.get('internal_number', False)
                     # self.log(cr, uid, ids, text)
                     self.message_append(cr, uid, [ids], text, body_text=text, context=context)
-            return res
+        return res
 
     def create(self, cr, uid, vals, context=None):
         if context is None:
