@@ -616,20 +616,20 @@ class stock_picking(osv.osv):
         return new_id
 
     def write(self, cr, uid, ids, vals, context=None):
-
-        for (id, name) in self.name_get(cr, uid, ids, context):
-            if vals.get('state', False):
-                text = _(u'{name} has been change to {state}').format(name=name, state=dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])
-                # self.log(cr, uid, id, text)
-                self.message_append(cr, uid, [id], text, body_text=text, context=context)
-            if vals.get('invoice_state', False):
-                stock = self.browse(cr, uid, id, context)
-                if vals.get('invoice_state', False) and (stock.invoice_state != vals.get('invoice_state', False)):
-                    invoice_to = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[vals.get('invoice_state', False)]
-                    invoice_from = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[stock.invoice_state]
-                    text = _(u'{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=invoice_from, invoice_to=invoice_to)
+        if vals.get('state', False) or vals.get('invoice_state', False):
+            for (id, name) in self.name_get(cr, uid, ids, context):
+                if vals.get('state', False):
+                    text = _(u'{name} has been change to {state}').format(name=name, state=dict(self.fields_get(cr, uid, allfields=['state'], context=context)['state']['selection'])[vals.get('state', False)])
                     # self.log(cr, uid, id, text)
                     self.message_append(cr, uid, [id], text, body_text=text, context=context)
+                if vals.get('invoice_state', False):
+                    stock = self.browse(cr, uid, id, context)
+                    if vals.get('invoice_state', False) and (stock.invoice_state != vals.get('invoice_state', False)):
+                        invoice_to = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[vals.get('invoice_state', False)]
+                        invoice_from = dict(self.fields_get(cr, uid, allfields=['invoice_state'], context=context)['invoice_state']['selection'])[stock.invoice_state]
+                        text = _(u'{order} has been change invoice state {invoice_from} to {invoice_to}').format(order=name, invoice_from=invoice_from, invoice_to=invoice_to)
+                        # self.log(cr, uid, id, text)
+                        self.message_append(cr, uid, [id], text, body_text=text, context=context)
 
         res = super(stock_picking, self).write(cr, uid, ids, vals, context=context)
         return res
@@ -1124,6 +1124,9 @@ class stock_picking(osv.osv):
 
         return vals
 
+    def _get_group_keys(self, cr, uid, partner, picking, context=None):
+        return partner.id
+
     def action_invoice_create(self, cr, uid, ids, journal_id=False,
             group=False, type='out_invoice', context=None):
         """ Creates invoice based on the invoice state selected for picking.
@@ -1151,15 +1154,18 @@ class stock_picking(osv.osv):
             if not inv_type:
                 inv_type = self._get_invoice_type(picking)
 
-            if group and partner.id in invoices_group:
-                invoice_id = invoices_group[partner.id]
-                invoice = invoice_obj.browse(cr, uid, invoice_id)
+            group_key = self._get_group_keys(cr, uid, partner, picking, context)
+
+            if group and group_key in invoices_group:
+                invoice_id = invoices_group[group_key]['id']
+                invoice = invoice_obj.browse(cr, uid, invoice_id, context)
                 invoice_vals_group = self._prepare_invoice_group(cr, uid, picking, partner, invoice, context=context)
                 invoice_obj.write(cr, uid, [invoice_id], invoice_vals_group, context=context)
             else:
                 invoice_vals = self._prepare_invoice(cr, uid, picking, partner, inv_type, journal_id, context=context)
                 invoice_id = invoice_obj.create(cr, uid, invoice_vals, context=context)
-                invoices_group[partner.id] = invoice_id
+                invoices_group[group_key] = {'id': invoice_id}
+
             res[picking.id] = invoice_id
 
             invoice_line_vals = []
