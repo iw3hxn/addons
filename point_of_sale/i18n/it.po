@@ -1731,7 +1731,7 @@ msgstr "Operazione"
 #. module: point_of_sale
 #: field:pos.order,account_move:0
 msgid "Journal Entry"
-msgstr "Voce giornale"
+msgstr "Scrittura Contabile"
 
 #. module: point_of_sale
 #: selection:report.cash.register,state:0
