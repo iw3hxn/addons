@@ -889,7 +889,7 @@ msgstr "Prezzo"
 #. module: point_of_sale
 #: field:account.journal,journal_user:0
 msgid "PoS Payment Method"
-msgstr "Utilizzabile nel Punto Cassa"
+msgstr "Pagamento utilizzabile nel Punto Cassa"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_sale_user
