@@ -1196,7 +1196,7 @@ class stock_picking(osv.osv):
             # message = _("The Picking '%s' has been Invoiced") % (picking.name,)
             # self.log(cr, uid, picking.id, message)
 
-        invoice_obj.button_compute(cr, uid, [res[invoice_id] for invoice_id in res.keys()], context=context, set_total=(inv_type in ('in_invoice', 'in_refund')))
+        invoice_obj.button_compute(cr, uid, list(set([res[invoice_id] for invoice_id in res.keys()])), context=context, set_total=(inv_type in ('in_invoice', 'in_refund')))
 
         self.write(cr, uid, res.keys(), {
             'invoice_state': 'invoiced',
