@@ -52,7 +52,7 @@
         <field name="inherit_id" ref="sale.view_order_tree" />
         <field name="arch" type="xml">
             <field name="state" position="after">
-                <field name="margin" groups="sale.view_margin"/>
+                <field name="margin" groups="sale.view_margin" sum="margin"/>
                 <field name="margin_rel" groups="sale.view_margin_rel"/>
             </field>
         </field>
