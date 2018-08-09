@@ -424,6 +424,26 @@ class purchase_order(osv.osv):
 
         return result
 
+    def _get_vals_inv_data(self, cr, uid, order, pay_acc_id, journal_ids, inv_lines, context):
+
+        inv_data = {
+            'name': order.partner_ref or order.name,
+            'reference': order.partner_ref or order.name,
+            'account_id': pay_acc_id,
+            'type': 'in_invoice',
+            'partner_id': order.partner_id.id,
+            'currency_id': order.pricelist_id.currency_id.id,
+            'address_invoice_id': order.partner_address_id.id,
+            'address_contact_id': order.partner_address_id.id,
+            'journal_id': len(journal_ids) and journal_ids[0] or False,
+            'invoice_line': [(6, 0, inv_lines)],
+            'origin': order.name,
+            'fiscal_position': order.fiscal_position.id or order.partner_id.property_account_position.id,
+            'payment_term': order.partner_id.property_payment_term and order.partner_id.property_payment_term.id or False,
+            'company_id': order.company_id.id,
+        }
+        return inv_data
+
     def action_invoice_create(self, cr, uid, ids, context=None):
         """Generates invoice for given ids of purchase orders and links that invoice ID to purchase order.
         :param ids: list of ids of purchase orders.
@@ -455,22 +475,7 @@ class purchase_order(osv.osv):
                 po_line.write({'invoiced':True, 'invoice_lines': [(4, inv_line_id)]}, context=context)
 
             # get invoice data and create invoice
-            inv_data = {
-                'name': order.partner_ref or order.name,
-                'reference': order.partner_ref or order.name,
-                'account_id': pay_acc_id,
-                'type': 'in_invoice',
-                'partner_id': order.partner_id.id,
-                'currency_id': order.pricelist_id.currency_id.id,
-                'address_invoice_id': order.partner_address_id.id,
-                'address_contact_id': order.partner_address_id.id,
-                'journal_id': len(journal_ids) and journal_ids[0] or False,
-                'invoice_line': [(6, 0, inv_lines)], 
-                'origin': order.name,
-                'fiscal_position': order.fiscal_position.id or order.partner_id.property_account_position.id,
-                'payment_term': order.partner_id.property_payment_term and order.partner_id.property_payment_term.id or False,
-                'company_id': order.company_id.id,
-            }
+            inv_data = self._get_vals_inv_data(cr, uid, order, pay_acc_id, journal_ids, inv_lines, context)
             inv_id = inv_obj.create(cr, uid, inv_data, context=context)
 
             # compute the invoice
