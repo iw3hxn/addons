@@ -23,7 +23,14 @@ from osv import fields, osv
 
 from tools.translate import _
 
+
 class stock_invoice_onshipping(osv.osv_memory):
+
+    def fields_view_get(self, cr, user, view_id=None, view_type='form', context=None, toolbar=False, submenu=False):
+        if 'form_view_ref' in context:
+            del context['form_view_ref']
+        res = super(stock_invoice_onshipping, self).fields_view_get(cr, user, view_id, view_type, context, toolbar, submenu)
+        return res
 
     def _get_journal(self, cr, uid, context=None):
         res = self._get_journal_id(cr, uid, context=context)
