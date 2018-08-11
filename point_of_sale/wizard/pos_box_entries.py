@@ -38,7 +38,7 @@ def get_journal(self, cr, uid, context=None):
     statement_obj = self.pool.get('account.bank.statement')
     pos_open_statement_obj = self.pool['pos.open.statement']
 
-    j_ids = journal_obj.search(cr, uid, [('journal_user','=',1), ('user_id', '=', uid)], context=context)
+    j_ids = journal_obj.search(cr, uid, [('journal_user', '=', 1), ('user_id', '=', uid), ('type', 'in', ('bank', 'cash'))], context=context)
     obj_ids = statement_obj.search(cr, uid, [('state', '=', 'open'), ('user_id', '=', uid), ('journal_id', 'in', j_ids)], context=context)
     if len(j_ids) != len(obj_ids):
         pos_open_statement_id = pos_open_statement_obj.create(cr, uid, {}, context=context)

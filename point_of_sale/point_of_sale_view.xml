@@ -802,7 +802,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
             <field name="context" eval="{'default_journal_user': 1, 'default_view_id': ref('account.account_journal_bank_view'), 'default_type': 'cash'}"/>
-            <field name="domain">[('journal_user','=', 1), ('type', 'in', '['cash', 'bank']')]</field>
+            <field name="domain">[('journal_user','=', 1), ('type', 'in', ['cash', 'bank'])]</field>
             <field name="help">Payment methods are defined by accounting journals having the field Payment Method checked.</field>
         </record>
 
