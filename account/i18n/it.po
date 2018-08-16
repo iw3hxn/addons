@@ -108,7 +108,7 @@ msgstr "Saldo scaduto"
 #. module: account
 #: view:account.move:0
 msgid "Total Debit"
-msgstr "Debito Totale"
+msgstr "Totale DARE"
 
 #. module: account
 #: field:account.bank.statement,date_from:0
@@ -464,7 +464,7 @@ msgstr "Conto predefinito di debito"
 #. module: account
 #: view:account.move:0
 msgid "Total Credit"
-msgstr "Credito Totale"
+msgstr "Totale AVERE"
 
 #. module: account
 #: view:account.move.line.unreconcile.select:0
@@ -1778,13 +1778,13 @@ msgstr "Ricerca Estratti Conto Bancari"
 #. module: account
 #: view:account.move.line:0
 msgid "Unposted Journal Items"
-msgstr "Registrazioni contabili non confermate"
+msgstr "Movimenti non definitivi"
 
 #. module: account
 #: view:account.chart.template:0
 #: field:account.chart.template,property_account_payable:0
 msgid "Payable Account"
-msgstr "Conto di debito"
+msgstr "Conto fornitori"
 
 #. module: account
 #: field:account.tax,account_paid_id:0
@@ -1892,7 +1892,7 @@ msgstr "Fatturazione"
 #: code:addons/account/report/account_partner_balance.py:115
 #, python-format
 msgid "Unknown Partner"
-msgstr "Partner sconosciuto"
+msgstr "Controparte sconosciuta"
 
 #. module: account
 #: field:account.tax.code,sum:0
@@ -2652,7 +2652,7 @@ msgstr "30% Anticipo, Resto a 30 giorni"
 #. module: account
 #: view:account.entries.report:0
 msgid "Unreconciled entries"
-msgstr "Voci non riconciliate"
+msgstr "Registrazioni non riconciliate"
 
 #. module: account
 #: field:account.invoice.tax,base_code_id:0
@@ -2952,7 +2952,7 @@ msgstr ""
 #: model:ir.actions.report.xml,name:account.account_aged_partner_balance
 #: model:ir.ui.menu,name:account.menu_aged_trial_balance
 msgid "Aged Partner Balance"
-msgstr "Estratto Conto Partner Periodico"
+msgstr "Saldo cliente - fornitore valorizzato per anzianita"
 
 #. module: account
 #: model:process.transition,name:account.process_transition_entriesreconcile0
@@ -3620,8 +3620,7 @@ msgid ""
 "All selected journal entries will be validated and posted. It means you "
 "won't be able to modify their accounting fields anymore."
 msgstr ""
-"Tutte le voci selezionate nel sezionale verranno validate e confermate. "
-"Significa che non sarà più possibile modificarle."
+"Tutte le scritture selezionate saranno validate e rese definitive. Non si potranno modificare in futuro."
 
 #. module: account
 #: model:ir.actions.report.xml,name:account.account_transfers
@@ -4491,7 +4490,7 @@ msgstr "Utente Paypal (generalmnete un'email) per ricevere pagamenti online."
 #: code:addons/account/report/common_report_header.py:68
 #, python-format
 msgid "All Posted Entries"
-msgstr "Tutte le registrazioni Pubblicate"
+msgstr "Tutte le scritture definitive"
 
 #. module: account
 #: code:addons/account/account_bank_statement.py:367
@@ -5704,7 +5703,7 @@ msgstr "Quantita' dei prodotti"
 #: selection:account.move,state:0
 #: view:account.move.line:0
 msgid "Unposted"
-msgstr "Non Pubblicate"
+msgstr "Non definitivi"
 
 #. module: account
 #: view:account.change.currency:0
@@ -5964,7 +5963,7 @@ msgstr "Storno"
 #. module: account
 #: field:res.partner,debit:0
 msgid "Total Payable"
-msgstr "Debito Totale"
+msgstr "Totale a debito"
 
 #. module: account
 #: model:account.account.type,name:account.data_account_type_income
@@ -6026,7 +6025,7 @@ msgstr "Valorizzazione"
 #: code:addons/account/report/account_partner_ledger.py:399
 #, python-format
 msgid "Receivable and Payable Accounts"
-msgstr "Conti di credito e debito"
+msgstr "Conti clienti e fornitori"
 
 #. module: account
 #: field:account.fiscal.position.account.template,position_id:0
@@ -6936,7 +6935,7 @@ msgstr "Stato in \"bozza\""
 #: code:addons/account/account_move_line.py:1058
 #, python-format
 msgid "Total debit"
-msgstr "Totale debiti"
+msgstr "Totale DARE"
 
 #. module: account
 #: code:addons/account/account_move_line.py:824
@@ -7953,7 +7952,7 @@ msgstr ""
 #. module: account
 #: view:account.move:0
 msgid "Unposted Journal Entries"
-msgstr "Registrazioni non PUbblicate"
+msgstr "Registrazioni non definitive"
 
 #. module: account
 #: view:product.product:0
@@ -8874,7 +8873,7 @@ msgstr "Riconciliazione"
 #: view:account.chart.template:0
 #: field:account.chart.template,property_account_receivable:0
 msgid "Receivable Account"
-msgstr "Conto di Credito"
+msgstr "Conto clienti"
 
 #. module: account
 #: view:account.invoice:0
@@ -9058,7 +9057,7 @@ msgstr "Il codice del conto deve essere unico per ogni azienda!"
 #: view:account.invoice:0
 #: model:ir.actions.act_window,name:account.act_account_journal_2_account_invoice_opened
 msgid "Unpaid Invoices"
-msgstr "Fatture Non Pagate"
+msgstr "Partite aperte"
 
 #. module: account
 #: code:addons/account/account_invoice.py:504
@@ -11227,7 +11226,7 @@ msgstr "Conti Bancari"
 #. module: account
 #: field:res.partner,credit:0
 msgid "Total Receivable"
-msgstr "Totale credito"
+msgstr "Totale a credito"
 
 #. module: account
 #: view:account.account:0

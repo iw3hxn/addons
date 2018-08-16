@@ -276,7 +276,7 @@ msgstr "Errore !"
 #. module: account_payment
 #: view:account.move.line:0
 msgid "Total debit"
-msgstr "Totale debiti"
+msgstr "Totale DARE"
 
 #. module: account_payment
 #: field:payment.order,date_done:0
@@ -445,7 +445,7 @@ msgstr "Popolamento estratto:"
 #. module: account_payment
 #: view:account.move.line:0
 msgid "Total credit"
-msgstr "Totale crediti"
+msgstr "Totale AVERE"
 
 #. module: account_payment
 #: help:payment.order,date_scheduled:0

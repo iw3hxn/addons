@@ -705,7 +705,7 @@ msgstr "Documento: Rendiconto cliente"
 #. module: account_followup
 #: view:account.move.line:0
 msgid "Total credit"
-msgstr "Totale crediti"
+msgstr "Totale AVERE"
 
 #. module: account_followup
 #: model:account_followup.followup.line,description:account_followup.demo_followup_line3
