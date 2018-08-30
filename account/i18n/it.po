@@ -742,7 +742,7 @@ msgstr ""
 #: model:ir.actions.act_window,name:account.action_aged_receivable
 #, python-format
 msgid "Receivable Accounts"
-msgstr "Conti di Credito"
+msgstr "Conti clienti"
 
 #. module: account
 #: constraint:account.move.line:0
@@ -10814,7 +10814,7 @@ msgstr "La registrazione è già stata riconciliata"
 #. module: account
 #: model:ir.model,name:account.model_report_account_receivable
 msgid "Receivable accounts"
-msgstr "Conti di credito"
+msgstr "Conti clienti"
 
 #. module: account
 #: selection:account.model.line,date_maturity:0
