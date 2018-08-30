@@ -892,7 +892,7 @@ class account_move_line(osv.osv):
         company_list = []
 
         for line in self.browse(cr, uid, ids, context=context):
-            if company_list and not line.company_id.id in company_list:
+            if company_list and line.company_id.id not in company_list:
                 raise osv.except_osv(_('Warning !'), _('To reconcile the entries company should be the same for all entries'))
             company_list.append(line.company_id.id)
 
