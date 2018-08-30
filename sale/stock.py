@@ -74,7 +74,7 @@ class stock_picking(osv.osv):
             invoice_vals['user_id'] = picking.sale_id.user_id.id
         return invoice_vals
 
-    def _get_price_unit_invoice(self, cursor, user, move_line, type):
+    def _get_price_unit_invoice(self, cursor, user, move_line, type, context=None):
         if move_line.sale_line_id and move_line.sale_line_id.product_id.id == move_line.product_id.id:
             uom_id = move_line.product_id.uom_id.id
             uos_id = move_line.product_id.uos_id and move_line.product_id.uos_id.id or False
@@ -84,7 +84,7 @@ class stock_picking(osv.osv):
                 price_unit = price / coeff
                 return price_unit
             return move_line.sale_line_id.price_unit
-        return super(stock_picking, self)._get_price_unit_invoice(cursor, user, move_line, type)
+        return super(stock_picking, self)._get_price_unit_invoice(cursor, user, move_line, type, context)
 
     def _get_discount_invoice(self, cursor, user, move_line):
         if move_line.sale_line_id:

@@ -943,7 +943,9 @@ class stock_picking(osv.osv):
             amount_unit = move_line.product_id.price_get('standard_price', context=context)[move_line.product_id.id]
             return amount_unit
         else:
-            return move_line.product_id.list_price
+            context['quantity'] = move_line.product_qty
+            price = move_line.product_id._product_price(False, False, context=context)[move_line.product_id.id]
+            return price
 
     def _get_discount_invoice(self, cr, uid, move_line):
         '''Return the discount for the move line'''
@@ -1097,7 +1099,7 @@ class stock_picking(osv.osv):
         if not uos_id and invoice_vals['type'] in ('out_invoice', 'out_refund'):
             uos_id = move_line.product_uom.id
 
-        price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'])
+        price_unit = self._get_price_unit_invoice(cr, uid, move_line, invoice_vals['type'], context)
         discount = self._get_discount_invoice(cr, uid, move_line)
 
         vals = {
@@ -1147,7 +1149,13 @@ class stock_picking(osv.osv):
             if picking.invoice_state != '2binvoiced':
                 continue
             partner = self._get_partner_to_invoice(cr, uid, picking, context=context)
-            if not partner:
+            if partner:
+                if inv_type == 'out_invoice':
+                    context.update({
+                        'partner': partner.id,
+                        'pricelist': partner.property_product_pricelist.id
+                    })
+            else:
                 raise osv.except_osv(_('Error, no partner !'),
                     _('Please put a partner on the picking list if you want to generate invoice.'))
 
