@@ -257,7 +257,7 @@ class account_bank_statement(osv.osv):
             'analytic_account_id': st_line.analytic_account_id and st_line.analytic_account_id.id or False
         }
 
-        if st.currency.id <> company_currency_id:
+        if st.currency.id != company_currency_id:
             amount_cur = res_currency_obj.compute(cr, uid, company_currency_id,
                         st.currency.id, amount, context=context)
             val['amount_currency'] = -amount_cur
@@ -275,7 +275,7 @@ class account_bank_statement(osv.osv):
         # if currency is not the same than the company
         amount_currency = False
         currency_id = False
-        if st.currency.id <> company_currency_id:
+        if st.currency.id != company_currency_id:
             amount_currency = st_line.amount
             currency_id = st.currency.id
         account_move_line_obj.create(cr, uid, {
