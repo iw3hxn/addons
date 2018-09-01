@@ -603,8 +603,11 @@ class pos_order(osv.osv):
                         grouped_data[key].append(values)
                     else:
                         current_value = grouped_data[key][0]
+                        if data_type == 'product':
+                            current_value.update({
+                                'name': _('Product')
+                            })
                         current_value.update({
-                            'name': data_type,
                             'quantity': current_value.get('quantity', 0.0) + values.get('quantity', 0.0),
                             'credit': current_value.get('credit', 0.0) + values.get('credit', 0.0),
                             'debit': current_value.get('debit', 0.0) + values.get('debit', 0.0),
@@ -631,11 +634,11 @@ class pos_order(osv.osv):
                     taxes = self.pool['account.tax'].browse(cr, uid, taxes, context)
 
                 context.update({'tax_calculation_rounding_method': 'round_globally'})
-                # computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, (line.price_unit * (100.0-line.discount)) / 100.0, line.qty, context=context)['taxes']
-                if line.qty:
-                    computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl / line.qty, line.qty, context=context)['taxes']
-                else:
-                    computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl, line.qty, context=context)['taxes']
+                computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, (line.price_unit * (100.0-line.discount)) / 100.0, line.qty, context=context)['taxes']
+                # if line.qty:
+                #     computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl / line.qty, line.qty, context=context)['taxes']
+                # else:
+                #     computed_taxes = account_tax_obj.compute_all(cr, uid, taxes, line.price_subtotal_incl, line.qty, context=context)['taxes']
 
                 for tax in computed_taxes:
                     # tax_amount += cur_obj.round(cr, uid, cur, tax['amount'])
@@ -678,7 +681,7 @@ class pos_order(osv.osv):
                     'debit': ((amount < 0) and -amount) or 0.0,
                     'tax_code_id': tax_code_id,
                     'tax_amount': tax_amount,
-                    'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
+                    'partner_id': order.partner_id and order.partner_id.id or False
                 })
                 counter_part += amount
 
@@ -714,8 +717,7 @@ class pos_order(osv.osv):
                     'debit': ((tax_amount < 0) and -tax_amount) or 0.0,
                     'tax_code_id': key[tax_code_pos],
                     'tax_amount': tax_amount,
-                    'partner_id': order.partner_id and self.pool['res.partner']._find_accounting_partner(
-                        order.partner_id).id or False
+                    'partner_id': order.partner_id and order.partner_id.id or False
                 })
                 counter_part += tax_amount
 
@@ -727,7 +729,7 @@ class pos_order(osv.osv):
                 # 'debit': ((order.amount_total > 0) and order.amount_total) or 0.0,
                 'credit': ((counter_part < 0) and -counter_part) or 0.0,
                 'debit': ((counter_part > 0) and counter_part) or 0.0,
-                'partner_id': order.partner_id and self.pool["res.partner"]._find_accounting_partner(order.partner_id).id or False
+                'partner_id': order.partner_id and order.partner_id.id or False
             })
 
             order.write({'state': 'done', 'account_move': move_id})
