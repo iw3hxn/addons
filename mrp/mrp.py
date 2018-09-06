@@ -718,13 +718,13 @@ class mrp_production(osv.osv):
             self.log(cr, uid, production_id, message)
         return True
 
-    def action_production_end(self, cr, uid, ids):
+    def action_production_end(self, cr, uid, ids, context=None):
         """ Changes production state to Finish and writes finished date.
         @return: True
         """
-        for production in self.browse(cr, uid, ids):
-            self._costs_generate(cr, uid, production)
-        return self.write(cr, uid, ids, {'state': 'done', 'date_finished': time.strftime('%Y-%m-%d %H:%M:%S')})
+        for production in self.browse(cr, uid, ids, context):
+            self._costs_generate(cr, uid, production, context)
+        return self.write(cr, uid, ids, {'state': 'done', 'date_finished': time.strftime('%Y-%m-%d %H:%M:%S')}, context)
 
     def test_production_done(self, cr, uid, ids):
         """ Tests whether production is done or not.
