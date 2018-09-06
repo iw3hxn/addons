@@ -866,7 +866,7 @@ class mrp_production(osv.osv):
         wf_service.trg_validate(uid, 'mrp.production', production_id, 'button_produce_done', cr)
         return True
 
-    def _costs_generate(self, cr, uid, production):
+    def _costs_generate(self, cr, uid, production, context=None):
         """ Calculates total costs at the end of the production.
         @param production: Id of production order.
         @return: Calculated amount.
