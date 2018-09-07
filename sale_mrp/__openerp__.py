@@ -45,7 +45,7 @@ It adds sales name and sales Reference on production order.
     'demo_xml': [],
     'test':['test/sale_mrp.yml'],
     'installable': True,
-    'auto_install': True,
+    'auto_install': False,
     'certificate': '00395598976683092013',
 }
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
