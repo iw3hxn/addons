@@ -560,6 +560,9 @@ class product_product(osv.osv):
         'color': 0,
     }
 
+    def _get_product(self, cr, uid, ids, context=None):
+        return self.pool['product.product'].search(cr, uid, [('product_tmpl_id', 'in', ids)], context=context)
+
     _name = "product.product"
     _description = "Product"
     _table = "product_product"
@@ -583,7 +586,11 @@ class product_product(osv.osv):
         'price_extra': fields.float('Variant Price Extra', digits_compute=dp.get_precision('Sale Price')),
         'price_margin': fields.float('Variant Price Margin', digits_compute=dp.get_precision('Sale Price')),
         'pricelist_id': fields.dummy(string='Pricelist', relation='product.pricelist', type='many2one'),
-        'name_template': fields.related('product_tmpl_id', 'name', string="Name", type='char', size=128, store=True, select=True),
+        'name_template': fields.related('product_tmpl_id', 'name', string="Name", type='char', size=128, select=True, store=
+            {
+                'product.product': (lambda self, cr, uid, ids, c={}: ids, ['product_tmpl_id'], 10),
+                'product.template': (_get_product, ['name'], 10),
+            },),
         'color': fields.integer('Color Index'),
         'product_image': fields.binary('Image'),
     }
@@ -611,8 +618,8 @@ class product_product(osv.osv):
         return False
 
     def _check_ean_key(self, cr, uid, ids, context=None):
-        for product in self.browse(cr, uid, ids, context=context):
-            res = check_ean(product.ean13)
+        for product in self.read(cr, uid, ids, ['ean13'], context=context):
+            res = check_ean(product['ean13'])
         return res
 
     _constraints = [(_check_ean_key, 'Error: Invalid ean code', ['ean13'])]

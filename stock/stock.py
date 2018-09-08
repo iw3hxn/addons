@@ -2917,10 +2917,10 @@ class stock_inventory_line(osv.osv):
         'prod_lot_id': fields.many2one('stock.production.lot', 'Serial Number', domain="[('product_id','=',product_id)]"),
         'state': fields.related('inventory_id','state',type='char',string='Status',readonly=True),
         'product_name': fields.related('product_id', 'name', type='char', string='Product name', store={
-                                                                                            'product.product': (_get_product_name_change, ['name', 'default_code'], 20),
+                                                                                            'product.product': (_get_product_name_change, ['name'], 20),
                                                                                             'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
         'product_code': fields.related('product_id', 'default_code', type='char', string='Product code', store={
-                                                                                            'product.product': (_get_product_name_change, ['name', 'default_code'], 20),
+                                                                                            'product.product': (_get_product_name_change, ['default_code'], 20),
                                                                                             'stock.inventory.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 20),}),
         'location_name': fields.related('location_id', 'complete_name', type='char', string='Location name', store={
                                                                                             'stock.location': (_get_location_change, ['name', 'location_id', 'active'], 20),
