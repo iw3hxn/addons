@@ -993,7 +993,7 @@ class mrp_production(osv.osv):
         # If usage of routing location is a internal, make outgoing shipment otherwise internal shipment
         if production.bom_id.routing_id and production.bom_id.routing_id.location_id:
             routing_loc = production.bom_id.routing_id.location_id
-            if routing_loc.usage <> 'internal':
+            if routing_loc.usage != 'internal':
                 pick_type = 'out'
             address_id = routing_loc.address_id and routing_loc.address_id.id or False
 
@@ -1069,9 +1069,11 @@ class mrp_production(osv.osv):
         """
         shipment_id = False
         wf_service = netsvc.LocalService("workflow")
-        uncompute_ids = filter(lambda x:x, [not x.product_lines and x.id or False for x in self.browse(cr, uid, ids, context=context)])
+
+        production_browse = self.browse(cr, uid, ids, context=context)
+        uncompute_ids = filter(lambda x:x, [not x.product_lines and x.id or False for x in production_browse])
         self.action_compute(cr, uid, uncompute_ids, context=context)
-        for production in self.browse(cr, uid, ids, context=context):
+        for production in production_browse:
             shipment_id = self._make_production_internal_shipment(cr, uid, production, context=context)
             produce_move_id = self._make_production_produce_line(cr, uid, production, context=context)
             
