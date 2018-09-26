@@ -1176,29 +1176,16 @@ class stock_picking(osv.osv):
 
             res[picking.id] = invoice_id
 
-            invoice_line_vals = []
             for move_line in picking.move_lines:
                 if move_line.state == 'cancel':
                     continue
                 if move_line.scrapped:
                     # do no invoice scrapped products
                     continue
-                vals = self._prepare_invoice_line(cr, uid, group, picking, move_line,
-                                invoice_id, invoice_vals, context=context)
+                vals = self._prepare_invoice_line(cr, uid, group, picking, move_line, invoice_id, invoice_vals, context=context)
                 if vals:
-                    if vals.get('invoice_id'):
-                        del vals['invoice_id']
-                    invoice_line_vals.append(vals)
-                    #invoice_line_id = invoice_line_obj.create(cr, uid, vals, context=context)
-                    #self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
-            if invoice_line_vals:
-                total_invoice_vals = {
-                    'invoice_line': [(0, False, invoice_line_val) for invoice_line_val in invoice_line_vals]
-                }
-                invoice_obj.write(cr, uid, [invoice_id], total_invoice_vals, context=context)
-            for invoice_line_id in self.pool['account.invoice.line'].search(
-                    cr, uid, [('invoice_id', '=', invoice_id)], context=context):
-                self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
+                    invoice_line_id = invoice_line_obj.create(cr, uid, vals, context=context)
+                    self._invoice_line_hook(cr, uid, move_line, invoice_line_id)
 
             self._invoice_hook(cr, uid, picking, invoice_id)
             # message = _("The Picking '%s' has been Invoiced") % (picking.name,)
