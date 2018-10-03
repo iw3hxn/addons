@@ -634,6 +634,9 @@ class stock_picking(osv.osv):
         res = super(stock_picking, self).write(cr, uid, ids, vals, context=context)
         return res
 
+    def _get_picking(self, cr, uid, ids, context):
+        return self.pool['stock.picking'].search(cr, uid, [('move_lines', 'in', ids)], context=context)
+
     _columns = {
         'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Reference', size=64, select=True),
@@ -662,15 +665,21 @@ class stock_picking(osv.osv):
                  "* Done: has been processed, can't be modified or cancelled anymore\n"\
                  "* Cancelled: has been cancelled, can't be confirmed anymore"),
         'min_date': fields.function(get_min_max_date, fnct_inv=_set_minimum_date, multi="min_max_date",
-                 store=True, type='datetime', string='Expected Date', select=1, help="Expected date for the picking to be processed"),
+                type='datetime', string='Expected Date', select=1, help="Expected date for the picking to be processed", store={
+                    'stock.move': (_get_picking, ['date_expected'], 20),
+            }),
         'date': fields.datetime('Order Date', help="Date of Order", select=True),
         'date_done': fields.datetime('Date Done', help="Date of Completion"),
         'max_date': fields.function(get_min_max_date, fnct_inv=_set_maximum_date, multi="min_max_date",
-                 store=True, type='datetime', string='Max. Expected Date', select=2),
+                type='datetime', string='Max. Expected Date', select=2, store={
+                    'stock.move': (_get_picking, ['date_expected'], 20),
+            }),
         'move_lines': fields.one2many('stock.move', 'picking_id', 'Internal Moves', readonly=True, states={'draft': [('readonly', False)]}),
         'auto_picking': fields.boolean('Auto-Picking'),
         'address_id': fields.many2one('res.partner.address', 'Address', help="Address of partner"),
-        'partner_id': fields.related('address_id','partner_id',type='many2one',relation='res.partner',string='Partner',store=True),
+        'partner_id': fields.related('address_id', 'partner_id', type='many2one',relation='res.partner',string='Partner', store={
+                    'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['address_id'], 20),
+        }),
         'invoice_state': fields.selection([
             ("invoiced", "Invoiced"),
             ("2binvoiced", "To Be Invoiced"),
