@@ -1119,6 +1119,9 @@ class sale_order_line(osv.osv):
         except Exception, ex:
             return False
 
+    def _get_order(self, cr, uid, ids, context=None):
+        return self.pool['sale.order'].search(cr, uid, [('order_line', 'in', ids)], context=context)
+
     _name = 'sale.order.line'
     _description = 'Sales Order Line'
     _columns = {
@@ -1153,9 +1156,17 @@ class sale_order_line(osv.osv):
                     \n* The \'Exception\' state is set when the related sales order is set as exception. \
                     \n* The \'Done\' state is set when the sales order line has been picked. \
                     \n* The \'Cancelled\' state is set when a user cancel the sales order related.'),
-        'order_partner_id': fields.related('order_id', 'partner_id', type='many2one', relation='res.partner', store=True, string='Customer'),
-        'salesman_id':fields.related('order_id', 'user_id', type='many2one', relation='res.users', store=True, string='Salesman'),
-        'company_id': fields.related('order_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True),
+        'order_partner_id': fields.related('order_id', 'partner_id', type='many2one', relation='res.partner', string='Customer', store={
+                'sale.order': (_get_order, ['partner_id'], 20),
+                'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 20),
+        }),
+        'salesman_id':fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Salesman', store={
+                'sale.order': (_get_order, ['user_id'], 20),
+                'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 20),
+        }),
+        'company_id': fields.related('order_id', 'company_id', type='many2one', relation='res.company', string='Company', readonly=True, store={
+                'sale.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 20),
+        }),
     }
     _order = 'sequence, id'
     _defaults = {
