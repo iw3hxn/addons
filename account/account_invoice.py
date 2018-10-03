@@ -217,6 +217,9 @@ class account_invoice(osv.osv):
     _order = "id desc"
     _inherit = ['mail.thread']
 
+    def _get_invoice_from_move(self, cr, uid, ids, context):
+        return self.pool['account.invoice'].search(cr, uid, [('move_id', 'in', ids)], context=context)
+
     _columns = {
         'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Description', size=64, select=True, readonly=True, states={'draft':[('readonly',False)]}),
@@ -228,7 +231,10 @@ class account_invoice(osv.osv):
             ('in_refund','Supplier Refund'),
             ],'Type', readonly=True, select=True, change_default=True),
 
-        'number': fields.related('move_id','name', type='char', readonly=True, size=64, relation='account.move', store=True, string='Number'),
+        'number': fields.related('move_id', 'name', type='char', readonly=True, size=64, relation='account.move', string='Number', store={
+                'account.move': (_get_invoice_from_move, ['name'], 10),
+                'account.invoice': (lambda self, cr, uid, ids, c={}: ids, ['move_id'], 10),
+        }),
         'internal_number': fields.char('Invoice Number', size=32, readonly=True, help="Unique number of the invoice, computed automatically when the invoice is created."),
         'reference': fields.char('Invoice Reference', size=64, help="The partner reference of this invoice."),
         'reference_type': fields.selection(_get_reference_type, 'Reference Type',
