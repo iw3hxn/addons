@@ -838,10 +838,21 @@ class pos_order_line(osv.osv):
         result['price_subtotal_incl'] = taxes['total_included']
         return {'value': result}
 
+    def _get_order(self, cr, uid, ids, context=None):
+        res = self.pool['pos.order.line'].search(cr, uid, [('order_id', 'in', ids)], context=context)
+        return res
+
+    def _get_order_from_product(self, uid, ids, context=None):
+        res = self.pool['pos.order.line'].search(cr, uid, [('product_id', 'in', ids)], context=context)
+        return res
+
     _columns = {
         'date_from': fields.function(lambda *a, **k: {}, method=True, type='date', string="Date from"),
         'date_to': fields.function(lambda *a, **k: {}, method=True, type='date', string="Date to"),
-        'date_order': fields.related('order_id', 'date_order', store=True, string='Date Order', type='date', size=64),
+        'date_order': fields.related('order_id', 'date_order', string='Date Order', type='date', size=64, store={
+                'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
+                'pos.order': (_get_order, ['date_order'], 20),
+        }),
         'active': fields.boolean('Active'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
         'name': fields.char('Line No', size=32, required=True),
@@ -855,11 +866,23 @@ class pos_order_line(osv.osv):
         'order_id': fields.many2one('pos.order', 'Order Ref', ondelete='cascade'),
         'create_date': fields.datetime('Creation Date', readonly=True),
         'pos_discount': fields.boolean('Discount?'),
-        'shop_id': fields.related('order_id', 'shop_id', type='many2one', relation='sale.shop', string='Shop', store=True),
-        'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store=True),
-        'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference', store=True),
+        'shop_id': fields.related('order_id', 'shop_id', type='many2one', relation='sale.shop', string='Shop', store={
+                'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
+                'pos.order': (_get_order, ['shop_id'], 20),
+        }),
+        'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store={
+                'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
+                'pos.order': (_get_order, ['user_id'], 20),
+        }),
+        'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference', store={
+                'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 2000),
+                'product.product': (_get_order_from_product, ['default_code'], 20),
+        }),
         'employee_id': fields.integer('ID employee'),
-        'categ_id': fields.related('product_id', 'product_tmpl_id', 'categ_id', type='many2one', relation='product.category', string='Category', store=True),
+        'categ_id': fields.related('product_id', 'product_tmpl_id', 'categ_id', type='many2one', relation='product.category', string='Category', store={
+                'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 2000),
+                'product.product': (_get_order_from_product, ['categ_id'], 20),
+        }),
     }
 
     _defaults = {
