@@ -1122,7 +1122,7 @@ class sale_order_line(osv.osv):
             return False
 
     def _get_order(self, cr, uid, ids, context=None):
-        return self.pool['sale.order'].search(cr, uid, [('order_line', 'in', ids)], context=context)
+        return self.pool['sale.order.line'].search(cr, uid, [('order_id', 'in', ids)], context=context)
 
     _name = 'sale.order.line'
     _description = 'Sales Order Line'
