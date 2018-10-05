@@ -113,17 +113,18 @@ class pos_make_payment(osv.osv_memory):
         if vals:
             order_obj.write(cr, uid, active_id, vals, context=context)
 
-        amount = float_round(order.amount_total, precision_digits=2) - float_round(order.amount_paid, precision_digits=2)
-        data = self.read(cr, uid, ids, context=context)[0]
+        # amount = float_round(order.amount_total, precision_digits=2) - float_round(order.amount_paid, precision_digits=2)
+        amount2 = abs(int(order.amount_total * 100) - int(order.amount_paid * 100))
         # this is probably a problem of osv_memory as it's not compatible with normal OSV's
         # data['journal'] = data['journal'][0]
-
-        if amount != 0.0:
+#        if amount != 0.0:
+        if amount2 > 0.1:
+            data = self.read(cr, uid, ids, context=context)[0]
             order_obj.add_payment(cr, uid, active_id, data, context=context)
-        if order_obj.test_paid(cr, uid, [active_id]):
+        if order_obj.test_paid(cr, uid, [active_id], context):
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'pos.order', active_id, 'paid', cr)
-            return True  # self.print_report(cr, uid, ids, context=context)
+            return True #self.print_report(cr, uid, ids, context=context)
 
         return self.launch_payment(cr, uid, ids, context=context)
 
