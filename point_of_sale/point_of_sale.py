@@ -842,7 +842,7 @@ class pos_order_line(osv.osv):
         res = self.pool['pos.order.line'].search(cr, uid, [('order_id', 'in', ids)], context=context)
         return res
 
-    def _get_order_from_product(self, uid, ids, context=None):
+    def _get_order_from_product(self, cr, uid, ids, context=None):
         res = self.pool['pos.order.line'].search(cr, uid, [('product_id', 'in', ids)], context=context)
         return res
 
