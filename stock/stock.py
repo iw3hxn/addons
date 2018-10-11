@@ -668,7 +668,7 @@ class stock_picking(osv.osv):
                 type='datetime', string='Expected Date', select=1, help="Expected date for the picking to be processed", store={
                     'stock.move': (_get_picking, ['date_expected'], 20),
             }),
-        'date': fields.datetime('Order Date', help="Date of Order", select=True),
+        'date': fields.datetime('Order Date', help="Datee of Order", select=True),
         'date_done': fields.datetime('Date Done', help="Date of Completion"),
         'max_date': fields.function(get_min_max_date, fnct_inv=_set_maximum_date, multi="min_max_date",
                 type='datetime', string='Max. Expected Date', select=2, store={
@@ -889,7 +889,7 @@ class stock_picking(osv.osv):
         pickings = self.browse(cr, uid, ids, context=context)
         order_ids = []
         for picking in pickings:
-            if picking.sale_id:
+            if picking.sale_id and picking.type == 'out':
                 order_ids.append(picking.sale_id.id)
             message = _("The Picking '%s' has been Transfert") % picking.name
             self.log(cr, uid, picking.id, message)
