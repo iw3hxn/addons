@@ -2490,3 +2490,8 @@ msgstr ""
 #: field:product.pricelist.item,price_discount:0
 msgid "Price Discount"
 msgstr "Sconto Prezzo"
+
+#. module: product
+#: model:product.uom,name:product.product_uom_litre
+msgid "Litre"
+msgstr "Litri"
