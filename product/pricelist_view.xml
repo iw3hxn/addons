@@ -206,6 +206,7 @@
 
         <menuitem
             action="product_price_type_action" id="menu_product_price_type"
+            groups="base.group_no_one"
             parent="product.menu_product_pricelist_main" sequence="4"/>
 
         <!-- Moved to extra module 'sale_pricelist_type_menu':
