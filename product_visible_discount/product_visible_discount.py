@@ -93,7 +93,7 @@ class sale_order_line(osv.osv):
                                                       product.id, qty or 1.0, partner_id, context=pricelist_context)
 
             so_pricelist = pricelist_obj.browse(cr, uid, pricelist, context=context)
-
+            result['rules'] = list_price[pricelist][1]
             new_list_price, currency_id = get_real_price_curency(list_price, product.id, qty, uom, pricelist)
             if so_pricelist.visible_discount and list_price[pricelist][0] != 0 and new_list_price != 0:
                 if product.company_id and so_pricelist.currency_id.id != product.company_id.currency_id.id:
