@@ -251,7 +251,7 @@ class sale_order_line(osv.osv):
             warning['message'] = message and message + '\n\n' + result['warning']['message'] or result['warning'][
                 'message']
 
-        return {'value': result.get('value', {}), 'warning': warning}
+        return {'value': result.get('value', {}), 'warning': warning, 'domain': result.get('domain', {})}
 
 
 sale_order_line()
