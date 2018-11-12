@@ -84,8 +84,15 @@ class sale_order(osv.osv):
                 'margin': 0.0,
                 'margin_rel': 0.0,
             }
+            sale_order_line_ids = []
             for line in sale.order_line:
-                result[sale.id]['margin'] += line.margin or 0.0
+                sale_order_line_ids.append(line.id)
+            margins = self.pool['sale.order.line']._product_margin(cr, uid, sale_order_line_ids, field_name, arg, context=context)
+            margin = 0
+            for key in margins.keys():
+                margin += margins[key]['margin']
+            result[sale.id]['margin'] = margin
+
             if sale.amount_untaxed:
                 result[sale.id]['margin_rel'] = (result[sale.id]['margin'] / sale.amount_untaxed) * 100
         return result
