@@ -958,7 +958,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                 if inv.type == 'out_refund':
                     entry_type = 'cont_voucher'
 
-            diff_currency_p = inv.currency_id.id <> company_currency
+            diff_currency_p = inv.currency_id.id != company_currency
             # create one move line for the total and possibly adjust the other lines amount
             total = 0
             total_currency = 0
@@ -1081,17 +1081,18 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         context = context or self.pool['res.users'].context_get(cr, uid)
 
         move_obj = self.pool['account.move']
-        for inv in self.browse(cr, uid, ids, context=context):
+        invoice_browse = self.browse(cr, uid, ids, context=context)
+        for inv in invoice_browse:
             ctx = context.copy()
             ctx.update({'lang': inv.partner_id.lang})
             ctx.update(company_id=inv.company_id.id, account_period_prefer_normal=True)
             ctx.update({'invoice': inv})
             move_obj.post(cr, uid, [inv.move_id.id], context=ctx)
 
-        #TODO: not correct fix but required a frech values before reading it.
-        self.write(cr, uid, ids, {})
+        # #TODO: not correct fix but required a frech values before reading it.
+        # self.write(cr, uid, ids, {})
 
-        for obj_inv in self.browse(cr, uid, ids, context=context):
+        for obj_inv in invoice_browse:
             id = obj_inv.id
             invtype = obj_inv.type
             number = obj_inv.number
@@ -1120,12 +1121,12 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                         'AND account_analytic_line.move_id = account_move_line.id',
                         (ref, move_id))
 
-            for inv_id, name in self.name_get(cr, uid, [id]):
-                ctx = context.copy()
-                if obj_inv.type in ('out_invoice', 'out_refund'):
-                    ctx = self.get_log_context(cr, uid, context=ctx)
-                message = _("Invoice  '%s' is validated.") % name
-                self.log(cr, uid, inv_id, message, context=ctx)
+            # for inv_id, name in self.name_get(cr, uid, [id]):
+            #     ctx = context.copy()
+            #     if obj_inv.type in ('out_invoice', 'out_refund'):
+            #         ctx = self.get_log_context(cr, uid, context=ctx)
+            #     message = _("Invoice  '%s' is validated.") % name
+            #     self.log(cr, uid, inv_id, message, context=ctx)
         return True
 
     def action_proforma(self, cr, uid, ids, context=None):

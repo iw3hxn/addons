@@ -21,6 +21,7 @@
 
 import time
 
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 from report import report_sxw
 import pooler
 
@@ -75,11 +76,12 @@ class Overdue(report_sxw.rml_parse):
 
     def _lines_get(self, partner):
         moveline_obj = pooler.get_pool(self.cr.dbname).get('account.move.line')
+        current_date = time.strftime(DEFAULT_SERVER_DATE_FORMAT)
         movelines = moveline_obj.search(self.cr, self.uid,
                 [('partner_id', '=', partner.id),
                     ('account_id.type', 'in', ['receivable', 'payable']),
-                    ('state', '<>', 'draft'), ('reconcile_id', '=', False)])
-        movelines = moveline_obj.browse(self.cr, self.uid, movelines)
+                    ('state', '!=', 'draft'), ('reconcile_id', '=', False), ('date_maturity', '<', current_date)], context=self.context)
+        movelines = moveline_obj.browse(self.cr, self.uid, movelines, self.context)
         return movelines
 
     def _message(self, obj, company):

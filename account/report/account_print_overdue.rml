@@ -86,6 +86,9 @@
     <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Centre_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Right_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Right_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
+    <paraStyle name="terp_default_Centre_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <images/>
   </stylesheet>
   <story>
@@ -174,10 +177,10 @@
           <para style="terp_tblheader_Details">Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details">Description</para>
+          <para style="terp_tblheader_Details">Ref</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Centre">Ref</para>
+          <para style="terp_tblheader_Details_Centre">Description</para>
         </td>
         <td>
           <para style="terp_tblheader_Details_Centre">Maturity date</para>
@@ -201,28 +204,28 @@
       <blockTable colWidths="57.0,136.0,52.0,71.0,55.0,56.0,66.0,17.0" style="Table3">
         <tr>
           <td>
-            <para style="terp_default_9">[[ formatLang(line['date'],date=True) ]]</para>
+            <para style="terp_default_7">[[ formatLang(line['date'],date=True) ]]</para>
           </td>
           <td>
-            <para style="terp_default_9">[[ line['name'] ]]</para>
+            <para style="terp_default_7">[[ line['invoice']['number'] ]]</para>
           </td>
           <td>
-            <para style="terp_default_Centre_9">[[ line['invoice']['number'] ]]</para>
+            <para style="terp_default_Centre_7">[[ line['name'] ]]</para>
           </td>
           <td>
-            <para style="terp_default_Centre_9">[[ line['date_maturity'] and formatLang(line['date_maturity'],date=True) or '' ]]</para>
+            <para style="terp_default_Centre_7">[[ line['date_maturity'] and formatLang(line['date_maturity'],date=True) or '' ]]</para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['debit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['credit'] * -1) or ' ') ]] </para>
+            <para style="terp_default_Right_7">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['debit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['credit'] * -1) or ' ') ]] </para>
           </td>
           <td>
-            <para style="terp_default_Right_9">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['credit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['debit'] * -1) or 0) ]]</para>
+            <para style="terp_default_Right_7">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['credit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['debit'] * -1) or 0) ]]</para>
           </td>
           <td>
-             <para style="terp_default_Right_9">[[ time.strftime('%Y-%m-%d') > formatLang((line['date_maturity'])) and formatLang(line['debit'] - line['credit']) ]] [[ company.currency_id.symbol ]] </para>
+             <para style="terp_default_Right_7">[[ time.strftime('%Y-%m-%d') > formatLang((line['date_maturity'])) and formatLang(line['debit'] - line['credit']) ]] [[ company.currency_id.symbol ]] </para>
           </td>
           <td>
-            <para style="terp_default_Centre_9">[[ line['blocked'] and 'X' or '' ]]</para>
+            <para style="terp_default_Centre_8">[[ line['blocked'] and 'X' or '' ]]</para>
           </td>
         </tr>
       </blockTable>
