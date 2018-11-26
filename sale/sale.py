@@ -1301,14 +1301,16 @@ class sale_order_line(osv.osv):
                 'product_uom_qty': product_uos_qty}, 'domain': {}}
 
         product = product_obj.browse(cr, uid, product_id)
+        uos_coeff = product.uos_coeff if product.uos_coeff else 1.0
+
         value = {
             'product_uom': product.uom_id.id,
         }
         # FIXME must depend on uos/uom of the product and not only of the coeff.
         try:
             value.update({
-                'product_uom_qty': product_uos_qty / product.uos_coeff,
-                'th_weight': product_uos_qty / product.uos_coeff * product.weight
+                'product_uom_qty': product_uos_qty / uos_coeff,
+                'th_weight': product_uos_qty / uos_coeff * product.weight
             })
         except ZeroDivisionError:
             pass
@@ -1403,6 +1405,8 @@ class sale_order_line(osv.osv):
         result = res.get('value', {})
         warning_msgs = res.get('warning') and res['warning']['message'] or ''
         product_obj = product_obj.browse(cr, uid, product, context=context)
+        # Avoid division by zero
+        uos_coeff = product_obj.uos_coeff if product_obj.uos_coeff else 1.0
 
         uom2 = False
         if uom:
@@ -1437,7 +1441,7 @@ class sale_order_line(osv.osv):
             result['product_uom'] = product_obj.uom_id.id
             if product_obj.uos_id:
                 result['product_uos'] = product_obj.uos_id.id
-                result['product_uos_qty'] = qty * product_obj.uos_coeff
+                result['product_uos_qty'] = qty * uos_coeff
                 uos_category_id = product_obj.uos_id.category_id.id
             else:
                 result['product_uos'] = False
@@ -1451,14 +1455,14 @@ class sale_order_line(osv.osv):
 
         elif uos and not uom: # only happens if uom is False
             result['product_uom'] = product_obj.uom_id and product_obj.uom_id.id
-            result['product_uom_qty'] = qty_uos / product_obj.uos_coeff
+            result['product_uom_qty'] = qty_uos / uos_coeff
             result['th_weight'] = result['product_uom_qty'] * product_obj.weight
         elif uom: # whether uos is set or not
             default_uom = product_obj.uom_id and product_obj.uom_id.id
             q = product_uom_obj._compute_qty(cr, uid, uom, qty, default_uom)
             if product_obj.uos_id:
                 result['product_uos'] = product_obj.uos_id.id
-                result['product_uos_qty'] = qty * product_obj.uos_coeff
+                result['product_uos_qty'] = qty * uos_coeff
             else:
                 result['product_uos'] = False
                 result['product_uos_qty'] = qty
