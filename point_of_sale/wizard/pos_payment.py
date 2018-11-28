@@ -81,15 +81,15 @@ class pos_make_payment(osv.osv_memory):
                     if partner_id:
                         order.write({'partner_id': partner_id[0]})
                         line.write({'active': False})
-
-            if float_round(list_price, precision_digits=2) != 0.0 and float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
-                discount = (list_price - pos_price) / list_price * 100
-                line_data = {
-                    'price_unit': list_price,
-                    'discount': discount,
-                    'pos_discount': True,
-                }
-                order_line_obj.write(cr, uid, line.id, line_data, context=context)
+            if not context.get('skip_force_discount', False):
+                if float_round(list_price, precision_digits=2) != 0.0 and float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
+                    discount = (list_price - pos_price) / list_price * 100
+                    line_data = {
+                        'price_unit': list_price,
+                        'discount': discount,
+                        'pos_discount': True,
+                    }
+                    order_line_obj.write(cr, uid, line.id, line_data, context=context)
 
         if hr_employee and len(order.lines) == len(line_deactive):  # i have set only one employee
             result = []
