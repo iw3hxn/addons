@@ -584,7 +584,7 @@ class sale_order(osv.osv):
         return {
             'name': _('Customer Invoices'),
             'view_type': 'form',
-            'view_mode': 'form',
+            'view_mode': 'page',
             'view_id': [res_id],
             'res_model': 'account.invoice',
             'context': "{'type':'out_invoice'}",
@@ -619,6 +619,7 @@ class sale_order(osv.osv):
         else:
             res = mod_obj.get_object_reference(cr, uid, 'stock', 'view_picking_out_form')
             result['views'] = [(res and res[1] or False, 'form')]
+            result['view_mode'] = 'page'
             result['res_id'] = pick_ids and pick_ids[0] or False
         result['context'] = {'default_type': 'out', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0}
         return result
@@ -643,6 +644,7 @@ class sale_order(osv.osv):
         else:
             res = mod_obj.get_object_reference(cr, uid, 'account', 'invoice_form')
             result['views'] = [(res and res[1] or False, 'form')]
+            result['view_mode'] = 'page'
             result['res_id'] = inv_ids and inv_ids[0] or False
 
         return result
