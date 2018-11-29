@@ -1879,14 +1879,9 @@ class stock_move(osv.osv):
 
         product_obj = self.pool.get('product.product')
         uos_coeff = product_obj.read(cr, uid, product_id, ['uos_coeff'])
-        if uos_coeff:
-            uos_coeff = uos_coeff[0]['uos_coeff']
-        else:
-            # Setting a default
-            uos_coeff = 1
 
         if product_uos and product_uom and (product_uom != product_uos):
-            result['product_uos_qty'] = product_qty * uos_coeff
+            result['product_uos_qty'] = product_qty * uos_coeff['uos_coeff']
         else:
             result['product_uos_qty'] = product_qty
 
