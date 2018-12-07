@@ -171,8 +171,8 @@ class account_move_line(osv.osv):
         name = _('Invoice')
         return {
             'name': name,
-            'view_type': 'form',
-            'view_mode': 'form',
+            'view_type': 'page',
+            'view_mode': 'page',
             'view_id': [view_id],
             'res_model': res_model,
             'context': ctx,
