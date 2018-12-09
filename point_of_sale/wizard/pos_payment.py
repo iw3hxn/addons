@@ -162,8 +162,11 @@ class pos_make_payment(osv.osv_memory):
             return order.amount_total - order.amount_paid
         return False
 
+    def _get_journal(self, cr, uid, context=None):
+        return self.pool['pos.box.entries']._get_journal(cr, uid, context)
+
     _columns = {
-        'journal': fields.selection(pos_box_entries.get_journal, "Payment Mode", required=True),
+        'journal': fields.selection(_get_journal, "Payment Mode", required=True),
         'amount': fields.float('Amount', digits=(16, 2), required= True),
         'payment_name': fields.char('Payment Reference', size=32),
         'payment_date': fields.date('Payment Date', required=True),

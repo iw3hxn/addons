@@ -19,13 +19,12 @@
 #
 ##############################################################################
 
-import time
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
+from dateutil.relativedelta import relativedelta
 from osv import osv, fields
 from tools.translate import _
-import pos_box_entries
+
 
 class pos_box_out(osv.osv_memory):
     _name = 'pos.box.out'
@@ -47,9 +46,12 @@ class pos_box_out(osv.osv_memory):
         res = [(r['id'], r['name']) for r in res]
         return res
 
+    def _get_journal(self, cr, uid, context=None):
+        return self.pool['pos.box.entries']._get_journal(cr, uid, context)
+
     _columns = {
         'name': fields.char('Description / Reason', size=32, required=True),
-        'journal_id': fields.selection(pos_box_entries.get_journal, "Cash Register", required=True, size=-1),
+        'journal_id': fields.selection(_get_journal, "Cash Register", required=True, size=-1),
         'product_id': fields.selection(_get_expense_product, "Operation", required=True, size=-1),
         'amount': fields.float('Amount', digits=(16, 2), required=True),
     }

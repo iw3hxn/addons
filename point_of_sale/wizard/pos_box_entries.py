@@ -52,6 +52,7 @@ def get_journal(self, cr, uid, context=None):
         raise osv.except_osv(_('Error !'), _('You do not have any open cash register. You must create a payment method or open a cash register.'))
     return res
 
+
 class pos_box_entries(osv.osv_memory):
     _name = 'pos.box.entries'
     _description = 'Pos Box Entries'
@@ -73,9 +74,12 @@ class pos_box_entries(osv.osv_memory):
 
         return res
 
+    def _get_journal(self, cr, uid, context=None):
+        return get_journal(self, cr, uid, context)
+
     _columns = {
         'name': fields.char('Reason', size=32, required=True),
-        'journal_id': fields.selection(get_journal, "Cash Register", required=True, size=-1),
+        'journal_id': fields.selection(_get_journal, "Cash Register", required=True, size=-1),
         'product_id': fields.selection(_get_income_product, "Operation", required=True, size=-1),
         'amount': fields.float('Amount', digits=(16, 2), required=True),
         'ref': fields.char('Ref', size=32),
