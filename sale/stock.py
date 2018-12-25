@@ -177,7 +177,7 @@ class stock_picking(osv.osv):
                         vals['account_analytic_id'] = self._get_account_analytic_invoice(cursor, user, picking, sale_line)
                         vals['invoice_id'] = invoices[result[picking.id]].id
                         invoice_line_id = invoice_line_obj.create(cursor, user, vals, context=context)
-                        order_line_obj.write(cursor, user, [sale_line.id], {
+                        sale_line.write({
                             'invoiced': True,
                             'invoice_lines': [(6, 0, [invoice_line_id])],
                         })
