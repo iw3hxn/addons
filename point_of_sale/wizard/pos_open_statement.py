@@ -55,7 +55,9 @@ class pos_open_statement(osv.osv_memory):
                     number = sequence_obj.next_by_id(cr, uid, journal.sequence_id.id, context=context)
                 else:
                     number = sequence_obj.next_by_code(cr, uid, 'account.cash.statement', context=context)
-    
+                balance_start = statement_obj.onchange_journal_id(cr, uid, [], journal.id).get('value').get('balance_start')
+                if balance_start:
+                    data.update(balance_start=balance_start)
                 data.update({
                     'journal_id': journal.id,
                     'user_id': uid,
