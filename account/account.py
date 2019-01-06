@@ -2418,7 +2418,7 @@ class account_tax(osv.osv):
             or 'round_per_line')
         if rounding_method == 'round_globally':
             tax_compute_precision += 5
-        totalin = totalex = float_round(price_unit * quantity, precision)
+        totalin = totalex = float_round(price_unit * quantity, tax_compute_precision)
         tin = []
         tex = []
         for tax in taxes:
