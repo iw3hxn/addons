@@ -52,11 +52,17 @@ class sale_order_line(osv.osv):
             rule_id = res_dict.get(pricelist) and res_dict[pricelist][1] or False
             currency_id = None
             if rule_id:
-                item_base = item_obj.read(cr, uid, [rule_id], ['base'])[0]['base']
+                item_read = item_obj.read(cr, uid, [rule_id], ['base', 'base_pricelist_id'])[0]
+                item_base = item_read['base']
                 if item_base > 0:
                     price_type = price_type_obj.browse(cr, uid, item_base)
                     field_name = price_type.field
                     currency_id = price_type.currency_id
+
+                elif item_base == -1:
+                    base_pricelist_id = item_read['base_pricelist_id'][0]
+                    field_name = 'price'
+                    context['pricelist'] = base_pricelist_id
 
             product = product_obj.browse(cr, uid, product_id, context)
             product_read = product_obj.read(cr, uid, [product_id], [field_name], context=context)[0]
