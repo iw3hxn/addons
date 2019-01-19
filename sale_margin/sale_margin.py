@@ -51,9 +51,9 @@ class sale_order_line(osv.osv):
             }
             price_subtotal_line = price_subtotal[line.id]
             if line.purchase_price:
-                total_purchase_price = line.product_uos_qty * line.purchase_price
+                total_purchase_price = line.product_uom_qty * line.purchase_price
             elif line.product_id:
-                total_purchase_price = line.product_uos_qty * line.product_id.standard_price
+                total_purchase_price = line.product_uom_qty * line.product_id.standard_price
             else:
                 total_purchase_price = 0
 
