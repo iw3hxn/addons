@@ -60,6 +60,7 @@ class sale_order_line(osv.osv):
                     currency_id = price_type.currency_id
 
                 elif item_base == -1:
+                    return get_real_price_curency(res_dict, product_id, qty, uom, item_read['base_pricelist_id'][0])
                     base_pricelist_id = item_read['base_pricelist_id'][0]
                     field_name = 'price'
                     context['pricelist'] = base_pricelist_id
