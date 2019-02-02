@@ -2004,7 +2004,7 @@ class account_tax_code(osv.osv):
                             GROUP BY line.tax_code_id',
                        (parent_ids,) + where_params)
         else:
-            cr.execute('SELECT line.tax_code_id, sum(line.tax_amount) \
+            cr.execute('SELECT line.tax_code_id, sum(line.credit) - sum(line.debit) \
                     FROM account_move_line AS line, \
                     account_move AS move \
                     WHERE line.tax_code_id IN %s ' + where + ' \
