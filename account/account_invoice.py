@@ -862,6 +862,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             else:
                 total -= i['price']
                 total_currency -= i['amount_currency'] or i['price']
+        total = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, total, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
+        total_currency = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, total_currency, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
         return total, total_currency, invoice_move_lines
 
     def inv_line_characteristic_hashcode(self, invoice, invoice_line):

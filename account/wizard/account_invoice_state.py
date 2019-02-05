@@ -19,10 +19,16 @@
 #
 ##############################################################################
 
-from osv import osv
-from tools.translate import _
+import logging
+
 import netsvc
 import pooler
+from osv import osv
+from tools.translate import _
+
+_logger = logging.getLogger(__name__)
+_logger.setLevel(logging.DEBUG)
+
 
 class account_invoice_confirm(osv.osv_memory):
     """
@@ -42,9 +48,11 @@ class account_invoice_confirm(osv.osv_memory):
         for record in data_inv:
             if record['state'] not in ('draft','proforma','proforma2'):
                 raise osv.except_osv(_('Warning'), _("Selected Invoice(s) cannot be confirmed as they are not in 'Draft' or 'Pro-Forma' state!"))
-            wf_service.trg_validate(uid, 'account.invoice', record['id'], 'invoice_open', cr)
+            try:
+                wf_service.trg_validate(uid, 'account.invoice', record['id'], 'invoice_open', cr)
+            except Exception as e:
+                _logger.error(u'Error on Invoice Confirmation')
         return {'type': 'ir.actions.act_window_close'}
-
 account_invoice_confirm()
 
 class account_invoice_cancel(osv.osv_memory):
