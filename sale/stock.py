@@ -150,6 +150,7 @@ class stock_picking(osv.osv):
             if picking.sale_id.client_order_ref:
                 inv_name = picking.sale_id.client_order_ref + " : " + invoice_created.name
                 invoice_obj.write(cursor, user, [invoice_created.id], {'name': inv_name}, context=context)
+            vals = False
             for sale_line in sale_lines:
                 if sale_line.product_id.type == 'service' and sale_line.invoiced == False:
                     if not type:
@@ -180,7 +181,10 @@ class stock_picking(osv.osv):
                         sale_line.write({
                             'invoiced': True,
                             'invoice_lines': [(6, 0, [invoice_line_id])],
-                        })
+                       })
+            if vals:
+                invoice_obj.button_reset_taxes(cursor, user, [invoices[result[picking.id]].id], context=context)
+
         return result
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
