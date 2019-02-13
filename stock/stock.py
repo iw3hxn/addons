@@ -2457,14 +2457,20 @@ class stock_move(osv.osv):
 
         return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
 
+    from profilehooks import profile
+    @profile(immediate=True)
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
         ctx = context.copy()
-        for move in self.browse(cr, uid, ids, context=context):
-            if move.state not in ['draft', 'cancel'] and not ctx.get('call_unlink', False):
-                raise osv.except_osv(_('UserError'),
-                        _('You can only delete draft or cancelled moves.'))
+
+        if not ctx.get('call_unlink', False) and self.search(cr, uid, [('id', 'in', ids), ('state', 'not in', ['draft', 'cancel'])], limit=1, context=context):
+            raise osv.except_osv(_('UserError'),
+                                 _('You can only delete draft or cancelled moves.'))
+        # for move in self.browse(cr, uid, ids, context=context):
+        #     if move.state not in ['draft', 'cancel'] and not ctx.get('call_unlink', False):
+        #         raise osv.except_osv(_('UserError'),
+        #                 _('You can only delete draft or cancelled moves.'))
         return super(stock_move, self).unlink(
             cr, uid, ids, context=ctx)
 
