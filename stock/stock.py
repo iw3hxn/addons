@@ -2457,8 +2457,6 @@ class stock_move(osv.osv):
 
         return [(0, 0, debit_line_vals), (0, 0, credit_line_vals)]
 
-    from profilehooks import profile
-    @profile(immediate=True)
     def unlink(self, cr, uid, ids, context=None):
         if context is None:
             context = {}
