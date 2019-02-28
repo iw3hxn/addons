@@ -30,6 +30,7 @@ from tools.translate import _
 
 class account_invoice(osv.osv):
     def _amount_all(self, cr, uid, ids, name, args, context=None):
+        cur_obj = self.pool.get('res.currency')
         res = {}
         for invoice in self.browse(cr, uid, ids, context=context):
             res[invoice.id] = {
@@ -41,6 +42,9 @@ class account_invoice(osv.osv):
                 res[invoice.id]['amount_untaxed'] += line.price_subtotal
             for line in invoice.tax_line:
                 res[invoice.id]['amount_tax'] += line.amount
+
+            res[invoice.id]['amount_tax'] = cur_obj.round(cr, uid, invoice.currency_id, res[invoice.id]['amount_tax'])
+            res[invoice.id]['amount_untaxed'] = cur_obj.round(cr, uid, invoice.currency_id, res[invoice.id]['amount_untaxed'])
             res[invoice.id]['amount_total'] = res[invoice.id]['amount_tax'] + res[invoice.id]['amount_untaxed']
         return res
 
@@ -1411,9 +1415,9 @@ class account_invoice_line(osv.osv):
                 partner=line.invoice_id.partner_id,
                 context=local_context)
             res[line.id] = taxes['total']
-            if line.invoice_id:
-                cur = line.invoice_id.currency_id
-                res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
+            # if line.invoice_id:
+            #     cur = line.invoice_id.currency_id
+            #     res[line.id] = cur_obj.round(cr, uid, cur, res[line.id])
         return res
 
     def _price_unit_default(self, cr, uid, context=None):
