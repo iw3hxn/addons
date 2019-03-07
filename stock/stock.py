@@ -890,7 +890,8 @@ class stock_picking(osv.osv):
         order_ids = []
         for picking in pickings:
             if picking.sale_id and picking.type == 'out':
-                order_ids.append(picking.sale_id.id)
+                if not self.search(cr, uid, [('sale_id', '=', picking.sale_id.id), ('type', '=', 'out'), ('state', '!=', 'done')], context=context):
+                    order_ids.append(picking.sale_id.id)
             message = _("The Picking '%s' has been Transfert") % picking.name
             self.log(cr, uid, picking.id, message)
             date_done = picking.date_done or time.strftime('%Y-%m-%d %H:%M:%S')
