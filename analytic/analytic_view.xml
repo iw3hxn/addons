@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+
+        <record id="view_account_analytic_account_form" model="ir.ui.view">
+            <field name="name">analytic.analytic.account.form</field>
+            <field name="model">account.analytic.account</field>
+            <field name="arch" type="xml">
+                <form string="Analytic Account" >
+                        <field name="name" />
+                        
+                        <group name="main">
+                            <group>
+                                <field name="partner_id" on_change="on_change_partner_id(partner_id, name)"/>
+                                <field name="manager_id"/>
+                                <field name="currency_id" attrs="{'invisible': ['|',('type', '&lt;&gt;', 'view'), ('company_id', '&lt;&gt;', False)]}"/>
+                            </group>
+                            <group>
+                                <field name="type" invisible="context.get('default_type', False)"/>
+                                <field name="template_id" on_change="on_change_template(template_id,context)" domain="[('type','=','template')]" attrs="{'invisible': [('type','in',['view', 'normal','template'])]}" context="{'default_type' : 'template'}"/>
+                                <field name="code"/>
+                                <field name="parent_id" on_change="on_change_parent(parent_id)"/>
+                                <field name="company_id" on_change="on_change_company(company_id)" widget="selection" groups="base.group_multi_company" attrs="{'required': [('type','&lt;&gt;','view')]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+
+                            <page string="Contract Information" name="contract_page" attrs="{'invisible':[('type','not in',['contract', 'template'])]}">
+                                <group string="Renewal" name="contract">
+                                    
+                                    <field name="date_start"/>
+                                    <separator string="End Date"/>
+                                    <field name="date" />
+                                </group>
+                                <separator string="Terms and Conditions" name="description"/>
+                                <field name="description"/>
+                            </page>
+                        </notebook>
+                    
+                </form>
+            </field>
+        </record>
+     </data>
+</openerp>
