@@ -44,6 +44,7 @@ def format_date_tz(date, tz_user):
     dt_format = tools.DEFAULT_SERVER_DATETIME_FORMAT
     return date and tools.server_to_local_timestamp(date, dt_format, dt_format, tz_user) or 'n/a'
 
+
 def truncate_text(text):
     lines = text and text.split('\n') or []
     if len(lines) > 3:
@@ -52,22 +53,24 @@ def truncate_text(text):
         res = '\n\t'.join(lines)
     return res
 
+
 def decode(text):
     """Returns unicode() string conversion of the the given encoded smtp header text"""
     if text:
         text = decode_header(text.replace('\r', ''))
         return ''.join([tools.ustr(x[0], x[1]) for x in text])
 
+
 def to_email(text):
     """Returns a list of the email addresses found in ``text``                       
     """
     if not text: return []
-    
+
     people = getaddresses([text])
-    addresses = [person[1] for person in people]    
+    addresses = [person[1] for person in people]
 
     return addresses
-    
+
 
 class mail_message_common(osv.osv_memory):
     """Common abstract class for holding the main attributes of a 
@@ -82,7 +85,8 @@ class mail_message_common(osv.osv_memory):
         'model': fields.char('Related Document model', size=128, select=1, readonly=1),
         'res_id': fields.integer('Related Document ID', select=1, readonly=1),
         'date': fields.datetime('Date'),
-        'email_from': fields.char('From', size=128, help='Message sender, taken from user preferences. If empty, this is not a mail but a message.'),
+        'email_from': fields.char('From', size=128,
+                                  help='Message sender, taken from user preferences. If empty, this is not a mail but a message.'),
         'email_to': fields.char('To', size=256, help='Message recipients'),
         'email_cc': fields.char('Cc', size=256, help='Carbon copy message recipients'),
         'email_bcc': fields.char('Bcc', size=256, help='Blind carbon copy message recipients'),
@@ -91,9 +95,11 @@ class mail_message_common(osv.osv_memory):
                                help="Full message headers, e.g. SMTP session headers "
                                     "(usually available on inbound messages only)"),
         'message_id': fields.char('Message-Id', size=256, help='Message unique identifier', select=1, readonly=1),
-        'references': fields.text('References', help='Message references, such as identifiers of previous messages', readonly=1),
+        'references': fields.text('References', help='Message references, such as identifiers of previous messages',
+                                  readonly=1),
         'subtype': fields.char('Message type', size=32, help="Type of message, usually 'html' or 'plain', used to "
-                                                             "select plaintext or rich text contents accordingly", readonly=1),
+                                                             "select plaintext or rich text contents accordingly",
+                               readonly=1),
         'body_text': fields.text('Text contents', help="Plain-text version of the message"),
         'body_html': fields.text('Rich-text contents', help="Rich-text/HTML version of the message"),
     }
@@ -101,6 +107,7 @@ class mail_message_common(osv.osv_memory):
     _defaults = {
         'subtype': 'plain'
     }
+
 
 class mail_message(osv.osv):
     '''Model holding RFC2822 email messages, and providing facilities
@@ -131,10 +138,10 @@ class mail_message(osv.osv):
             if action_ids:
                 action_data = ir_act_window.read(cr, uid, action_ids[0], context=context)
                 action_data.update({
-                    'domain' : "[('id','=',%d)]"%(res_id),
+                    'domain': "[('id','=',%d)]" % (res_id),
                     'nodestroy': True,
                     'context': {}
-                    })
+                })
         return action_data
 
     # XXX to review - how to determine action to use?
@@ -147,9 +154,9 @@ class mail_message(osv.osv):
         if action_ids:
             action_data = action_pool.read(cr, uid, action_ids[0], context=context)
             action_data.update({
-                'domain': [('id','in',att_ids)],
+                'domain': [('id', 'in', att_ids)],
                 'nodestroy': True
-                })
+            })
         return action_data
 
     def _get_display_text(self, cr, uid, ids, name, arg, context=None):
@@ -161,7 +168,8 @@ class mail_message(osv.osv):
         for message in self.browse(cr, SUPERUSER_ID, ids, context):
             msg_txt = ''
             if message.email_from:
-                msg_txt += _('%s wrote on %s: \n Subject: %s \n\t') % (message.email_from or '/', format_date_tz(message.date, tz_user), message.subject)
+                msg_txt += _('%s wrote on %s: \n Subject: %s \n\t') % (
+                message.email_from or '/', format_date_tz(message.date, tz_user), message.subject)
                 if message.body_text:
                     msg_txt += truncate_text(message.body_text)
             else:
@@ -173,18 +181,21 @@ class mail_message(osv.osv):
     _columns = {
         'partner_id': fields.many2one('res.partner', 'Related partner'),
         'user_id': fields.many2one('res.users', 'Related user', readonly=1),
-        'attachment_ids': fields.many2many('ir.attachment', 'message_attachment_rel', 'message_id', 'attachment_id', 'Attachments'),
+        'attachment_ids': fields.many2many('ir.attachment', 'message_attachment_rel', 'message_id', 'attachment_id',
+                                           'Attachments'),
         'display_text': fields.function(_get_display_text, method=True, type='text', size="512", string='Display Text'),
         'mail_server_id': fields.many2one('ir.mail_server', 'Outgoing mail server', readonly=1),
         'state': fields.selection([
-                        ('outgoing', 'Outgoing'),
-                        ('sent', 'Sent'),
-                        ('received', 'Received'),
-                        ('exception', 'Delivery Failed'),
-                        ('cancel', 'Cancelled'),
-                        ], 'State', readonly=True),
-        'auto_delete': fields.boolean('Auto Delete', help="Permanently delete this email after sending it, to save space"),
-        'original': fields.binary('Original', help="Original version of the message, as it was sent on the network", readonly=1),
+            ('outgoing', 'Outgoing'),
+            ('sent', 'Sent'),
+            ('received', 'Received'),
+            ('exception', 'Delivery Failed'),
+            ('cancel', 'Cancelled'),
+        ], 'State', readonly=True),
+        'auto_delete': fields.boolean('Auto Delete',
+                                      help="Permanently delete this email after sending it, to save space"),
+        'original': fields.binary('Original', help="Original version of the message, as it was sent on the network",
+                                  readonly=1),
     }
 
     _defaults = {
@@ -200,8 +211,8 @@ class mail_message(osv.osv):
         """Overridden to avoid duplicating fields that are unique to each email"""
         if default is None:
             default = {}
-        default.update(message_id=False,original=False,headers=False)
-        return super(mail_message,self).copy(cr, uid, id, default=default, context=context)
+        default.update(message_id=False, original=False, headers=False)
+        return super(mail_message, self).copy(cr, uid, id, default=default, context=context)
 
     def schedule_with_attach(self, cr, uid, email_from, email_to, subject, body, model=False, email_cc=None,
                              email_bcc=None, reply_to=False, attachments=None, message_id=False, references=False,
@@ -246,45 +257,45 @@ class mail_message(osv.osv):
             if param and not isinstance(param, list):
                 param = [param]
         msg_vals = {
-                'subject': subject,
-                'date': time.strftime('%Y-%m-%d %H:%M:%S'),
-                'user_id': uid,
-                'model': model,
-                'res_id': res_id,
-                'body_text': body if subtype != 'html' else False,
-                'body_html': body if subtype == 'html' else False,
-                'email_from': email_from,
-                'email_to': email_to and ','.join(email_to) or '',
-                'email_cc': email_cc and ','.join(email_cc) or '',
-                'email_bcc': email_bcc and ','.join(email_bcc) or '',
-                'reply_to': reply_to,
-                'message_id': message_id,
-                'references': references,
-                'subtype': subtype,
-                'headers': headers, # serialize the dict on the fly
-                'mail_server_id': mail_server_id,
-                'state': 'outgoing',
-                'auto_delete': auto_delete
-            }
+            'subject': subject,
+            'date': time.strftime('%Y-%m-%d %H:%M:%S'),
+            'user_id': uid,
+            'model': model,
+            'res_id': res_id,
+            'body_text': body if subtype != 'html' else False,
+            'body_html': body if subtype == 'html' else False,
+            'email_from': email_from,
+            'email_to': email_to and ','.join(email_to) or '',
+            'email_cc': email_cc and ','.join(email_cc) or '',
+            'email_bcc': email_bcc and ','.join(email_bcc) or '',
+            'reply_to': reply_to,
+            'message_id': message_id,
+            'references': references,
+            'subtype': subtype,
+            'headers': headers,  # serialize the dict on the fly
+            'mail_server_id': mail_server_id,
+            'state': 'outgoing',
+            'auto_delete': auto_delete
+        }
         email_msg_id = self.create(cr, uid, msg_vals, context)
         attachment_ids = []
         for fname, fcontent in attachments.iteritems():
             attachment_data = {
-                    'name': fname,
-                    'datas_fname': fname,
-                    'datas': fcontent and fcontent.encode('base64'),
-                    'res_model': self._name,
-                    'res_id': email_msg_id,
+                'name': fname,
+                'datas_fname': fname,
+                'datas': fcontent and fcontent.encode('base64'),
+                'res_model': self._name,
+                'res_id': email_msg_id,
             }
             if context.has_key('default_type'):
                 del context['default_type']
             attachment_ids.append(attachment_obj.create(cr, uid, attachment_data, context))
         if attachment_ids:
-            self.write(cr, uid, email_msg_id, { 'attachment_ids': [(6, 0, attachment_ids)]}, context=context)
+            self.write(cr, uid, email_msg_id, {'attachment_ids': [(6, 0, attachment_ids)]}, context=context)
         return email_msg_id
 
     def mark_outgoing(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'outgoing'}, context)
+        return self.write(cr, uid, ids, {'state': 'outgoing'}, context)
 
     def process_email_queue(self, cr, uid, ids=None, context=None):
         """Send immediately queued messages, committing after each
@@ -349,6 +360,24 @@ class mail_message(osv.osv):
                        'original': source_of_email,
                     }
         """
+
+        def unique_filename(attachments, file_name):
+            if attachments:
+                attachments_dict = dict(attachments)
+
+                if '.' in file_name:
+                    name, extension = file_name.rsplit('.', 1)
+
+                new_filename = name + '.' + extension
+                count = 0
+
+                while new_filename in attachments_dict:
+                    count += 1
+                    new_filename = "{name}-{count}.{extension}".format(name=name, count=count, extension=extension)
+                return new_filename
+            else:
+                return file_name
+
         msg_txt = message
         if isinstance(message, str):
             msg_txt = email.message_from_string(message)
@@ -365,8 +394,8 @@ class mail_message(osv.osv):
         if save_original:
             # save original, we need to be able to read the original email sometimes
             msg['original'] = message.as_string() if isinstance(message, Message) \
-                                                  else message
-            msg['original'] = base64.b64encode(msg['original']) # binary fields are b64
+                else message
+            msg['original'] = base64.b64encode(msg['original'])  # binary fields are b64
 
         if not message_id:
             # Very unusual situation, be we should be fault-tolerant here
@@ -418,7 +447,7 @@ class mail_message(osv.osv):
                                 'with message-id %r, assuming current date/time.',
                                 msg_txt.get('Date'), message_id)
                 stored_date = datetime.datetime.now()
-                
+
             msg['date'] = stored_date.strftime("%Y-%m-%d %H:%M:%S")
 
         if 'Content-Transfer-Encoding' in fields:
@@ -439,7 +468,7 @@ class mail_message(osv.osv):
             encoding = msg_txt.get_content_charset()
             body = tools.ustr(msg_txt.get_payload(decode=True), encoding, errors='replace')
             if 'text/html' in msg.get('content-type', ''):
-                msg['body_html'] =  body
+                msg['body_html'] = body
                 msg['subtype'] = 'html'
                 body = tools.html2plaintext(body)
             msg['body_text'] = tools.ustr(body, encoding, errors='replace')
@@ -457,21 +486,21 @@ class mail_message(osv.osv):
 
                 encoding = part.get_content_charset()
                 filename = part.get_filename()
-                if part.get_content_maintype()=='text':
+                if part.get_content_maintype() == 'text':
                     content = part.get_payload(decode=True)
                     if filename:
-                        attachments.append((filename, content))
+                        attachments.append((unique_filename(attachments, filename), content))
                     content = tools.ustr(content, encoding, errors='replace')
                     if part.get_content_subtype() == 'html':
                         msg['body_html'] = content
-                        msg['subtype'] = 'html' # html version prevails
+                        msg['subtype'] = 'html'  # html version prevails
                         body = tools.ustr(tools.html2plaintext(content))
                         body = body.replace('&#13;', '')
                     elif part.get_content_subtype() == 'plain':
                         body = content
                 elif part.get_content_maintype() in ('application', 'image'):
-                    if filename :
-                        attachments.append((filename,part.get_payload(decode=True)))
+                    if filename:
+                        attachments.append((unique_filename(attachments, filename), part.get_payload(decode=True)))
                     else:
                         res = part.get_payload(decode=True)
                         body += tools.ustr(res, encoding, errors='replace')
@@ -483,7 +512,6 @@ class mail_message(osv.osv):
         msg['body'] = msg['body_text']
         msg['sub_type'] = msg['subtype'] or 'plain'
         return msg
-
 
     def send(self, cr, uid, ids, auto_commit=False, context=None):
         """Sends the selected emails immediately, ignoring their current
@@ -529,8 +557,8 @@ class mail_message(osv.osv):
                     email_bcc=to_email(message.email_bcc),
                     reply_to=message.reply_to,
                     attachments=attachments, message_id=message.message_id,
-                    references = message.references,
-                    object_id=message.res_id and ('%s-%s' % (message.res_id,message.model)),
+                    references=message.references,
+                    object_id=message.res_id and ('%s-%s' % (message.res_id, message.model)),
                     subtype=message.subtype,
                     subtype_alternative=subtype_alternative,
                     headers=message.headers and ast.literal_eval(message.headers))
@@ -539,36 +567,36 @@ class mail_message(osv.osv):
                                                 context=context)
                 if res:
                     message.write(
-                            {
-                                'state':'sent',
-                                'message_id': res,
-                                'user_id': message.user_id.id or uid,
-                                'date': message.date
+                        {
+                            'state': 'sent',
+                            'message_id': res,
+                            'user_id': message.user_id.id or uid,
+                            'date': message.date
                                     or datetime.datetime.now(),
-                            })
+                        })
                     message_sent = True
                 else:
-                    message.write({'state':'exception'})
+                    message.write({'state': 'exception'})
                     message_sent = False
 
                 # if auto_delete=True then delete that sent messages as well as attachments
                 if message_sent and message.auto_delete:
                     self.pool.get('ir.attachment').unlink(cr, uid,
                                                           [x.id for x in message.attachment_ids \
-                                                                if x.res_model == self._name and \
-                                                                   x.res_id == message.id],
+                                                           if x.res_model == self._name and \
+                                                           x.res_id == message.id],
                                                           context=context)
                     message.unlink()
             except Exception:
                 _logger.exception('failed sending mail.message %s', message.id)
-                message.write({'state':'exception'})
+                message.write({'state': 'exception'})
 
             if auto_commit == True:
                 cr.commit()
         return True
 
     def cancel(self, cr, uid, ids, context=None):
-        self.write(cr, uid, ids, {'state':'cancel'}, context=context)
+        self.write(cr, uid, ids, {'state': 'cancel'}, context=context)
         return True
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
