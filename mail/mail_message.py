@@ -367,8 +367,12 @@ class mail_message(osv.osv):
 
                 if '.' in file_name:
                     name, extension = file_name.rsplit('.', 1)
+                else:
+                    name = file_name
+                    extension = ''
 
                 new_filename = name + '.' + extension
+
                 count = 0
 
                 while new_filename in attachments_dict:
