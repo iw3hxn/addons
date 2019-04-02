@@ -164,7 +164,7 @@ the rule to mark CC(mail to any other person defined in actions)."),
         # Check if any rule matching with current object
         for obj_name, rule_id in res:
             if not (model == obj_name):
-                continue # TODO add this condition in the WHERE clause above.
+                continue  # TODO add this condition in the WHERE clause above.
             else:
                 obj = self.pool.get(obj_name)
                 # If the rule doesn't involve a time condition, run it immediately
@@ -290,16 +290,16 @@ the rule to mark CC(mail to any other person defined in actions)."),
     def format_mail(self, obj, body):
         data = {
             'object_id': obj.id,
-            'object_subject': hasattr(obj, 'name') and obj.name or False,
-            'object_date': hasattr(obj, 'date') and obj.date or False,
-            'object_description': hasattr(obj, 'description') and obj.description or False,
-            'object_user': hasattr(obj, 'user_id') and (obj.user_id and obj.user_id.name) or '/',
-            'object_user_email': hasattr(obj, 'user_id') and (obj.user_id and \
+            'object_subject': 'name' in obj._model._all_columns and obj.name or False,
+            'object_date': 'date' in obj._model._all_columns and obj.date or False,
+            'object_description': 'description' in obj._model._all_columns and obj.description or False,
+            'object_user': 'user_id' in obj._model._all_columns and (obj.user_id and obj.user_id.name) or '/',
+            'object_user_email': 'user_id' in obj._model._all_columns and (obj.user_id and \
                                      obj.user_id.user_email) or '/',
-            'object_user_phone': hasattr(obj, 'partner_address_id') and (obj.partner_address_id and \
+            'object_user_phone': 'partner_address_id' in obj._model._all_columns and (obj.partner_address_id and \
                                      obj.partner_address_id.phone) or '/',
-            'partner': hasattr(obj, 'partner_id') and (obj.partner_id and obj.partner_id.name) or '/',
-            'partner_email': hasattr(obj, 'partner_address_id') and (obj.partner_address_id and\
+            'partner': 'partner_id' in obj._model._all_columns and (obj.partner_id and obj.partner_id.name) or '/',
+            'partner_email': 'partner_address_id' in obj._model._all_columns and (obj.partner_address_id and\
                                          obj.partner_address_id.email) or '/',
         }
         return self.format_body(body % data)
