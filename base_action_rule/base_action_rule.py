@@ -333,7 +333,6 @@ the rule to mark CC(mail to any other person defined in actions)."),
                     _("No E-Mail ID Found for your Company address!"))
         return mail_message.schedule_with_attach(cr, uid, emailfrom, emails, name, body, model='base.action.rule', reply_to=reply_to, res_id=obj.id)
 
-
     def do_check(self, cr, uid, action, obj, context=None):
         """ check Action
             @param self: The object pointer
@@ -351,9 +350,9 @@ the rule to mark CC(mail to any other person defined in actions)."),
                     ok = False
             else:
                 ok = False
-        if getattr(obj, 'user_id', False):
+        if 'user_id' in obj._model._all_columns:
             ok = ok and (not action.trg_user_id.id or action.trg_user_id.id==obj.user_id.id)
-        if getattr(obj, 'partner_id', False):
+        if 'partner_id' in obj._model._all_columns:
             ok = ok and (not action.trg_partner_id.id or action.trg_partner_id.id==obj.partner_id.id)
             ok = ok and (
                 not action.trg_partner_categ_id.id or
@@ -363,7 +362,7 @@ the rule to mark CC(mail to any other person defined in actions)."),
                 )
             )
         state_to = context.get('state_to', False)
-        state = getattr(obj, 'state', False)
+        state = 'state' in obj._model._all_columns
         if state:
             ok = ok and (not action.trg_state_from or action.trg_state_from==state)
         if state_to:

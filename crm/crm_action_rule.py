@@ -65,12 +65,12 @@ class base_action_rule(osv.osv):
     def do_check(self, cr, uid, action, obj, context=None):
         ok = super(base_action_rule, self).do_check(cr, uid, action, obj, context=context)
 
-        if hasattr(obj, 'section_id'):
+        if 'section_id' in obj._model._all_columns:
             ok = ok and (not action.trg_section_id or action.trg_section_id.id == obj.section_id.id)
-        if hasattr(obj, 'categ_id'):
+        if 'categ_id' in obj._model._all_columns:
             ok = ok and (not action.trg_categ_id or action.trg_categ_id.id == obj.categ_id.id)
 
-        #Cheking for history
+        # Cheking for history
         regex = action.regex_history
         if regex:
             res = False
