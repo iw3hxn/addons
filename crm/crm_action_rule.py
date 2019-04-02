@@ -92,6 +92,9 @@ class base_action_rule(osv.osv):
 
     def do_action(self, cr, uid, action, model_obj, obj, context=None):
         write = {}
+        if model_obj._name != 'crm.lead':
+            return super(base_action_rule, self).do_action(cr, uid, action, model_obj, obj, context=context)
+
         if hasattr(action, 'act_section_id') and action.act_section_id:
             obj.section_id = action.act_section_id
             write['section_id'] = action.act_section_id.id
@@ -99,7 +102,7 @@ class base_action_rule(osv.osv):
         if hasattr(obj, 'email_cc') and action.act_email_cc:
             if '@' in (obj.email_cc or ''):
                 emails = obj.email_cc.split(",")
-                if  action.act_email_cc not in emails:# and '<'+str(action.act_email_cc)+">" not in emails:
+                if action.act_email_cc not in emails:  # and '<'+str(action.act_email_cc)+">" not in emails:
                     write['email_cc'] = obj.email_cc+','+action.act_email_cc
             else:
                 write['email_cc'] = action.act_email_cc
@@ -122,7 +125,6 @@ class base_action_rule(osv.osv):
             self.email_send(cr, uid, obj, emails, action.act_mail_body)
         context.update(save_context)
         return True
-
 
     def state_get(self, cr, uid, context=None):
         """Gets available states for crm"""

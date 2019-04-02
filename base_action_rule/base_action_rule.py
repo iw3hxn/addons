@@ -397,30 +397,31 @@ the rule to mark CC(mail to any other person defined in actions)."),
             self.pool.get('ir.actions.server').run(cr, uid, [action.server_action_id.id], context)
         write = {}
 
-        if hasattr(obj, 'user_id') and action.act_user_id:
+        if 'user_id' in obj._model._all_columns and action.act_user_id:
             obj.user_id = action.act_user_id
             write['user_id'] = action.act_user_id.id
-        if hasattr(obj, 'date_action_last'):
+        if 'date_action_last' in obj._model._all_columns:
             write['date_action_last'] = time.strftime('%Y-%m-%d %H:%M:%S')
-        if hasattr(obj, 'state') and action.act_state:
+        if 'state' in obj._model._all_columns and action.act_state:
             obj.state = action.act_state
             write['state'] = action.act_state
 
-        if hasattr(obj, 'categ_id') and action.act_categ_id:
+        if 'categ_id' in obj._model._all_columns and action.act_categ_id:
             obj.categ_id = action.act_categ_id
             write['categ_id'] = action.act_categ_id.id
 
-        model_obj.write(cr, uid, [obj.id], write, context)
+        if write:
+            model_obj.write(cr, uid, [obj.id], write, context)
 
-        if hasattr(model_obj, 'remind_user') and action.act_remind_user:
+        if 'remind_user' in obj._model._all_columns and action.act_remind_user:
             model_obj.remind_user(cr, uid, [obj.id], context, attach=action.act_remind_attach)
-        if hasattr(model_obj, 'remind_partner') and action.act_remind_partner:
+        if 'remind_partner' in obj._model._all_columns and action.act_remind_partner:
             model_obj.remind_partner(cr, uid, [obj.id], context, attach=action.act_remind_attach)
         if action.act_method:
             getattr(model_obj, 'act_method')(cr, uid, [obj.id], action, context)
 
         emails = []
-        if hasattr(obj, 'user_id') and action.act_mail_to_user:
+        if 'user_id' in obj._model._all_columns and action.act_mail_to_user:
             if obj.user_id:
                 emails.append(obj.user_id.user_email)
 
@@ -430,8 +431,8 @@ the rule to mark CC(mail to any other person defined in actions)."),
             emails += (action.act_mail_to_email or '').split(',')
 
         locals_for_emails = {
-            'user' : self.pool.get('res.users').browse(cr, uid, uid, context=context),
-            'obj' : obj,
+            'user': self.pool.get('res.users').browse(cr, uid, uid, context=context),
+            'obj': obj,
         }
 
         if action.act_email_to:
