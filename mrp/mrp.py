@@ -1017,7 +1017,7 @@ class mrp_production(osv.osv):
         stock_move = self.pool.get('stock.move')
         source_location_id = production.product_id.product_tmpl_id.property_stock_production.id
         destination_location_id = production.location_dest_id.id
-        move_name = _('PROD: %s') + production.name 
+        move_name = _('PROD: %s') % production.name
         data = {
             'name': move_name,
             'date': production.date_planned,
