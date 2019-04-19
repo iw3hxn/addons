@@ -50,7 +50,7 @@ msgstr "Destinazione"
 #: code:addons/purchase/purchase.py:236
 #, python-format
 msgid "In order to delete a purchase order, it must be cancelled first!"
-msgstr ""
+msgstr "Per cancellare l'ordine di acquisto deve essere prima portato in bozza"
 
 #. module: purchase
 #: help:purchase.report,date:0
