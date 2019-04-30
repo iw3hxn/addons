@@ -47,6 +47,7 @@ SALE_ORDER_EDI_STRUCT = {
     'company_id': True, # -> to be changed into partner
     #custom: 'partner_ref'
     'date_order': True,
+    'minimum_planned_date': True,
     'partner_id': True,
     #custom: 'partner_address'
     #custom: 'notes'
@@ -207,8 +208,9 @@ class sale_order_line(osv.osv, EDIMixin):
             edi_doc = super(sale_order_line,self).edi_export(cr, uid, [line], edi_struct, context)[0]
             edi_doc['__import_model'] = 'purchase.order.line'
             edi_doc['product_qty'] = line.product_uom_qty
+
             if line.product_uos:
-                edi_doc.update(product_uom=line.product_uos,
+                edi_doc.update(product_uom=line.product_uos.name,
                                product_qty=line.product_uos_qty)
 
             # company.security_days is for internal use, so customer should only
