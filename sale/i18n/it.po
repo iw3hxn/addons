@@ -2550,3 +2550,9 @@ msgstr "_Annulla"
 #: view:sale.add.note:0
 msgid "_Add"
 msgstr "_Aggiungi"
+
+#. module: sale
+#: code:addons/sale/sale.py:468
+#, python-format
+msgid "{order} has been change date from {date_from} to {date_to}"
+msgstr "{order} è stata cambiata la data da {date_from} a {date_to}"
