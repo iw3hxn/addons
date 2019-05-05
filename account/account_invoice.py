@@ -866,8 +866,8 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             else:
                 total -= i['price']
                 total_currency -= i['amount_currency'] or i['price']
-        total = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, total, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
-        total_currency = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, total_currency, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
+        total = cur_obj.compute(cr, uid, inv.currency_id.id, inv.currency_id.id, total, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
+        total_currency = cur_obj.compute(cr, uid, inv.currency_id.id, inv.currency_id.id, total_currency, context={'date': inv.date_invoice or time.strftime('%Y-%m-%d')}, round=True)
         return total, total_currency, invoice_move_lines
 
     def inv_line_characteristic_hashcode(self, invoice, invoice_line):
@@ -1059,7 +1059,7 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
             # account move reference when creating the same invoice after a cancelled one:
             # ctx.update({'invoice':inv})
             # move_obj.post(cr, uid, [move_id], context=ctx)
-        self._log_event(cr, uid, ids)
+        # self._log_event(cr, uid, ids)
         return True
 
     def line_get_convert(self, cr, uid, x, part, date, context=None):
