@@ -352,12 +352,12 @@ class sale_order(osv.osv):
 
     def onchange_pricelist_id(self, cr, uid, ids, pricelist_id, order_lines, context={}):
         if (not pricelist_id) or (not order_lines):
-            return {}
+            return {'value': {}}
         warning = {
             'title': _('Pricelist Warning!'),
-            'message' : _('If you change the pricelist of this order (and eventually the currency), prices of existing order lines will not be updated.')
+            'message': _('If you change the pricelist of this order (and eventually the currency), prices of existing order lines will not be updated.')
         }
-        return {'warning': warning}
+        return {'value': {}, 'warning': warning}
 
     def onchange_partner_order_id(self, cr, uid, ids, order_id, invoice_id=False, shipping_id=False, context={}):
         if not order_id:
