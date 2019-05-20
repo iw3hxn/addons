@@ -223,8 +223,8 @@ class product_product(osv.osv):
         
         # Extract UoM id from product ids 
         product2uom = {}
-        for product in self.read(cr, uid, ids, ['uom_id'], context=context):
-            product2uom[product['id']] = product['uom_id'][0]
+        for product in self.read(cr, uid, ids, ['uom_id'], context=context, load='_obj'):
+            product2uom[product['id']] = product['uom_id']
             
         # Create a dict of the UoM resources by id that we need for conversion purposes
         uoms_o = {}
