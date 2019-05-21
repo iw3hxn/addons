@@ -623,6 +623,9 @@ class purchase_order(osv.osv):
         })
         return super(purchase_order, self).copy(cr, uid, id, default, context)
 
+    def _get_do_merge_order_line_keys(self):
+        return ['name', 'date_planned', 'taxes_id', 'price_unit', 'product_id', 'move_dest_id', 'account_analytic_id']
+
     def do_merge(self, cr, uid, ids, context=None):
         """
         To merge similar type of purchase orders.
@@ -693,8 +696,10 @@ class purchase_order(osv.osv):
                     if not porder.origin in order_infos['origin'] and not order_infos['origin'] in porder.origin:
                         order_infos['origin'] = (order_infos['origin'] or '') + ' ' + porder.origin
 
+            order_line_keys = self._get_do_merge_order_line_keys()
+
             for order_line in porder.order_line:
-                line_key = make_key(order_line, ('name', 'date_planned', 'taxes_id', 'price_unit', 'product_id', 'move_dest_id', 'account_analytic_id'))
+                line_key = make_key(order_line, order_line_keys)
                 o_line = order_infos['order_line'].setdefault(line_key, {})
                 if o_line:
                     # merge the line with an existing line
