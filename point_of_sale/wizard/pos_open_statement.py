@@ -49,6 +49,7 @@ class pos_open_statement(osv.osv_memory):
             raise osv.except_osv(_('No Cash Register Defined !'), _('You must define which payment method must be available through the point of sale by reusing existing bank and cash through "Accounting > Configuration > Financial Accounting > Journals". Select a journal and check the field "PoS Payment Method" from the "Point of Sale" tab. You can also create new payment methods directly from menu "PoS Backend > Configuration > Payment Methods".'))
 
         for journal in journal_obj.browse(cr, uid, j_ids, context=context):
+            data = {}
             ids = statement_obj.search(cr, uid, [('state', '!=', 'confirm'), ('user_id', '=', uid), ('journal_id', '=', journal.id)], context=context)
             if not ids:
                 if journal.sequence_id:
