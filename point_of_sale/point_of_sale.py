@@ -526,10 +526,10 @@ class pos_order(osv.osv):
         def compute_tax(amount, tax, line):
             if amount > 0:
                 tax_code_id = tax['base_code_id']
-                tax_amount = line.price_subtotal * tax['base_sign']
+                tax_amount = abs(line.price_subtotal) * tax['base_sign']
             else:
                 tax_code_id = tax['ref_base_code_id']
-                tax_amount = line.price_subtotal * tax['ref_base_sign']
+                tax_amount = abs(line.price_subtotal) * tax['ref_base_sign']
 
             return (tax_code_id, tax_amount,)
 
