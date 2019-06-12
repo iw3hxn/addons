@@ -633,7 +633,7 @@ class document_storage(osv.osv):
             # to write the fname and size, and update them in the db concurrently.
             # We cannot use a write() here, because we are already in one.
             cr.execute('UPDATE ir_attachment SET store_fname = %s, file_size = %s, file_type = %s WHERE id = %s',
-                (store_fname, filesize, icont_u, file_node.file_id))
+                (store_fname, filesize, mime, file_node.file_id))
             file_node.content_length = filesize
             file_node.content_type = mime
             return True
