@@ -1693,7 +1693,7 @@ class account_invoice_line(osv.osv):
                 tax_code_found = True
 
                 res[-1]['tax_code_id'] = tax_code_id
-                res[-1]['tax_amount'] = cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, tax_amount, context={'date': inv.date_invoice})
+                res[-1]['tax_amount'] = tax_amount  #cur_obj.compute(cr, uid, inv.currency_id.id, company_currency, tax_amount, context={'date': inv.date_invoice})
         return res
 
     def move_line_get_item(self, cr, uid, line, context=None):
