@@ -728,6 +728,8 @@ class account_account(osv.osv):
 
     def _check_moves(self, cr, uid, ids, method, context=None):
         line_obj = self.pool.get('account.move.line')
+        if isinstance(ids, (int, long)):
+            ids = [ids]
         account_ids = self.search(cr, uid, [('id', 'child_of', ids)])
 
         if line_obj.search(cr, uid, [('account_id', 'in', account_ids)]):
@@ -2004,7 +2006,7 @@ class account_tax_code(osv.osv):
                             GROUP BY line.tax_code_id',
                        (parent_ids,) + where_params)
         else:
-            cr.execute('SELECT line.tax_code_id, sum(line.credit) - sum(line.debit) \
+            cr.execute('SELECT line.tax_code_id, sum(line.tax_amount) \
                     FROM account_move_line AS line, \
                     account_move AS move \
                     WHERE line.tax_code_id IN %s ' + where + ' \
