@@ -21,8 +21,11 @@
 
 {
     "name": "Calendar Layer",
-    "version": "1.1",
-    "depends": ["base", "mail"],
+    "version": "1.1a",
+    "depends": [
+        "base",
+        "mail"
+    ],
     'complexity': "easy",
     'description': """
 This is a full-featured calendar system.
@@ -49,11 +52,14 @@ If you need to manage your meetings, you should install the CRM module.
         'wizard/base_calendar_invite_attendee_view.xml',
         'base_calendar_view.xml'
     ],
-    "test" : ['test/base_calendar_test.yml'],
+    "test": ['test/base_calendar_test.yml'],
     "installable": True,
     "auto_install": False,
     "certificate": "00694071962960352821",
-    'images': ['images/base_calendar1.jpeg','images/base_calendar2.jpeg','images/base_calendar3.jpeg','images/base_calendar4.jpeg',],
+    'images': [
+        'images/base_calendar1.jpeg',
+        'images/base_calendar2.jpeg',
+        'images/base_calendar3.jpeg',
+        'images/base_calendar4.jpeg'
+    ],
 }
-
-# vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
