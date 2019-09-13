@@ -76,6 +76,10 @@ class purchase_order(osv.osv):
                         (date_planned=%s or date_planned<%s)""", (value,po.id,po.minimum_planned_date,value))
             cr.execute("""update purchase_order set
                     minimum_planned_date=%s where id=%s""", (value, po.id))
+
+            cr.execute("""update stock_picking set
+                                min_date=%s where purchase_id=%s""", (value, po.id))
+
         return True
 
     def _minimum_planned_date(self, cr, uid, ids, field_name, arg, context=None):
