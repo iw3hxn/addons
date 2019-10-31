@@ -401,7 +401,7 @@ class purchase_order(osv.osv):
             res = mod_obj.get_object_reference(cr, uid, 'stock', 'view_picking_in_form')
             result['views'] = [(res and res[1] or False, 'form')]
             result['res_id'] = pick_ids and pick_ids[0] or False
-        result['context'] = {'default_type': 'in', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0}
+        result['context'] = {'default_type': 'in', 'contact_display': 'partner_address', 'search_default_confirmed': 0, 'search_default_available': 0, 'type_in': 1}
         return result
 
     def action_view_invoice(self, cr, uid, ids, context=None):
