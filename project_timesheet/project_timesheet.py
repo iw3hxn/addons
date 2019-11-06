@@ -74,7 +74,8 @@ class project_work(osv.osv):
         res['product_uom_id'] = emp.product_id.uom_id.id
         return res
 
-    def create(self, cr, uid, vals, context):
+    def create(self, cr, uid, vals, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         obj_timesheet = self.pool.get('hr.analytic.timesheet')
         project_obj = self.pool.get('project.project')
         task_obj = self.pool.get('project.task')
