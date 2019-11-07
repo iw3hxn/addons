@@ -29,7 +29,7 @@ class mrp_workorder(osv.osv):
     _auto = False
     _columns = {
         'year': fields.char('Year', size=64, readonly=True),
-        'month':fields.selection([('01','January'), ('02','February'), ('03','March'), ('04','April'), ('05','May'), ('06','June'),
+        'month': fields.selection([('01','January'), ('02','February'), ('03','March'), ('04','April'), ('05','May'), ('06','June'),
                                   ('07','July'), ('08','August'), ('09','September'), ('10','October'), ('11','November'), ('12','December')],'Month',readonly=True),
         'day': fields.char('Day', size=64, readonly=True),
         'nbr': fields.integer('# of Lines', readonly=True),
@@ -56,7 +56,7 @@ class mrp_workorder(osv.osv):
                     min(wl.id) as id,
                     mp.product_id as product_id,
                     sum(wl.hour) as total_hours,
-                    avg(wl.delay) as delay,
+                    0 as delay,
                     (w.costs_hour*sum(wl.hour)) as total_cost,
                     wl.production_id as production_id,
                     wl.workcenter_id as workcenter_id,
