@@ -153,6 +153,11 @@ class users(osv.osv):
                 ((encrypt_md5(password, gen_salt()), id)
                  for id, password in to_crypt))
 
+    def create(self, cr, uid, values, context=None):
+        if 'new_password' in values:
+            values['password'] = values['new_password']
+        return super(users, self).create(cr, uid, values, context)
+
     def set_pw(self, cr, uid, id, name, value, args, context):
         if not value:
             raise osv.except_osv(_('Error'), _("Please specify the password !"))
