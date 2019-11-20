@@ -206,9 +206,12 @@ class document_file(osv.osv):
         # Grab ids, bypassing 'count'
         ids = super(document_file, self).search(cr, uid, args, offset=offset,
                                                 limit=limit, order=order,
-                                                context=context, count=False)
+                                                context=context, count=count)
         if not ids:
             return 0 if count else []
+
+        if count:
+            return ids
 
         # Work with a set, as list.remove() is prohibitive for large lists of documents
         # (takes 20+ seconds on a db with 100k docs during search_count()!)

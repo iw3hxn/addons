@@ -1729,7 +1729,7 @@ class ir_attachment(osv.osv):
             else:
                 new_args.append(domain_item)
         return super(ir_attachment, self).search(cr, uid, new_args, offset=offset,
-                                                 limit=limit, order=order, context=context, count=False)
+                                                 limit=limit, order=order, context=context, count=count)
 
 
 ir_attachment()
