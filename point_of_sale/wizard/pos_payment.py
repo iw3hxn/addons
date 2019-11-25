@@ -96,7 +96,9 @@ class pos_make_payment(osv.osv_memory):
             while hr_employee:
                 employee = hr_employee.pop()
                 try:
-                    res = hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=context, dt=order.date_order)
+                    ctx = context.copy()
+                    ctx['shop_id'] = order.shop_id.id
+                    res = hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=ctx, dt=order.date_order)
                 except Exception as e:
                     res = str(e)
                 result.append(res)

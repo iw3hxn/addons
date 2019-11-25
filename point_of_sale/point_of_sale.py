@@ -422,7 +422,7 @@ class pos_order(osv.osv):
         return abs
 
     def action_invoice_state(self, cr, uid, ids, context=None):
-        return self.write(cr, uid, ids, {'state':'invoiced'}, context=context)
+        return self.write(cr, uid, ids, {'state': 'invoiced'}, context=context)
 
     def action_invoice(self, cr, uid, ids, context=None):
         wf_service = netsvc.LocalService("workflow")
@@ -1044,5 +1044,18 @@ class res_partner(osv.osv):
         'property_customer_ref': fields.char('Customer Ref.', size=16, help="The reference attributed by the partner to the current company as a customer of theirs."),
     }
 
+
+class hr_attendance(osv.osv):
+    _inherit = "hr.attendance"
+
+    _columns = {
+        'shop_id': fields.many2one('sale.shop', 'Shop'),
+    }
+
+    def create(self, cr, uid, values, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        if context.get('shop_id'):
+            values['shop_id'] = context['shop_id']
+        return super(hr_attendance, self).create(cr, uid, values, context)
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
