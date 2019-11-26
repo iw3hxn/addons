@@ -4,7 +4,7 @@
               sequence="19" groups="base.group_system"
               web_icon="images/knowledge.png"
               web_icon_hover="images/knowledge-hover.png"/>
-    <menuitem name="Configuration" id="knowledge.menu_document_configuration" parent="knowledge.menu_document" sequence="50"/>
+    <menuitem name="Configuration" id="knowledge.menu_document_configuration" parent="knowledge.menu_document" sequence="50" groups="document.group_document_manager"/>
 
     <menuitem id="knowledge.menu_document2" name="Collaborative Content"
        parent="knowledge.menu_document" />
