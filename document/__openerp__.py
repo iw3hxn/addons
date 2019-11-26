@@ -22,7 +22,7 @@
 
 {
     'name': 'Document Management System',
-    'version': '2.1a',
+    'version': '2.1b',
     'category': 'Knowledge Management',
     'complexity': "normal",
     'description': """

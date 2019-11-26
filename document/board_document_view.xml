@@ -33,7 +33,7 @@
             <field name="view_id" ref="board_document_manager_form"/>
          </record>
 
-        <menuitem id="menu_reporting" name="Reporting" sequence="2" parent="knowledge.menu_document"/>
+         <menuitem id="menu_reporting" name="Reporting" sequence="2" parent="knowledge.menu_document" groups="document.group_document_manager" />
          <menuitem
             name="Dashboard"
             id="menu_reports_document"
