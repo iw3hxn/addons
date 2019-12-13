@@ -22,7 +22,7 @@
 
 {
     'name': 'Budgets Management',
-    'version': '1.0',
+    'version': '1.0a',
     'category': 'Accounting & Finance',
     'complexity': "normal",
     'description': """
