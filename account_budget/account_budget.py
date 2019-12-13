@@ -20,7 +20,8 @@
 ##############################################################################
 import datetime
 from operator import add
-
+from dateutil.relativedelta import relativedelta
+from openerp.tools import DEFAULT_SERVER_DATE_FORMAT
 import decimal_precision as dp
 from openerp.osv import fields, osv
 from openerp.tools.translate import _
@@ -363,14 +364,32 @@ class crossovered_budget_lines(osv.osv):
     def _theo(self, cr, uid, ids, name, args, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            res[line.id] = self._theo_amt(cr, uid, [line.id], context=context)[line.id]
+
+            start_date = datetime.datetime.strptime(line.date_from, DEFAULT_SERVER_DATE_FORMAT)
+            end_date = datetime.datetime.strptime(line.date_to, DEFAULT_SERVER_DATE_FORMAT)
+            today = datetime.datetime.today()
+            # today = datetime.datetime.strptime('2019-04-15', DEFAULT_SERVER_DATE_FORMAT)
+
+            total_delta_months = relativedelta(end_date, start_date).months + 1  #  (end_date - start_date).days
+            today_delta_months = relativedelta(today, start_date).months + 1  #  (end_date - start (today - start_date).days
+
+            res[line.id] = (line.planned_amount / total_delta_months) * today_delta_months
         return res
 
     def _perc(self, cr, uid, ids, name, args, context=None):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
-            if line.theoritical_amount <> 0.00:
+            if line.theoritical_amount != 0.00:
                 res[line.id] = float((line.practical_amount or 0.0) / line.theoritical_amount) * 100
+            else:
+                res[line.id] = 0.00
+        return res
+
+    def _delta_prac(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        for line in self.browse(cr, uid, ids, context=context):
+            if line.practical_amount != 0.00:
+                res[line.id] = line.theoritical_amount - line.practical_amount
             else:
                 res[line.id] = 0.00
         return res
@@ -387,7 +406,8 @@ class crossovered_budget_lines(osv.osv):
         'planned_amount': fields.float('Planned Amount', required=True, digits_compute=dp.get_precision('Account')),
         'practical_amount': fields.function(_prac, string='Practical Amount', type='float', digits_compute=dp.get_precision('Account')),
         'theoritical_amount': fields.function(_theo, string='Theoretical Amount', type='float', digits_compute=dp.get_precision('Account')),
-        'percentage':fields.function(_perc, string='Percentage', type='float'),
+        'delta_amount': fields.function(_delta_prac, string='Delta Amount', type='float', digits_compute=dp.get_precision('Account')),
+        'percentage': fields.function(_perc, string='Percentage', type='float'),
         'company_id': fields.related('crossovered_budget_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True)
     }
 

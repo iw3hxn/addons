@@ -113,7 +113,8 @@
                             <field name="date_to" attrs="{'readonly':[('state','!=','draft')]}"/>
                             <field name="company_id" groups="base.group_multi_company" widget="selection"/>
                             <field name="crossovered_budget_line" colspan="4" nolabel="1" attrs="{'readonly':[('state','!=','draft')]}">
-                                <tree string="Budget Lines">
+                                <tree string="Budget Lines" colors="red: delta_amount &lt; 0; green: delta_amount &gt; 0" >
+
                                     <field name="analytic_account_id" groups="analytic.group_analytic_accounting"/>
                                     <field name="general_budget_id"/>
                                     <field name="date_from"/>
@@ -122,6 +123,7 @@
                                     <field name="planned_amount" sum="Planned Amount"/>
                                     <field name="practical_amount" sum="Practical Amount"/>
                                     <field name="theoritical_amount" sum="Theoretical Amount"/>
+                                    <field name="delta_amount" />
                                     <field name="percentage"/>
                                 </tree>
                                 <form string="Budget Lines">

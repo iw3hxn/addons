@@ -101,7 +101,7 @@ msgstr "Confermato"
 #. module: account_budget
 #: field:crossovered.budget.lines,percentage:0
 msgid "Percentage"
-msgstr "Percentuale"
+msgstr "% usato"
 
 #. module: account_budget
 #: report:account.analytic.account.budget:0
@@ -180,7 +180,7 @@ msgstr "Reimposta a \"Bozza\""
 #: view:crossovered.budget:0
 #: field:crossovered.budget.lines,planned_amount:0
 msgid "Planned Amount"
-msgstr "Importo previsto"
+msgstr "Budget"
 
 #. module: account_budget
 #: report:account.analytic.account.budget:0
@@ -208,7 +208,7 @@ msgstr "Valore Effettivo"
 #: view:crossovered.budget:0
 #: field:crossovered.budget.lines,practical_amount:0
 msgid "Practical Amount"
-msgstr "Imporo effettivo"
+msgstr "Consuntivo"
 
 #. module: account_budget
 #: field:crossovered.budget,date_to:0
@@ -369,7 +369,14 @@ msgstr "Stampa"
 #: view:crossovered.budget:0
 #: field:crossovered.budget.lines,theoritical_amount:0
 msgid "Theoretical Amount"
-msgstr "Importo Teorico"
+msgstr "Rateo Budget Attuale"
+
+#. module: account_budget
+#: view:account.budget.post:0
+#: view:crossovered.budget:0
+#: field:crossovered.budget.lines,delta_amount:0
+msgid "Delta Amount"
+msgstr "Differenza"
 
 #. module: account_budget
 #: report:account.analytic.account.budget:0
