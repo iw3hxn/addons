@@ -132,8 +132,100 @@
                                     <field name="date_from"/>
                                     <field name="date_to"/>
                                     <field name="paid_date" select="1"/>
-                                    <field name="planned_amount" select="1"/>
                                     <field name="company_id" widget="selection" groups="base.group_multi_company"/>
+                                    <group colspan="12" col="14">
+                                        <group string="Jan">
+                                            <field name="jan" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jan_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jan_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Feb">
+                                            <field name="feb" nolabel="1"/>
+                                            <newline/>
+                                            <field name="feb_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="feb_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Mar">
+                                            <field name="mar" nolabel="1"/>
+                                            <newline/>
+                                            <field name="mar_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="mar_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Apr">
+                                            <field name="apr" nolabel="1"/>
+                                            <newline/>
+                                            <field name="apr_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="apr_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="May">
+                                            <field name="may" nolabel="1"/>
+                                            <newline/>
+                                            <field name="may_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="may_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Jun">
+                                            <field name="jun" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jun_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jun_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Jul">
+                                            <field name="jul" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jul_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="jul_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Aug">
+                                            <field name="aug" nolabel="1"/>
+                                            <newline/>
+                                            <field name="aug_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="aug_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Sep">
+                                            <field name="sep" nolabel="1"/>
+                                            <newline/>
+                                            <field name="sep_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="sep_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Oct">
+                                            <field name="oct" nolabel="1"/>
+                                            <newline/>
+                                            <field name="oct_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="oct_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Nov">
+                                            <field name="nov" nolabel="1"/>
+                                            <newline/>
+                                            <field name="nov_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="nov_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Dec">
+                                            <field name="dec" nolabel="1"/>
+                                            <newline/>
+                                            <field name="dec_budget" nolabel="1"/>
+                                            <newline/>
+                                            <field name="dec_delta" nolabel="1"/>
+                                        </group>
+                                        <group string="Sum">
+                                            <field name="practical_amount" />
+                                            <newline/>
+                                            <field name="planned_amount"/>
+                                            <newline/>
+                                            <field name="delta_amount" />
+                                        </group>
+                                    </group>
                                 </form>
                             </field>
                             <field name="state" select="1"/>

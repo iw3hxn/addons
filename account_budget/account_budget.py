@@ -153,7 +153,7 @@ class crossovered_budget_lines(osv.osv):
 
         return periods
 
-    def _compute_init_balance(self, account_id=None, period_ids=None, mode='computed', default_values=False):
+    def _compute_init_balance(self, cr, uid, account_id=None, period_ids=None, mode='computed', default_values=False):
         if not isinstance(period_ids, list):
             period_ids = [period_ids]
         res = {}
@@ -162,17 +162,17 @@ class crossovered_budget_lines(osv.osv):
             if not account_id or not period_ids:
                 raise Exception('Missing account or period_ids')
             try:
-                self.cursor.execute("SELECT sum(debit) AS debit, "
+                cr.execute("SELECT sum(debit) AS debit, "
                                     " sum(credit) AS credit, "
                                     " sum(debit)-sum(credit) AS balance, "
                                     " sum(amount_currency) AS curr_balance"
                                     " FROM account_move_line"
                                     " WHERE period_id in %s"
                                     " AND account_id = %s", (tuple(period_ids), account_id))
-                res = self.cursor.dictfetchone()
+                res = cr.dictfetchone()
 
             except Exception, exc:
-                self.cursor.rollback()
+                cr.rollback()
                 raise
 
         return {'debit': res.get('debit') or 0.0,
@@ -209,14 +209,14 @@ class crossovered_budget_lines(osv.osv):
         opening_period_selected = self.get_included_opening_period(cr, uid, start_period)
 
         for acc in self.pool.get('account.account').browse(cr, uid, account_ids):
-            res[acc.id] = self._compute_init_balance(default_values=True)
+            res[acc.id] = self._compute_init_balance(cr, uid, default_values=True)
             if acc.user_type.close_method == 'none':
                 # we compute the initial balance for close_method == none only when we print a GL
                 # during the year, when the opening period is not included in the period selection!
                 if pnl_periods_ids and not opening_period_selected:
-                    res[acc.id] = self._compute_init_balance(acc.id, pnl_periods_ids)
+                    res[acc.id] = self._compute_init_balance(cr, uid, acc.id, pnl_periods_ids)
             else:
-                res[acc.id] = self._compute_init_balance(acc.id, bs_period_ids)
+                res[acc.id] = self._compute_init_balance(cr, uid, acc.id, bs_period_ids)
         return res
 
     def _get_account_details(self, cr, uid, account_ids, target_move, fiscalyear, main_filter, start, stop, initial_balance_mode, context=None):
@@ -394,6 +394,45 @@ class crossovered_budget_lines(osv.osv):
                 res[line.id] = 0.00
         return res
 
+    def _practical_amount_month(self, cr, uid, ids, name, args, context=None):
+        res = {}
+        months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+        account_obj = self.pool.get('account.account')
+        for line in self.browse(cr, uid, ids, context=context):
+            res[line.id] = {}
+            acc_ids = [x.id for x in line.general_budget_id.account_ids]
+            acc_ids = account_obj._get_children_and_consol(cr, uid, acc_ids, context=context)
+            date_from = line.date_from
+            fiscalyear_obj = self.pool['account.fiscalyear']
+            fiscalyear_id = fiscalyear_obj.find(cr, uid, dt=date_from, context=context)
+            fiscalyear = fiscalyear_obj.browse(cr, uid, fiscalyear_id, context)
+
+            start_date = datetime.datetime.strptime(line.date_from, DEFAULT_SERVER_DATE_FORMAT)
+
+            month_number = 1
+            for month in months:
+                new_start_date = start_date
+                date_from = datetime.date(start_date.year, month_number, 1)
+
+                date_to = date_from + relativedelta(day=1, months=+1, days=-1)
+
+                month_sum = 0
+                accounts_by_ids = self._get_account_details(cr, uid, acc_ids, target_move='posted',
+                                                            fiscalyear=fiscalyear,
+                                                            main_filter='filter_date', start=date_from.strftime(DEFAULT_SERVER_DATE_FORMAT),
+                                                            stop=date_to.strftime(DEFAULT_SERVER_DATE_FORMAT), initial_balance_mode=False,
+                                                            context=context)
+
+                for key in accounts_by_ids.keys():
+                    month_sum += accounts_by_ids[key]['balance']
+                res[line.id][month] = month_sum
+                res[line.id][month + '_budget'] = line.planned_amount / 12
+                res[line.id][month + '_delta'] = res[line.id][month + '_budget'] - res[line.id][month]
+
+                month_number += 1
+
+        return res
+
     _name = "crossovered.budget.lines"
     _description = "Budget Line"
     _columns = {
@@ -408,7 +447,94 @@ class crossovered_budget_lines(osv.osv):
         'theoritical_amount': fields.function(_theo, string='Theoretical Amount', type='float', digits_compute=dp.get_precision('Account')),
         'delta_amount': fields.function(_delta_prac, string='Delta Amount', type='float', digits_compute=dp.get_precision('Account')),
         'percentage': fields.function(_perc, string='Percentage', type='float'),
-        'company_id': fields.related('crossovered_budget_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True)
+        'company_id': fields.related('crossovered_budget_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True),
+        'jan': fields.function(_practical_amount_month, string='Gen', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'feb': fields.function(_practical_amount_month, string='Feb', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'mar': fields.function(_practical_amount_month, string='Mar', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'apr': fields.function(_practical_amount_month, string='Apr', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'may': fields.function(_practical_amount_month, string='Mag', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'jun': fields.function(_practical_amount_month, string='Giu', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'jul': fields.function(_practical_amount_month, string='Lug', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'aug': fields.function(_practical_amount_month, string='Ago', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'sep': fields.function(_practical_amount_month, string='Set', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'oct': fields.function(_practical_amount_month, string='Ott', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'nov': fields.function(_practical_amount_month, string='Nov', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'dec': fields.function(_practical_amount_month, string='Dic', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+
+        'jan_budget': fields.function(_practical_amount_month, string='Gen', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'feb_budget': fields.function(_practical_amount_month, string='Feb', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'mar_budget': fields.function(_practical_amount_month, string='Mar', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'apr_budget': fields.function(_practical_amount_month, string='Apr', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'may_budget': fields.function(_practical_amount_month, string='Mag', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'jun_budget': fields.function(_practical_amount_month, string='Giu', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'jul_budget': fields.function(_practical_amount_month, string='Lug', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'aug_budget': fields.function(_practical_amount_month, string='Ago', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'sep_budget': fields.function(_practical_amount_month, string='Set', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'oct_budget': fields.function(_practical_amount_month, string='Ott', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'nov_budget': fields.function(_practical_amount_month, string='Nov', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+        'dec_budget': fields.function(_practical_amount_month, string='Dic', type='float', multi='practical_amount_month',
+                               digits_compute=dp.get_precision('Account')),
+
+        'jan_delta': fields.function(_practical_amount_month, string='Gen', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'feb_delta': fields.function(_practical_amount_month, string='Feb', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'mar_delta': fields.function(_practical_amount_month, string='Mar', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'apr_delta': fields.function(_practical_amount_month, string='Apr', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'may_delta': fields.function(_practical_amount_month, string='Mag', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'jun_delta': fields.function(_practical_amount_month, string='Giu', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'jul_delta': fields.function(_practical_amount_month, string='Lug', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'aug_delta': fields.function(_practical_amount_month, string='Ago', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'sep_delta': fields.function(_practical_amount_month, string='Set', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'oct_delta': fields.function(_practical_amount_month, string='Ott', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'nov_delta': fields.function(_practical_amount_month, string='Nov', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+        'dec_delta': fields.function(_practical_amount_month, string='Dic', type='float',
+                                      multi='practical_amount_month',
+                                      digits_compute=dp.get_precision('Account')),
+
     }
 
 crossovered_budget_lines()
