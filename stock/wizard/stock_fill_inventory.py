@@ -127,6 +127,8 @@ class stock_fill_inventory(osv.osv_memory):
                     stock_move_details.update({'product_qty': 0})
 
                 for field, value in stock_move_details.items():
+                    if field == 'product_qty':
+                        continue
                     domain.append((field, '=', value))
 
                 line_ids = inventory_line_obj.search(cr, uid, domain, context=context)
