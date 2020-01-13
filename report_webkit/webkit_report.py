@@ -34,6 +34,7 @@ import subprocess
 import os
 import sys
 import report
+import shutil
 import tempfile
 import time
 import logging
@@ -53,24 +54,27 @@ from osv.osv import except_osv
 
 logger = logging.getLogger('report_webkit')
 
+
 def mako_template(text):
     """Build a Mako template.
 
     This template uses UTF-8 encoding
     """
-    tmp_lookup  = TemplateLookup() #we need it in order to allow inclusion and inheritance
+    tmp_lookup = TemplateLookup()  # we need it in order to allow inclusion and inheritance
     return Template(text, input_encoding='utf-8', output_encoding='utf-8', lookup=tmp_lookup)
+
 
 class WebKitParser(report_sxw):
     """Custom class that use webkit to render HTML reports
        Code partially taken from report openoffice. Thanks guys :)
     """
+
     def __init__(self, name, table, rml=False, parser=False,
-        header=True, store=False):
+                 header=True, store=False):
         self.parser_instance = False
         self.localcontext = {}
         report_sxw.__init__(self, name, table, rml, parser,
-            header, store)
+                            header, store)
 
     def get_lib(self, cursor, uid):
         """Return the lib wkhtml path"""
@@ -92,13 +96,13 @@ class WebKitParser(report_sxw):
             return webkit_path
 
         raise except_osv(
-                         _('Wkhtmltopdf library path is not set'),
-                         _('Please install executable on your system' \
-                         ' (sudo apt-get install wkhtmltopdf) or download it from here:' \
-                         ' http://code.google.com/p/wkhtmltopdf/downloads/list and set the' \
-                         ' path in the ir.config_parameter with the webkit_path key.' \
-                         'Minimal version is 0.9.9')
-                        )
+            _('Wkhtmltopdf library path is not set'),
+            _('Please install executable on your system' \
+              ' (sudo apt-get install wkhtmltopdf) or download it from here:' \
+              ' http://code.google.com/p/wkhtmltopdf/downloads/list and set the' \
+              ' path in the ir.config_parameter with the webkit_path key.' \
+              'Minimal version is 0.9.9')
+        )
 
     def generate_pdf(self, comm_path, report_xml, header, footer, html_list, webkit_header=False):
         """Call webkit in order to generate pdf"""
@@ -116,63 +120,79 @@ class WebKitParser(report_sxw):
         command.append('--quiet')
         # default to UTF-8 encoding.  Use <meta charset="latin-1"> to override.
         command.extend(['--encoding', 'utf-8'])
-        if header :
-            head_file = file( os.path.join(
-                                  tmp_dir,
-                                  str(time.time()) + '.head.html'
-                                 ),
-                                'w'
-                            )
+        if header:
+            head_file = file(os.path.join(
+                tmp_dir,
+                str(time.time()) + '.head.html'
+            ),
+                'w'
+            )
             head_file.write(header)
             head_file.close()
             file_to_del.append(head_file.name)
             command.extend(['--header-html', head_file.name])
-        if footer :
-            foot_file = file(  os.path.join(
-                                  tmp_dir,
-                                  str(time.time()) + '.foot.html'
-                                 ),
-                                'w'
-                            )
+        if footer:
+            foot_file = file(os.path.join(
+                tmp_dir,
+                str(time.time()) + '.foot.html'
+            ),
+                'w'
+            )
             foot_file.write(footer)
             foot_file.close()
             file_to_del.append(foot_file.name)
             command.extend(['--footer-html', foot_file.name])
 
-        if webkit_header.margin_top :
+        if webkit_header.margin_top:
             command.extend(['--margin-top', str(webkit_header.margin_top).replace(',', '.')])
-        if webkit_header.margin_bottom :
+        if webkit_header.margin_bottom:
             command.extend(['--margin-bottom', str(webkit_header.margin_bottom).replace(',', '.')])
-        if webkit_header.margin_left :
+        if webkit_header.margin_left:
             command.extend(['--margin-left', str(webkit_header.margin_left).replace(',', '.')])
-        if webkit_header.margin_right :
+        if webkit_header.margin_right:
             command.extend(['--margin-right', str(webkit_header.margin_right).replace(',', '.')])
-        if webkit_header.orientation :
+        if webkit_header.orientation:
             command.extend(['--orientation', str(webkit_header.orientation).replace(',', '.')])
-        if webkit_header.format :
+        if webkit_header.format:
             command.extend(['--page-size', str(webkit_header.format).replace(',', '.')])
         count = 0
-        for html in html_list :
-            html_file = file(os.path.join(tmp_dir, str(time.time()) + str(count) +'.body.html'), 'w')
+        for html in html_list:
+            html_file = file(os.path.join(tmp_dir, str(time.time()) + str(count) + '.body.html'), 'w')
             count += 1
             html_file.write(html)
             html_file.close()
             file_to_del.append(html_file.name)
             command.append(html_file.name)
         command.append(out_filename)
+
         try:
-            status = subprocess.call(command, stderr=subprocess.PIPE) # ignore stderr
-            if status :
+            if report_xml.wkhtmltopdf_debug:
+                wkhtml_dir = '/tmp/wkhtmltopdf/'
+
+                if not os.path.isdir(wkhtml_dir):
+                    os.makedirs(wkhtml_dir)
+
+                with open(wkhtml_dir + 'commands.txt', 'a') as command_file:
+                    logger.info(' '.join(command))
+                    command_file.write(' '.join(command) + '\n')
+
+                for html in file_to_del:
+                    shutil.copy(html, wkhtml_dir + os.path.basename(html))
+
+            status = subprocess.call(command, stderr=subprocess.PIPE)  # ignore stderr
+            if status:
+                logger.error(status)
                 raise except_osv(
-                                _('Webkit raise an error' ),
-                                status
-                            )
-        except Exception:
-            for f_to_del in file_to_del :
+                    _('Webkit raise an error'),
+                    status
+                )
+        except Exception, e:
+            logger.error('Exception: ' + str(e))
+            for f_to_del in file_to_del:
                 os.unlink(f_to_del)
 
         pdf = file(out_filename, 'rb').read()
-        for f_to_del in file_to_del :
+        for f_to_del in file_to_del:
             os.unlink(f_to_del)
 
         os.unlink(out_filename)
@@ -187,8 +207,9 @@ class WebKitParser(report_sxw):
         if res == src:
             # no translation defined, fallback on None (backward compatibility)
             res = ir_translation._get_source(self.parser_instance.cr, self.parser_instance.uid,
-                                             None, 'report', self.parser_instance.localcontext.get('lang', 'en_US'), src)
-        if not res :
+                                             None, 'report', self.parser_instance.localcontext.get('lang', 'en_US'),
+                                             src)
+        if not res:
             return src
         return res
 
@@ -197,10 +218,12 @@ class WebKitParser(report_sxw):
         """generate the PDF"""
 
         if context is None:
-            context={}
+            context = {}
+
         htmls = []
+
         if report_xml.report_type != 'webkit':
-            return super(WebKitParser,self).create_single_pdf(cursor, uid, ids, data, report_xml, context=context)
+            return super(WebKitParser, self).create_single_pdf(cursor, uid, ids, data, report_xml, context=context)
 
         self.parser_instance = self.parser(cursor,
                                            uid,
@@ -211,41 +234,41 @@ class WebKitParser(report_sxw):
         objs = self.getObjects(cursor, uid, ids, context)
         self.parser_instance.set_context(objs, data, ids, report_xml.report_type)
 
-        template =  False
+        template = False
 
-        if report_xml.report_file :
+        if report_xml.report_file:
             path = addons.get_module_resource(report_xml.report_file)
-            if path and os.path.exists(path) :
+            if path and os.path.exists(path):
                 template = file(path).read()
-        if not template and report_xml.report_webkit_data :
-            template =  report_xml.report_webkit_data
-        if not template :
+        if not template and report_xml.report_webkit_data:
+            template = report_xml.report_webkit_data
+        if not template:
             raise except_osv(_('Error!'), _('Webkit Report template not found !'))
         header = report_xml.webkit_header.html
         footer = report_xml.webkit_header.footer_html
         if not header and report_xml.header:
             raise except_osv(
-                  _('No header defined for this Webkit report!'),
-                  _('Please set a header in company settings')
-              )
-        if not report_xml.header :
+                _('No header defined for this Webkit report!'),
+                _('Please set a header in company settings')
+            )
+        if not report_xml.header:
             header = ''
             default_head = addons.get_module_resource('report_webkit', 'default_header.html')
-            with open(default_head,'r') as f:
+            with open(default_head, 'r') as f:
                 header = f.read()
         css = report_xml.webkit_header.css
-        if not css :
+        if not css:
             css = ''
         user = self.pool.get('res.users').browse(cursor, uid, uid)
-        company= user.company_id
+        company = user.company_id
 
-        #default_filters=['unicode', 'entity'] can be used to set global filter
+        # default_filters=['unicode', 'entity'] can be used to set global filter
         body_mako_tpl = mako_template(template)
         helper = WebKitHelper(cursor, uid, report_xml.id, context)
         if report_xml.precise_mode:
             for obj in objs:
                 self.parser_instance.localcontext['objects'] = [obj]
-                try :
+                try:
                     html = body_mako_tpl.render(helper=helper,
                                                 css=css,
                                                 _=self.translate_call,
@@ -256,7 +279,7 @@ class WebKitParser(report_sxw):
                     logger.error(msg)
                     raise except_osv(_('Webkit render'), msg)
         else:
-            try :
+            try:
                 html = body_mako_tpl.render(helper=helper,
                                             css=css,
                                             _=self.translate_call,
@@ -267,7 +290,7 @@ class WebKitParser(report_sxw):
                 logger.error(msg)
                 raise except_osv(_('Webkit render'), msg)
         head_mako_tpl = mako_template(header)
-        try :
+        try:
             head = head_mako_tpl.render(helper=helper,
                                         css=css,
                                         _=self.translate_call,
@@ -275,11 +298,11 @@ class WebKitParser(report_sxw):
                                         **self.parser_instance.localcontext)
         except Exception, e:
             raise except_osv(_('Webkit render'),
-                exceptions.text_error_template().render())
+                             exceptions.text_error_template().render())
         foot = False
-        if footer :
+        if footer:
             foot_mako_tpl = mako_template(footer)
-            try :
+            try:
                 foot = foot_mako_tpl.render(helper=helper,
                                             css=css,
                                             _=self.translate_call,
@@ -288,8 +311,8 @@ class WebKitParser(report_sxw):
                 msg = exceptions.text_error_template().render()
                 logger.error(msg)
                 raise except_osv(_('Webkit render'), msg)
-        if report_xml.webkit_debug :
-            try :
+        if report_xml.webkit_debug:
+            try:
                 deb = head_mako_tpl.render(helper=helper,
                                            css=css,
                                            _debug=tools.ustr("\n".join(htmls)),
@@ -304,14 +327,13 @@ class WebKitParser(report_sxw):
         pdf = self.generate_pdf(bin, report_xml, head, foot, htmls)
         return (pdf, 'pdf')
 
-
     def create(self, cursor, uid, ids, data, context=None):
         """We override the create function in order to handle generator
            Code taken from report openoffice. Thanks guys :) """
         pool = pooler.get_pool(cursor.dbname)
         ir_obj = pool.get('ir.actions.report.xml')
         report_xml_ids = ir_obj.search(cursor, uid,
-                [('report_name', '=', self.name[7:])], context=context)
+                                       [('report_name', '=', self.name[7:])], context=context)
         if report_xml_ids:
 
             report_xml = ir_obj.browse(cursor,
@@ -325,11 +347,11 @@ class WebKitParser(report_sxw):
             report_rml.report_sxw = None
         else:
             return super(WebKitParser, self).create(cursor, uid, ids, data, context)
-        if report_xml.report_type != 'webkit' :
+        if report_xml.report_type != 'webkit':
             return super(WebKitParser, self).create(cursor, uid, ids, data, context)
         result = self.create_source_pdf(cursor, uid, ids, data, report_xml, context)
         if not result:
-            return (False,False)
+            return (False, False)
         return result
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

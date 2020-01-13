@@ -81,22 +81,27 @@ TODO
  * Web client WYSIWYG
 
                     """,
-    "version": "0.9",
+    "version": "0.9a",
     "depends": ["base"],
     "author": "Camptocamp",
     "category": "Reporting", # i.e a technical module, not shown in Application install menu
     "url": "http://http://www.camptocamp.com/",
-    "data": [ "security/ir.model.access.csv",
-              "data.xml",
-              "wizard/report_webkit_actions_view.xml",
-              "company_view.xml",
-              "header_view.xml",
-              "ir_report_view.xml",
+    "data": [ 
+        "security/ir.model.access.csv",
+        "data.xml",
+        "wizard/report_webkit_actions_view.xml",
+        "company_view.xml",
+        "header_view.xml",
+        "ir_report_view.xml",
     ],
     "installable": True,
     "auto_install": False,
     "certificate": "001159699313338995949",
-    'images': ['images/companies_webkit.jpeg','images/header_html.jpeg','images/header_img.jpeg'],
+    'images': [
+        'images/companies_webkit.jpeg',
+        'images/header_html.jpeg',
+        'images/header_img.jpeg'
+    ],
 }
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
