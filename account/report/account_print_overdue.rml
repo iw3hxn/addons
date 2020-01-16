@@ -71,6 +71,7 @@
     <paraStyle name="Heading 9" fontName="Helvetica-Bold" fontSize="75%" leading="NaN" spaceBefore="12.0" spaceAfter="6.0"/>
     <paraStyle name="terp_tblheader_General" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
     <paraStyle name="terp_tblheader_Details" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="6.0" spaceAfter="6.0"/>
+    <paraStyle name="terp_default_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_8" fontName="Helvetica" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Bold_8" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_tblheader_General_Centre" fontName="Helvetica-Bold" fontSize="8.0" leading="10" alignment="CENTER" spaceBefore="6.0" spaceAfter="6.0"/>
@@ -86,15 +87,12 @@
     <paraStyle name="terp_default_Bold_9" fontName="Helvetica-Bold" fontSize="9.0" leading="11" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Centre_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <paraStyle name="terp_default_Right_9" fontName="Helvetica" fontSize="9.0" leading="11" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="terp_default_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="LEFT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="terp_default_Right_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="RIGHT" spaceBefore="0.0" spaceAfter="0.0"/>
-    <paraStyle name="terp_default_Centre_7" fontName="Helvetica" fontSize="7.0" leading="10" alignment="CENTER" spaceBefore="0.0" spaceAfter="0.0"/>
     <images/>
   </stylesheet>
   <story>
   <pto>
   <pto_header>
-    <blockTable colWidths="57.0,136.0,51.0,72.0,54.0,56.0,66.0,18.0" style="Table1">
+    <blockTable colWidths="65.0,184.0,80.0,72.0,54.0,56.0" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_Details">Date</para>
@@ -114,12 +112,6 @@
         <td>
           <para style="terp_tblheader_Details_Right">Paid</para>
         </td>
-        <td>
-          <para style="terp_tblheader_Details_Right">Maturity</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_Details_Centre">Li.</para>
-        </td>
       </tr>
     </blockTable>
   </pto_header>
@@ -131,12 +123,14 @@
           <para style="terp_default_9">[[ repeatIn(adr_get(o, 'invoice'),'addr') ]]</para>
         </td>
         <td>
-          <para style="terp_default_9">[[ o.title.name or '' ]] [[ o.name ]]</para>
+          <para style="terp_default_Bold_9">Spettabile</para>
+          <para style="terp_default_9">
+            <font color="white"> </font>
+          </para>
+          <para style="terp_default_Bold_9">[[ o.title.name or '' ]] [[ o.name ]]</para>
           <para style="terp_default_9">[[ addr['street'] ]]</para>
           <para style="terp_default_9">[[ addr['street2'] or removeParentNode('para') ]]</para>
-          <para style="terp_default_9">[[ addr['zip'] ]] [[ addr['city'] ]]</para>
-          <para style="terp_default_9">[[ addr['state_id'] or removeParentNode('para')]]</para>
-          <para style="terp_default_9">[[ addr['country_id'] ]]</para>
+          <para style="terp_default_9">[[ addr['zip'] ]] - [[ addr['city'] ]] [[ addr['province'] and ('- (' +  addr['province'] + ')') or '' ]] - [[ addr['country_id'] ]]</para>
           <para style="terp_default_9">
             <font color="white"> </font>
           </para>
@@ -152,11 +146,11 @@
     </para>
     <para style="terp_default_9">Document: Customer account statement</para>
     <para style="terp_default_9">Date: [[ formatLang(time.strftime('%Y-%m-%d'),date=True) ]]</para>
-    <para style="terp_default_9">Customer Ref: [[ o.ref or ' ']]</para>
+    <para style="terp_default_9">[[ o.ref and 'Customer Ref:' or ' ']] [[ o.ref or ' ']]</para>
     <para style="terp_default_9">
       <font color="white"> </font>
     </para>
-    <para style="terp_default_9">Dear Sir/Madam,</para>
+    <para style="terp_default_9"></para>
     <para style="terp_default_9">
       <font color="white"> </font>
     </para>
@@ -171,66 +165,51 @@
     <para style="terp_default_9">
       <font color="white"> </font>
     </para>
-    <blockTable colWidths="57.0,136.0,51.0,72.0,54.0,56.0,66.0,18.0" style="Table1">
+    <blockTable colWidths="65.0,254.0,72.0,54.0,56.0" style="Table1">
       <tr>
         <td>
           <para style="terp_tblheader_Details">Date</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details">Ref</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_Details_Centre">Description</para>
+          <para style="terp_tblheader_Details">Description [[ document_type ]]</para>
         </td>
         <td>
           <para style="terp_tblheader_Details_Centre">Maturity date</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Due</para>
+          <para style="terp_tblheader_Details_Right">Importo</para>
         </td>
         <td>
-          <para style="terp_tblheader_Details_Right">Paid</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_Details_Right">Maturity</para>
-        </td>
-        <td>
-          <para style="terp_tblheader_Details_Centre">Li.</para>
+          <para style="terp_tblheader_Details_Right">Da Saldare</para>
         </td>
       </tr>
     </blockTable>
     <section>
       <para style="terp_default_8">[[repeatIn(getLines(o), 'line') ]]</para>
-      <blockTable colWidths="57.0,136.0,52.0,71.0,55.0,56.0,66.0,17.0" style="Table3">
+      <blockTable colWidths="65.0,254.0,71.0,55.0,56.0" style="Table3">
         <tr>
           <td>
-            <para style="terp_default_7">[[ formatLang(line['date'],date=True) ]]</para>
+            <para style="terp_default_8">[[ formatLang(line['date'],date=True) ]]</para>
           </td>
           <td>
-            <para style="terp_default_7">[[ line['invoice']['number'] ]]</para>
+            <para style="terp_default_8">[[ ref_get(line) ]]</para>
           </td>
           <td>
-            <para style="terp_default_Centre_7">[[ line['name'] ]]</para>
+            <para style="terp_default_Centre_8">[[ line['date_maturity'] and formatLang(line['date_maturity'],date=True) or '' ]]</para>
           </td>
           <td>
-            <para style="terp_default_Centre_7">[[ line['date_maturity'] and formatLang(line['date_maturity'],date=True) or '' ]]</para>
+            <para style="terp_default_Right_8">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['debit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['credit'] * -1) or ' ') ]] </para>
           </td>
           <td>
-            <para style="terp_default_Right_7">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['debit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['credit'] * -1) or ' ') ]] </para>
-          </td>
-          <td>
-            <para style="terp_default_Right_7">[[ (line['account_id']['type'] == 'receivable' and formatLang(line['credit']) or 0) or (line['account_id']['type'] == 'payable' and formatLang(line['debit'] * -1) or 0) ]]</para>
-          </td>
-          <td>
-             <para style="terp_default_Right_7">[[ time.strftime('%Y-%m-%d') > formatLang((line['date_maturity'])) and formatLang(line['debit'] - line['credit']) ]] [[ company.currency_id.symbol ]] </para>
-          </td>
-          <td>
-            <para style="terp_default_Centre_8">[[ line['blocked'] and 'X' or '' ]]</para>
+
+
+          <para style="terp_default_Right_8">[[ (formatLang(amount_residual(line)) or '0,00') ]]</para>
+
           </td>
         </tr>
       </blockTable>
     </section>
-    <blockTable colWidths="245.0,71.0,56.0,56.0,66.0,17.0" style="Table2">
+    <blockTable colWidths="322.0,71.0,62.0,56.0" style="Table2">
       <tr>
         <td>
           <para style="terp_default_8">
@@ -238,51 +217,24 @@
           </para>
         </td>
         <td>
-          <para style="terp_default_Bold_9">Sub-Total : </para>
+          <para style="terp_default_Bold_8">Totale : </para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ formatLang((reduce(lambda x, y: x + ((y['account_id']['type'] == 'receivable' and y['debit'] or 0) or (y['account_id']['type'] == 'payable' and y['credit'] * -1 or 0)), getLines(o), 0))) ]] </para>
+          <para style="terp_default_Right_8">[[ formatLang((reduce(lambda x, y: x + ((y['account_id']['type'] == 'receivable' and y['debit'] or 0) or (y['account_id']['type'] == 'payable' and y['credit'] * -1 or 0)), getLines(o), 0))) ]] </para>
         </td>
         <td>
-          <para style="terp_default_Right_9">[[ formatLang((reduce(lambda x, y: x + ((y['account_id']['type'] == 'receivable' and y['credit'] or 0) or (y['account_id']['type'] == 'payable' and y['debit'] * -1 or 0)), getLines(o), 0))) ]] </para>
-        </td>
-        <td>
-          <para style="terp_default_Right_9">[[ formatLang((reduce(lambda x, y: x + (y['debit'] - y['credit']), filter(lambda x: x['date_maturity'] &lt; time.strftime('%Y-%m-%d'), getLines(o)), 0)), currency_obj=company.currency_id) ]]</para>
-        </td>
-        <td>
-          <para style="terp_default_9">
-            <font color="white"> </font>
-          </para>
+          <para style="terp_default_Right_8">[[ clear_just_processed_partial_reconciliation() ]] [[ formatLang((reduce(lambda x, y: x + (amount_residual(y) ), getLines(o), 0))) ]] </para>
         </td>
       </tr>
     </blockTable>
-    <blockTable colWidths="250.0,66.0,62.0,131.0" style="Table4">
-      <tr>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-        <td>
-          <para style="terp_default_Bold_9">Balance : </para>
-        </td>
-        <td>
-          <para style="terp_tblheader_Details_Right">[[ formatLang((reduce(lambda x, y: x +(y['debit'] - y['credit']), getLines(o), 0)), currency_obj=company.currency_id) ]]</para>
-        </td>
-        <td>
-          <para style="terp_default_8">
-            <font color="white"> </font>
-          </para>
-        </td>
-      </tr>
-    </blockTable>
+
     <para style="terp_default_9">
       <font color="white"> </font>
     </para>
     <para style="terp_default_9">
       <font color="white"> </font>
     </para>
-    <para style="terp_default_9">Total amount due: [[ formatLang((reduce(lambda x, y: x + (y['debit'] - y['credit']), getLines(o), 0)), currency_obj=company.currency_id) ]].</para>
+    <para style="terp_default_9">Total amount due: [[ clear_just_processed_partial_reconciliation() ]] [[ formatLang((reduce(lambda x, y: x + (amount_residual(y)), getLines(o), 0)), currency_obj=company.currency_id) ]]</para>
     <para style="terp_default_8">
       <font color="white"> </font>
     </para>
