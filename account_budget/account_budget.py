@@ -368,7 +368,8 @@ class crossovered_budget_lines(osv.osv):
             start_date = datetime.datetime.strptime(line.date_from, DEFAULT_SERVER_DATE_FORMAT)
             end_date = datetime.datetime.strptime(line.date_to, DEFAULT_SERVER_DATE_FORMAT)
             today = datetime.datetime.today()
-            # today = datetime.datetime.strptime('2019-04-15', DEFAULT_SERVER_DATE_FORMAT)
+            if today > end_date:
+                today = end_date
 
             total_delta_months = relativedelta(end_date, start_date).months + 1  #  (end_date - start_date).days
             today_delta_months = relativedelta(today, start_date).months + 1  #  (end_date - start (today - start_date).days
@@ -389,7 +390,7 @@ class crossovered_budget_lines(osv.osv):
         res = {}
         for line in self.browse(cr, uid, ids, context=context):
             if line.practical_amount != 0.00:
-                res[line.id] = line.theoritical_amount - line.practical_amount
+                res[line.id] = line.planned_amount - line.practical_amount
             else:
                 res[line.id] = 0.00
         return res
@@ -443,9 +444,9 @@ class crossovered_budget_lines(osv.osv):
         'date_to': fields.date('End Date', required=True),
         'paid_date': fields.date('Paid Date'),
         'planned_amount': fields.float('Planned Amount', required=True, digits_compute=dp.get_precision('Account')),
-        'practical_amount': fields.function(_prac, string='Practical Amount', type='float', digits_compute=dp.get_precision('Account')),
-        'theoritical_amount': fields.function(_theo, string='Theoretical Amount', type='float', digits_compute=dp.get_precision('Account')),
-        'delta_amount': fields.function(_delta_prac, string='Delta Amount', type='float', digits_compute=dp.get_precision('Account')),
+        'practical_amount': fields.function(_prac, string='Practical Amount', type='float', digits_compute=dp.get_precision('Account'), store=False),
+        'theoritical_amount': fields.function(_theo, string='Theoretical Amount', type='float', digits_compute=dp.get_precision('Account'), store=False),
+        'delta_amount': fields.function(_delta_prac, string='Delta Amount', type='float', digits_compute=dp.get_precision('Account'), store=False),
         'percentage': fields.function(_perc, string='Percentage', type='float'),
         'company_id': fields.related('crossovered_budget_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True),
         'jan': fields.function(_practical_amount_month, string='Gen', type='float', multi='practical_amount_month',
