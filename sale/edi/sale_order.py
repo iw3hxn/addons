@@ -88,7 +88,10 @@ class sale_order(osv.osv, EDIMixin):
                     'currency': self.pool.get('res.currency').edi_export(cr, uid, [order.pricelist_id.currency_id],
                                                                          context=context)[0],
                     'partner_ref': order.client_order_ref or False,
-                    'notes': order.note or False,
+                    # WARNING: order.note inherit content from the opportuniy, which may or may not
+                    # be sensible data not to be shared with the customer. Here replaced with custom field.
+                    #'notes': order.note or False,
+                    'notes': order.condizioni_vendita or False,
             })
             edi_doc_list.append(edi_doc)
         return edi_doc_list
