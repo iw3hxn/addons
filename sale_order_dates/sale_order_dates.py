@@ -50,7 +50,7 @@ class sale_order_dates(osv.osv):
                 dt_s = dt.strftime('%Y-%m-%d')
                 dates_list.append(dt_s)
             if dates_list:
-                res[order.id] = min(dates_list)
+                res[order.id] = max(dates_list)
         return res
 
     _columns = {
