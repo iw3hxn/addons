@@ -30,7 +30,7 @@ msgstr "Data in cui il cliente ha richiesto per le vendite"
 #. module: sale_order_dates
 #: field:sale.order,commitment_date:0
 msgid "Commitment Date"
-msgstr "Data impegno"
+msgstr "Data consegna prevista"
 
 #. module: sale_order_dates
 #: field:sale.order,effective_date:0

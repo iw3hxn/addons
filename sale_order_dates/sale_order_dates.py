@@ -46,7 +46,7 @@ class sale_order_dates(osv.osv):
         for order in self.browse(cr, uid, ids, context=context):
             dates_list = []
             for line in order.order_line:
-                dt = datetime.strptime(order.date_order, '%Y-%m-%d') + relativedelta(days=line.delay or 0.0)
+                dt = datetime.strptime(order.date_confirm or order.date_order, '%Y-%m-%d') + relativedelta(days=line.delay or 0.0)
                 dt_s = dt.strftime('%Y-%m-%d')
                 dates_list.append(dt_s)
             if dates_list:
