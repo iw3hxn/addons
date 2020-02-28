@@ -482,12 +482,82 @@ the rule to mark CC(mail to any other person defined in actions)."),
             @param ids: List of Action Rule’s IDs
             @param context: A standard dictionary for contextual values """
 
-        empty = orm.browse_null()
+        class FakeObject(object):
+            """
+            This class represents a fake object from which to extract the information required to format the email text.
+            The class return 'False' on every attribute requested provided the name of the attribute is the name of one
+            of the columns of the model. If there is no column of the same name as the requested attribute an
+            exception will be raised.
+            """
+
+            # - - - - - - -
+            # Constructor
+            # - - - - - - -
+            def __init__(self, rule_obj=None):
+                """
+                Class constructor
+                :param rule_obj: the base_action_rile object the system is processing, this object is used to extract
+                                 the model name of the target objects to which the rule applies.
+                """
+
+                # Set a fake id field (used by format_mail method)
+                self.id = False
+
+                # Retrieve the model of the target object, the model is used to check if the requested
+                # field exists or not
+                if rule_obj is not None:
+                    self._target_obj_model_name = rule_obj.browse(cr, uid, ids[0], context).model_id.model
+                    self._target_obj_model = rule_obj.pool[self._target_obj_model_name]
+                else:
+                    self._target_obj_model_name = None
+                    self._target_obj_model = None
+                # end if
+
+            # end __init__
+
+            # - - - - - - - - -
+            # Properties
+            # - - - - - - - - -
+            @property
+            def _model(self):
+                return self._target_obj_model
+            # end _model
+
+            # - - - - - - - - -
+            # Special methods
+            # - - - - - - - - -
+            def __getattr__(self, name):
+
+                if self._model is None:
+                    return FakeObject()
+
+                elif name in self._model._all_columns:
+                    return FakeObject()
+
+                else:
+                    error_msg = 'Requested attribute is not a column of the model (attribute: %s - model: %s)' % (name, self._target_obj_model_name)
+                    raise AttributeError(error_msg)
+
+                # end if
+
+            # end __getattr__
+
+            def __str__(self):
+                return 'Fake value'
+            # end __str__
+
+            def __unicode__(self):
+                return self.__str__()
+            # end __str__
+
+        # end FakeObject
+
         rule_obj = self.pool.get('base.action.rule')
+        fake_target_obj = FakeObject(rule_obj=self)
         for rule in self.browse(cr, uid, ids, context=context):
             if rule.act_mail_body:
                 try:
-                    rule_obj.format_mail(empty, rule.act_mail_body)
+                    rule_obj.format_mail(fake_target_obj, rule.act_mail_body)
                 except (ValueError, KeyError, TypeError):
                     return False
         return True
