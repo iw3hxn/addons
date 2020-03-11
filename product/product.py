@@ -147,8 +147,8 @@ class product_uom(osv.osv):
     def _compute_qty(self, cr, uid, from_uom_id, qty, to_uom_id=False):
         if not from_uom_id or not qty or not to_uom_id:
             return qty
-        if from_uom_id == to_uom_id:
-            return qty
+        # if from_uom_id == to_uom_id:
+        #     return qty
         uoms = self.browse(cr, uid, [from_uom_id, to_uom_id])
         if uoms[0].id == from_uom_id:
             from_unit, to_unit = uoms[0], uoms[-1]
@@ -627,41 +627,55 @@ class product_product(osv.osv):
     def on_order(self, cr, uid, ids, orderline, quantity):
         pass
 
-    def name_get(self, cr, user, ids, context=None):
-        if context is None:
-            context = {}
+    def name_get(self, cr, uid, ids, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         if not len(ids):
             return []
-        def _name_get(d):
-            name = d.get('name','')
-            code = d.get('default_code',False)
-            if code:
-                name = '[%s] %s' % (code,name)
-            if d.get('variants'):
-                name = name + ' - %s' % (d['variants'],)
-            return (d['id'], name)
 
-        partner_id = context.get('partner_id', False)
+        def _name_get(d):
+            hide_code = context.get('hide_code', False)
+            name = d.get('name', '')
+            code = d.get('default_code', False)
+            if code and not hide_code:
+                name = u'[{code}] {name}'.format(code=code, name=name)
+            if d.get('variants', False):
+                name = name + u' - {0}'.format(d['variants'])
+            return d['id'], name
 
         result = []
-        for product in self.browse(cr, user, ids, context=context):
-            sellers = filter(lambda x: x.name.id == partner_id, product.seller_ids)
+
+        partner_id = context.get('partner_id', False)
+        if partner_id:
+            product_read = self.read(cr, uid, ids, ['id', 'name', 'variants', 'default_code', 'uos_coeff', 'seller_ids'], context=context)
+        else:
+            product_read = self.read(cr, uid, ids, ['id', 'name', 'variants', 'default_code', 'uos_coeff'], context=context)
+
+        for product in product_read:
+            sellers = False
+            if partner_id:
+                seller_ids = product['seller_ids']
+                seller_ids2 = self.pool['product.supplierinfo'].search(cr, uid, [('id', 'in', seller_ids),
+                                                                                 ('name', '=', partner_id)],
+                                                                       context=context)
+                sellers = self.pool['product.supplierinfo'].read(cr, uid, seller_ids2,
+                                                                 ['name', 'product_code', 'product_name'],
+                                                                 context=context)
             if sellers:
                 for s in sellers:
                     mydict = {
-                              'id': product.id,
-                              'name': s.product_name or product.name,
-                              'default_code': s.product_code or product.default_code,
-                              'variants': product.variants
-                              }
+                        'id': product['id'],
+                        'name': s['product_name'] or product['name'],
+                        'default_code': s['product_code'] or product['default_code'],
+                        'variants': product['variants'],
+                    }
                     result.append(_name_get(mydict))
             else:
                 mydict = {
-                          'id': product.id,
-                          'name': product.name,
-                          'default_code': product.default_code,
-                          'variants': product.variants
-                          }
+                    'id': product['id'],
+                    'name': product['name'],
+                    'default_code': product['default_code'],
+                    'variants': product['variants'],
+                }
                 result.append(_name_get(mydict))
         return result
 
