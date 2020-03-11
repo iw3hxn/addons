@@ -301,7 +301,7 @@ class audittrail_objects_proxy(object_proxy):
             res_ids = args[0]
             old_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
             res = fct_src(cr, uid_orig, model.model, method, *args)
-        else:  # method is write, action or workflow action
+        elif method == 'write':  # method is write, action or workflow action
             res_ids = []
             if args:
                 res_ids = args[0]
@@ -317,6 +317,9 @@ class audittrail_objects_proxy(object_proxy):
             if res_ids:
                 # check the new values and store them into a dictionary
                 new_values = self.get_data(cr, uid_orig, pool, res_ids, model, method)
+        else:  # method is read_group
+            res_ids = []
+            res = fct_src(cr, uid_orig, model.model, method, *args)
         # compare the old and new values and create audittrail log if needed
         self.process_data(cr, uid_orig, pool, res_ids, model, method, old_values, new_values, field_list)
         return res
