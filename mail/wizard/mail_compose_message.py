@@ -23,8 +23,7 @@ import ast
 import re
 
 import tools
-from osv import osv
-from osv import fields
+from openerp.osv import orm, fields
 from tools.safe_eval import safe_eval as eval
 from tools.translate import _
 
@@ -33,7 +32,8 @@ from ..mail_message import to_email
 # main mako-like expression pattern
 EXPRESSION_PATTERN = re.compile('(\$\{.+?\})')
 
-class mail_compose_message(osv.osv_memory):
+
+class mail_compose_message(orm.TransientModel):
     """Generic E-mail composition wizard. This wizard is meant to be inherited
        at model and view level to provide specific wizard features.
 
@@ -158,22 +158,22 @@ class mail_compose_message(osv.osv_memory):
                 if not (subject.startswith('Re:') or subject.startswith(re_prefix)):
                     subject = "%s %s" % (re_prefix, subject)
             result.update({
-                    'subtype' : 'plain', # default to the text version due to quoting
-                    'body_text' : body,
-                    'subject' : subject,
-                    'attachment_ids' : [],
-                    'model' : message_data.model or False,
-                    'res_id' : message_data.res_id or False,
-                    'email_from' : current_user.user_email or message_data.email_to or False,
-                    'email_to' : message_data.reply_to or message_data.email_from or False,
-                    'email_cc' : message_data.email_cc or False,
-                    'user_id' : uid,
+                'subtype': 'plain',  # default to the text version due to quoting
+                'body_text': body,
+                'subject': subject,
+                'attachment_ids': [],
+                'model': message_data.model or False,
+                'res_id': message_data.res_id or False,
+                'email_from': current_user.user_email or message_data.email_to or False,
+                'email_to': message_data.reply_to or message_data.email_from or False,
+                'email_cc': message_data.email_cc or False,
+                'user_id': uid,
 
-                    # pass msg-id and references of mail we're replying to, to construct the
-                    # new ones later when sending
-                    'message_id' :  message_data.message_id or False,
-                    'references' : message_data.references and tools.ustr(message_data.references) or False,
-                })
+                # pass msg-id and references of mail we're replying to, to construct the
+                # new ones later when sending
+                'message_id': message_data.message_id or False,
+                'references': message_data.references and tools.ustr(message_data.references) or False,
+            })
         return result
 
     def send_mail(self, cr, uid, ids, context=None):
@@ -265,6 +265,7 @@ class mail_compose_message(osv.osv_memory):
         """
         if context is None:
             context = {}
+
         def merge(match):
             exp = str(match.group()[2:-1]).strip()
             result = eval(exp,
