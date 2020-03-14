@@ -24,8 +24,7 @@ import base64
 import logging
 
 import netsvc
-from osv import osv
-from osv import fields
+from openerp.osv import orm, fields
 import tools
 from tools.translate import _
 from urllib import quote as quote
@@ -35,7 +34,8 @@ try:
 except ImportError:
     logging.getLogger('init').warning("email_template: mako templates not available, templating features will not work!")
 
-class email_template(osv.osv):
+
+class email_template(orm.Model):
     "Templates for sending email"
     _inherit = 'mail.message'
     _name = "email.template"
@@ -222,7 +222,7 @@ class email_template(osv.osv):
                     ir_values_obj = self.pool.get('ir.values')
                     ir_values_obj.unlink(cr, uid, template.ref_ir_value.id, context)
             except:
-                raise osv.except_osv(_("Warning"), _("Deletion of the action record failed."))
+                raise orm.except_orm(_("Warning"), _("Deletion of the action record failed."))
         return True
 
     def unlink(self, cr, uid, ids, context=None):
