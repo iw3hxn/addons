@@ -136,18 +136,34 @@ class sale_order(osv.osv):
 
     def _invoiced_rate(self, cursor, user, ids, name, arg, context=None):
         res = {}
-        for sale in self.browse(cursor, user, ids, context=context):
+        #for sale in self.browse(cursor, user, ids, context=context):
+        for sale in self.read(cursor, user, ids, ['amount_untaxed'], context=context):
             # if sale.invoiced:
             #     res[sale.id] = 100.0
             #     continue
             tot = 0.0
-            for invoice in sale.invoice_ids:
-                if invoice.state not in ('draft', 'cancel'):
-                    tot += invoice.amount_untaxed
+
+            # for order_line in sale.order_line:
+            #     for invoice_line in order_line.invoice_lines:
+            #         tot += invoice_line.price_subtotal
+            order_line_ids = self.pool['sale.order.line'].search(cursor, user, [('order_id', '=', sale['id'])], context=context)
+            if order_line_ids:
+                cursor.execute("""SELECT invoice_id FROM sale_order_line_invoice_rel WHERE order_line_id IN %s""", (tuple(order_line_ids),))
+                res_query = cursor.fetchall()
+                invoice_line_ids = []
+                for line in res_query:
+                    invoice_line_ids.append(line[0])
+                invoice_line_ids = list(set(invoice_line_ids))
+                for invoice_line in self.pool['account.invoice.line'].read(cursor, user, invoice_line_ids, [('price_subtotal')], context=context):
+                    tot += invoice_line['price_subtotal']
+
+            # # for invoice in sale.invoice_ids:
+            # #     if invoice.state not in ('draft', 'cancel'):
+            # #         tot += invoice.amount_untaxed
             if tot:
-                res[sale.id] = min(100.0, tot * 100.0 / (sale.amount_untaxed or 1.00))
+                res[sale['id']] = min(100.0, tot * 100.0 / (sale['amount_untaxed'] or 1.00))
             else:
-                res[sale.id] = 0.0
+                res[sale['id']] = 0.0
         return res
 
     def _invoice_exists(self, cursor, user, ids, name, arg, context=None):
