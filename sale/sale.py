@@ -196,6 +196,16 @@ class sale_order(osv.osv):
         sale_clause = ''
         no_invoiced = False
         for arg in args:
+            if arg[1] == '=' and not arg[2]:
+                cursor.execute("""
+                SELECT sale.id 
+                FROM sale_order AS sale 
+                WHERE sale.id NOT IN 
+                        (SELECT rel.order_id 
+                        FROM sale_order_invoice_rel AS rel) and sale.state != 'cancel'""")
+                res = cursor.fetchall()
+                return [('id', 'in', [x[0] for x in res])]
+
             if (arg[1] == '=' and arg[2]) or (arg[1] == '!=' and not arg[2]):
                 clause += 'AND inv.state = \'paid\''
             else:
