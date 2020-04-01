@@ -134,10 +134,11 @@ class sale_order(osv.osv):
                 res[order.id] = tmp[order.id]['total'] and (100.0 * tmp[order.id]['picked'] / tmp[order.id]['total']) or 0.0
         return res
 
-    def _invoiced_rate(self, cursor, user, ids, name, arg, context=None):
+    def _invoiced_rate(self, cr, uid, ids, name, arg, context=None):
         res = {}
         #for sale in self.browse(cursor, user, ids, context=context):
-        for sale in self.read(cursor, user, ids, ['amount_untaxed'], context=context):
+        for sale in self.read(cr, uid, ids, ['amount_untaxed', 'invoice_ids'], context=context):
+            account_invoice_line_obj = self.pool['account.invoice.line']
             # if sale.invoiced:
             #     res[sale.id] = 100.0
             #     continue
@@ -146,16 +147,38 @@ class sale_order(osv.osv):
             # for order_line in sale.order_line:
             #     for invoice_line in order_line.invoice_lines:
             #         tot += invoice_line.price_subtotal
-            order_line_ids = self.pool['sale.order.line'].search(cursor, user, [('order_id', '=', sale['id'])], context=context)
+            invoice_ids = sale.get('invoice_ids', [])
+            all_invoice_line_ids = []
+            if invoice_ids:
+                all_invoice_line_ids = account_invoice_line_obj.search(cr, uid, [('invoice_id', 'in', invoice_ids)], context=context)
+
+            invoice_line_ids = []
+            order_line_ids = self.pool['sale.order.line'].search(cr, uid, [('order_id', '=', sale['id'])], context=context)
             if order_line_ids:
-                cursor.execute("""SELECT invoice_id FROM sale_order_line_invoice_rel WHERE order_line_id IN %s""", (tuple(order_line_ids),))
-                res_query = cursor.fetchall()
-                invoice_line_ids = []
-                for line in res_query:
-                    invoice_line_ids.append(line[0])
+                cr.execute("""SELECT invoice_id FROM sale_order_line_invoice_rel WHERE order_line_id IN %s""", (tuple(order_line_ids),))
+                res_query = cr.fetchall()
+                invoice_line_ids = [line[0] for line in res_query]
                 invoice_line_ids = list(set(invoice_line_ids))
-                for invoice_line in self.pool['account.invoice.line'].read(cursor, user, invoice_line_ids, [('price_subtotal')], context=context):
+                for invoice_line in account_invoice_line_obj.read(cr, uid, invoice_line_ids, [('price_subtotal')], context=context):
                     tot += invoice_line['price_subtotal']
+
+            other_invoice_line_ids = list(set(all_invoice_line_ids) - set(invoice_line_ids))
+            invoice_line_connect_to_other_order_ids = []
+            if other_invoice_line_ids:
+                cr.execute("""
+                                SELECT 
+                                   invoice_id
+                                FROM 
+                                   sale_order_line_invoice_rel
+                                WHERE
+                                   invoice_id IN %s
+                                GROUP BY invoice_id
+                                """, (tuple(other_invoice_line_ids),))
+                res_query = cr.fetchall()
+                invoice_line_connect_to_other_order_ids = [line[0] for line in res_query]
+            other_line_ids = list(set(other_invoice_line_ids) - set(invoice_line_connect_to_other_order_ids))
+            for invoice_line in account_invoice_line_obj.read(cr, uid, list(set(invoice_line_ids + other_line_ids)), [('price_subtotal')], context=context):
+                tot += invoice_line['price_subtotal']
 
             # # for invoice in sale.invoice_ids:
             # #     if invoice.state not in ('draft', 'cancel'):
