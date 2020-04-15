@@ -1221,16 +1221,31 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
         return self.name_get(cr, user, ids, context)
 
     def _refund_cleanup_lines(self, cr, uid, lines):
+        invoice_line_obj = self.pool['account.invoice.line']
+
+        columns_many2one = []
+        columns_many2many = []
+        for col in invoice_line_obj._columns:
+            col_type = invoice_line_obj._columns[col]._type
+            if col_type == 'many2one':
+                columns_many2one.append(col)
+            elif col_type == 'many2many':
+                columns_many2many.append(col)
+
         for line in lines:
             del line['id']
             del line['invoice_id']
-            for field in ('company_id', 'partner_id', 'account_id', 'product_id',
-                          'uos_id', 'account_analytic_id', 'tax_code_id', 'base_code_id'):
+            for field in columns_many2one:
+            # for field in ('company_id', 'partner_id', 'account_id', 'product_id',
+            #               'uos_id', 'account_analytic_id', 'tax_code_id', 'base_code_id'):
                 if line.get(field):
                     line[field] = line[field][0]
-            if 'invoice_line_tax_id' in line:
-                line['invoice_line_tax_id'] = [(6,0, line.get('invoice_line_tax_id', [])) ]
-        return map(lambda x: (0,0,x), lines)
+
+            for field in columns_many2many:
+                line[field] = [(6, 0, line.get(field, []))]
+            # if 'invoice_line_tax_id' in line:
+            #    line['invoice_line_tax_id'] = [(6,0, line.get('invoice_line_tax_id', [])) ]
+        return map(lambda x: (0, 0, x), lines)
 
     def refund(self, cr, uid, ids, date=None, period_id=None, description=None, journal_id=None):
         invoices = self.read(cr, uid, ids, ['name', 'type', 'number', 'reference', 'comment', 'date_due', 'partner_id', 'address_contact_id', 'address_invoice_id', 'partner_contact', 'partner_insite', 'partner_ref', 'payment_term', 'account_id', 'currency_id', 'invoice_line', 'tax_line', 'journal_id', 'user_id', 'fiscal_position'])
@@ -1280,17 +1295,32 @@ tax-included line subtotals to be equal to the total amount with taxes.'''),
                 invoice.update({
                     'name': description,
                 })
+
+            columns_many2one = []
+            columns_many2many = []
+            for col in self._columns:
+                col_type = self._columns[col]._type
+                if col_type == 'many2one':
+                    columns_many2one.append(col)
+                elif col_type == 'many2many':
+                    columns_many2many.append(col)
+
             # take the id part of the tuple returned for many2one fields
             for field in ('address_contact_id', 'address_invoice_id', 'partner_id',
                     'account_id', 'currency_id', 'payment_term', 'journal_id',
                     'user_id', 'fiscal_position'):
                 invoice[field] = invoice[field] and invoice[field][0]
 
-            index = 0
-            for line in invoice['invoice_line']:
-                if line[2].get('move_line_id', False):
-                    invoice['invoice_line'][index][2]['move_line_id'] = invoice['invoice_line'][index][2]['move_line_id'][0]
-                index += 1
+            # for field in ('address_contact_id', 'address_invoice_id', 'partner_id',
+            #         'account_id', 'currency_id', 'payment_term', 'journal_id',
+            #         'user_id', 'fiscal_position'):
+            #     invoice[field] = invoice[field] and invoice[field][0]
+            #
+            # index = 0
+            # for line in invoice['invoice_line']:
+            #     if line[2].get('move_line_id', False):
+            #         invoice['invoice_line'][index][2]['move_line_id'] = invoice['invoice_line'][index][2]['move_line_id'][0]
+            #     index += 1
             # create the new invoice
             new_ids.append(self.create(cr, uid, invoice))
 
