@@ -3,6 +3,7 @@
 #
 #    OpenERP, Open Source Management Solution
 #    Copyright (C) 2004-2010 Tiny SPRL (<http://tiny.be>).
+#    © 2020 Didotech srl (www.didotech.com)
 #
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -1523,9 +1524,11 @@ rule or repeating pattern of time to exclude from the recurring rule."),
         select = map(lambda x: (x, base_calendar_id2real_id(x)), select)
         result = []
 
-        real_data = super(calendar_event, self).read(cr, uid,
-                                                     [real_id for base_calendar_id, real_id in select],
-                                                     fields=fields2, context=context, load=load)
+        real_data = super(calendar_event, self).read(
+            cr, uid,
+            list(set([real_id for base_calendar_id, real_id in select])),
+            fields=fields2, context=context, load=load
+        )
         real_data = dict(zip([x['id'] for x in real_data], real_data))
 
         for base_calendar_id, real_id in select:
