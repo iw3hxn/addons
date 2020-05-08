@@ -21,7 +21,7 @@
 
 {
     "name": "Calendar Layer",
-    "version": "1.1a",
+    "version": "1.1b",
     "depends": [
         "base",
         "mail"
