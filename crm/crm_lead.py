@@ -641,7 +641,7 @@ class crm_lead(crm_case, osv.osv):
             if action == 'create':
                 partner_id = force_partner_id or self._lead_create_partner(cr, uid, lead, context=context)
                 self._lead_create_partner_address(cr, uid, lead, partner_id, context=context)
-            self._lead_set_partner(cr, uid, lead, partner_id, context=context)
+                self._lead_set_partner(cr, uid, lead, partner_id, context=context)
             partner_ids[lead.id] = partner_id
         return partner_ids
 
