@@ -26,6 +26,7 @@ from osv.orm import except_orm
 import nodes
 from tools.translate import _
 
+
 class document_directory(osv.osv):
     _name = 'document.directory'
     _description = 'Directory'
@@ -33,10 +34,11 @@ class document_directory(osv.osv):
     _columns = {
         'name': fields.char('Name', size=64, required=True, select=1),
         'write_date': fields.datetime('Date Modified', readonly=True),
-        'write_uid':  fields.many2one('res.users', 'Last Modification User', readonly=True),
+        'write_uid': fields.many2one('res.users', 'Last Modification User', readonly=True),
         'create_date': fields.datetime('Date Created', readonly=True),
-        'create_uid':  fields.many2one('res.users', 'Creator', readonly=True),
-        'domain': fields.char('Domain', size=128, help="Use a domain if you want to apply an automatic filter on visible resources."),
+        'create_uid': fields.many2one('res.users', 'Creator', readonly=True),
+        'domain': fields.char('Domain', size=128,
+                              help="Use a domain if you want to apply an automatic filter on visible resources."),
         'user_id': fields.many2one('res.users', 'Owner'),
         'storage_id': fields.many2one('document.storage', 'Storage', change_default=True),
         'group_ids': fields.many2many('res.groups', 'document_directory_group_rel', 'item_id', 'group_id', 'Groups'),
@@ -45,32 +47,32 @@ class document_directory(osv.osv):
         'file_ids': fields.one2many('ir.attachment', 'parent_id', 'Files'),
         'content_ids': fields.one2many('document.directory.content', 'directory_id', 'Virtual Files'),
         'type': fields.selection([
-            ('directory','Static Directory'),
-            ('ressource','Folders per resource'),
-            ],
+            ('directory', 'Static Directory'),
+            ('ressource', 'Folders per resource'),
+        ],
             'Type', required=True, select=1, change_default=True,
             help="Each directory can either have the type Static or be linked to another resource. A static directory, as with Operating Systems, is the classic directory that can contain a set of files. The directories linked to systems resources automatically possess sub-directories for each of resource types defined in the parent directory."),
         'ressource_type_id': fields.many2one('ir.model', 'Resource model', change_default=True,
-            help="Select an object here and there will be one folder per record of that resource."),
-        'resource_field': fields.many2one('ir.model.fields', 'Name field', help='Field to be used as name on resource directories. If empty, the "name" will be used.'),
+                                             help="Select an object here and there will be one folder per record of that resource."),
+        'resource_field': fields.many2one('ir.model.fields', 'Name field',
+                                          help='Field to be used as name on resource directories. If empty, the "name" will be used.'),
         'resource_find_all': fields.boolean('Find all resources', required=True,
-                help="If true, all attachments that match this resource will " \
-                    " be located. If false, only ones that have this as parent." ),
+                                            help="If true, all attachments that match this resource will " \
+                                                 " be located. If false, only ones that have this as parent."),
         'ressource_parent_type_id': fields.many2one('ir.model', 'Parent Model', change_default=True,
-            help="If you put an object here, this directory template will appear bellow all of these objects. " \
-                 "Such directories are \"attached\" to the specific model or record, just like attachments. " \
-                 "Don't put a parent directory if you select a parent model."),
+                                                    help="If you put an object here, this directory template will appear bellow all of these objects. " \
+                                                         "Such directories are \"attached\" to the specific model or record, just like attachments. " \
+                                                         "Don't put a parent directory if you select a parent model."),
         'ressource_id': fields.integer('Resource ID',
-            help="Along with Parent Model, this ID attaches this folder to a specific record of Parent Model."),
+                                       help="Along with Parent Model, this ID attaches this folder to a specific record of Parent Model."),
         'ressource_tree': fields.boolean('Tree Structure',
-            help="Check this if you want to use the same tree structure as the object selected in the system."),
+                                         help="Check this if you want to use the same tree structure as the object selected in the system."),
         'dctx_ids': fields.one2many('document.directory.dctx', 'dir_id', 'Context fields'),
         'company_id': fields.many2one('res.company', 'Company', change_default=True),
     }
 
-
-    def _get_root_directory(self, cr,uid, context=None):
-        objid=self.pool.get('ir.model.data')
+    def _get_root_directory(self, cr, uid, context=None):
+        objid = self.pool.get('ir.model.data')
         try:
             mid = objid._get_id(cr, uid, 'document', 'dir_root')
             if not mid:
@@ -80,40 +82,45 @@ class document_directory(osv.osv):
         except Exception, e:
             import netsvc
             logger = netsvc.Logger()
-            logger.notifyChannel("document", netsvc.LOG_WARNING, 'Cannot set directory root:'+ str(e))
+            logger.notifyChannel("document", netsvc.LOG_WARNING, 'Cannot set directory root:' + str(e))
             return False
         return objid.browse(cr, uid, mid, context=context).res_id
 
     def _get_def_storage(self, cr, uid, context=None):
         if context and context.has_key('default_parent_id'):
-                # Use the same storage as the parent..
-                diro = self.browse(cr, uid, context['default_parent_id'])
-                if diro.storage_id:
-                        return diro.storage_id.id
-        objid=self.pool.get('ir.model.data')
+            # Use the same storage as the parent..
+            diro = self.browse(cr, uid, context['default_parent_id'])
+            if diro.storage_id:
+                return diro.storage_id.id
+        objid = self.pool.get('ir.model.data')
         try:
-                mid =  objid._get_id(cr, uid, 'document', 'storage_default')
-                return objid.browse(cr, uid, mid, context=context).res_id
+            mid = objid._get_id(cr, uid, 'document', 'storage_default')
+            return objid.browse(cr, uid, mid, context=context).res_id
         except Exception:
-                return None
+            return None
 
     _defaults = {
-        'company_id': lambda s,cr,uid,c: s.pool.get('res.company')._company_default_get(cr, uid, 'document.directory', context=c),
-        'user_id': lambda self,cr,uid,ctx: uid,
+        'company_id': lambda s, cr, uid, c: s.pool.get('res.company')._company_default_get(cr, uid,
+                                                                                           'document.directory',
+                                                                                           context=c),
+        'user_id': lambda self, cr, uid, ctx: uid,
         'domain': '[]',
         'type': 'directory',
         'ressource_id': 0,
-        'storage_id': _get_def_storage, # Still, it is bad practice to set it everywhere.
+        'storage_id': _get_def_storage,  # Still, it is bad practice to set it everywhere.
         'resource_find_all': True,
     }
     _sql_constraints = [
-        ('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)', 'The directory name must be unique !'),
+        ('dirname_uniq', 'unique (name,parent_id,ressource_id,ressource_parent_type_id)',
+         'The directory name must be unique !'),
         ('no_selfparent', 'check(parent_id <> id)', 'Directory cannot be parent of itself!'),
-        ('dir_parented', 'check(parent_id IS NOT NULL OR storage_id IS NOT NULL)', 'Directory must have a parent or a storage')
+        ('dir_parented', 'check(parent_id IS NOT NULL OR storage_id IS NOT NULL)',
+         'Directory must have a parent or a storage')
     ]
+
     def name_get(self, cr, uid, ids, context=None):
         res = []
-        if not self.search(cr,uid,[('id','in',ids)]):
+        if not self.search(cr, uid, [('id', 'in', ids)]):
             ids = []
         for d in self.browse(cr, uid, ids, context=context):
             s = ''
@@ -132,13 +139,14 @@ class document_directory(osv.osv):
             dir_id = dir_id[0]
 
         def _parent(dir_id, path):
-            parent=self.browse(cr, uid, dir_id)
+            parent = self.browse(cr, uid, dir_id)
             if parent.parent_id and not parent.ressource_parent_type_id:
-                _parent(parent.parent_id.id,path)
+                _parent(parent.parent_id.id, path)
                 path.append(parent.name)
             else:
                 path.append(parent.name)
                 return path
+
         path = []
         _parent(dir_id, path)
         return path
@@ -146,8 +154,9 @@ class document_directory(osv.osv):
     def _check_recursion(self, cr, uid, ids, context=None):
         level = 100
         while len(ids):
-            cr.execute('select distinct parent_id from document_directory where id in ('+','.join(map(str,ids))+')')
-            ids = filter(None, map(lambda x:x[0], cr.fetchall()))
+            cr.execute(
+                'select distinct parent_id from document_directory where id in (' + ','.join(map(str, ids)) + ')')
+            ids = filter(None, map(lambda x: x[0], cr.fetchall()))
             if not level:
                 return False
             level -= 1
@@ -171,6 +180,7 @@ class document_directory(osv.osv):
             object: the object.directory or object.directory.content
             object2: the other object linked (if object.directory.content)
     """
+
     def get_object(self, cr, uid, uri, context=None):
         """ Return a node object for the given uri.
            This fn merely passes the call to node_context
@@ -224,7 +234,7 @@ class document_directory(osv.osv):
                 pass
         return res
 
-    def _locate_child(self, cr, uid, root_id, uri,nparent, ncontext):
+    def _locate_child(self, cr, uid, root_id, uri, nparent, ncontext):
         """ try to locate the node in uri,
             Return a tuple (node_dir, remaining_path)
         """
@@ -232,53 +242,67 @@ class document_directory(osv.osv):
 
     def copy(self, cr, uid, id, default=None, context=None):
         if not default:
-            default ={}
+            default = {}
         name = self.read(cr, uid, [id])[0]['name']
-        default.update({'name': name+ " (copy)"})
-        return super(document_directory,self).copy(cr, uid, id, default, context=context)
+        default.update({'name': name + " (copy)"})
+        return super(document_directory, self).copy(cr, uid, id, default, context=context)
 
     def _check_duplication(self, cr, uid, vals, ids=[], op='create'):
-        name=vals.get('name',False)
-        parent_id=vals.get('parent_id',False)
-        ressource_parent_type_id=vals.get('ressource_parent_type_id',False)
-        ressource_id=vals.get('ressource_id',0)
-        if op=='write':
+        name = vals.get('name', False)
+        parent_id = vals.get('parent_id', False)
+        ressource_parent_type_id = vals.get('ressource_parent_type_id', False)
+        ressource_id = vals.get('ressource_id', 0)
+        if op == 'write':
             for directory in self.browse(cr, uid, ids):
+
+                name = vals.get('name', False)
+                parent_id = vals.get('parent_id', False)
+                ressource_parent_type_id = vals.get('ressource_parent_type_id', False)
+                ressource_id = vals.get('ressource_id', 0)
+
                 if not name:
-                    name=directory.name
+                    name = directory.name
                 if not parent_id:
-                    parent_id=directory.parent_id and directory.parent_id.id or False
+                    parent_id = directory.parent_id and directory.parent_id.id or False
                 # TODO fix algo
                 if not ressource_parent_type_id:
-                    ressource_parent_type_id=directory.ressource_parent_type_id and directory.ressource_parent_type_id.id or False
+                    ressource_parent_type_id = directory.ressource_parent_type_id and directory.ressource_parent_type_id.id or False
                 if not ressource_id:
-                    ressource_id=directory.ressource_id and directory.ressource_id or 0
-                res=self.search(cr,uid,[('id','<>',directory.id),('name','=',name),('parent_id','=',parent_id),('ressource_parent_type_id','=',ressource_parent_type_id),('ressource_id','=',ressource_id)])
+                    ressource_id = directory.ressource_id and directory.ressource_id or 0
+                res = self.search(cr, uid,
+                                  [('id', '!=', directory.id), ('name', '=', name), ('parent_id', '=', parent_id),
+                                   ('ressource_parent_type_id', '=', ressource_parent_type_id),
+                                   ('ressource_id', '=', ressource_id)])
                 if len(res):
                     return False
-        if op=='create':
-            res=self.search(cr,uid,[('name','=',name),('parent_id','=',parent_id),('ressource_parent_type_id','=',ressource_parent_type_id),('ressource_id','=',ressource_id)])
+        if op == 'create':
+            res = self.search(cr, uid, [('name', '=', name), ('parent_id', '=', parent_id),
+                                        ('ressource_parent_type_id', '=', ressource_parent_type_id),
+                                        ('ressource_id', '=', ressource_id)])
             if len(res):
                 return False
         return True
+
     def write(self, cr, uid, ids, vals, context=None):
         if not self._check_duplication(cr, uid, vals, ids, op='write'):
             raise osv.except_osv(_('ValidateError'), _('Directory name must be unique!'))
-        return super(document_directory,self).write(cr, uid, ids, vals, context=context)
+        return super(document_directory, self).write(cr, uid, ids, vals, context=context)
 
     def create(self, cr, uid, vals, context=None):
         if not self._check_duplication(cr, uid, vals):
             raise osv.except_osv(_('ValidateError'), _('Directory name must be unique!'))
-        newname = vals.get('name',False)
+        newname = vals.get('name', False)
         if newname:
             for illeg in ('/', '@', '$', '#'):
                 if illeg in newname:
                     raise osv.except_osv(_('ValidateError'), _('Directory name contains special characters!'))
-        return super(document_directory,self).create(cr, uid, vals, context)
+        return super(document_directory, self).create(cr, uid, vals, context)
 
     # TODO def unlink(...
 
+
 document_directory()
+
 
 class document_directory_dctx(osv.osv):
     """ In order to evaluate dynamic folders, child items could have a limiting
@@ -293,10 +317,13 @@ class document_directory_dctx(osv.osv):
     _description = 'Directory Dynamic Context'
     _columns = {
         'dir_id': fields.many2one('document.directory', 'Directory', required=True, ondelete="cascade"),
-        'field': fields.char('Field', size=20, required=True, select=1, help="The name of the field. Note that the prefix \"dctx_\" will be prepended to what is typed here."),
-        'expr': fields.char('Expression', size=64, required=True, help="A python expression used to evaluate the field.\n" + \
-                "You can use 'dir_id' for current dir, 'res_id', 'res_model' as a reference to the current record, in dynamic folders"),
-        }
+        'field': fields.char('Field', size=20, required=True, select=1,
+                             help="The name of the field. Note that the prefix \"dctx_\" will be prepended to what is typed here."),
+        'expr': fields.char('Expression', size=64, required=True,
+                            help="A python expression used to evaluate the field.\n" + \
+                                 "You can use 'dir_id' for current dir, 'res_id', 'res_model' as a reference to the current record, in dynamic folders"),
+    }
+
 
 document_directory_dctx()
 
@@ -304,8 +331,10 @@ document_directory_dctx()
 class document_directory_node(osv.osv):
     _inherit = 'process.node'
     _columns = {
-        'directory_id':  fields.many2one('document.directory', 'Document directory', ondelete="set null"),
+        'directory_id': fields.many2one('document.directory', 'Document directory', ondelete="set null"),
     }
+
+
 document_directory_node()
 
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:
