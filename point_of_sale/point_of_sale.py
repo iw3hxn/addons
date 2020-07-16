@@ -583,7 +583,7 @@ class pos_order(osv.osv):
                 })
 
                 if data_type == 'product':
-                    key = ('product', values['partner_id'], values['account_id'], values['debit'] > 0)
+                    key = ('product', values['partner_id'], "{}_{}".format(values['account_id'], values['tax_code_id']), values['debit'] > 0)
                 elif data_type == 'tax':
                     key = ('tax', values['partner_id'], values['tax_code_id'], values['debit'] > 0)
                 elif data_type == 'counter_part':
@@ -873,7 +873,7 @@ class pos_order_line(osv.osv):
         }),
         'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
-                'pos.order': (_get_order, ['user_id'], 20),
+                'pos.order': (_get_order, ['user_id', 'state'], 20),
         }),
         'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference', store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 2000),
