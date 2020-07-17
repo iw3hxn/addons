@@ -104,6 +104,9 @@ class pos_make_payment(osv.osv_memory):
                 result.append(res)
 
             order_obj.write(cr, uid, active_id, {'active': False, 'note': result}, context=context)
+            pos_order_line_ids = self.pool['pos.order.line'].search(cr, uid, [('order_id', '=', active_id)], context=context)
+            if pos_order_line_ids:
+                self.pool['pos.order.line'].write(cr, uid, pos_order_line_ids, {'active': False}, context=context)
             wf_service = netsvc.LocalService("workflow")
             wf_service.trg_validate(uid, 'pos.order', active_id, 'cancel', cr)
             return {'type': 'ir.actions.act_window_close'}
