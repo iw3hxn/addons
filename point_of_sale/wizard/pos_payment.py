@@ -80,7 +80,7 @@ class pos_make_payment(osv.osv_memory):
                     partner_id = self.pool['res.partner'].search(cr, uid, [('property_customer_ref', '=', line.notice[len(order.shop_id.product_customer_id.default_code):-1])])
                     if partner_id:
                         order.write({'partner_id': partner_id[0]})
-                        line.write({'active': False})
+                line.write({'active': False})
             if not context.get('skip_force_discount', False):
                 if float_round(list_price, precision_digits=2) != 0.0 and float_round(list_price, precision_digits=2) != float_round(pos_price, precision_digits=2):
                     discount = (list_price - pos_price) / list_price * 100
