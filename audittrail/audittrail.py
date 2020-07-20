@@ -282,7 +282,7 @@ class audittrail_objects_proxy(object_proxy):
         field_list = []
         old_values = new_values = {}
 
-        if method == 'create':
+        if method in ['create', 'copy']:
             res = fct_src(cr, uid_orig, model.model, method, *args)
             if res:
                 res_ids = [res]
