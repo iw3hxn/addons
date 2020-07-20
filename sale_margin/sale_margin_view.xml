@@ -41,6 +41,7 @@
                    position="after">
                 <field name="purchase_price" groups="sale.view_margin" invisible="1"/>
                 <field name="total_purchase_price" groups="sale.view_margin" sum="Total Cost"/>
+                <field name="margin" sum="Total Margin"  groups="sale.view_margin"/>
             </xpath>
         </field>
     </record>
