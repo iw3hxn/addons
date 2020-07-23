@@ -60,7 +60,7 @@ class sale_order_line(osv.osv):
                     currency_id = price_type.currency_id
 
                 elif item_base == -1:
-                    return get_real_price_curency(res_dict, product_id, qty, uom, item_read['base_pricelist_id'][0])
+                    # return get_real_price_curency(res_dict, product_id, qty, uom, item_read['base_pricelist_id'][0])
                     base_pricelist_id = item_read['base_pricelist_id'][0]
                     field_name = 'price'
                     context['pricelist'] = base_pricelist_id
@@ -108,7 +108,7 @@ class sale_order_line(osv.osv):
                     ctx = context.copy()
                     ctx['date'] = date_order
                     new_list_price = self.pool['res.currency'].compute(cr, uid,
-                                                                       currency_id.id, so_pricelist.currency_id.id,
+                                                                       currency_id, so_pricelist.currency_id.id,
                                                                        new_list_price, context=ctx)
                 discount = (new_list_price - price) / new_list_price * 100
                 if discount > 0:
