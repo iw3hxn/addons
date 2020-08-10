@@ -1058,4 +1058,18 @@ class hr_attendance(osv.osv):
             values['shop_id'] = context['shop_id']
         return super(hr_attendance, self).create(cr, uid, values, context)
 
+    def _altern_si_so(self, cr, uid, ids, context=None):
+
+        return True
+
+    _constraints = [(_altern_si_so, 'Error: Sign in (resp. Sign out) must follow Sign out (resp. Sign in)', ['action'])]
+
+
+class hr_employee(osv.osv):
+    _inherit = "hr.employee"
+
+    def _action_check(self, cr, uid, emp_id, dt=False, context=None):
+        return True
+
+
 # vim:expandtab:smartindent:tabstop=4:softtabstop=4:shiftwidth=4:

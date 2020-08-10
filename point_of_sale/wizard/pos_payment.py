@@ -20,13 +20,16 @@
 ##############################################################################
 
 import time
+import datetime
 
+import netsvc
+from openerp import SUPERUSER_ID
+from openerp.tools import DEFAULT_SERVER_DATETIME_FORMAT
+from openerp.tools.float_utils import float_round
 from osv import osv, fields
 from tools.translate import _
+
 import pos_box_entries
-import netsvc
-from openerp.tools.float_utils import float_round
-from openerp import SUPERUSER_ID
 
 
 class pos_make_payment(osv.osv_memory):
@@ -98,7 +101,23 @@ class pos_make_payment(osv.osv_memory):
                 try:
                     ctx = context.copy()
                     ctx['shop_id'] = order.shop_id.id
-                    res = hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=sign_action.pop()['type'], context=ctx, dt=order.date_order)
+                    attendance_action = sign_action.pop()['type']
+                    employee_state = employee.state
+                    force_attendance_action = False
+                    if attendance_action == 'sign_in' and employee_state == 'present':
+                        force_attendance_action = 'sign_out'
+                    elif attendance_action == 'sign_out' and employee_state == 'absent':
+                        force_attendance_action = 'sign_in'
+                    if force_attendance_action:
+                        result.append("Force {} at {}".format(force_attendance_action, order.date_order))
+
+                        dt = datetime.datetime.strptime(order.date_order, DEFAULT_SERVER_DATETIME_FORMAT)
+                        dt_10 = dt - datetime.timedelta(seconds=10)
+                        hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id],
+                                                                 type=force_attendance_action, context=ctx,
+                                                                 dt=dt_10.strftime(DEFAULT_SERVER_DATETIME_FORMAT))
+
+                    res = hr_employee_obj.attendance_action_change(cr, employee.user_id.id, [employee.id], type=attendance_action, context=ctx, dt=order.date_order)
                 except Exception as e:
                     res = str(e)
                 result.append(res)

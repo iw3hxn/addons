@@ -46,7 +46,7 @@ Main features :
         'images/sale_order_pos.jpeg',
         'images/product_pos.jpeg'
     ],
-    'depends': ['sale'],
+    'depends': ['sale', 'hr_attendance'],
     'init_xml': [],
 
     'update_xml': [
