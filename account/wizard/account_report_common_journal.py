@@ -20,6 +20,9 @@
 ##############################################################################
 
 from osv import osv, fields
+import logging
+_logger = logging.getLogger(__name__)
+
 
 class account_common_journal_report(osv.osv_memory):
     _name = 'account.common.journal.report'
@@ -47,6 +50,23 @@ class account_common_journal_report(osv.osv_memory):
         data['form'].update(self.read(cr, uid, ids, ['amount_currency'], context=context)[0])
         fy_ids = data['form']['fiscalyear_id'] and [data['form']['fiscalyear_id']] or self.pool.get('account.fiscalyear').search(cr, uid, [('state', '=', 'draft')], context=context)
         period_list = data['form']['periods'] or self.pool.get('account.period').search(cr, uid, [('fiscalyear_id', 'in', fy_ids)], context=context)
+        for journal_id in data['form']['journal_ids']:
+            for period_id in period_list:
+                account_journal_period_obj = self.pool['account.journal.period']
+                ids_journal_period = account_journal_period_obj.search(cr, uid, [('journal_id', '=', journal_id), ('period_id', '=', period_id)])
+                if not ids_journal_period:
+                    journal = self.pool['account.journal'].read(cr, uid, journal_id, ['code', 'name'], context=context)
+                    period = self.pool['account.period'].read(cr, uid, period_id, ['name'], context=context)
+                    account_journal_period_values = {
+                        'name': (journal['code'] or journal['name']) + ':' + (period['name'] or ''),
+                        'journal_id': journal_id,
+                        'period_id': period_id,
+                        'state': 'printed',
+                    }
+                    account_journal_period_obj.create(cr, uid, account_journal_period_values, context)
+                    _logger.error(
+                        "The Entry for Period '%s', Journal '%s' was missing in 'account.journal.period' and has been fixed now !",
+                        period['name'], journal['name'])
         data['form']['active_ids'] = self.pool.get('account.journal.period').search(cr, uid, [('journal_id', 'in', data['form']['journal_ids']), ('period_id', 'in', period_list)], context=context)
         return data
 
