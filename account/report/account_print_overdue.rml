@@ -131,6 +131,8 @@
           <para style="terp_default_9">[[ addr['street'] ]]</para>
           <para style="terp_default_9">[[ addr['street2'] or removeParentNode('para') ]]</para>
           <para style="terp_default_9">[[ addr['zip'] ]] - [[ addr['city'] ]] [[ addr['province'] and ('- (' +  addr['province'] + ')') or '' ]] - [[ addr['country_id'] ]]</para>
+          <para style="terp_default_9">Telefono [[ addr['phone'] or removeParentNode('para') ]]</para>
+          <para style="terp_default_9">Email [[ addr['email'] or removeParentNode('para') ]]</para>
           <para style="terp_default_9">
             <font color="white"> </font>
           </para>
