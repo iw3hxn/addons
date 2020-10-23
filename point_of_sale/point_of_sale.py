@@ -852,7 +852,7 @@ class pos_order_line(osv.osv):
         'date_to': fields.function(lambda *a, **k: {}, method=True, type='date', string="Date to"),
         'date_order': fields.related('order_id', 'date_order', string='Date Order', type='date', size=64, store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
-                'pos.order': (_get_order, ['date_order'], 20),
+                'pos.order': (_get_order, ['date_order', 'state', 'active'], 20),
         }),
         'active': fields.boolean('Active'),
         'company_id': fields.many2one('res.company', 'Company', required=True),
@@ -869,11 +869,11 @@ class pos_order_line(osv.osv):
         'pos_discount': fields.boolean('Discount?'),
         'shop_id': fields.related('order_id', 'shop_id', type='many2one', relation='sale.shop', string='Shop', store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
-                'pos.order': (_get_order, ['shop_id'], 20),
+                'pos.order': (_get_order, ['shop_id', 'active', 'state'], 2000),
         }),
         'user_id': fields.related('order_id', 'user_id', type='many2one', relation='res.users', string='Connected Salesman', store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['order_id'], 2000),
-                'pos.order': (_get_order, ['user_id', 'state'], 20),
+                'pos.order': (_get_order, ['user_id', 'state', 'active'], 2000),
         }),
         'default_code': fields.related('product_id', 'default_code', type='char', relation='product.product', string='Reference', store={
                 'pos.order.line': (lambda self, cr, uid, ids, c={}: ids, ['product_id'], 2000),
@@ -902,17 +902,17 @@ class pos_order_line(osv.osv):
         })
         return super(pos_order_line, self).copy_data(cr, uid, id, default, context=context)
 
-    def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
-        new_args = []
-        for arg in args:
-            if arg[0] == 'shop_id':
-                new_args.append(('order_id.shop_id', '=', arg[2] ))
-            elif arg[0] == 'user_id':
-                new_args.append(('order_id.user_id', '=', arg[2] ))
-            else:
-                new_args.append(arg)
-
-        return super(pos_order_line, self).search(cr, uid, new_args, offset=offset, limit=limit, order=order, context=context, count=count)
+    # def search(self, cr, uid, args, offset=0, limit=0, order=None, context=None, count=False):
+    #     new_args = []
+    #     for arg in args:
+    #         if arg[0] == 'shop_id':
+    #             new_args.append(('order_id.shop_id', '=', arg[2] ))
+    #         elif arg[0] == 'user_id':
+    #             new_args.append(('order_id.user_id', '=', arg[2] ))
+    #         else:
+    #             new_args.append(arg)
+    #
+    #     return super(pos_order_line, self).search(cr, uid, new_args, offset=offset, limit=limit, order=order, context=context, count=count)
 
 
 class pos_category(osv.osv):
