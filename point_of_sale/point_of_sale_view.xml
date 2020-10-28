@@ -294,7 +294,7 @@
             <field name="view_type">form</field>
             <field name="view_mode">tree</field>
             <field name="view_id" ref="view_pos_order_line"/>
-            <field name="domain">[]</field>
+            <field name="domain">[('order_id.state', 'not in', ['draft', 'cancel'])]</field>
             <field name="context">{'pos_line_extended': 1, 'nodelete': '1', 'nocreate': '1', 'noduplicate': '1'}</field>
         </record>
 
