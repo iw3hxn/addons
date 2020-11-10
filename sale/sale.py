@@ -1028,7 +1028,7 @@ class sale_order(osv.osv):
         :param list(browse_record) order_lines: sale order line records to procure
         :param int picking_id: optional ID of a stock picking to which the created stock moves
                                will be added. A new picking will be created if ommitted.
-        :return: True
+        :return: picking_id
         """
         context = context or self.pool['res.users'].context_get(cr, uid)
         stop_procurement = context.get('stop_procurement', False)
@@ -1075,12 +1075,12 @@ class sale_order(osv.osv):
                         val['state'] = 'manual'
                         break
         order.write(val)
-        return True
+        return picking_id
 
     def action_ship_create(self, cr, uid, ids, context=None):
         context = context or self.pool['res.users'].context_get(cr, uid)
         for order in self.browse(cr, uid, ids, context=context):
-            self._create_pickings_and_procurements(cr, uid, order, order.order_line, None, context=context)
+            self._create_pickings_and_procurements(cr, uid, order, order.order_line, False, context=context)
         return True
 
     def action_ship_end(self, cr, uid, ids, context=None):
