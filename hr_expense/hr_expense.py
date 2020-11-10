@@ -238,9 +238,14 @@ class product_product(osv.osv):
         if not hr_expense_ok:
             return {}
         data_obj = self.pool.get('ir.model.data')
-        cat_id = data_obj._get_id(cr, uid, 'hr_expense', 'cat_expense')
+        try:
+            cat_id = data_obj.get_object_reference(cr, uid, 'hr_expense', 'cat_expense')
+        except ValueError:
+            return {}
         categ_id = data_obj.browse(cr, uid, cat_id).res_id
-        res = {'value' : {'type':'service','procure_method':'make_to_stock','supply_method':'buy','purchase_ok':True,'sale_ok' :False,'categ_id':categ_id }}
+        res = {
+            'value': {'type': 'service', 'procure_method': 'make_to_stock', 'supply_method': 'buy', 'purchase_ok': True,
+                      'sale_ok': False, 'categ_id': categ_id}}
         return res
 
 product_product()
