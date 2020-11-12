@@ -637,6 +637,12 @@ class stock_picking(osv.osv):
     def _get_picking(self, cr, uid, ids, context):
         return self.pool['stock.picking'].search(cr, uid, [('move_lines', 'in', ids)], context=context)
 
+    def _get_picking_partner_id(self, cr, uid, ids, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        stock_picking_model = self.pool['stock.picking']
+        picking_ids = stock_picking_model.search(cr, uid, [('address_id', 'in', ids)], context=context)
+        return picking_ids
+
     _columns = {
         'message_ids': fields.one2many('mail.message', 'res_id', 'Messages', domain=[('model', '=', _name)]),
         'name': fields.char('Reference', size=64, select=True),
@@ -679,6 +685,7 @@ class stock_picking(osv.osv):
         'address_id': fields.many2one('res.partner.address', 'Address', help="Address of partner"),
         'partner_id': fields.related('address_id', 'partner_id', type='many2one',relation='res.partner',string='Partner', store={
                     'stock.picking': (lambda self, cr, uid, ids, c={}: ids, ['address_id'], 20),
+                    'res.partner.address': (_get_picking_partner_id, ['partner_id'], 20),
         }),
         'invoice_state': fields.selection([
             ("invoiced", "Invoiced"),
