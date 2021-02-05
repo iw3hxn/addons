@@ -325,12 +325,13 @@ class project(osv.osv):
         default = default or {}
         context['active_test'] = False
         default['state'] = 'open'
-        default['code'] = False
+        if not context.get('force_code', False):
+            default['code'] = False
         default['line_ids'] = []
         default['tasks'] = []
-        proj = self.browse(cr, uid, id, context=context)
         if not default.get('name', False):
-            default['name'] = proj.name + _(' (copy)')
+            proj = self.read(cr, uid, id, ['name'], context=context)
+            default['name'] = proj['name'] + _(' (copy)')
 
         res = super(project, self).copy(cr, uid, id, default, context)
         # self.map_tasks(cr, uid, id, res, context)
