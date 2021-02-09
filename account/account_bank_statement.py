@@ -191,7 +191,10 @@ class account_bank_statement(osv.osv):
         if context is None:
             context = {}
         ctx = context.copy()
-        ctx.update({'company_id': company_id})
+        ctx.update({
+            'company_id': company_id,
+            'account_period_prefer_normal': True
+        })
         pids = period_pool.find(cr, uid, dt=date, context=ctx)
         if pids:
             res.update({'period_id': pids[0]})
