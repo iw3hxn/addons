@@ -74,6 +74,9 @@ class project_work(osv.osv):
         res['product_uom_id'] = emp.product_id.uom_id.id
         return res
 
+    def _hook_timesheet_vals(self, cr, uid, task_values, timesheet_value, context):
+        return timesheet_value
+
     def create(self, cr, uid, vals, context=None):
         context = context or self.pool['res.users'].context_get(cr, uid)
         obj_timesheet = self.pool.get('hr.analytic.timesheet')
@@ -82,7 +85,7 @@ class project_work(osv.osv):
         uom_obj = self.pool.get('product.uom')
         
         vals_line = {}
-        if not context.get('no_analytic_entry',False):
+        if not context.get('no_analytic_entry', False):
             obj_task = task_obj.browse(cr, uid, vals['task_id'])
             result = self.get_user_related_details(cr, uid, vals.get('user_id', uid))
             vals_line['name'] = '%s: %s' % (tools.ustr(obj_task.name), tools.ustr(vals['name'] or '/'))
@@ -90,7 +93,7 @@ class project_work(osv.osv):
             vals_line['product_id'] = result['product_id']
             vals_line['date'] = vals['date'][:10]
             
-            #calculate quantity based on employee's product's uom 
+            # calculate quantity based on employee's product's uom
             vals_line['unit_amount'] = vals['hours']
 
             default_uom = self.pool.get('res.users').browse(cr, uid, uid).company_id.project_time_mode_id.id
@@ -109,7 +112,8 @@ class project_work(osv.osv):
                 amount = vals_line['unit_amount']
                 prod_id = vals_line['product_id']
                 unit = False
-                timeline_id = obj_timesheet.create(cr, uid, vals_line, context)
+                new_vals_line = self._hook_timesheet_vals(cr, uid, vals, vals_line, context)
+                timeline_id = obj_timesheet.create(cr, uid, new_vals_line, context)
 
                 # Compute based on pricetype
                 amount_unit = obj_timesheet.on_change_unit_amount(cr, uid, timeline_id,

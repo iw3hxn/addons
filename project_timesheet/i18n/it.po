@@ -325,7 +325,7 @@ msgstr "Aprile"
 #. module: project_timesheet
 #: view:project.project:0
 msgid "Invoicing Data"
-msgstr "Data fatturazione"
+msgstr "Dati fatturazione"
 
 #. module: project_timesheet
 #: model:process.transition,note:project_timesheet.process_transition_taskencoding0
