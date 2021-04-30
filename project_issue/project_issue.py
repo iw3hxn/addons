@@ -294,18 +294,17 @@ class project_issue(crm.crm_case, osv.osv):
         data_obj = self.pool.get('ir.model.data')
         task_obj = self.pool.get('project.task')
 
-
         if context is None:
             context = {}
 
-        result = data_obj._get_id(cr, uid, 'project', 'view_task_search_form')
-        res = data_obj.read(cr, uid, result, ['res_id'])
-        id2 = data_obj._get_id(cr, uid, 'project', 'view_task_form2')
-        id3 = data_obj._get_id(cr, uid, 'project', 'view_task_tree2')
-        if id2:
-            id2 = data_obj.browse(cr, uid, id2, context=context).res_id
-        if id3:
-            id3 = data_obj.browse(cr, uid, id3, context=context).res_id
+        # result = data_obj._get_id(cr, uid, 'project', 'view_task_search_form')
+        # res = data_obj.read(cr, uid, result, ['res_id'])
+        # id2 = data_obj._get_id(cr, uid, 'project', 'view_task_form2')
+        # id3 = data_obj._get_id(cr, uid, 'project', 'view_task_tree2')
+        # if id2:
+        #     id2 = data_obj.browse(cr, uid, id2, context=context).res_id
+        # if id3:
+        #     id3 = data_obj.browse(cr, uid, id3, context=context).res_id
 
         for bug in case_obj.browse(cr, uid, ids, context=context):
             new_task_id = task_obj.create(cr, uid, {
@@ -326,19 +325,19 @@ class project_issue(crm.crm_case, osv.osv):
             }
             case_obj.write(cr, uid, [bug.id], vals)
 
-        return  {
-            'name': _('Tasks'),
-            'view_type': 'form',
-            'view_mode': 'form,tree',
-            'res_model': 'project.task',
-            'res_id': int(new_task_id),
-            'view_id': False,
-            'views': [(id2,'form'),(id3,'tree'),(False,'calendar'),(False,'graph')],
-            'type': 'ir.actions.act_window',
-            'search_view_id': res['res_id'],
-            'nodestroy': True
-        }
-
+        # return  {
+        #     'name': _('Tasks'),
+        #     'view_type': 'form',
+        #     'view_mode': 'form,tree',
+        #     'res_model': 'project.task',
+        #     'res_id': int(new_task_id),
+        #     'view_id': False,
+        #     'views': [(id2,'form'),(id3,'tree'),(False,'calendar'),(False,'graph')],
+        #     'type': 'ir.actions.act_window',
+        #     'search_view_id': res['res_id'],
+        #     'nodestroy': True
+        # }
+        return True
 
     def _convert(self, cr, uid, ids, xml_id, context=None):
         data_obj = self.pool.get('ir.model.data')
