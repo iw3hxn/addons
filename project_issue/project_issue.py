@@ -308,9 +308,9 @@ class project_issue(crm.crm_case, osv.osv):
 
         for bug in case_obj.browse(cr, uid, ids, context=context):
             new_task_id = task_obj.create(cr, uid, {
-                'name': bug.name,
+                'name': u"Ticket #{}: {}".format(bug.id, bug.name),
                 'partner_id': bug.partner_id.id,
-                'description':bug.description,
+                'description': bug.description,
                 'date_deadline': bug.date,
                 'project_id': bug.project_id.id,
                 # priority must be in ['0','1','2','3','4'], while bug.priority is in ['1','2','3','4','5']
