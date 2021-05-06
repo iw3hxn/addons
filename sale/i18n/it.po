@@ -20,7 +20,7 @@ msgstr ""
 #: code:addons/sale/wizard/sale_make_invoice_advance.py:66
 #, python-format
 msgid "Advance of %s %%"
-msgstr "Anticipo su %s %%"
+msgstr "Anticipo del %s %%"
 
 #. module: sale
 #: code:addons/sale/sale.py:555
