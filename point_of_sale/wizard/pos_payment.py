@@ -187,6 +187,9 @@ class pos_make_payment(osv.osv_memory):
         return False
 
     def _get_journal(self, cr, uid, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        if context.get('user_id'):
+            uid = context['user_id']
         return self.pool['pos.box.entries']._get_journal(cr, uid, context)
 
     _columns = {

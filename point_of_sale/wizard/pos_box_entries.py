@@ -75,6 +75,9 @@ class pos_box_entries(osv.osv_memory):
         return res
 
     def _get_journal(self, cr, uid, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
+        if context.get('user_id'):
+            uid = context['user_id']
         return get_journal(self, cr, uid, context)
 
     _columns = {

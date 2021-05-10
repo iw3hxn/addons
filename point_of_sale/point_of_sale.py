@@ -338,6 +338,7 @@ class pos_order(osv.osv):
         return True
 
     def add_payment(self, cr, uid, order_id, data, context=None):
+        context = context or self.pool['res.users'].context_get(cr, uid)
         """Create a new payment for the order"""
         statement_obj = self.pool.get('account.bank.statement')
         statement_line_obj = self.pool.get('account.bank.statement.line')
@@ -346,6 +347,8 @@ class pos_order(osv.osv):
         curr_c = self.pool.get('res.users').browse(cr, uid, uid, context=context).company_id
         curr_company = curr_c.id
         order = self.browse(cr, uid, order_id, context=context)
+        if context.get('user_id'):
+            uid = context['user_id']
         ids_new = []
         args = {
             'amount': data['amount'],
@@ -778,7 +781,9 @@ class account_bank_statement_line(osv.osv):
     _inherit = 'account.bank.statement.line'
     _columns = {
         'journal_id': fields.related('statement_id', 'journal_id', type='many2one', relation='account.journal',
-                                     string='Journal', store=True, readonly=True),
+                                     string='Journal', readonly=True, store={
+                                         'account.bank.statement.line': (lambda self, cr, uid, ids, c={}: ids, ['statement_id'], 10),
+                                     }),
         'pos_statement_id': fields.many2one('pos.order', ondelete='cascade'),
     }
 
