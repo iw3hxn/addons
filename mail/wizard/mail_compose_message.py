@@ -209,6 +209,7 @@ class mail_compose_message(orm.TransientModel):
                 references = (mail.references or '') + " " + mail.message_id
                 headers['In-Reply-To'] = mail.message_id
 
+            auto_delete = mail.auto_delete
             if context.get('mail.compose.message.mode', False) == 'mass_mail':
                 # Mass mailing: must render the template patterns
                 if context.get('active_ids') and context.get('active_model'):
@@ -234,13 +235,13 @@ class mail_compose_message(orm.TransientModel):
                         mail_message.schedule_with_attach(cr, uid, email_from, to_email(email_to), subject, rendered_body,
                             model=mail.model, email_cc=to_email(email_cc), email_bcc=to_email(email_bcc), reply_to=mail.reply_to,
                             attachments=attachment, references=references, res_id=active_id,
-                            subtype=mail.subtype, headers=headers, context=context)
+                            subtype=mail.subtype, headers=headers, auto_delete=auto_delete, context=context)
             else:
                 # normal mode - no mass-mailing
                 msg_id = mail_message.schedule_with_attach(cr, uid, mail.email_from, to_email(mail.email_to), mail.subject, body,
                     model=mail.model, email_cc=to_email(mail.email_cc), email_bcc=to_email(mail.email_bcc), reply_to=mail.reply_to,
                     attachments=attachment, references=references, res_id=int(mail.res_id),
-                    subtype=subtype, headers=headers, context=context)
+                    subtype=subtype, headers=headers, auto_delete=auto_delete, context=context)
                 # in normal mode, we send the email immediately, as the user expects us to (delay should be sufficiently small)
                 # mail_message.send(cr, uid, [msg_id], context=context)
 
