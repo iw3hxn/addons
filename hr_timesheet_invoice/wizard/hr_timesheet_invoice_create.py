@@ -114,7 +114,8 @@ class account_analytic_line(osv.osv):
                     else:
                         factor_name = product.name
                 else:
-                    data['product'] = data['product'][0]
+                    if isinstance(data['product'], tuple):
+                        data['product'] = data['product'][0]
                     product = product_obj.browse(cr, uid, data['product'], context=context2)
                     factor_name = product_obj.name_get(cr, uid, [data['product']], context=context)[0][1]
 
