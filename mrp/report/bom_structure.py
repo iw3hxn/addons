@@ -45,6 +45,7 @@ class bom_structure(report_sxw.rml_parse):
                 res['uname'] = l.product_uom.name
                 res['code'] = l.code
                 res['level'] = level
+                res['position'] = l.position
                 result.append(res)
                 if l.child_complete_ids:
                     if level<6:
