@@ -253,22 +253,26 @@ class mail_thread(orm.Model):
                     'date': email_date or time.strftime('%Y-%m-%d %H:%M:%S'),
                     'body_text': body_text,
                     'email_to': email_to,
-                    'email_from': email_from or \
-                        (hasattr(thread, 'user_id') and thread.user_id and thread.user_id.user_email),
+                    'email_from': email_from or (hasattr(thread, 'user_id') and thread.user_id and thread.user_id.user_email),
                     'email_cc': email_cc,
-                    'email_bcc': email_bcc,
-                    'partner_id': partner_id,
+                    'email_bcc': email_bcc and email_bcc or '',
                     'references': references,
                     'message_id': message_id,
-                    'attachment_ids': [(6, 0, to_attach)],
-                    'state' : 'received',
+                    'state': 'received',
                     'body_html': body_html,
                     'subtype': subtype,
                     'headers': headers,
-                    'reply_to': reply_to,
-                    'original': original,
+                    'reply_to': reply_to and reply_to or '',
+                    'original': original and original or '',
                 }
-            mail_message.create(cr, uid, data, context=context)
+                if to_attach:
+                    data['attachment_ids'] = [(6, 0, to_attach)]
+                if partner_id:
+                    data['partner_id']= partner_id
+            try:
+                mail_message.create(cr, uid, data, context=context)
+            except Exception as e:
+                _logger.error("Error on mail_massage create with data = {data}".format(data=data))
         return True
 
     def message_append_dict(self, cr, uid, ids, msg_dict, context=None):
