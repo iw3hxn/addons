@@ -258,7 +258,8 @@ class audittrail_objects_proxy(object_proxy):
                 "new_value_text": line.get('new_value_text', ''),
                 "field_description": field_obj.string
             }
-            line_id = log_line_pool.create(cr, uid, vals)
+            if vals["field_id"]:
+                line_id = log_line_pool.create(cr, uid, vals)
         return True
 
     def log_fct(self, cr, uid_orig, model, method, fct_src, *args):
