@@ -126,6 +126,10 @@ class mrp_routing_workcenter(osv.osv):
         'cycle_nbr': lambda *a: 1.0,
         'hour_nbr': lambda *a: 0.0,
     }
+
+
+
+
 mrp_routing_workcenter()
 
 class mrp_bom(osv.osv):
@@ -341,6 +345,22 @@ class mrp_bom(osv.osv):
                 max_prop = prop
         return result
 
+    def _hook_workcenter_lines_bom_explode(self, wc_use, factor, level):
+        wc = wc_use.workcenter_id
+        d, m = divmod(factor, wc_use.workcenter_id.capacity_per_cycle)
+        mult = (d + (m and 1.0 or 0.0))
+        cycle = mult * wc_use.cycle_nbr
+
+        return {
+            'name': tools.ustr(wc_use.name),
+            'workcenter_id': wc.id,
+            'sequence': level + (wc_use.sequence or 0),
+            'cycle': cycle,
+            'hour': float(wc_use.hour_nbr * mult + (
+                    (wc.time_start or 0.0) + (wc.time_stop or 0.0) + cycle * (wc.time_cycle or 0.0)) * (
+                                  wc.time_efficiency or 1.0)),
+        }
+
     def _bom_explode(self, cr, uid, bom, factor, properties=[], addthis=False, level=0, routing_id=False):
         """ Finds Products and Work Centers for related BoM for manufacturing order.
         @param bom: BoM of particular product.
@@ -386,17 +406,8 @@ class mrp_bom(osv.osv):
             routing = (routing_id and routing_obj.browse(cr, uid, routing_id)) or bom.routing_id or False
             if routing:
                 for wc_use in routing.workcenter_lines:
-                    wc = wc_use.workcenter_id
-                    d, m = divmod(factor, wc_use.workcenter_id.capacity_per_cycle)
-                    mult = (d + (m and 1.0 or 0.0))
-                    cycle = mult * wc_use.cycle_nbr
-                    result2.append({
-                        'name': tools.ustr(wc_use.name),
-                        'workcenter_id': wc.id,
-                        'sequence': level+(wc_use.sequence or 0),
-                        'cycle': cycle,
-                        'hour': float(wc_use.hour_nbr*mult + ((wc.time_start or 0.0)+(wc.time_stop or 0.0)+cycle*(wc.time_cycle or 0.0)) * (wc.time_efficiency or 1.0)),
-                    })
+                    result2.append(self._hook_workcenter_lines_bom_explode(wc_use, factor, level))
+
             for bom2 in bom.bom_lines:
                 res = self._bom_explode(cr, uid, bom2, factor, properties, addthis=True, level=level+10)
                 result = result + res[0]
