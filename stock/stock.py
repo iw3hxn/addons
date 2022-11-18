@@ -1646,6 +1646,8 @@ class stock_move(osv.osv):
                    (move.product_id.track_incoming and move.location_id.usage == 'supplier') or \
                    (move.product_id.track_outgoing and move.location_dest_id.usage == 'customer') \
                )):
+                logger = logging.getLogger('_check_tracking')
+                logger.warn("{}".format(move.product_id.name_get()[0]))
                 return False
         return True
 
