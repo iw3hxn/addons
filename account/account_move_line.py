@@ -167,7 +167,7 @@ class account_move_line(osv.osv):
 
         view_id = view and view[1] or False
 
-        ctx = "{'nodelete': '1', 'nocreate': '1'}"
+        ctx = {'nodelete': '1', 'nocreate': '1', 'account_move_line': account_move_line.id}
         name = _('Invoice')
         return {
             'name': name,
@@ -572,6 +572,7 @@ class account_move_line(osv.osv):
 
     def _get_move_lines(self, cr, uid, ids, context=None):
         result = []
+        result2 = self.pool['account.move.line'].search(cr, uid, [('move_id', 'in', ids)], context=context)
         for move in self.pool.get('account.move').browse(cr, uid, ids, context=context):
             for line in move.line_id:
                 result.append(line.id)
@@ -598,7 +599,10 @@ class account_move_line(osv.osv):
         'account_id': fields.many2one('account.account', 'Account', required=True, ondelete="cascade", domain=[('type','<>','view'), ('type', '<>', 'closed')], select=2),
         'move_id': fields.many2one('account.move', 'Move', ondelete="cascade", help="The move of this entry line.", select=2, required=True),
         'narration': fields.related('move_id','narration', type='text', relation='account.move', string='Internal Note'),
-        'ref': fields.related('move_id', 'ref', string='Reference', type='char', size=64, store=True),
+        'ref': fields.related('move_id', 'ref', string='Reference', type='char', size=64, store={
+                                    'account.move': (_get_move_lines, ['ref'], 20),
+                                    'account.move.line': (lambda self, cr, uid, ids, c={}: ids, ['move_id'], 10),
+                                }),
         'statement_id': fields.many2one('account.bank.statement', 'Statement', help="The bank statement used for bank reconciliation", select=1),
         'reconcile_function_id': fields.function(
             _get_reconcile, method=True,
@@ -640,7 +644,9 @@ class account_move_line(osv.osv):
             type='many2one', relation='account.invoice', fnct_search=_invoice_search),
         'account_tax_id': fields.many2one('account.tax', 'Tax'),
         'analytic_account_id': fields.many2one('account.analytic.account', 'Analytic Account'),
-        'company_id': fields.related('account_id', 'company_id', type='many2one', relation='res.company', string='Company', store=True, readonly=True)
+        'company_id': fields.related('account_id', 'company_id', type='many2one', relation='res.company', string='Company', readonly=True, store={
+                                    'account.move.line': (lambda self, cr, uid, ids, c={}: ids, ['account_id'], 10),
+            })
     }
 
     def _get_date(self, cr, uid, context=None):
