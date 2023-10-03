@@ -49,8 +49,8 @@ class sale_order_dates(osv.osv):
                 dt = datetime.strptime(order.date_confirm or order.date_order, '%Y-%m-%d') + relativedelta(days=line.delay or 0.0)
                 dt_s = dt.strftime('%Y-%m-%d')
                 dates_list.append(dt_s)
-            if dates_list:
-                res[order.id] = max(dates_list)
+            res[order.id] = max(dates_list) if dates_list else False
+
         return res
 
     _columns = {
