@@ -17,8 +17,8 @@
                     <separator colspan="4"/>
                     <group colspan="4" col="6">
                         <button icon="gtk-cancel" special="cancel" string="Cancel"/>
-                        <button icon="terp-gtk-jump-to-ltr" string="Sign in" name="si_check" type="object"/>
-                        <button icon="terp-gtk-jump-to-rtl" string="Sign out" name="so_check" type="object"/>
+                        <button icon="terp-gtk-jump-to-ltr" string="Sign in" name="si_check" type="object" attrs="{'invisible': [('state', '!=', 'absent')]}"/>
+                        <button icon="terp-gtk-jump-to-rtl" string="Sign out" name="so_check" type="object" attrs="{'invisible': [('state', '=', 'absent')]}"/>
                    </group>
                </form>
             </field>
@@ -80,7 +80,7 @@
                     <group colspan="4" >
                     <separator string="You did not sign in the last time. Please enter the date and time you signed in." colspan="4" />
                     <field name="name" />
-                    <field name="last_time" string="Your last sign in" />
+                    <field name="last_time" string="Your last sign in" readonly="1"/>
                     </group>
                     <separator colspan="4" />
                     <group colspan="4" col="6">
