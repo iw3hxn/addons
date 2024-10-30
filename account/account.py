@@ -1328,8 +1328,10 @@ class account_period(osv.osv):
             raise osv.except_osv(_('Error'), _('Start period should be smaller then End period'))
         #for period from = january, we want to exclude the opening period (but it has same date_from, so we have to check if period_from is special or not to include that clause or not in the search).
         if period_from.special:
-            return self.search(cr, uid, [('date_start', '>=', period_date_start), ('date_stop', '<=', period_date_stop),
-                                         ('company_id', '=', company1_id)])
+            period_ids = self.search(cr, uid, [('date_start', '>=', period_date_start), ('date_stop', '<=', period_date_stop),
+                                     ('company_id', '=', company1_id), ('special', '=', False)])
+
+            return [period_from.id] + period_ids
         return self.search(cr, uid, [('date_start', '>=', period_date_start), ('date_stop', '<=', period_date_stop),
                                      ('company_id', '=', company1_id), ('special', '=', False)])
 
@@ -1549,6 +1551,7 @@ class account_move(osv.osv):
                     ('journal_id', '=', move.journal_id.id),
                 ])
                 if len(move_ids) > 1:
+                    _logger.info("_check_centralisation {} ".format(move.journal_id.name))
                     return False
         return True
 
