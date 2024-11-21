@@ -292,6 +292,10 @@ class document_file(osv.osv):
     def create(self, cr, uid, vals, context=None):
         if context is None:
             context = {}
+
+        if context.get('force_create'):
+            return super(document_file, self).create(cr, uid, vals, context)
+
         vals['parent_id'] = context.get('parent_id', False) or vals.get('parent_id', False)
         if not vals['parent_id']:
             vals['parent_id'] = self.pool.get('document.directory')._get_root_directory(cr,uid, context)
