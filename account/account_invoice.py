@@ -172,6 +172,8 @@ class account_invoice(osv.osv):
 
     def _compute_lines(self, cr, uid, ids, name, args, context=None):
         result = {}
+        journal_ids = self.pool['account.journal'].search(cr, uid, [('type', 'in', ('cash', 'bank'))], context=context)
+
         for invoice in self.browse(cr, uid, ids, context=context):
             src = []
             lines = []
@@ -186,7 +188,11 @@ class account_invoice(osv.osv):
                     src.append(m.id)
 
             lines = filter(lambda x: x not in src, lines)
-            result[invoice.id] = lines
+            lines_ids = self.pool['account.move.line'].search(cr, uid, [
+                ('id', 'in', lines),
+                ('journal_id', 'in', journal_ids),
+            ], context=context)
+            result[invoice.id] = lines_ids
         return result
 
     def _get_invoice_from_line(self, cr, uid, ids, context=None):
